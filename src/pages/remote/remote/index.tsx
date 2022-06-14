@@ -1,12 +1,20 @@
 
 import { Breadcrumb, Button, Input, Layout, Slider, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import LoadingPage from '../../components/loadingPage/Index';
-import LoginHeader from '../../components/loginHeader/Index';
-import MenuCollapsible from '../../components/menu/Index';
-import { hotkeyService, keyPressService, mouseButtonService, mouseMoveButtonService, mouseMoveService, mouseScrollService, screenSizeService } from '../../services/remoteService';
+import Pusher from 'react-pusher';
+import LoadingPage from '../../../components/loadingPage/Index';
+import LoginHeader from '../../../components/loginHeader/Index';
+import MenuCollapsible from '../../../components/menu/Index';
+import {
+    hotkeyService,
+    keyPressService,
+    mouseButtonService,
+    mouseMoveButtonService,
+    mouseMoveService,
+    mouseScrollService,
+    screenSizeService
+} from '../../../services/remoteService';
 import styles from './Remote.module.css';
-import Pusher from 'react-pusher'
 
 
 const { Header, Content } = Layout;
