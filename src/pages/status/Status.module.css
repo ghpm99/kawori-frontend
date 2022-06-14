@@ -1,0 +1,23 @@
+.header {
+	padding: 0;
+}
+
+.breadcrumb {
+	margin: 16px 16px;
+}
+
+.layout {
+	min-height: 100vh;
+}
+
+.container {
+	display: flex;
+	margin: 16px 16px;
+}
+
+.indicator {
+	margin: 16px 16px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}

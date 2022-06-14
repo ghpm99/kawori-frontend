@@ -1,0 +1,33 @@
+.container {
+    min-height: 100vh;
+}
+
+.breadcrumb {
+    margin: 16px 16px;
+}
+
+.header {
+    padding: 0;
+}
+
+.command_container {
+    margin: 16px 16px;
+}
+
+.command_input {
+
+
+}
+
+.input {
+    width: calc(100% - 200px);
+}
+
+@media only screen and (max-width: 600px) {
+    .command_input{
+        display: grid;
+    }
+    .input {
+        width: 100%;
+    }
+}
