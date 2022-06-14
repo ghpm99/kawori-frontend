@@ -1,0 +1,9 @@
+.logo {
+	color: white;
+	text-align: center;
+	margin: 19px;
+}
+
+.header {
+    display: flex;
+}

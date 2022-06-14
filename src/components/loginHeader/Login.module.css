@@ -1,0 +1,13 @@
+.layout {
+    float: right;
+    margin-right: 16px;
+}
+
+.buttons {
+    margin: 0px 5px;
+}
+
+.button {
+    margin: 0px 5px;
+    color: white;
+}
