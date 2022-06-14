@@ -3,10 +3,10 @@ import { Breadcrumb, Button, Input, Layout, Typography } from 'antd';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import Pusher from 'react-pusher';
-import LoadingPage from '../../components/loadingPage/Index';
-import LoginHeader from '../../components/loginHeader/Index';
-import MenuCollapsible from '../../components/menu/Index';
-import { sendCommandService } from '../../services/remoteService';
+import LoadingPage from '../../../components/loadingPage/Index';
+import LoginHeader from '../../../components/loginHeader/Index';
+import MenuCollapsible from '../../../components/menu/Index';
+import { sendCommandService } from '../../../services/remoteService';
 import styles from './Command.module.css';
 
 

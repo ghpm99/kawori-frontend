@@ -22,7 +22,7 @@ class MyDocument extends Document {
 		return (
 			<Html>
 				<Head>
-					<title>Remote Media Player</title>
+					<title>Kawori</title>
 				</Head>
 				<body>
 					<Main />
