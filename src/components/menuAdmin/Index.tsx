@@ -17,7 +17,7 @@ const { SubMenu } = Menu;
 type MenuItem = Required<MenuProps>['items'][number];
 
 
-function MenuCollapsible(props: { selected: string[] }) {
+function MenuAdmin(props: { selected: string[] }) {
 
 	const router = useRouter()
 
@@ -143,4 +143,4 @@ function MenuCollapsible(props: { selected: string[] }) {
 	)
 }
 
-export default MenuCollapsible
+export default MenuAdmin

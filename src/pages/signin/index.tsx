@@ -1,6 +1,7 @@
 
 import { Button, Card, Checkbox, Form, Input, Layout, Typography } from 'antd';
 import { signIn } from 'next-auth/react';
+import MenuHeader from '../../components/menuHeader';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -16,9 +17,11 @@ export default function LoginPage(props) {
     };
 
     return (
-        <Layout style={ { minHeight: '100vh' } }>
-
-            <Header style={ { padding: 0 } } />
+        <Layout style={ {
+            minHeight: '100vh',
+            backgroundColor: 'rgb(0, 0, 27)',
+            } }>
+            <MenuHeader />
             <Content>
                 <Layout style={ {
                     width: '100vw',
@@ -26,7 +29,8 @@ export default function LoginPage(props) {
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    backgroundColor: 'rgb(0, 0, 27)',
                 } }>
                     <div style={ { maxWidth: '50%' } }>
                         <Card title='Login'>
