@@ -2,9 +2,9 @@
 import { Breadcrumb, Button, Input, Layout, Slider, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import Pusher from 'react-pusher';
-import LoadingPage from '../../../components/loadingPage/Index';
-import LoginHeader from '../../../components/loginHeader/Index';
-import MenuCollapsible from '../../../components/menu/Index';
+import LoadingPage from '../../../../components/loadingPage/Index';
+import LoginHeader from '../../../../components/loginHeader/Index';
+import MenuAdmin from '../../../../components/menuAdmin/Index';
 import {
     hotkeyService,
     keyPressService,
@@ -13,7 +13,7 @@ import {
     mouseMoveService,
     mouseScrollService,
     screenSizeService
-} from '../../../services/remoteService';
+} from '../../../../services/remoteService';
 import styles from './Remote.module.css';
 
 
@@ -80,7 +80,7 @@ function RemotePage(props) {
 
     return (
         <Layout className={ styles.container }>
-            <MenuCollapsible selected={ ['3'] } />
+            <MenuAdmin selected={ ['3'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />

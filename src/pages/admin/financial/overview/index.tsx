@@ -3,21 +3,21 @@ import { Content, Header } from 'antd/lib/layout/layout'
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import LoadingPage from '../../../components/loadingPage/Index'
-import LoginHeader from '../../../components/loginHeader/Index'
-import MenuCollapsible from '../../../components/menu/Index'
-import PaymentFixed from '../../../components/overview/paymentFixed'
-import PaymentWithFixed from '../../../components/overview/paymentWithFixed'
-import PaymentWithoutFixed from '../../../components/overview/paymentWithoutFixed'
-import { fetchPaymentReport } from '../../../store/features/financial/Index'
-import { RootState } from '../../../store/store'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import PaymentFixed from '../../../../components/overview/paymentFixed'
+import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
+import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
+import { fetchPaymentReport } from '../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../store/store'
 import styles from './Overview.module.css'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)
 
 function Overview() {
   const financialStore = useSelector((state: RootState) => state.financial.paymentReport)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchPaymentReport())
@@ -38,7 +38,7 @@ function Overview() {
 
   return (
     <Layout className={ styles.container }>
-      <MenuCollapsible selected={ ['sub2', 'overview'] } />
+      <MenuAdmin selected={ ['sub2', 'overview'] } />
       <Layout>
         <Header className={ styles.header }>
           <LoginHeader />

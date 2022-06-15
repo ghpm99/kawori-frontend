@@ -1,13 +1,12 @@
 
 import { Breadcrumb, Layout, Progress, Typography } from 'antd';
-import { useSession } from 'next-auth/react';
 import Pusher from 'react-pusher';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingPage from '../../components/loadingPage/Index';
-import LoginHeader from '../../components/loginHeader/Index';
-import MenuCollapsible from '../../components/menu/Index';
-import { setCpuAndMemoryValue } from '../../store/features/status/Index';
-import { RootState } from '../../store/store';
+import LoadingPage from '../../../components/loadingPage/Index';
+import LoginHeader from '../../../components/loginHeader/Index';
+import MenuAdmin from '../../../components/menuAdmin/Index';
+import { setCpuAndMemoryValue } from '../../../store/features/status/Index';
+import { RootState } from '../../../store/store';
 import S from './Status.module.css';
 
 
@@ -30,7 +29,7 @@ function StatusPage(props) {
 
 	return (
 		<Layout className={ S.layout }>
-			<MenuCollapsible selected={ ['6'] } />
+			<MenuAdmin selected={ ['6'] } />
 			<Layout>
 				<Header className={ S.header } >
 					<LoginHeader />

@@ -3,11 +3,11 @@ import { Breadcrumb, Button, Checkbox, DatePicker, Divider, Form, Input, InputNu
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingPage from '../../../components/loadingPage/Index';
-import LoginHeader from '../../../components/loginHeader/Index';
-import MenuCollapsible from '../../../components/menu/Index';
-import {saveNewPayment } from '../../../store/features/financial/Index';
-import { RootState } from '../../../store/store';
+import LoadingPage from '../../../../components/loadingPage/Index';
+import LoginHeader from '../../../../components/loginHeader/Index';
+import MenuCollapsible from '../../../../components/menuAdmin/Index';
+import {saveNewPayment } from '../../../../store/features/financial/Index';
+import { RootState } from '../../../../store/store';
 import styles from './Report.module.css'
 
 
@@ -41,7 +41,6 @@ function FinancialPage() {
 			'fixed': values.fixed ? true : false,
 			'value': values.value
 		}
-		dispatch(saveNewPayment({ payment: newPayment }))
 	}
 
 	const headerTableFinancial = [
