@@ -3,7 +3,7 @@
     color:white;
     display: flex;
     background-color: rgb(0, 0, 27);
-    border-bottom: 5px solid;
+    border-bottom: 5px solid #111;
 }
 
 .menu {
@@ -76,7 +76,7 @@
 .user-options {
     display: flex;
     margin: 6px;
-    padding: 16px;
+    align-items: center;
 }
 
 .user-option {
@@ -84,7 +84,6 @@
     padding:16px;
     cursor: pointer;
     text-align: center;
-    padding: 16px;
 }
 
 .user-option:hover {

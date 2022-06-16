@@ -167,5 +167,5 @@ export default function PaymentDetails() {
 PaymentDetails.auth = {
     role: 'admin',
     loading: <LoadingPage />,
-    unauthorized: "/login",
+    unauthorized: "/signin",
 }

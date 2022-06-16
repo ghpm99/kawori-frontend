@@ -31,27 +31,31 @@ export default function MenuHeader(props) {
                         Status
                     </a>
                 </Link>
-                <Link href='/'>
-                    <a className={ styles['menu-item'] }>
-                        Comunidade
-                    </a>
-                </Link>
-                <Link href='/'>
-                    <a className={ styles['menu-item'] }>
-                        Incorporar Bot!
-                    </a>
-                </Link>
+                <a
+                    target='_blank'
+                    href='https://discord.gg/5rwtq5V'
+                    className={ styles['menu-item'] }
+                >
+                    Comunidade
+                </a>
+                <a
+                    target='_blank'
+                    href='https://discordapp.com/api/oauth2/authorize?client_id=622218589243572224&permissions=8&scope=bot'
+                    className={ styles['menu-item'] }
+                >
+                    Incorporar Bot!
+                </a>
             </div>
             <div className={ styles['user-container'] }>
                 <div>
                 </div>
                 { context.status === 'authenticated'
                     ? <div className={ styles['user-options'] }>
-                       <AccountMenuInfo user={{
-                            avatar: '',
-                            name: context.data.user.name ?? '' ,
+                        <AccountMenuInfo user={ {
+                            avatar: context.data.user.image,
+                            name: context.data.user.name ?? '',
                             email: context.data.user.email ?? ''
-                       }}/>
+                        } } />
                     </div>
                     : <div className={ styles['user-options'] }>
                         <Link href='/signin'>

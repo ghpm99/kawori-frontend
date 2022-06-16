@@ -168,7 +168,7 @@ function TableSummary(props) {
 FinancialPage.auth = {
     role: 'admin',
     loading: <LoadingPage />,
-    unauthorized: "/login",
+    unauthorized: "/signin",
 }
 
 export default FinancialPage

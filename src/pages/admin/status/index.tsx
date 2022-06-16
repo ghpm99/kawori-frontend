@@ -78,7 +78,7 @@ function StatusPage(props) {
 StatusPage.auth = {
 	role: 'admin',
 	loading: <LoadingPage />,
-	unauthorized: "/login",
+	unauthorized: "/signin",
 }
 
 StatusPage.pusher = {

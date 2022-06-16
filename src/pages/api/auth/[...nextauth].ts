@@ -50,9 +50,9 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 	]
 
 	const pages = {
-		signIn: '/login',
-		signOut: '/auth/signout',
-		error: '/login',
+		signIn: '/signin',
+		signOut: '/signout',
+		error: '/',
 		verifyRequest: '/auth/verify-request',
 		newUser: '/auth/new-user',
 	}

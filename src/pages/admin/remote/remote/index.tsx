@@ -227,7 +227,7 @@ function RemotePage(props) {
 RemotePage.auth = {
     role: 'admin',
     loading: <LoadingPage />,
-    unauthorized: "/login",
+    unauthorized: "/signin",
 }
 
 RemotePage.pusher = {
