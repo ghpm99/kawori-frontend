@@ -1,14 +1,12 @@
 
-import { Breadcrumb, Button, Checkbox, DatePicker, Divider, Form, Input, InputNumber, Layout, Select, Switch, Table, Typography } from 'antd';
+import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from 'antd';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingPage from '../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuCollapsible from '../../../../components/menuAdmin/Index';
-import {saveNewPayment } from '../../../../store/features/financial/Index';
 import { RootState } from '../../../../store/store';
-import styles from './Report.module.css'
+import styles from './Report.module.css';
 
 
 const { Header, Content, Footer } = Layout;
@@ -115,7 +113,7 @@ function FinancialPage() {
 FinancialPage.auth = {
 	role: 'admin',
 	loading: <LoadingPage />,
-	unauthorized: "/login",
+	unauthorized: "/signin",
 }
 
 export default FinancialPage

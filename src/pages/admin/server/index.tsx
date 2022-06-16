@@ -32,7 +32,7 @@ function ServerPage() {
 ServerPage.auth = {
     role: 'admin',
     loading: <LoadingPage />,
-    unauthorized: "/login",
+    unauthorized: "/signin",
 }
 
 export default ServerPage

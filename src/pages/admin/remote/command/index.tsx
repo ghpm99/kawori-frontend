@@ -86,7 +86,7 @@ function CommandPage(props) {
 CommandPage.auth = {
     role: 'admin',
     loading: <LoadingPage />,
-    unauthorized: "/login",
+    unauthorized: "/signin",
 }
 
 CommandPage.pusher = {

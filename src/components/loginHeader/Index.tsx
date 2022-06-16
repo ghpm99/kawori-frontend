@@ -30,7 +30,7 @@ export default function LoginHeader() {
                             type='ghost'
                             className={ S.button }
                         >
-                            <Link href='/login'>Sign in</Link>
+                            <Link href='/signin'>Sign in</Link>
                         </Button>
                         <Button
                             type='ghost'

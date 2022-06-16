@@ -1,14 +1,12 @@
 
 import {
-	DesktopOutlined, HddOutlined, HomeOutlined, ScheduleOutlined, SettingOutlined, UserOutlined, YoutubeOutlined, SnippetsOutlined
+	DesktopOutlined, HddOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, MenuProps } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import styles from './Menu.module.css'
+import styles from './Menu.module.css';
 import useMenu from './useMenu';
 
 const { Sider } = Layout;
@@ -46,6 +44,7 @@ function MenuAdmin(props: { selected: string[] }) {
 	}
 
 	const items: ItemType[] = [
+		getItem('Conta', 'user', '/admin/user', <UserOutlined />),
 		getItem('Remoto', 'remote', null, <DesktopOutlined />, [
 			getItem(
 				'Comando',
@@ -81,7 +80,11 @@ function MenuAdmin(props: { selected: string[] }) {
 
 	return (
 		<Sider collapsible collapsed={ context.collapsed } onCollapse={ context.toggleCollapsed }>
-			<div className={ styles.logo }>Kawori</div>
+			<Link href='/'>
+				<p className={ styles.logo }>
+					Kawori
+				</p>
+			</Link>
 			<Menu
 				theme="dark"
 				selectedKeys={ props.selected }
