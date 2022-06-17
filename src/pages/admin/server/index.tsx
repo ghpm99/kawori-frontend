@@ -19,7 +19,7 @@ function ServerPage() {
                 </Header>
                 <Content>
                     <Breadcrumb className={ styles.breadcrumb }>
-                        <Breadcrumb.Item>RMP</Breadcrumb.Item>
+                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Servidor</Breadcrumb.Item>
                     </Breadcrumb>
                 </Content>

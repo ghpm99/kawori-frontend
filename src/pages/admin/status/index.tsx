@@ -36,7 +36,7 @@ function StatusPage(props) {
 				</Header>
 				<Content>
 					<Breadcrumb className={ S.breadcrumb }>
-						<Breadcrumb.Item>RMP</Breadcrumb.Item>
+						<Breadcrumb.Item>Kawori</Breadcrumb.Item>
 						<Breadcrumb.Item>Status</Breadcrumb.Item>
 					</Breadcrumb>
 					<div className={ S.container }>
