@@ -19,7 +19,7 @@ export default function LoginPage(props) {
     return (
         <Layout style={ {
             minHeight: '100vh',
-            backgroundColor: 'rgb(0, 0, 27)',
+            backgroundColor: 'rgb(0, 0, 27, 0.8)',
             } }>
             <MenuHeader />
             <Content>
@@ -30,7 +30,7 @@ export default function LoginPage(props) {
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'rgb(0, 0, 27)',
+                    backgroundColor: 'rgb(0, 0, 27, 0)',
                 } }>
                     <div style={ { maxWidth: '50%' } }>
                         <Card title='Login'>
