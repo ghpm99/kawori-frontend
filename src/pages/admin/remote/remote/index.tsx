@@ -87,7 +87,7 @@ function RemotePage(props) {
                 </Header>
                 <Content>
                     <Breadcrumb className={ styles.breadcrumb }>
-                        <Breadcrumb.Item>RMP</Breadcrumb.Item>
+                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Remoto</Breadcrumb.Item>
                     </Breadcrumb>
                     <Layout className={ styles.key_hold }>

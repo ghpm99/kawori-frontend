@@ -90,7 +90,7 @@ function FinancialPage() {
 				</Header>
 				<Content>
 					<Breadcrumb className={ styles.breadcrumb }>
-						<Breadcrumb.Item>RMP</Breadcrumb.Item>
+						<Breadcrumb.Item>Kawori</Breadcrumb.Item>
 						<Breadcrumb.Item>Financeiro</Breadcrumb.Item>
 						<Breadcrumb.Item>Relatorio</Breadcrumb.Item>
 					</Breadcrumb>

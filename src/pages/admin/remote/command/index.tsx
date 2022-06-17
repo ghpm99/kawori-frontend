@@ -37,7 +37,7 @@ function CommandPage(props) {
                 </Header>
                 <Content>
                     <Breadcrumb className={ styles.breadcrumb }>
-                        <Breadcrumb.Item>RMP</Breadcrumb.Item>
+                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Comando</Breadcrumb.Item>
                     </Breadcrumb>
                     <Layout className={ styles.command_container }>
