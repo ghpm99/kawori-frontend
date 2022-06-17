@@ -11,18 +11,84 @@ import {
 } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import moment from 'moment'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import LoadingPage from '../../../../../components/loadingPage/Index'
 import LoginHeader from '../../../../../components/loginHeader/Index'
 import MenuAdmin from '../../../../../components/menuAdmin/Index'
+import {
+    savePaymentDetailService,
+    payoffPaymentService
+} from '../../../../../services/financialService'
+import {
+    fetchPaymentDetails,
+    changeNamePaymentDetails,
+    changeTypePaymentDetails,
+    changeFixedPaymentDetails,
+    changeActivePaymentDetails,
+    changePaymentDatePaymentDetails,
+    changeValuePaymentDetails
+} from '../../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../../store/store'
 import styles from './Details.module.css'
-import usePaymentDetails from './usePaymentDetails'
 
 const { Paragraph } = Typography
 const { Option } = Select
 
 export default function PaymentDetails() {
 
-    const context = usePaymentDetails()
+    const router = useRouter()
+    const { id } = router.query
+
+    const financialStore = useSelector((state: RootState) => state.financial.paymentDetail)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if (id) {
+            const idPayment = parseInt(id as string)
+            dispatch(fetchPaymentDetails(idPayment))
+        }
+    }, [id])
+
+    const date = new Date(financialStore.data?.date).toLocaleDateString()
+
+    const save = (event) => {
+        savePaymentDetailService(id, financialStore.data)
+    }
+
+    const changeName = (event) => {
+        dispatch(changeNamePaymentDetails(event))
+    }
+
+    const changeType = (event) => {
+        dispatch(changeTypePaymentDetails(event))
+    }
+
+    const changeFixed = (event) => {
+        const { checked } = event.target
+        dispatch(changeFixedPaymentDetails(checked))
+    }
+
+    const changeActive = (event) => {
+        const { checked } = event.target
+        dispatch(changeActivePaymentDetails(checked))
+    }
+
+    const changePaymentDate = (date) => {
+        dispatch(changePaymentDatePaymentDetails(date.format('YYYY-MM-DD')))
+    }
+
+    const changeValue = (event) => {
+        dispatch(changeValuePaymentDetails(event))
+    }
+
+    const payoff = (event) => {
+        payoffPaymentService(financialStore.data.id).then(data => {
+            console.log(data)
+            dispatch(fetchPaymentDetails(financialStore.data.id))
+        })
+    }
 
     return (
         <Layout className={ styles.container }>
@@ -39,10 +105,10 @@ export default function PaymentDetails() {
                         <Breadcrumb.Item>Detalhes</Breadcrumb.Item>
                     </Breadcrumb>
                     <Layout className={ styles.container_labels }>
-                        <Card loading={ context.financialStore.loading }>
+                        <Card loading={ financialStore.loading }>
                             <div className={ styles.label_detail }>
                                 <div className={ styles.label }>
-                                    ID: { context.financialStore.data?.id }
+                                    ID: { financialStore.data?.id }
                                 </div>
                             </div>
                             <div className={ styles.label_detail }>
@@ -51,9 +117,9 @@ export default function PaymentDetails() {
                                 </div>
                                 <Paragraph
                                     style={ { margin: '0' } }
-                                    editable={ { onChange: context.changeName } }
+                                    editable={ { onChange: changeName } }
                                 >
-                                    { context.financialStore.data?.name }
+                                    { financialStore.data?.name }
                                 </Paragraph>
                             </div>
                             <div className={ styles.label_detail }>
@@ -61,7 +127,7 @@ export default function PaymentDetails() {
                                     Dia de lançamento:
                                 </div>
                                 <div>
-                                    { context.date }
+                                    { date }
                                 </div>
                             </div>
                             <div className={ styles.label_detail }>
@@ -69,7 +135,7 @@ export default function PaymentDetails() {
                                     Status:
                                 </div>
                                 <div>
-                                    { context.financialStore.data?.status === 0 ? 'Em aberto' : 'Baixado' }
+                                    { financialStore.data?.status === 0 ? 'Em aberto' : 'Baixado' }
                                 </div>
                             </div>
                             <div className={ styles.label_detail }>
@@ -77,9 +143,9 @@ export default function PaymentDetails() {
                                     Dia de pagamento:
                                 </div>
                                 <DatePicker
-                                    value={ moment(context.financialStore.data?.payment_date) }
+                                    value={ moment(financialStore.data?.payment_date) }
                                     format='DD/MM/YYYY'
-                                    onChange={ context.changePaymentDate }
+                                    onChange={ changePaymentDate }
                                 />
                             </div>
                             <div className={ styles.label_detail }>
@@ -88,8 +154,8 @@ export default function PaymentDetails() {
                                 </div>
                                 <Select
                                     placeholder='Selecione o tipo de entrada'
-                                    value={ context.financialStore.data?.type }
-                                    onChange={ context.changeType }
+                                    value={ financialStore.data?.type }
+                                    onChange={ changeType }
                                 >
                                     <Option value={ 0 }>
                                         Credito
@@ -104,14 +170,14 @@ export default function PaymentDetails() {
                                     Parcelas:
                                 </div>
                                 <div>
-                                    { context.financialStore.data?.installments }
+                                    { financialStore.data?.installments }
                                 </div>
                             </div>
                             <div className={ styles.label_detail }>
                                 <div>
                                     <Checkbox
-                                        checked={ context.financialStore.data?.fixed }
-                                        onChange={ context.changeFixed }
+                                        checked={ financialStore.data?.fixed }
+                                        onChange={ changeFixed }
                                     >
                                         Fixo
                                     </Checkbox>
@@ -120,8 +186,8 @@ export default function PaymentDetails() {
                             <div className={ styles.label_detail }>
                                 <div>
                                     <Checkbox
-                                        checked={ context.financialStore.data?.active }
-                                        onChange={ context.changeActive }
+                                        checked={ financialStore.data?.active }
+                                        onChange={ changeActive }
                                     >
                                         Ativo
                                     </Checkbox>
@@ -132,17 +198,17 @@ export default function PaymentDetails() {
                                     Valor:
                                 </div>
                                 <InputNumber
-                                    value={ context.financialStore.data?.value }
-                                    onChange={ context.changeValue }
+                                    value={ financialStore.data?.value }
+                                    onChange={ changeValue }
                                 />
                             </div>
                             <div className={ styles.buttons }>
                                 {
-                                    context.financialStore.data?.status === 0 ? (
+                                    financialStore.data?.status === 0 ? (
                                         <Button
                                             danger
                                             type='default'
-                                            onClick={ context.payoff }
+                                            onClick={ payoff }
                                         >
                                             Baixar pagamento
                                         </Button>
@@ -150,7 +216,7 @@ export default function PaymentDetails() {
                                 }
                                 <Button
                                     type='primary'
-                                    onClick={ context.save }
+                                    onClick={ save }
                                     className={ styles.button_save }
                                 >
                                     Salvar
