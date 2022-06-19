@@ -12,7 +12,7 @@ const { Header, Content, Footer } = Layout;
 function ServerPage() {
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['7'] } />
+            <MenuAdmin selected={ ['server'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />

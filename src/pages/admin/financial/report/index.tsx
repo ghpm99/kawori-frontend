@@ -83,7 +83,7 @@ function FinancialPage() {
 
 	return (
 		<Layout className={ styles.container }>
-			<MenuCollapsible selected={ ['sub2', 'report'] } />
+			<MenuCollapsible selected={ ['report'] } />
 			<Layout>
 				<Header className={ styles.header } >
 					<LoginHeader />

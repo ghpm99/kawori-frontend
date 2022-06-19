@@ -38,7 +38,7 @@ function Overview() {
 
   return (
     <Layout className={ styles.container }>
-      <MenuAdmin selected={ ['sub2', 'overview'] } />
+      <MenuAdmin selected={ ['overview'] } />
       <Layout>
         <Header className={ styles.header }>
           <LoginHeader />

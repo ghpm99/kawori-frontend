@@ -12,7 +12,7 @@ const { Header, Content, Footer } = Layout;
 function FaceTexture() {
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['7'] } />
+            <MenuAdmin selected={ ['facetexture'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />
@@ -20,7 +20,7 @@ function FaceTexture() {
                 <Content>
                     <Breadcrumb className={ styles.breadcrumb }>
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Servidor</Breadcrumb.Item>
+                        <Breadcrumb.Item>Facetexture</Breadcrumb.Item>
                     </Breadcrumb>
                 </Content>
             </Layout>

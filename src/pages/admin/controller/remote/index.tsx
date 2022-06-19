@@ -80,7 +80,7 @@ function RemotePage(props) {
 
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['3'] } />
+            <MenuAdmin selected={ ['controller', 'remote'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />

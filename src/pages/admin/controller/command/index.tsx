@@ -30,7 +30,7 @@ function CommandPage(props) {
 
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['2'] } />
+            <MenuAdmin selected={ ['controller', 'command'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />

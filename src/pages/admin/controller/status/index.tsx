@@ -29,7 +29,7 @@ function StatusPage(props) {
 
 	return (
 		<Layout className={ S.layout }>
-			<MenuAdmin selected={ ['6'] } />
+			<MenuAdmin selected={ ['controller', 'status'] } />
 			<Layout>
 				<Header className={ S.header } >
 					<LoginHeader />
