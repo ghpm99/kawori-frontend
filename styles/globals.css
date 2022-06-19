@@ -6,56 +6,6 @@ body {
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	background-color: #00001b;
 	opacity: 0.9;
-	background-image: linear-gradient(
-			30deg,
-			#060635 12%,
-			transparent 12.5%,
-			transparent 87%,
-			#060635 87.5%,
-			#060635
-		),
-		linear-gradient(
-			150deg,
-			#060635 12%,
-			transparent 12.5%,
-			transparent 87%,
-			#060635 87.5%,
-			#060635
-		),
-		linear-gradient(
-			30deg,
-			#060635 12%,
-			transparent 12.5%,
-			transparent 87%,
-			#060635 87.5%,
-			#060635
-		),
-		linear-gradient(
-			150deg,
-			#060635 12%,
-			transparent 12.5%,
-			transparent 87%,
-			#060635 87.5%,
-			#060635
-		),
-		linear-gradient(
-			60deg,
-			#06063577 25%,
-			transparent 25.5%,
-			transparent 75%,
-			#06063577 75%,
-			#06063577
-		),
-		linear-gradient(
-			60deg,
-			#06063577 25%,
-			transparent 25.5%,
-			transparent 75%,
-			#06063577 75%,
-			#06063577
-		);
-	background-size: 48px 84px;
-	background-position: 0 0, 0 0, 24px 42px, 24px 42px, 0 0, 24px 42px;
 }
 
 a {
@@ -66,3 +16,11 @@ a {
 * {
 	box-sizing: border-box;
 }
+
+#tsparticles {
+	position: absolute;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+	z-index: -1;
+  }
