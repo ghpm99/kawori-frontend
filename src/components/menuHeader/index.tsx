@@ -6,7 +6,6 @@ import useMenuHeader from './useMenuHeader';
 export default function MenuHeader(props) {
 
     const context = useMenuHeader();
-    console.log(context.data)
 
     return (
         <div className={ styles['menu-header'] }>

@@ -1,14 +1,9 @@
-import { MenuProps } from 'antd';
-import { ItemType } from 'antd/lib/menu/hooks/useItems'
-import { useSession } from 'next-auth/react'
-import { useState } from 'react'
-
-
-
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
 const useMenu = () => {
 
-    const { status } = useSession()
+    const { status, data } = useSession()
 
 	const [collapsed, setCollapsed] = useState<boolean>()
 

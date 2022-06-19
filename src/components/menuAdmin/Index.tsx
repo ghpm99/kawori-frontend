@@ -2,81 +2,16 @@
 import {
 	DesktopOutlined, HddOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined
 } from '@ant-design/icons';
-import { Layout, Menu, MenuProps } from 'antd';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { Layout, Menu } from 'antd';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import styles from './Menu.module.css';
 import useMenu from './useMenu';
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
-
-type MenuItem = Required<MenuProps>['items'][number];
-
 
 function MenuAdmin(props: { selected: string[] }) {
 
-	const router = useRouter()
-
 	const context = useMenu();
-
-	function getItem(
-		label: React.ReactNode,
-		key: React.Key,
-		path?: string,
-		icon?: React.ReactNode,
-		children?: MenuItem[],
-		type?: 'group',
-	): MenuItem {
-		return {
-			key,
-			icon,
-			children,
-			label,
-			type,
-			onClick: (e) => {
-				if (path) {
-					router.push(path)
-				}
-			},
-		} as MenuItem;
-	}
-
-	const items: ItemType[] = [
-		getItem('Conta', 'user', '/admin/user', <UserOutlined />),
-		getItem('Remoto', 'remote', null, <DesktopOutlined />, [
-			getItem(
-				'Comando',
-				'remote-command',
-				'remote/command',
-				<DesktopOutlined />,
-			),
-			getItem(
-				'Remoto',
-				'remote-remote',
-				'remote/remote',
-				<DesktopOutlined />
-			),
-			getItem(
-				'Status',
-				'remote-status',
-				'remote/status',
-				<HddOutlined />),
-		]),
-		getItem('Financeiro', 'financial', null, <SnippetsOutlined />, [
-			getItem(
-				'Overview',
-				'financial-Overview',
-				'/financial/overview',
-				<SnippetsOutlined />),
-			getItem(
-				'Pagamentos',
-				'financial-payments',
-				'/financial/payments',
-				<SnippetsOutlined />),
-		]),
-	]
 
 	return (
 		<Sider collapsible collapsed={ context.collapsed } onCollapse={ context.toggleCollapsed }>
@@ -89,8 +24,6 @@ function MenuAdmin(props: { selected: string[] }) {
 				theme="dark"
 				selectedKeys={ props.selected }
 				mode="inline"
-				items={ items }
-				onClick={ (e) => console.log(e) }
 			>
 				<Menu.Item key="1" icon={ <HomeOutlined /> }>
 					<Link href={ '/' }>
@@ -99,42 +32,47 @@ function MenuAdmin(props: { selected: string[] }) {
 				</Menu.Item>
 				{ context.status === 'authenticated' && (
 					<>
-						<SubMenu key='' icon={ <DesktopOutlined /> } title='Remoto'>
+						<Menu.Item icon={<UserOutlined />} title='Usuario'>
+							<Link href={ '/admin/user' }>
+								Conta
+							</Link>
+						</Menu.Item>
+						<Menu.SubMenu key='' icon={ <DesktopOutlined /> } title='Remoto'>
 							<Menu.Item key="2" icon={ <DesktopOutlined /> }>
-								<Link href={ '/command' }>
+								<Link href={ '/admin/controller/command' }>
 									Comando
 								</Link>
 							</Menu.Item>
 							<Menu.Item key="3" icon={ <DesktopOutlined /> }>
-								<Link href={ '/remote' }>
+								<Link href={ '/admin/controller/remote' }>
 									Remoto
 								</Link>
 							</Menu.Item>
 							<Menu.Item key="6" icon={ <HddOutlined /> }>
-								<Link href={ '/status' }>
+								<Link href={ '/admin/controller/status' }>
 									Status
 								</Link>
 							</Menu.Item>
-						</SubMenu>
-						<SubMenu key='sub2' icon={ <SnippetsOutlined /> } title='Financeiro'>
+						</Menu.SubMenu>
+						<Menu.SubMenu key='sub2' icon={ <SnippetsOutlined /> } title='Financeiro'>
 							<Menu.Item key='overview'>
-								<Link href={ '/financial/overview' }>
+								<Link href={ '/admin/financial/overview' }>
 									Overview
 								</Link>
 							</Menu.Item>
 							<Menu.Item key='payments'>
-								<Link href={ '/financial/payments' }>
+								<Link href={ '/admin/financial/payments' }>
 									Pagamentos
 								</Link>
 							</Menu.Item>
 							<Menu.Item key='report'>
-								<Link href={ '/financial/report' }>
+								<Link href={ '/admin/financial/report' }>
 									Relatorio por mês
 								</Link>
 							</Menu.Item>
-						</SubMenu>
+						</Menu.SubMenu>
 						<Menu.Item key="7" icon={ <SettingOutlined /> }>
-							<Link href={ '/server' }>
+							<Link href={ '/admin/server' }>
 								Servidor
 							</Link>
 						</Menu.Item>
@@ -145,5 +83,7 @@ function MenuAdmin(props: { selected: string[] }) {
 		</Sider>
 	)
 }
+
+
 
 export default MenuAdmin

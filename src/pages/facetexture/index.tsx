@@ -1,9 +1,19 @@
 
 import Link from 'next/link';
+import Particles from 'react-tsparticles';
 import MenuHeader from '../../components/menuHeader';
 import styles from './Facetexture.module.css';
+import { loadFull } from 'tsparticles';
+import { Engine, ISourceOptions } from 'tsparticles-engine';
+import particlesOptions from '../../../public/particles.json';
+import { useCallback } from 'react';
 
 export default function Facetexture(props) {
+
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadFull(engine);
+  }, []);
+
   return (
     <div className={ styles['container'] }>
       <div className={ styles['body'] }>
@@ -43,6 +53,7 @@ export default function Facetexture(props) {
           </Link>
         </div>
       </div>
+      <Particles options={ particlesOptions as ISourceOptions } init={ particlesInit } />
     </div>
   )
 }
