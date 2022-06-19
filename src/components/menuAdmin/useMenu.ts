@@ -13,6 +13,7 @@ const useMenu = () => {
 
     return {
         status,
+        data: data as ISession,
         collapsed,
         toggleCollapsed,
     }

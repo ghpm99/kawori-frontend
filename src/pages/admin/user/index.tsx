@@ -14,9 +14,35 @@ const User = () => {
 
     const { data } = useSession()
 
+    const session = data ? data as ISession: null
+
+    const getBorderColor = () => {
+        if (!session) {
+            return '#fff'
+        }
+        if(session.user.isSuperuser){
+            return 'blue'
+        }
+        if(session.user.isStaff){
+            return 'violet'
+        }
+        if(session.user.isActive){
+            return 'green'
+        }else{
+            return 'red'
+        }
+    }
+
+    const formatDate = (date: string) => {
+
+        const dateFormat = new Date(date)
+        return dateFormat.toLocaleString()
+
+    }
+
     return (
         <Layout className={ styles['container'] }>
-            <MenuAdmin selected={ ['sub2', 'report'] } />
+            <MenuAdmin selected={ ['user'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />
@@ -32,16 +58,48 @@ const User = () => {
                                 shape="circle"
                                 size="large"
                                 icon={ <UserOutlined /> }
-                                src={ data?.user?.image }
+                                src={ session?.user?.image }
+                                style={{
+                                    border: `1px solid ${getBorderColor()}`,
+                                    marginBottom: '10px',
+                                }}
                             />
                             <Title level={ 3 }>Nome</Title>
+                            <Paragraph>{ session?.user?.name ?? "" }</Paragraph>
+                            <Title level={ 3 }>Primeiro nome</Title>
                             <Paragraph
                                 editable={{
                                     tooltip: 'Editar nome'
                                 }}
-                            >{ data?.user?.name ?? "" }</Paragraph>
+                            >{ session?.user?.firstName ?? "" }</Paragraph>
+                            <Title level={ 3 }>Ultimo nome</Title>
+                            <Paragraph
+                                editable={{
+                                    tooltip: 'Editar nome'
+                                }}
+                            >{ session?.user?.lastName ?? "" }</Paragraph>
+                            <Title level={ 3 }>Username</Title>
+                            <Paragraph
+                                editable={{
+                                    tooltip: 'Editar nome'
+                                }}
+                            >{ session?.user?.username ?? "" }</Paragraph>
                             <Title level={ 3 }>E-mail</Title>
-                            <Paragraph>{ data?.user?.email ?? "" }</Paragraph>
+                            <Paragraph>{ session?.user?.email ?? "" }</Paragraph>
+                            <Title level={ 3 }>Ultimo login</Title>
+                            <Paragraph
+                                editable={{
+                                    tooltip: 'Editar nome'
+                                }}
+                            >
+                                { session?.user?.lastLogin ? formatDate(session.user.lastLogin) : "" }
+                                </Paragraph>
+                            <Title level={ 3 }>Data cadastrada</Title>
+                            <Paragraph
+                                editable={{
+                                    tooltip: 'Editar nome'
+                                }}
+                            >{ session?.user?.dateJoined ? formatDate(session.user.dateJoined) : "" }</Paragraph>
                         </div>
                     </Layout>
                 </Content>

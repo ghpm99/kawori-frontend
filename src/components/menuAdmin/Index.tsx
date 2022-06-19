@@ -1,6 +1,12 @@
 
 import {
-	DesktopOutlined, HddOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined
+	DesktopOutlined,
+	HddOutlined,
+	HomeOutlined,
+	SettingOutlined,
+	SnippetsOutlined,
+	UserOutlined,
+	AppstoreOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import Link from 'next/link';
@@ -25,60 +31,68 @@ function MenuAdmin(props: { selected: string[] }) {
 				selectedKeys={ props.selected }
 				mode="inline"
 			>
-				<Menu.Item key="1" icon={ <HomeOutlined /> }>
+				<Menu.Item key="home" icon={ <HomeOutlined /> }>
 					<Link href={ '/' }>
 						Inicio
 					</Link>
 				</Menu.Item>
 				{ context.status === 'authenticated' && (
 					<>
-						<Menu.Item icon={<UserOutlined />} title='Usuario'>
+						<Menu.Item key='user' icon={ <UserOutlined /> } title='Usuario'>
 							<Link href={ '/admin/user' }>
 								Conta
 							</Link>
 						</Menu.Item>
-						<Menu.SubMenu key='' icon={ <DesktopOutlined /> } title='Remoto'>
-							<Menu.Item key="2" icon={ <DesktopOutlined /> }>
-								<Link href={ '/admin/controller/command' }>
-									Comando
-								</Link>
-							</Menu.Item>
-							<Menu.Item key="3" icon={ <DesktopOutlined /> }>
-								<Link href={ '/admin/controller/remote' }>
-									Remoto
-								</Link>
-							</Menu.Item>
-							<Menu.Item key="6" icon={ <HddOutlined /> }>
-								<Link href={ '/admin/controller/status' }>
-									Status
-								</Link>
-							</Menu.Item>
-						</Menu.SubMenu>
-						<Menu.SubMenu key='sub2' icon={ <SnippetsOutlined /> } title='Financeiro'>
-							<Menu.Item key='overview'>
-								<Link href={ '/admin/financial/overview' }>
-									Overview
-								</Link>
-							</Menu.Item>
-							<Menu.Item key='payments'>
-								<Link href={ '/admin/financial/payments' }>
-									Pagamentos
-								</Link>
-							</Menu.Item>
-							<Menu.Item key='report'>
-								<Link href={ '/admin/financial/report' }>
-									Relatorio por mês
-								</Link>
-							</Menu.Item>
-						</Menu.SubMenu>
-						<Menu.Item key="7" icon={ <SettingOutlined /> }>
-							<Link href={ '/admin/server' }>
-								Servidor
+						<Menu.Item key='facetexture' icon={ <AppstoreOutlined /> }>
+							<Link href={ '/admin/facetexture' }>
+								Facetexture
 							</Link>
 						</Menu.Item>
+						{ context.data.user.isSuperuser && (
+							<>
+								<Menu.SubMenu key='controller' icon={ <DesktopOutlined /> } title='Remoto'>
+									<Menu.Item key="command" icon={ <DesktopOutlined /> }>
+										<Link href={ '/admin/controller/command' }>
+											Comando
+										</Link>
+									</Menu.Item>
+									<Menu.Item key="remote" icon={ <DesktopOutlined /> }>
+										<Link href={ '/admin/controller/remote' }>
+											Remoto
+										</Link>
+									</Menu.Item>
+									<Menu.Item key="status" icon={ <HddOutlined /> }>
+										<Link href={ '/admin/controller/status' }>
+											Status
+										</Link>
+									</Menu.Item>
+								</Menu.SubMenu>
+								<Menu.SubMenu key='financial' icon={ <SnippetsOutlined /> } title='Financeiro'>
+									<Menu.Item key='overview'>
+										<Link href={ '/admin/financial/overview' }>
+											Overview
+										</Link>
+									</Menu.Item>
+									<Menu.Item key='payments'>
+										<Link href={ '/admin/financial/payments' }>
+											Pagamentos
+										</Link>
+									</Menu.Item>
+									<Menu.Item key='report'>
+										<Link href={ '/admin/financial/report' }>
+											Relatorio por mês
+										</Link>
+									</Menu.Item>
+								</Menu.SubMenu>
+								<Menu.Item key="server" icon={ <SettingOutlined /> }>
+									<Link href={ '/admin/server' }>
+										Servidor
+									</Link>
+								</Menu.Item>
+							</>
+						) }
 					</>
 				) }
-
 			</Menu>
 		</Sider>
 	)
