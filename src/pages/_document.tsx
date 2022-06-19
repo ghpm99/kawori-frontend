@@ -4,23 +4,22 @@ import Document, {
 	Head, Html, Main,
 	NextScript
 } from "next/document";
-
 import React from "react";
 
 React.useLayoutEffect = React.useEffect;
 
 class MyDocument extends Document {
+
 	static async getInitialProps(ctx: DocumentContext) {
 		const initialProps = await Document.getInitialProps(ctx);
 		return { ...initialProps };
 	}
 
 	render() {
+
 		return (
 			<Html>
-				<Head>
-					<title>Kawori</title>
-				</Head>
+				<Head title='Kawori' />
 				<body>
 					<Main />
 					<NextScript />
