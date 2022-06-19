@@ -6,8 +6,6 @@ const useMenuHeader = () => {
 
     const { data, status } = useSession()
 
-    console.log(data, status)
-
     return {
         status,
         data,

@@ -85,7 +85,6 @@ export default function PaymentDetails() {
 
     const payoff = (event) => {
         payoffPaymentService(financialStore.data.id).then(data => {
-            console.log(data)
             dispatch(fetchPaymentDetails(financialStore.data.id))
         })
     }

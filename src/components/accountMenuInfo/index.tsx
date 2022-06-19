@@ -7,17 +7,19 @@ const AccountMenuInfo = (props: IAccountMenuInfoProps) => {
 
     return (
         <div className={ styles['dropdown'] }>
-            <span>
-                <FontAwesomeIcon
-                icon={ faUser }
-                style={{
-                    marginRight: '6px',
-                }}
-                />
-                { props.user.name }
-            </span>
-            <div className={styles['dropdown-content']}>
-                <Link href={'/admin/user'}>
+            <Link href={ '/admin/user' }>
+                <span>
+                    <FontAwesomeIcon
+                        icon={ faUser }
+                        style={ {
+                            marginRight: '6px',
+                        } }
+                    />
+                    { props.user.name }
+                </span>
+            </Link>
+            <div className={ styles['dropdown-content'] }>
+                <Link href={ '/admin/user' }>
                     <p>Conta</p>
                 </Link>
                 <p>Sair</p>

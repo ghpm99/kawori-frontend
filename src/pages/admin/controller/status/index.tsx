@@ -2,11 +2,11 @@
 import { Breadcrumb, Layout, Progress, Typography } from 'antd';
 import Pusher from 'react-pusher';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingPage from '../../../components/loadingPage/Index';
-import LoginHeader from '../../../components/loginHeader/Index';
-import MenuAdmin from '../../../components/menuAdmin/Index';
-import { setCpuAndMemoryValue } from '../../../store/features/status/Index';
-import { RootState } from '../../../store/store';
+import LoadingPage from '../../../../components/loadingPage/Index';
+import LoginHeader from '../../../../components/loginHeader/Index';
+import MenuAdmin from '../../../../components/menuAdmin/Index';
+import { setCpuAndMemoryValue } from '../../../../store/features/status/Index';
+import { RootState } from '../../../../store/store';
 import S from './Status.module.css';
 
 

@@ -60,11 +60,21 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 	const callbacks = {
 		async session({ session, user, token }) {
 			session.accessToken = token.userSession
+			session.user.isStaff = token.isStaff
+			session.user.isActive = token.isActive
+			session.user.isSuperuser = token.isSuperuser
+			session.user.lastLogin = token.lastLogin
+			session.user.dateJoined = token.dateJoined
 			return session
 		},
 		async jwt({ token, user, account, profile, isNewUser }) {
 			if (user !== undefined) {
 				token.userSession = user.token
+				token.isStaff = user.is_staff
+				token.isActive = user.is_active
+				token.isSuperuser = user.is_superuser
+				token.lastLogin = user.last_login
+				token.dateJoined = user.date_joined
 			}
 			return token
 		},

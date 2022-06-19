@@ -1,12 +1,21 @@
 
 import { Button, Card, Checkbox, Form, Input, Layout, Typography } from 'antd';
 import { signIn } from 'next-auth/react';
+import Particles from 'react-tsparticles';
 import MenuHeader from '../../components/menuHeader';
+import { loadFull } from 'tsparticles';
+import { Engine, ISourceOptions } from 'tsparticles-engine';
+import particlesOptions from '../../../public/particles.json';
+import { useCallback } from 'react';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 export default function LoginPage(props) {
+
+    const particlesInit = useCallback(async (engine: Engine) => {
+        await loadFull(engine);
+      }, []);
 
     const onFinish = (values: any) => {
         signIn('credentials', { username: values.username, password: values.password, callbackUrl: '/' })
@@ -73,7 +82,7 @@ export default function LoginPage(props) {
                     </div>
                 </Layout>
             </Content>
-
+            <Particles options={ particlesOptions as ISourceOptions } init={ particlesInit } />
         </Layout>
 
     )
