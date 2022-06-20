@@ -2,6 +2,7 @@ import { ConfigProvider } from 'antd'
 import 'antd/dist/antd.css'
 import ptBr from 'antd/lib/locale/pt_BR'
 import { SessionProvider, useSession } from 'next-auth/react'
+import Head from 'next/head'
 import { Provider } from 'react-redux'
 import '../../styles/globals.css'
 import LoadingPage from '../components/loadingPage/Index'
@@ -14,6 +15,9 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   return (
     <SessionProvider session={ session }>
       <ConfigProvider locale={ ptBr }>
+        <Head>
+          <title>Kawori</title>
+        </Head>
         { Component.auth ? (
           Component.pusher ? (
             <Auth>
