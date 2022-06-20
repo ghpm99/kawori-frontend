@@ -6,6 +6,7 @@ import {
     DatePicker,
     InputNumber,
     Layout,
+    message,
     Select,
     Typography
 } from 'antd'
@@ -38,6 +39,8 @@ const { Option } = Select
 
 export default function PaymentDetails() {
 
+    const msgRef = 'payment-details-msg'
+
     const router = useRouter()
     const { id } = router.query
 
@@ -54,7 +57,12 @@ export default function PaymentDetails() {
     const date = new Date(financialStore.data?.date).toLocaleDateString()
 
     const save = (event) => {
-        savePaymentDetailService(id, financialStore.data)
+        savePaymentDetailService(id, financialStore.data).then(response => {
+            message.success({
+                content: response.msg,
+                key: msgRef
+            })
+        })
     }
 
     const changeName = (event) => {
@@ -85,6 +93,10 @@ export default function PaymentDetails() {
 
     const payoff = (event) => {
         payoffPaymentService(financialStore.data.id).then(data => {
+            message.success({
+                content: data.msg,
+                key: msgRef
+            })
             dispatch(fetchPaymentDetails(financialStore.data.id))
         })
     }
