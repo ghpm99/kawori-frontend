@@ -19,7 +19,7 @@ class MyDocument extends Document {
 
 		return (
 			<Html>
-				<Head title='Kawori' />
+				<Head />
 				<body>
 					<Main />
 					<NextScript />
