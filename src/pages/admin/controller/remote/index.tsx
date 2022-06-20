@@ -25,7 +25,7 @@ const { TextArea } = Input;
 function RemotePage(props) {
 
     const [hook, setHook] = useState({
-        src: 'https://rmp-server-dev.herokuapp.com/media/screenshot/screenshot.png'
+        src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png`
     })
 
     const [key, setKey] = useState('')
