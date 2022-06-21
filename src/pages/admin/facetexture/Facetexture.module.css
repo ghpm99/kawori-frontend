@@ -9,3 +9,7 @@
 .header {
 	padding: 0;
 }
+
+.characters-container {
+	display: grid;
+}
