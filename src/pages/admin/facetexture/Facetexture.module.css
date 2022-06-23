@@ -10,6 +10,33 @@
 	padding: 0;
 }
 
+.characters {
+	display: flex;
+	margin: 16px;
+	padding: 8px;
+}
+
 .characters-container {
-	display: grid;
+	display: flex;
+	flex-wrap: wrap;
+	width: 875px;
+}
+
+.character {
+	width: 125px;
+	height: 160px;
+}
+
+.character-info {
+	margin: 16px;
+	padding: 8px;
+}
+
+.include-characters {
+	width: 125px;
+	height: 160px;
+	background-color: black;
+	font-size: 72px;
+	text-align: center;
+	color: white;
 }
