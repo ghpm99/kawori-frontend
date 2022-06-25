@@ -20,20 +20,57 @@ function FaceTexture() {
 
     const [classBdo, setClasBdo] = useState([])
     const [selected, setSelected] = useState<Facetexture>()
+    const [loading, setLoading] = useState(true)
 
     const facetexture = useLiveQuery(
         () => db.facetexture.toArray()
     )
 
     useEffect(() => {
-        fetchFacetextureService().then(response => {
-            console.log(response)
+        setLoading(true)
+        fetchFaceTextureClassService().then(response => {
+
+            setClasBdo(response.class)
+            fetchFacetextureService().then(response => {
+                (response.characters as Facetexture[]).forEach(
+                    facetexture => updateFacetextureLocal(facetexture)
+                )
+            }).finally(() => {
+                setLoading(false)
+            })
         })
 
-        fetchFaceTextureClassService().then(response => {
-            setClasBdo(response.class)
-        })
     }, [])
+
+    const updateFacetextureLocal = async (facetexture: Facetexture) => {
+        const facetextureLocal = await db.facetexture.where('id').equals(facetexture.id).first()
+
+        if (!facetextureLocal) {
+            includeNewCharacterLocal(facetexture)
+        } else {
+            facetexture.image = facetextureLocal.image
+            updateCharacterLocal(facetexture)
+        }
+    }
+
+    const includeNewCharacterLocal = async (facetexture: Facetexture) => {
+
+        const classObject = classBdo.find(
+            item => item.id === facetexture.class
+        )
+        const blob = await fetch(`/facetexture/${classObject.name ?? 'default'}.png`).then(r => r.blob())
+
+        await db.facetexture.add({
+            ...facetexture,
+            image: blob,
+        })
+    }
+
+    const updateCharacterLocal = (facetexture: Facetexture) => {
+        db.facetexture.update(facetexture.id, {
+            ...facetexture
+        })
+    }
 
     const updateFacetexture = async () => {
         updateFacetextureService({
@@ -75,7 +112,7 @@ function FaceTexture() {
         )
         const blob = await fetch(`/facetexture/${classObject.name}.png`).then(r => r.blob())
 
-        const newImage = facetexture.name === 'default.png'? blob : facetexture.image
+        const newImage = facetexture.name === 'default.png' ? blob : facetexture.image
 
         setSelected(prev => ({
             ...prev,
@@ -103,6 +140,14 @@ function FaceTexture() {
     const setSelectedCharacter = async (id) => {
         const facetexture = await db.facetexture.where('id').equals(id).first()
         setSelected(facetexture)
+    }
+
+    const updateImageSelectedCharacter = (id, file) => {
+        console.log(id, file)
+    }
+
+    if(loading){
+        return <LoadingPage />
     }
 
     return (
@@ -185,6 +230,7 @@ function FaceTexture() {
                                     <div>
                                         <Upload
                                             listType='picture-card'
+                                            beforeUpload={(file) => updateImageSelectedCharacter(selected.id, file)}
                                         >
                                             <div>
                                                 <PlusOutlined />
