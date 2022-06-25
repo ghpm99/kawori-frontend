@@ -1,33 +1,33 @@
 
-import { Breadcrumb, Checkbox, Image, Layout, message, Select } from 'antd';
+import { Breadcrumb, Checkbox, Image, Layout, message, Select, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import LoadingPage from '../../../components/loadingPage/Index';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
 import { fetchFaceTextureClassService, fetchFacetextureService, updateFacetextureService } from '../../../services/facetextureService';
 import Styles from './Facetexture.module.css';
+import { db, Facetexture } from '../../../util/db';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 
 const { Header, Content } = Layout;
 
-interface ICharacter {
-    image: string
-    name: string
-    class: string
-    show: boolean
-}
 
 function FaceTexture() {
 
     const messageRef = 'facetexture-message-ref'
 
-    const [characters, setCharacters] = useState<ICharacter[]>([])
     const [classBdo, setClasBdo] = useState([])
-    const [selectedCharacter, setSelectedCharacter] = useState<number>()
+    const [selected, setSelected] = useState<Facetexture>()
+
+    const facetexture = useLiveQuery(
+        () => db.facetexture.toArray()
+    )
 
     useEffect(() => {
         fetchFacetextureService().then(response => {
-            setCharacters(response.characters)
+            console.log(response)
         })
 
         fetchFaceTextureClassService().then(response => {
@@ -35,9 +35,9 @@ function FaceTexture() {
         })
     }, [])
 
-    const updateFacetexture = () => {
+    const updateFacetexture = async () => {
         updateFacetextureService({
-            characters: characters
+            characters: await db.facetexture.toArray()
         }).then(response => {
             message.success({
                 content: response.msg,
@@ -52,57 +52,57 @@ function FaceTexture() {
         })
     }
 
-    const includeNewCharacteres = () => {
-        setCharacters((prev) => [
-            ...prev,
-            {
-                image: 'default.png',
-                name: '',
-                class: '',
-                show: false,
-            }
-        ])
+    const includeNewCharacteres = async () => {
+
+        const blob = await fetch('/facetexture/default.png').then(r => r.blob())
+
+        const id = await db.facetexture.add({
+            name: 'default.png',
+            order: 0,
+            show: true,
+            image: blob,
+        })
 
         updateFacetexture()
     }
 
-    const updateCharacterClass = (index, value) => {
+    const updateCharacterClass = async (id, value) => {
 
-        const charactersTemp = [...characters]
+        const facetexture = await db.facetexture.where('id').equals(id).first()
 
-        if (!charactersTemp[index]) {
-            return
-        }
-        charactersTemp[index].class = value
-
-        charactersTemp[index].image = getClassImage(value)
-
-        setCharacters(charactersTemp)
-
-        updateFacetexture()
-    }
-
-    const getClassImage = (value) => {
         const classObject = classBdo.find(
             item => item.id === value
         )
+        const blob = await fetch(`/facetexture/${classObject.name}.png`).then(r => r.blob())
 
-        return `${classObject.name}.png`
+        const newImage = facetexture.name === 'default.png'? blob : facetexture.image
+
+        setSelected(prev => ({
+            ...prev,
+            class: value,
+            image: newImage,
+        }))
+        db.facetexture.update(id, {
+            class: value,
+            image: newImage,
+        })
+        updateFacetexture()
     }
 
-    const updateCharacterShowClass = (index, event) => {
-
-        const charactersTemp = [...characters]
-
-        if (!charactersTemp[index]) {
-            return
-        }
-
-        charactersTemp[index].show = event.target.checked
-
-        setCharacters(charactersTemp)
-
+    const updateCharacterShowClass = (id, event) => {
+        setSelected(prev => ({
+            ...prev,
+            show: event.target.checked
+        }))
+        db.facetexture.update(id, {
+            show: event.target.checked
+        })
         updateFacetexture()
+    }
+
+    const setSelectedCharacter = async (id) => {
+        const facetexture = await db.facetexture.where('id').equals(id).first()
+        setSelected(facetexture)
     }
 
     return (
@@ -121,18 +121,22 @@ function FaceTexture() {
                         <div>
                             <h1>Personagens</h1>
                             <div className={ Styles['characters-container'] }>
-                                { characters.map((character, index) => (
+                                { facetexture?.map((character, index) => (
                                     <div
                                         key={ `character-${index}` }
                                         className={ Styles['character'] }
-                                        onClick={ (event) => setSelectedCharacter(index) }
+                                        onClick={ (event) => setSelectedCharacter(character.id) }
                                     >
-                                        <img
-                                            src={ `/facetexture/${character?.image}` }
-                                            alt={ character.name }
-                                            width={ 125 }
-                                            height={ 160 }
-                                        />
+                                        {
+                                            character.image &&
+                                            <img
+                                                src={ URL.createObjectURL(character.image) }
+                                                alt={ character.name }
+                                                width={ 125 }
+                                                height={ 160 }
+                                            />
+                                        }
+
                                     </div>
                                 )) }
                                 <div
@@ -144,38 +148,52 @@ function FaceTexture() {
                             </div>
                         </div>
                         <div className={ Styles['character-info'] }>
-                            <div>
-                                <div>Propriedades</div>
-                                <Image
-                                    src={ `/facetexture/${characters[selectedCharacter]?.image}` }
-                                    alt={ characters[selectedCharacter]?.name }
-                                    width={ 125 }
-                                    height={ 160 }
-                                />
-                            </div>
-                            <div>
-                                <Select
-                                    options={ classBdo.map(
-                                        item => ({
-                                            value: item.id,
-                                            label: item.name
-                                        })
-                                    ) }
-                                    value={ characters[selectedCharacter]?.class }
-                                    style={ {
-                                        width: '125px'
-                                    } }
-                                    onChange={ (value) => updateCharacterClass(selectedCharacter, value) }
-                                />
-                            </div>
-                            <div>
-                                <Checkbox
-                                    checked={characters[selectedCharacter]?.show}
-                                    onChange={(e) => updateCharacterShowClass(selectedCharacter, e)}
-                                >
-                                    Mostrar icone da classe
-                                </Checkbox>
-                            </div>
+                            { selected &&
+                                <>
+                                    <div>
+                                        <div>Propriedades</div>
+                                        <Image
+                                            src={ URL.createObjectURL(selected.image) }
+                                            alt={ selected?.name }
+                                            width={ 125 }
+                                            height={ 160 }
+                                        />
+                                    </div>
+                                    <div>
+                                        <Select
+                                            options={ classBdo.map(
+                                                item => ({
+                                                    value: item.id,
+                                                    label: item.name
+                                                })
+                                            ) }
+                                            value={ selected?.class }
+                                            style={ {
+                                                width: '125px'
+                                            } }
+                                            onChange={ (value) => updateCharacterClass(selected.id, value) }
+                                        />
+                                    </div>
+                                    <div>
+                                        <Checkbox
+                                            checked={ selected?.show }
+                                            onChange={ (e) => updateCharacterShowClass(selected.id, e) }
+                                        >
+                                            Mostrar icone da classe
+                                        </Checkbox>
+                                    </div>
+                                    <div>
+                                        <Upload
+                                            listType='picture-card'
+                                        >
+                                            <div>
+                                                <PlusOutlined />
+                                                <div style={ { marginTop: 8 } }>Upload</div>
+                                            </div>
+                                        </Upload>
+                                    </div>
+                                </>
+                            }
                         </div>
                     </div>
                     <div>
