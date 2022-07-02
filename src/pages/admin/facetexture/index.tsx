@@ -10,10 +10,9 @@ import Styles from './Facetexture.module.css';
 import { db, Facetexture } from '../../../util/db';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { RcFile } from 'antd/lib/upload';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext, Draggable, Droppable, resetServerContext } from 'react-beautiful-dnd'
 
 const { Header, Content } = Layout;
-
 
 function FaceTexture() {
 
@@ -94,7 +93,9 @@ function FaceTexture() {
 
         const blob = await fetch('/facetexture/default.png').then(r => r.blob())
 
-        const lastOrder = ((await db.facetexture.orderBy('order').last())?.order ?? 0) + 1
+        const lastFacetexture = await db.facetexture.orderBy('order').last()
+
+        const lastOrder = lastFacetexture ? lastFacetexture.order + 1 : 0
 
         const id = await db.facetexture.add({
             name: 'default.png',
@@ -165,39 +166,22 @@ function FaceTexture() {
     }
 
     const reorderCharacter = async (facetexture: Facetexture, newOrder: number) => {
+        console.log('reorderCharacter', facetexture, newOrder)
         if (newOrder <= 0) {
             return
         }
-        //source = id: 15 order:4
-        //destination = id:16 order:5
-        // 5 > 4
-        console.log('source', facetexture.order)
-        console.log('destination', newOrder)
-        if (newOrder > facetexture.order) {
-            const facetexturesMiddle = await db.facetexture.where('order').between(facetexture.order, newOrder + 1).toArray()
-            console.log('middle', facetexturesMiddle)
-            for (const facetextureMiddle of facetexturesMiddle) {
-                console.log(facetextureMiddle.order)
-                db.facetexture.update(facetextureMiddle.id, {
-                    order: facetextureMiddle.order - 1
-                })
-            }
-        }
 
-        const facetexturesAfter = await db.facetexture.where('order').aboveOrEqual(newOrder).toArray()
-        console.log('after', facetexturesAfter)
+        const facetextures = await db.facetexture.orderBy('order').toArray()
+        const newFacetextureList = facetextures.filter(item => item.id !== facetexture.id)
+        newFacetextureList.splice(newOrder, 0, facetexture)
 
-        for (const facetextureAfter of facetexturesAfter) {
-            console.log(facetextureAfter.order)
-            db.facetexture.update(facetextureAfter.id, {
-                order: facetextureAfter.order + 1
+        newFacetextureList.forEach(async (item, index) => {
+            await db.facetexture.update(item.id, {
+                order: index
             })
-        }
-        console.log('destination', newOrder)
-        db.facetexture.update(facetexture.id, {
-            order: newOrder
         })
 
+        updateFacetexture()
     }
 
     const onDragEnd = async (result, provider) => {
@@ -205,18 +189,39 @@ function FaceTexture() {
         if (!result.destination) {
             return
         }
+        const indexSource = result.source.index + (parseInt(result.source.droppableId) * 7)
+        const indexDestination = result.destination.index + (parseInt(result.destination.droppableId) * 7)
+        console.log(indexSource, indexDestination)
 
-        const facetextureSource = await db.facetexture.where('id').equals(result.source.index).first()
-        const facetextureDestination = await db.facetexture.where('id').equals(result.destination.index).first()
+        const facetextureSource = await db.facetexture.where('order').equals(indexSource).first()
+        const facetextureDestination = await db.facetexture.where('order').equals(indexDestination).first()
 
         reorderCharacter(facetextureSource, facetextureDestination.order)
-
         updateFacetexture()
     }
 
     if (loading) {
         return <LoadingPage />
     }
+
+    function listToMatrix(list, elementsPerSubArray) {
+        var matrix = [], i, k;
+
+        for (i = 0, k = -1; i < list.length; i++) {
+            if (i % elementsPerSubArray === 0) {
+                k++;
+                matrix[k] = [];
+            }
+
+            matrix[k].push(list[i]);
+        }
+
+        return matrix;
+    }
+
+    const facetextureMatrix = listToMatrix(facetexture, 7)
+
+    console.log(facetextureMatrix)
 
     return (
         <Layout className={ Styles.container }>
@@ -234,51 +239,54 @@ function FaceTexture() {
                         <div>
                             <h1>Personagens</h1>
                             <DragDropContext onDragEnd={ onDragEnd }>
-                                <Droppable
-                                    droppableId='droppable'
-                                    type='CHARACTERS'
-                                    direction='horizontal'
-                                >
-                                    { (provided, snapshot) => (
-                                        <div
-                                            { ...provided.droppableProps }
-                                            ref={ provided.innerRef }
-                                            className={ Styles['characters-container'] }
-                                        >
-                                            { facetexture?.map((character, index) => (
-                                                <Draggable
-                                                    key={ character.id.toString() }
-                                                    draggableId={ character.id.toString() }
-                                                    index={ character.id }
+                                { facetextureMatrix.map((row, indexRow) => (
+                                    <Droppable
+                                        key={ indexRow }
+                                        droppableId={ `${indexRow}` }
+                                        direction='horizontal'
+                                    >
+                                        { (provided, snapshot) => (
+                                            <div
+                                                ref={ provided.innerRef }
+                                                className={ Styles['characters-container'] }
+                                                { ...provided.droppableProps }
+                                            >
+                                                { row.map((character, index) => (
+                                                    <Draggable
+                                                        key={ character.id.toString() }
+                                                        draggableId={ character.id.toString() }
+                                                        index={ index }
 
-                                                >
-                                                    { (provided, snapshot) => (
-                                                        <div
-                                                            ref={ provided.innerRef }
-                                                            { ...provided.dragHandleProps }
-                                                            { ...provided.draggableProps }
-                                                            key={ character.id.toString() }
-                                                            className={ Styles['character'] }
-                                                            onClick={ (event) => setSelectedCharacter(character.id) }
-                                                        >
-                                                            {
-                                                                character.image &&
-                                                                <img
-                                                                    src={ URL.createObjectURL(character.image) }
-                                                                    alt={ character.name }
-                                                                    width={ 125 }
-                                                                    height={ 160 }
-                                                                />
-                                                            }
-                                                        </div>
-                                                    ) }
+                                                    >
+                                                        { (provided, snapshot) => (
+                                                            <div
+                                                                ref={ provided.innerRef }
+                                                                { ...provided.dragHandleProps }
+                                                                { ...provided.draggableProps }
+                                                                key={ character.id.toString() }
+                                                                className={ Styles['character'] }
+                                                                onClick={ (event) => setSelectedCharacter(character.id) }
+                                                            >
+                                                                {
+                                                                    character.image &&
+                                                                    <img
+                                                                        src={ URL.createObjectURL(character.image) }
+                                                                        alt={ character.name }
+                                                                        width={ 125 }
+                                                                        height={ 160 }
+                                                                    />
+                                                                }
+                                                            </div>
+                                                        ) }
 
-                                                </Draggable>
-                                            )) }
-                                            { provided.placeholder }
-                                        </div>
-                                    ) }
-                                </Droppable>
+                                                    </Draggable>
+                                                )) }
+                                                { provided.placeholder }
+                                            </div>
+                                        ) }
+                                    </Droppable>
+                                )) }
+
                             </DragDropContext>
                             <div
                                 className={ Styles['include-characters'] }
@@ -390,6 +398,11 @@ FaceTexture.auth = {
     role: 'user',
     loading: <LoadingPage />,
     unauthorized: "/signin",
+}
+
+FaceTexture.getInitialProps = async (ctx) => {
+    resetServerContext()
+    return {}
 }
 
 export default FaceTexture
