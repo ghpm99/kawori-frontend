@@ -17,8 +17,7 @@
 }
 
 .characters-container {
-	display: grid;
-	grid-template-columns: auto auto auto auto auto auto;
+	display: flex;
 	width: 875px;
 }
 
