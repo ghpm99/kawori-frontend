@@ -22,7 +22,7 @@ export class MySubClassedDexie extends Dexie {
 
   constructor() {
     super('kawori');
-    this.version(1).stores({
+    this.version(2).stores({
       facetexture: '++id, name, class, show, order, image', // Primary key and indexed props
       background: '++id, image'
     });
