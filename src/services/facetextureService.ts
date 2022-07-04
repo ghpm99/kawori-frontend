@@ -23,8 +23,10 @@ export async function updateFacetextureService(characters){
     return response.data
 }
 
-export async function fetchFaceTextureClassService() {
-    const response = await apiFacetexture.get('/class')
+export async function fetchFaceTextureClassService(params?) {
+    const response = await apiFacetexture.get('/class', {
+        params: params
+    })
     return response.data
 }
 

@@ -29,7 +29,7 @@ function FaceTexture() {
 
     const { data } = useSession()
 
-    const [classBdo, setClasBdo] = useState([])
+    const [classBdo, setClassBdo] = useState([])
     const [selected, setSelected] = useState<Facetexture>()
     const [loading, setLoading] = useState(true)
     const [background, setBackground] = useState<RcFile>()
@@ -43,7 +43,7 @@ function FaceTexture() {
         setLoading(true)
         fetchFaceTextureClassService().then(response => {
 
-            setClasBdo(response.class)
+            setClassBdo(response.class)
             fetchFacetextureService().then(response => {
                 (response.characters as Facetexture[]).forEach(
                     facetexture => updateFacetextureLocal(facetexture)
@@ -86,9 +86,7 @@ function FaceTexture() {
 
     const includeNewCharacterLocal = async (facetexture: Facetexture) => {
 
-        const classObject = classBdo.find(
-            item => item.id === facetexture.class
-        )
+        const classObject = (await fetchFaceTextureClassService({id: facetexture.class})).class[0]
         const blob = await fetch(`/facetexture/${classObject?.name ?? 'default'}.png`).then(r => r.blob())
 
         await db.facetexture.add({
