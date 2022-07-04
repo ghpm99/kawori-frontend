@@ -5,6 +5,14 @@ const apiFacetexture = axios.create({
     baseURL: '/api/facetexture'
 })
 
+const djangoApiFacetexture = axios.create({
+	baseURL: process.env.NEXT_PUBLIC_API_URL + '/admin-api/facetexture',
+	headers: {
+		'Access-Control-Allow-Origin': '*',
+	},
+    responseType:'blob',
+})
+
 export async function fetchFacetextureService(){
     const response = await apiFacetexture.get('/')
     return response.data
@@ -17,5 +25,33 @@ export async function updateFacetextureService(characters){
 
 export async function fetchFaceTextureClassService() {
     const response = await apiFacetexture.get('/class')
+    return response.data
+}
+
+export async function previewFacetextureService(token, args) {
+    const response = await djangoApiFacetexture.post('/preview',
+        {...args},
+        {
+			headers: {
+                Authorization: `Basic ${token}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		}
+    )
+
+    return response.data
+}
+
+export async function downloadFacetextureService(token, args) {
+    const response = await djangoApiFacetexture.post('/download',
+        {...args},
+        {
+			headers: {
+                Authorization: `Basic ${token}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		}
+    )
+    console.log(response)
     return response.data
 }

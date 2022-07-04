@@ -1,18 +1,25 @@
 
-import { Breadcrumb, Button, Checkbox, Image, Layout, message, Select, Upload } from 'antd';
 import { InboxOutlined, PlusOutlined } from '@ant-design/icons';
+import { Breadcrumb, Button, Checkbox, Image, Layout, message, Select, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
+import { RcFile } from 'antd/lib/upload';
+import Dragger from 'antd/lib/upload/Dragger';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import LoadingPage from '../../../components/loadingPage/Index';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
-import { fetchFaceTextureClassService, fetchFacetextureService, updateFacetextureService } from '../../../services/facetextureService';
-import Styles from './Facetexture.module.css';
+import {
+    downloadFacetextureService,
+    fetchFaceTextureClassService,
+    fetchFacetextureService,
+    previewFacetextureService,
+    updateFacetextureService
+} from '../../../services/facetextureService';
 import { db, Facetexture } from '../../../util/db';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { RcFile } from 'antd/lib/upload';
-import { DragDropContext, Draggable, Droppable, resetServerContext } from 'react-beautiful-dnd'
-import ImgCrop from 'antd-img-crop';
-import Dragger from 'antd/lib/upload/Dragger';
+import Styles from './Facetexture.module.css';
 
 const { Header, Content } = Layout;
 
@@ -20,10 +27,13 @@ function FaceTexture() {
 
     const messageRef = 'facetexture-message-ref'
 
+    const { data } = useSession()
+
     const [classBdo, setClasBdo] = useState([])
     const [selected, setSelected] = useState<Facetexture>()
     const [loading, setLoading] = useState(true)
     const [background, setBackground] = useState<RcFile>()
+    const [previewBackground, setPreviewBackground] = useState()
 
     const facetexture = useLiveQuery(
         () => db.facetexture.orderBy('order').toArray()
@@ -219,18 +229,18 @@ function FaceTexture() {
     }
 
     function listToMatrix(list, elementsPerSubArray) {
-        var matrix = [], i, k;
+        var matrix = [], i, k
 
         for (i = 0, k = -1; i < list.length; i++) {
             if (i % elementsPerSubArray === 0) {
                 k++;
-                matrix[k] = [];
+                matrix[k] = []
             }
 
-            matrix[k].push(list[i]);
+            matrix[k].push(list[i])
         }
 
-        return matrix;
+        return matrix
     }
 
     const facetextureMatrix = listToMatrix(facetexture, 7)
@@ -242,8 +252,26 @@ function FaceTexture() {
         setBackground(file)
     }
 
-    const processImage = () => {
+    const updatePreviewBackground = () => {
+        previewFacetextureService(data.accessToken, {
+            'background': background
+        }).then(response => {
+            setPreviewBackground(response)
+        })
+    }
 
+    const downloadFacetexture = () => {
+        downloadFacetextureService(data.accessToken, {
+            'background': background
+        }).then(response => {
+            console.log(response)
+            const downloadUrl = URL.createObjectURL(response)
+            let a = document.createElement("a")
+            a.href = downloadUrl
+            a.download = 'export'
+            document.body.appendChild(a)
+            a.click()
+        })
     }
 
     return (
@@ -302,7 +330,6 @@ function FaceTexture() {
                                                                     }
                                                                 </div>
                                                             ) }
-
                                                         </Draggable>
                                                     )) }
                                                     { provided.placeholder }
@@ -310,7 +337,6 @@ function FaceTexture() {
                                             ) }
                                         </Droppable>
                                     )) }
-
                                 </DragDropContext>
                                 <div
                                     className={ Styles['include-characters'] }
@@ -318,7 +344,6 @@ function FaceTexture() {
                                 >
                                     +
                                 </div>
-
                             </div>
                             <div className={ Styles['character-info'] }>
                                 { selected &&
@@ -420,6 +445,7 @@ function FaceTexture() {
                                             height: 640
                                         }
                                     } }
+                                    aspect={ 4 / 3 }
                                 >
                                     <Dragger
                                         fileList={ [] }
@@ -442,19 +468,21 @@ function FaceTexture() {
                         <div className={ Styles['preview-container'] }>
                             <h1>Preview</h1>
                             <div>
-                                <div
-                                    className={ Styles['preview-characters'] }
-                                    style={{backgroundImage: `url(${URL.createObjectURL(background)})`}}
-                                >
-                                    { facetexture.map((item, index) => (
-                                        <div
-                                            key={ index }
-                                            className={ Styles['preview-character'] }
-                                        />
-                                    )) }
-                                </div>
+                                <Button onClick={ updatePreviewBackground }>
+                                    Atualizar
+                                </Button>
+                                <Button onClick={ downloadFacetexture }>
+                                    Baixar
+                                </Button>
                             </div>
-
+                            <div>
+                                { previewBackground &&
+                                    <img
+                                        src={ URL.createObjectURL(previewBackground) }
+                                        alt={ 'preview-background' }
+                                    />
+                                }
+                            </div>
                         </div>
                     </div>
                 </Content>
