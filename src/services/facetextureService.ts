@@ -13,9 +13,28 @@ const djangoApiFacetexture = axios.create({
     responseType:'blob',
 })
 
+
+interface IFacetextureApi {
+    characters: IFacetextureCharacterApi[]
+}
+
+export interface IFacetextureCharacterApi {
+    id: number
+    name: string
+    class: {
+        id: number
+        name: string
+        abbreviation: string
+        class_image: string
+    }
+    show: boolean
+    order: number
+    image: {}
+}
+
 export async function fetchFacetextureService(){
     const response = await apiFacetexture.get('/')
-    return response.data
+    return response.data as IFacetextureApi
 }
 
 export async function updateFacetextureService(characters){
