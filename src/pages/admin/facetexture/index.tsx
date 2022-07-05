@@ -15,6 +15,7 @@ import {
     downloadFacetextureService,
     fetchFaceTextureClassService,
     fetchFacetextureService,
+    IFacetextureCharacterApi,
     previewFacetextureService,
     updateFacetextureService
 } from '../../../services/facetextureService';
@@ -45,7 +46,7 @@ function FaceTexture() {
 
             setClassBdo(response.class)
             fetchFacetextureService().then(response => {
-                (response.characters as Facetexture[]).forEach(
+                response.characters.forEach(
                     facetexture => updateFacetextureLocal(facetexture)
                 )
             }).finally(() => {
@@ -73,24 +74,26 @@ function FaceTexture() {
         setBackground(backgroundImage)
     }
 
-    const updateFacetextureLocal = async (facetexture: Facetexture) => {
+    const updateFacetextureLocal = async (facetexture: IFacetextureCharacterApi) => {
         const facetextureLocal = await db.facetexture.where('id').equals(facetexture.id).first()
 
         if (!facetextureLocal) {
             includeNewCharacterLocal(facetexture)
         } else {
-            facetexture.image = facetextureLocal.image
-            updateCharacterLocal(facetexture)
+            const facetextureUpdate = facetexture as unknown as Facetexture
+            facetextureUpdate.image = facetextureLocal.image
+            facetextureUpdate.class = facetexture.class.id
+            updateCharacterLocal(facetextureUpdate)
         }
     }
 
-    const includeNewCharacterLocal = async (facetexture: Facetexture) => {
+    const includeNewCharacterLocal = async (facetexture: IFacetextureCharacterApi) => {
 
-        const classObject = (await fetchFaceTextureClassService({id: facetexture.class})).class[0]
-        const blob = await fetch(`/facetexture/${classObject?.name ?? 'default'}.png`).then(r => r.blob())
+        const blob = await fetch(`/facetexture/${facetexture.class?.name ?? 'default'}.png`).then(r => r.blob())
 
         await db.facetexture.add({
             ...facetexture,
+            class: facetexture.class.id,
             image: blob,
         })
     }
