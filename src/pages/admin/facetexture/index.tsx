@@ -1,14 +1,16 @@
 
 import { InboxOutlined, PlusOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Checkbox, Image, Layout, message, Select, Upload } from 'antd';
+import { Breadcrumb, Button, Checkbox, Image, Layout, message, Progress, Select, Skeleton, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
+import SkeletonButton from 'antd/lib/skeleton/Button';
+import SkeletonImage from 'antd/lib/skeleton/Image';
+import SkeletonInput from 'antd/lib/skeleton/Input';
 import { RcFile } from 'antd/lib/upload';
 import Dragger from 'antd/lib/upload/Dragger';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import LoadingPage from '../../../components/loadingPage/Index';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
 import {
@@ -65,7 +67,7 @@ function FaceTexture() {
         if (background) {
             backgroundImage = background.image
         } else {
-            backgroundImage = await fetch(`/facetexture/background-default.jpg`).then(r => r.blob())
+            backgroundImage = await fetch(`/facetexture/default-background.png`).then(r => r.blob())
             await db.background.add({
                 image: backgroundImage
             })
@@ -274,6 +276,11 @@ function FaceTexture() {
             a.click()
         })
     }
+
+    message.success({
+        content: 'Carregado',
+        key: 'loading-msg'
+    })
 
     return (
         <Layout className={ Styles.container }>
@@ -493,11 +500,57 @@ function FaceTexture() {
     )
 }
 
+const LoadingPage = () => {
+    message.loading({
+        content: 'Carregando',
+        key: 'loading-msg'
+    })
+    return (
+        <Layout className={ Styles.container }>
+            <MenuAdmin selected={ ['facetexture'] } />
+            <Layout>
+                <Header className={ Styles.header } >
+                    <LoginHeader />
+                </Header>
+                <Content>
+                    <Breadcrumb className={ Styles.breadcrumb }>
+                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                        <Breadcrumb.Item>Facetexture</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <div className={ Styles['container-toolkit'] }>
+                        <div className={ Styles['characters'] }>
+                            <div>
+                                <h1>Personagens</h1>
+                                <SkeletonImage />
+                            </div>
+                            <div className={ Styles['character-info'] }>
+                                <Skeleton />
+                            </div>
+                        </div>
+                        <div className={ Styles['background-container'] }>
+                            <h1>Background</h1>
+                            <div>
+                                <SkeletonImage />
+                            </div>
+                        </div>
+                        <div className={ Styles['preview-container'] }>
+                            <h1>Preview</h1>
+                            <div>
+                                <SkeletonImage />
+                            </div>
+                        </div>
+                    </div>
+                </Content>
+            </Layout>
+        </Layout>
+    )
+}
+
 FaceTexture.auth = {
     role: 'user',
     loading: <LoadingPage />,
     unauthorized: "/signin",
 }
 
-
 export default FaceTexture
+
