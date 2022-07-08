@@ -1,26 +1,30 @@
 
 import { InboxOutlined, PlusOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Checkbox, Image, Layout, message, Progress, Select, Skeleton, Upload } from 'antd';
+import { Breadcrumb, Button, Checkbox, Image, Layout, message, Select, Skeleton, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import SkeletonButton from 'antd/lib/skeleton/Button';
 import SkeletonImage from 'antd/lib/skeleton/Image';
-import SkeletonInput from 'antd/lib/skeleton/Input';
 import { RcFile } from 'antd/lib/upload';
 import Dragger from 'antd/lib/upload/Dragger';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { useSelector } from 'react-redux';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
 import {
-    downloadFacetextureService,
-    fetchFaceTextureClassService,
-    fetchFacetextureService,
-    IFacetextureCharacterApi,
-    previewFacetextureService,
+    downloadFacetextureService, previewFacetextureService,
     updateFacetextureService
 } from '../../../services/facetextureService';
+import {
+    fetchFacetexture,
+    fetchFacetextureClass,
+    reorderCharacterReducer,
+    setSelectedFacetextureReducer,
+    updateBackgroundReducer,
+    updateFacetextureUrlReducer
+} from '../../../store/features/facetexture';
+import { RootState, useAppDispatch } from '../../../store/store';
 import { db, Facetexture } from '../../../util/db';
 import Styles from './Facetexture.module.css';
 
@@ -32,10 +36,9 @@ function FaceTexture() {
 
     const { data } = useSession()
 
-    const [classBdo, setClassBdo] = useState([])
-    const [selected, setSelected] = useState<Facetexture>()
-    const [loading, setLoading] = useState(true)
-    const [background, setBackground] = useState<RcFile>()
+    const dispatch = useAppDispatch()
+    const facetextureStore = useSelector((state: RootState) => state.facetexture)
+
     const [previewBackground, setPreviewBackground] = useState()
 
     const facetexture = useLiveQuery(
@@ -43,55 +46,57 @@ function FaceTexture() {
     )
 
     useEffect(() => {
-        setLoading(true)
-        fetchFaceTextureClassService().then(response => {
-
-            setClassBdo(response.class)
-            fetchFacetextureService().then(response => {
-                response.characters.forEach(
-                    facetexture => updateFacetextureLocal(facetexture)
-                )
-            }).finally(() => {
-                setLoading(false)
-            })
-        })
 
         updateBackground()
+
+        dispatch(fetchFacetextureClass())
+        dispatch(fetchFacetexture()).then(action => {
+            (action.payload as IFacetexture[]).map(item => {
+                updateFacetextureLocal(item)
+            })
+        })
 
     }, [])
 
     const updateBackground = async () => {
-        const background = await db.background.where('id').equals(1).first()
+        const background = await db.background.toArray()[0]
         let backgroundImage
 
         if (background) {
-            backgroundImage = background.image
+            backgroundImage = URL.createObjectURL(background.image)
         } else {
-            backgroundImage = await fetch(`/facetexture/default-background.png`).then(r => r.blob())
+            backgroundImage = '/facetexture/default-background.png'
+            const blob = await fetch(backgroundImage).then(r => r.blob())
             await db.background.add({
-                image: backgroundImage
+                image: blob
             })
         }
+        dispatch(updateBackgroundReducer(backgroundImage))
 
-        setBackground(backgroundImage)
     }
 
-    const updateFacetextureLocal = async (facetexture: IFacetextureCharacterApi) => {
+    const updateFacetextureLocal = async (facetexture: IFacetexture) => {
         const facetextureLocal = await db.facetexture.where('id').equals(facetexture.id).first()
 
         if (!facetextureLocal) {
             includeNewCharacterLocal(facetexture)
         } else {
-            const facetextureUpdate = facetexture as unknown as Facetexture
-            facetextureUpdate.image = facetextureLocal.image
-            facetextureUpdate.class = facetexture.class.id
+            dispatch(updateFacetextureUrlReducer({
+                id: facetextureLocal.id,
+                image: URL.createObjectURL(facetextureLocal.image)
+            }))
+            const facetextureUpdate: Facetexture = {
+                ...facetexture,
+                image: facetextureLocal.image,
+                class: facetexture.class.id
+            }
             updateCharacterLocal(facetextureUpdate)
         }
     }
 
-    const includeNewCharacterLocal = async (facetexture: IFacetextureCharacterApi) => {
+    const includeNewCharacterLocal = async (facetexture: IFacetexture) => {
 
-        const blob = await fetch(`/facetexture/${facetexture.class?.name ?? 'default'}.png`).then(r => r.blob())
+        const blob = await fetch(facetexture.image).then(r => r.blob())
 
         await db.facetexture.add({
             ...facetexture,
@@ -142,17 +147,13 @@ function FaceTexture() {
     const updateCharacterClass = async (id, value) => {
 
         const facetexture = await db.facetexture.where('id').equals(id).first()
-        const classObject = classBdo.find(
+        const classObject = facetextureStore.class.find(
             item => item.id === value
         )
         const blob = await fetch(`/facetexture/${classObject.name}.png`).then(r => r.blob())
         const newImage = facetexture.name === 'default.png' ? blob : facetexture.image
 
-        setSelected(prev => ({
-            ...prev,
-            class: value,
-            image: newImage,
-        }))
+
         db.facetexture.update(id, {
             class: value,
             image: newImage,
@@ -161,10 +162,7 @@ function FaceTexture() {
     }
 
     const updateCharacterShowClass = (id, event) => {
-        setSelected(prev => ({
-            ...prev,
-            show: event.target.checked
-        }))
+
         db.facetexture.update(id, {
             show: event.target.checked
         })
@@ -172,16 +170,10 @@ function FaceTexture() {
     }
 
     const setSelectedCharacter = async (id) => {
-        const facetexture = await db.facetexture.where('id').equals(id).first()
-        setSelected(facetexture)
+        dispatch(setSelectedFacetextureReducer(id))
     }
 
     const updateImageSelectedCharacter = (id, file: RcFile) => {
-        setSelected(prev => ({
-            ...prev,
-            name: file.name,
-            image: file,
-        }))
         db.facetexture.update(id, {
             name: file.name,
             image: file,
@@ -191,25 +183,19 @@ function FaceTexture() {
 
     const deleteCharacter = (id) => {
         db.facetexture.delete(id)
-        setSelected(undefined)
         updateFacetexture()
     }
 
-    const reorderCharacter = async (facetexture: Facetexture, newOrder: number) => {
+    const reorderCharacter = async (facetexture: IFacetexture, newOrder: number) => {
 
         if (newOrder <= 0) {
             return
         }
 
-        const facetextures = await db.facetexture.orderBy('order').toArray()
-        const newFacetextureList = facetextures.filter(item => item.id !== facetexture.id)
-        newFacetextureList.splice(newOrder, 0, facetexture)
-
-        newFacetextureList.forEach(async (item, index) => {
-            await db.facetexture.update(item.id, {
-                order: index
-            })
-        })
+        dispatch(reorderCharacterReducer({
+            facetexture: facetexture,
+            newOrder: newOrder
+        }))
 
         updateFacetexture()
     }
@@ -219,15 +205,16 @@ function FaceTexture() {
         if (!result.destination) {
             return
         }
+
         const indexSource = result.source.index + (parseInt(result.source.droppableId) * 7)
         const indexDestination = result.destination.index + (parseInt(result.destination.droppableId) * 7)
-        const facetextureSource = await db.facetexture.where('order').equals(indexSource).first()
-        const facetextureDestination = await db.facetexture.where('order').equals(indexDestination).first()
+        const facetextureSource = facetextureStore.facetexture.find(item => item.order === indexSource)
+        const facetextureDestination = facetextureStore.facetexture.find(item => item.order === indexDestination)
 
         reorderCharacter(facetextureSource, facetextureDestination.order)
     }
 
-    if (loading) {
+    if (facetextureStore.loading) {
         return <LoadingPage />
     }
 
@@ -246,16 +233,18 @@ function FaceTexture() {
         return matrix
     }
 
-    const facetextureMatrix = listToMatrix(facetexture, 7)
+    const facetextureMatrix = listToMatrix(facetextureStore.facetexture, 7)
 
     const uploadNewBackground = (file: RcFile) => {
         db.background.update(1, {
             image: file
         })
-        setBackground(file)
+        const backgroundUrl = URL.createObjectURL(file)
+        dispatch(updateBackgroundReducer(backgroundUrl))
     }
 
-    const updatePreviewBackground = () => {
+    const updatePreviewBackground = async () => {
+        const background = await db.background.where('id').equals(1).first()
         previewFacetextureService(data.accessToken, {
             'background': background
         }).then(response => {
@@ -263,7 +252,8 @@ function FaceTexture() {
         })
     }
 
-    const downloadFacetexture = () => {
+    const downloadFacetexture = async () => {
+        const background = await db.background.where('id').equals(1).first()
         downloadFacetextureService(data.accessToken, {
             'background': background
         }).then(response => {
@@ -281,6 +271,8 @@ function FaceTexture() {
         content: 'Carregado',
         key: 'loading-msg'
     })
+
+    const selectedFacetexture = facetextureStore.facetexture.find(item => item.id === facetextureStore.selected)
 
     return (
         <Layout className={ Styles.container }>
@@ -330,7 +322,7 @@ function FaceTexture() {
                                                                     {
                                                                         character.image &&
                                                                         <img
-                                                                            src={ URL.createObjectURL(character.image) }
+                                                                            src={ character.image }
                                                                             alt={ character.name }
                                                                             width={ 125 }
                                                                             height={ 160 }
@@ -354,36 +346,36 @@ function FaceTexture() {
                                 </div>
                             </div>
                             <div className={ Styles['character-info'] }>
-                                { selected &&
+                                { selectedFacetexture &&
                                     <>
                                         <div>
                                             <div>Propriedades</div>
                                             <Image
-                                                src={ URL.createObjectURL(selected.image) }
-                                                alt={ selected?.name }
+                                                src={ selectedFacetexture.image }
+                                                alt={ selectedFacetexture.name }
                                                 width={ 125 }
                                                 height={ 160 }
                                             />
                                         </div>
                                         <div>
                                             <Select
-                                                options={ classBdo.map(
+                                                options={ facetextureStore.class.map(
                                                     item => ({
                                                         value: item.id,
                                                         label: item.name
                                                     })
                                                 ) }
-                                                value={ selected?.class }
+                                                value={ selectedFacetexture?.class }
                                                 style={ {
                                                     width: '125px'
                                                 } }
-                                                onChange={ (value) => updateCharacterClass(selected.id, value) }
+                                                onChange={ (value) => updateCharacterClass(selectedFacetexture.id, value) }
                                             />
                                         </div>
                                         <div>
                                             <Checkbox
-                                                checked={ selected?.show }
-                                                onChange={ (e) => updateCharacterShowClass(selected.id, e) }
+                                                checked={ selectedFacetexture?.show }
+                                                onChange={ (e) => updateCharacterShowClass(selectedFacetexture.id, e) }
                                             >
                                                 Mostrar icone da classe
                                             </Checkbox>
@@ -391,7 +383,7 @@ function FaceTexture() {
                                         <div>
                                             <Upload
                                                 listType='picture-card'
-                                                beforeUpload={ (file) => updateImageSelectedCharacter(selected.id, file) }
+                                                beforeUpload={ (file) => updateImageSelectedCharacter(selectedFacetexture.id, file) }
                                                 fileList={ [] }
                                             >
                                                 <div>
@@ -403,7 +395,7 @@ function FaceTexture() {
                                         <div>
                                             <Button
                                                 type='primary'
-                                                onClick={ () => deleteCharacter(selected.id) }
+                                                onClick={ () => deleteCharacter(selectedFacetexture.id) }
                                             >
                                                 Deletar personagem
                                             </Button>
@@ -412,11 +404,7 @@ function FaceTexture() {
                                             <Button
                                                 type='primary'
                                                 onClick={ () => {
-                                                    reorderCharacter(selected, selected.order - 1)
-                                                    setSelected(prev => ({
-                                                        ...prev,
-                                                        order: prev.order - 1
-                                                    }))
+                                                    reorderCharacter(selectedFacetexture, selectedFacetexture.order - 1)
                                                 } }
                                             >
                                                 Mover para anterior
@@ -424,11 +412,8 @@ function FaceTexture() {
                                             <Button
                                                 type='primary'
                                                 onClick={ () => {
-                                                    reorderCharacter(selected, selected.order + 1)
-                                                    setSelected(prev => ({
-                                                        ...prev,
-                                                        order: prev.order + 1
-                                                    }))
+                                                    reorderCharacter(selectedFacetexture, selectedFacetexture.order + 1)
+
                                                 } }
                                             >
                                                 Mover para proximo
@@ -442,7 +427,7 @@ function FaceTexture() {
                             <h1>Background</h1>
                             <div>
                                 <img
-                                    src={ URL.createObjectURL(background) }
+                                    src={ facetextureStore.backgroundUrl }
                                     alt={ 'background' }
                                 />
                                 <ImgCrop

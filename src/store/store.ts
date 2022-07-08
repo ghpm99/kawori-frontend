@@ -2,6 +2,7 @@ import { Action, configureStore, ThunkDispatch } from '@reduxjs/toolkit'
 import statusReducer from './features/status/Index'
 import commonReducer from './features/common/Index'
 import financialReducer from './features/financial/Index'
+import facetextureReducer from './features/facetexture'
 import { useDispatch } from 'react-redux'
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
 		status: statusReducer,
 		common: commonReducer,
 		financial: financialReducer,
+		facetexture: facetextureReducer,
 	},
 })
 
