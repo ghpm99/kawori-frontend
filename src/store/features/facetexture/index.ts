@@ -83,14 +83,14 @@ export const facetextureSlice = createSlice({
 			state.edited = true
 		},
 		includeNewCharacterReducer: (state: IFacetextureState) => {
-			const lastFacetexture =
-				Math.max(...state.facetexture.map((item) => item.order)) + 1 ?? 1
+
+			const lastOrder = state.facetexture.length !== 0 ? Math.max(...state.facetexture.map((item) => item.order)) +1 : 0
 
 			state.facetexture.push({
-				id: lastFacetexture,
+				id: lastOrder,
 				image: '/media/classimage/default.png',
-				order: lastFacetexture,
-				name: `default${lastFacetexture}.png`,
+				order: lastOrder,
+				name: `default${lastOrder}.png`,
 				show: true,
 				class: state.class[0],
 				upload: false,
