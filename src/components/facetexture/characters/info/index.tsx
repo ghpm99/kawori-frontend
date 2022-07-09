@@ -2,6 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Image, Select, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import { useSelector } from 'react-redux'
+import { deleteCharacterReducer, updateCharacterClassReducer, updateCharacterShowClassReducer, updateFacetextureUrlReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import { db } from '../../../../util/db'
 import Styles from './Info.module.css'
@@ -10,30 +11,35 @@ const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const updateCharacterClass = async (id, value) => {
-
-        const facetexture = await db.facetexture.where('id').equals(id).first()
-        const classObject = facetextureStore.class.find(
-            item => item.id === value
-        )
+    const updateCharacterClass = (id, value) => {
+        dispatch(updateCharacterClassReducer({
+            id:id,
+            class: value
+        }))
     }
 
     const updateImageSelectedCharacter = (id, file: RcFile) => {
         db.facetexture.update(id, {
             name: file.name,
             image: file,
+            upload: true,
         })
+        dispatch(updateFacetextureUrlReducer({
+            id: id,
+            image: URL.createObjectURL(file),
+            upload: true,
+        }))
     }
 
     const deleteCharacter = (id) => {
-        db.facetexture.delete(id)
+        dispatch(deleteCharacterReducer(id))
     }
 
     const updateCharacterShowClass = (id, event) => {
-
-        db.facetexture.update(id, {
+        dispatch(updateCharacterShowClassReducer({
+            id: id,
             show: event.target.checked
-        })
+        }))
     }
 
     const selectedFacetexture = facetextureStore.facetexture.find(item => item.id === facetextureStore.selected)
@@ -59,7 +65,10 @@ const Info = () => {
                                     label: item.name
                                 })
                             ) }
-                            value={ selectedFacetexture?.class }
+                            value={{
+                                value: selectedFacetexture?.class.id,
+                                label: selectedFacetexture?.class.name
+                            }}
                             style={ {
                                 width: '125px'
                             } }

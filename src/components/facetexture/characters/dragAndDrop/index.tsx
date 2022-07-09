@@ -9,18 +9,6 @@ const DragAndDropCharacters = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const reorderCharacter = async (facetexture: IFacetexture, newOrder: number) => {
-
-        if (newOrder <= 0) {
-            return
-        }
-
-        dispatch(reorderCharacterReducer({
-            facetexture: facetexture,
-            newOrder: newOrder
-        }))
-    }
-
     const onDragEnd = async (result, provider) => {
 
         if (!result.destination) {
@@ -32,10 +20,17 @@ const DragAndDropCharacters = () => {
         const facetextureSource = facetextureStore.facetexture.find(item => item.order === indexSource)
         const facetextureDestination = facetextureStore.facetexture.find(item => item.order === indexDestination)
 
-        reorderCharacter(facetextureSource, facetextureDestination.order)
+        if (!facetextureDestination || facetextureDestination.order <= 0) {
+            return
+        }
+
+        dispatch(reorderCharacterReducer({
+            facetexture: facetextureSource,
+            newOrder: facetextureDestination.order
+        }))
     }
 
-    const setSelectedCharacter = async (id) => {
+    const setSelectedCharacter = (id) => {
         dispatch(setSelectedFacetextureReducer(id))
     }
 
