@@ -73,7 +73,7 @@ function FaceTexture() {
         if (background) {
             backgroundImage = URL.createObjectURL(background.image)
         } else {
-            backgroundImage = '/facetexture/default-background.png'
+            backgroundImage = '/media/default-background.png'
             const blob = await fetch(backgroundImage).then(r => r.blob())
             await db.background.add({
                 image: blob
