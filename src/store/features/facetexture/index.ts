@@ -26,11 +26,10 @@ export const fetchFacetexture = createAsyncThunk(
 	async () => {
 		const response = await fetchFacetextureService()
 		const characters = response.characters.map((item) => ({
-				...item,
-				image: item.class.class_image,
-				upload: false,
-			})
-)
+			...item,
+			image: item.class.class_image,
+			upload: false,
+		}))
 		return characters
 	}
 )
@@ -85,10 +84,11 @@ export const facetextureSlice = createSlice({
 		},
 		includeNewCharacterReducer: (state: IFacetextureState) => {
 			const lastFacetexture =
-				Math.max(...state.facetexture.map((item) => item.order)) + 1
+				Math.max(...state.facetexture.map((item) => item.order)) + 1 ?? 1
+
 			state.facetexture.push({
 				id: lastFacetexture,
-				image: '/facetexture/default.png',
+				image: '/media/classimage/default.png',
 				order: lastFacetexture,
 				name: `default${lastFacetexture}.png`,
 				show: true,
@@ -117,7 +117,9 @@ export const facetextureSlice = createSlice({
 			state: IFacetextureState,
 			action: PayloadAction<number>
 		) => {
-			let newFacetextureList = state.facetexture.filter(item => item.id !== action.payload)
+			let newFacetextureList = state.facetexture.filter(
+				(item) => item.id !== action.payload
+			)
 			newFacetextureList = newFacetextureList.map((item, index) => ({
 				...item,
 				order: index,
@@ -129,12 +131,16 @@ export const facetextureSlice = createSlice({
 			state: IFacetextureState,
 			action: PayloadAction<IUpdateCharacterShowClassAction>
 		) => {
-			state.facetexture.find(item => item.id === action.payload.id).show = action.payload.show
+			state.facetexture.find((item) => item.id === action.payload.id).show =
+				action.payload.show
 			state.edited = true
 		},
-		setFacetextureIsEdited: (state: IFacetextureState, action: PayloadAction<boolean>) => {
+		setFacetextureIsEdited: (
+			state: IFacetextureState,
+			action: PayloadAction<boolean>
+		) => {
 			state.edited = action.payload
-		}
+		},
 	},
 	extraReducers: (builder) => {
 		builder
