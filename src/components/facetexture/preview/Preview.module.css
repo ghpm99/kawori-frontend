@@ -2,3 +2,11 @@
 	margin: 16px;
 	padding: 8px;
 }
+
+.update-button {
+	margin-right: 3px;
+}
+
+.download-button {
+	margin-left: 3px;
+}
