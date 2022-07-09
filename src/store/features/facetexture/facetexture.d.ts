@@ -4,6 +4,7 @@ interface IFacetextureState {
 	facetexture: IFacetexture[]
 	selected?: number
 	backgroundUrl: string
+    edited: boolean
 }
 
 interface IClass {

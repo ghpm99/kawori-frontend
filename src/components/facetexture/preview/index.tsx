@@ -4,33 +4,37 @@ import { useState } from 'react'
 import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetextureService'
 import { db } from '../../../util/db'
 import Styles from './Preview.module.css'
+import { saveAs } from 'file-saver'
+import { DownloadOutlined } from '@ant-design/icons'
 
 const Preview = () => {
 
     const { data } = useSession()
     const [previewBackground, setPreviewBackground] = useState()
+    const [loading, setLoading] = useState(false)
+    const [downloading, setDownloading] = useState(false)
 
     const updatePreviewBackground = async () => {
-        const background = await db.background.where('id').equals(1).first()
+        setLoading(true)
+        const background = (await db.background.toArray())[0]
         previewFacetextureService(data.accessToken, {
-            'background': background
+            'background': background.image
         }).then(response => {
             setPreviewBackground(response)
+        }).finally(() => {
+            setLoading(false)
         })
     }
 
     const downloadFacetexture = async () => {
-        const background = await db.background.where('id').equals(1).first()
+        setDownloading(true)
+        const background = (await db.background.toArray())[0]
         downloadFacetextureService(data.accessToken, {
-            'background': background
+            'background': background.image
         }).then(response => {
-            console.log(response)
-            const downloadUrl = URL.createObjectURL(response)
-            let a = document.createElement("a")
-            a.href = downloadUrl
-            a.download = 'export'
-            document.body.appendChild(a)
-            a.click()
+            saveAs(response, 'export.zip')
+        }).finally(() => {
+            setDownloading(false)
         })
     }
 
@@ -38,10 +42,21 @@ const Preview = () => {
         <div className={ Styles['preview-container'] }>
             <h1>Preview</h1>
             <div>
-                <Button onClick={ updatePreviewBackground }>
+                <Button
+                    onClick={ updatePreviewBackground }
+                    loading={ loading }
+                    type='primary'
+                    className={Styles['update-button']}
+                >
                     Atualizar
                 </Button>
-                <Button onClick={ downloadFacetexture }>
+                <Button
+                    onClick={ downloadFacetexture }
+                    loading={ downloading }
+                    type="primary"
+                    icon={<DownloadOutlined />}
+                    className={Styles['download-button']}
+                >
                     Baixar
                 </Button>
             </div>

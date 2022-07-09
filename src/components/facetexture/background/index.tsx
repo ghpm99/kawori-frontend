@@ -12,8 +12,9 @@ const Background = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const uploadNewBackground = (file: RcFile) => {
-        db.background.update(1, {
+    const uploadNewBackground = async (file: RcFile) => {
+        const firstBackground = (await db.background.toArray())[0]
+        db.background.update(firstBackground.id, {
             image: file
         })
         const backgroundUrl = URL.createObjectURL(file)

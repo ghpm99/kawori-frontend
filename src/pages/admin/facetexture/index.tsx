@@ -9,9 +9,11 @@ import Loading from '../../../components/facetexture/loading';
 import Preview from '../../../components/facetexture/preview';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
+import { updateFacetextureService } from '../../../services/facetextureService';
 import {
     fetchFacetexture,
     fetchFacetextureClass,
+    setFacetextureIsEdited,
     updateBackgroundReducer,
     updateFacetextureUrlReducer
 } from '../../../store/features/facetexture';
@@ -42,9 +44,30 @@ function FaceTexture() {
 
     }, [])
 
+    useEffect(() => {
+        if (facetextureStore.edited) {
+            dispatch(setFacetextureIsEdited(false))
+            updateFacetextureService({
+                characters: facetextureStore.facetexture.map(item => ({
+                    ...item,
+                    class: item.class.id
+                }))
+            }).then(response => {
+                message.success({
+                    content: response.msg,
+                    key: messageRef,
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+
+            facetextureStore.facetexture.forEach(item => updateFacetextureLocal(item))
+        }
+    }, [facetextureStore.edited])
+
     const updateBackground = async () => {
         const background = (await db.background.toArray())[0]
-        console.log(background)
+
         let backgroundImage
 
         if (background) {
@@ -66,23 +89,15 @@ function FaceTexture() {
         if (!facetextureLocal) {
             includeNewCharacterLocal(facetexture)
         } else {
-            dispatch(updateFacetextureUrlReducer({
-                id: facetextureLocal.id,
-                image: URL.createObjectURL(facetextureLocal.image),
-                upload: facetextureLocal.upload,
-            }))
-            const facetextureUpdate: Facetexture = {
-                ...facetexture,
-                image: facetextureLocal.image,
-                class: facetexture.class.id
-            }
-            updateCharacterLocal(facetextureUpdate)
+            updateCharacterLocal(facetexture, facetextureLocal)
         }
     }
 
     const includeNewCharacterLocal = async (facetexture: IFacetexture) => {
 
-        const blob = await axios.get(facetexture.image).then(r => r.data.blob())
+        const blob = await axios.get(facetexture.image, {
+            responseType: 'blob'
+        }).then(r => r.data)
 
         await db.facetexture.add({
             ...facetexture,
@@ -91,20 +106,44 @@ function FaceTexture() {
         })
     }
 
-    const updateCharacterLocal = (facetexture: Facetexture) => {
-        db.facetexture.update(facetexture.id, {
-            ...facetexture
-        })
+    const updateCharacterLocal = (facetexture: IFacetexture, facetextureLocal: Facetexture) => {
+
+        if(facetextureLocal.upload){
+            dispatch(updateFacetextureUrlReducer({
+                id: facetexture.id,
+                image: URL.createObjectURL(facetextureLocal.image),
+                upload: facetexture.upload,
+            }))
+        }
+        facetextureLocal = {
+            ...facetextureLocal,
+            class: facetexture.class.id,
+            name: facetexture.name,
+            order: facetexture.order,
+            show: facetexture.show,
+            upload: facetexture.upload
+        }
+
+        db.facetexture.update(facetextureLocal.id, facetextureLocal)
     }
+
+    useEffect(() => {
+        if (facetextureStore.loading) {
+            message.loading({
+                content: 'Carregando',
+                key: 'loading-msg'
+            })
+        } else {
+            message.success({
+                content: 'Carregado!',
+                key: 'loading-msg'
+            })
+        }
+    }, [facetextureStore.loading])
 
     if (facetextureStore.loading) {
         return <Loading />
     }
-
-    message.success({
-        content: 'Carregado',
-        key: 'loading-msg'
-    })
 
     return (
         <Layout className={ Styles['container'] }>

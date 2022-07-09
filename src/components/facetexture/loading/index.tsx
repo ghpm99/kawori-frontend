@@ -6,10 +6,7 @@ import MenuAdmin from '../../menuAdmin/Index'
 import Styles from './Loading.module.css'
 
 const Loading = () => {
-    message.loading({
-        content: 'Carregando',
-        key: 'loading-msg'
-    })
+
     return (
         <Layout className={ Styles.container }>
             <MenuAdmin selected={ ['facetexture'] } />
