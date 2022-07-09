@@ -7,7 +7,7 @@ const New = () => {
 
     const dispatch = useAppDispatch()
 
-    const includeNewCharacteres = async () => {
+    const includeNewCharacteres = () => {
         dispatch(includeNewCharacterReducer())
     }
 

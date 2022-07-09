@@ -7,6 +7,7 @@ export interface Facetexture {
   show: boolean
   order: number
   image: Blob
+  upload: boolean
 }
 
 export interface Background {
@@ -22,8 +23,8 @@ export class MySubClassedDexie extends Dexie {
 
   constructor() {
     super('kawori');
-    this.version(2).stores({
-      facetexture: '++id, name, class, show, order, image', // Primary key and indexed props
+    this.version(3).stores({
+      facetexture: '++id, name, class, show, order, image, upload',
       background: '++id, image'
     });
   }

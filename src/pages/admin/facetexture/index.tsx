@@ -1,5 +1,6 @@
 
 import { Breadcrumb, Layout, message } from 'antd';
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Background from '../../../components/facetexture/background';
@@ -67,7 +68,8 @@ function FaceTexture() {
         } else {
             dispatch(updateFacetextureUrlReducer({
                 id: facetextureLocal.id,
-                image: URL.createObjectURL(facetextureLocal.image)
+                image: URL.createObjectURL(facetextureLocal.image),
+                upload: facetextureLocal.upload,
             }))
             const facetextureUpdate: Facetexture = {
                 ...facetexture,
@@ -80,7 +82,7 @@ function FaceTexture() {
 
     const includeNewCharacterLocal = async (facetexture: IFacetexture) => {
 
-        const blob = await fetch(facetexture.image).then(r => r.blob())
+        const blob = await axios.get(facetexture.image).then(r => r.data.blob())
 
         await db.facetexture.add({
             ...facetexture,
