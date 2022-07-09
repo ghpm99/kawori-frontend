@@ -51,10 +51,25 @@ export const facetextureSlice = createSlice({
             state.selected = action.payload
         },
         reorderCharacterReducer: (state:IFacetextureState, action: PayloadAction<IReorderCharacterAction>) => {
-            const newFacetextureList = state.facetexture.filter(item => item.id !== action.payload.facetexture.id)
+            let newFacetextureList = state.facetexture.filter(item => item.id !== action.payload.facetexture.id)
             newFacetextureList.splice(action.payload.newOrder, 0, action.payload.facetexture)
-            state.facetexture = newFacetextureList
-        }
+			newFacetextureList = newFacetextureList.map((item, index) => ({
+				...item,
+				order: index
+			}))
+            state.facetexture = newFacetextureList.sort((a, b) => a.order - b.order)
+        },
+		includeNewCharacterReducer: (state:IFacetextureState) => {
+			const lastFacetexture = Math.max(...state.facetexture.map(item => item.order)) + 1
+			state.facetexture.push({
+				id: lastFacetexture,
+				image: '/facetexture/default.png',
+				order: lastFacetexture,
+				name: 'default.png',
+				show: true,
+				class: state.class[0]
+			})
+		},
     },
 	extraReducers: (builder) => {
 		builder
@@ -75,7 +90,8 @@ export const {
     updateFacetextureUrlReducer,
     updateBackgroundReducer,
     setSelectedFacetextureReducer,
-    reorderCharacterReducer
+    reorderCharacterReducer,
+	includeNewCharacterReducer,
 } = facetextureSlice.actions
 
 export default facetextureSlice.reducer
