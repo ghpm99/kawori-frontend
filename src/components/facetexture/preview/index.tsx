@@ -15,6 +15,9 @@ const Preview = () => {
     const [downloading, setDownloading] = useState(false)
 
     const updatePreviewBackground = async () => {
+        if (loading) {
+            return
+        }
         setLoading(true)
         const background = (await db.background.toArray())[0]
         previewFacetextureService(data.accessToken, {
@@ -27,6 +30,9 @@ const Preview = () => {
     }
 
     const downloadFacetexture = async () => {
+        if (downloading) {
+            return
+        }
         setDownloading(true)
         const background = (await db.background.toArray())[0]
         downloadFacetextureService(data.accessToken, {
@@ -46,7 +52,7 @@ const Preview = () => {
                     onClick={ updatePreviewBackground }
                     loading={ loading }
                     type='primary'
-                    className={Styles['update-button']}
+                    className={ Styles['update-button'] }
                 >
                     Atualizar
                 </Button>
@@ -54,8 +60,8 @@ const Preview = () => {
                     onClick={ downloadFacetexture }
                     loading={ downloading }
                     type="primary"
-                    icon={<DownloadOutlined />}
-                    className={Styles['download-button']}
+                    icon={ <DownloadOutlined /> }
+                    className={ Styles['download-button'] }
                 >
                     Baixar
                 </Button>
