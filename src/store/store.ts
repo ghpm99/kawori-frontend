@@ -12,6 +12,7 @@ export const store = configureStore({
 		financial: financialReducer,
 		facetexture: facetextureReducer,
 	},
+	devTools: process.env.NODE_ENV === 'development'
 })
 
 export type RootState = ReturnType<typeof store.getState>
