@@ -1,6 +1,7 @@
 
 import { Breadcrumb, Button, Input, Layout, Typography } from 'antd';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
+import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import Pusher from 'react-pusher';
 import LoadingPage from '../../../../components/loadingPage/Index';
@@ -93,7 +94,20 @@ CommandPage.pusher = {
     name: 'command'
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps = async ({ req, res }) => {
+    const session = await getSession({ req })
+
+    const isSuperuser = (session as unknown as ISession).user.isSuperuser
+
+    if(!isSuperuser){
+        return {
+            redirect: {
+              destination: '/',
+              permanent: false,
+            },
+          }
+    }
+
     const props = {
         pusher_key: process.env.PUSHER_KEY,
         pusher_cluster: process.env.PUSHER_CLUSTER

@@ -1,6 +1,7 @@
 
 import { Breadcrumb, Layout, message } from 'antd';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Background from '../../../components/facetexture/background';
@@ -12,7 +13,6 @@ import MenuAdmin from '../../../components/menuAdmin/Index';
 import { updateFacetextureService } from '../../../services/facetextureService';
 import {
     fetchFacetexture,
-    fetchFacetextureClass,
     setFacetextureIsEdited,
     updateBackgroundReducer,
     updateFacetextureUrlReducer
@@ -27,17 +27,17 @@ function FaceTexture() {
 
     const messageRef = 'facetexture-message-ref'
 
+    const router = useRouter()
+
     const dispatch = useAppDispatch()
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
-
 
     useEffect(() => {
 
         updateBackground()
 
-        dispatch(fetchFacetextureClass())
         dispatch(fetchFacetexture()).then(action => {
-            (action.payload as IFacetexture[]).map(item => {
+            (action.payload as { characters: IFacetexture[] }).characters.map(item => {
                 updateFacetextureLocal(item)
             })
         })
@@ -45,7 +45,13 @@ function FaceTexture() {
     }, [])
 
     useEffect(() => {
-        if (facetextureStore.edited) {
+        if (facetextureStore.error) {
+            router.replace('/error')
+        }
+    }, [facetextureStore.error])
+
+    useEffect(() => {
+        if (facetextureStore.edited && !facetextureStore.error) {
             dispatch(setFacetextureIsEdited(false))
             updateFacetextureService({
                 characters: facetextureStore.facetexture.map(item => ({
@@ -108,7 +114,7 @@ function FaceTexture() {
 
     const updateCharacterLocal = (facetexture: IFacetexture, facetextureLocal: Facetexture) => {
 
-        if(facetextureLocal.upload){
+        if (facetextureLocal.upload) {
             dispatch(updateFacetextureUrlReducer({
                 id: facetexture.id,
                 image: URL.createObjectURL(facetextureLocal.image),

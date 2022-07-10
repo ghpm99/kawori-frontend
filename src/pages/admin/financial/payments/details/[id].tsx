@@ -12,6 +12,7 @@ import {
 } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import moment from 'moment'
+import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
@@ -246,3 +247,19 @@ PaymentDetails.auth = {
     loading: <LoadingPage />,
     unauthorized: "/signin",
 }
+
+export const getServerSideProps = async ({ req, res }) => {
+    const session = await getSession({ req })
+
+    const isSuperuser = (session as unknown as ISession).user.isSuperuser
+
+    if(!isSuperuser){
+        return {
+            redirect: {
+              destination: '/',
+              permanent: false,
+            },
+          }
+    }
+    return {}
+  }

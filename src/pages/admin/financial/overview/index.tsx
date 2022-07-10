@@ -12,6 +12,7 @@ import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutF
 import { fetchPaymentReport } from '../../../../store/features/financial/Index'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import styles from './Overview.module.css'
+import { getSession } from 'next-auth/react'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -64,11 +65,26 @@ function Overview() {
   )
 }
 
-
 Overview.auth = {
   role: 'admin',
   loading: <LoadingPage />,
   unauthorized: '/signin',
+}
+
+export const getServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req })
+
+  const isSuperuser = (session as unknown as ISession).user.isSuperuser
+
+  if(!isSuperuser){
+      return {
+          redirect: {
+            destination: '/',
+            permanent: false,
+          },
+        }
+  }
+  return {}
 }
 
 export default Overview

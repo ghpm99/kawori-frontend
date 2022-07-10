@@ -11,26 +11,20 @@ const initialState: IFacetextureState = {
 	facetexture: [],
 	selected: undefined,
 	edited: false,
+	error: false
 }
-
-export const fetchFacetextureClass = createAsyncThunk(
-	'facetexture/fetchFacetextureClass',
-	async () => {
-		const response = await fetchFaceTextureClassService()
-		return response
-	}
-)
 
 export const fetchFacetexture = createAsyncThunk(
 	'facetexture/fetchFacetexture',
 	async () => {
+		const classes = await fetchFaceTextureClassService()
 		const response = await fetchFacetextureService()
 		const characters = response.characters.map((item) => ({
 			...item,
 			image: item.class.class_image,
 			upload: false,
 		}))
-		return characters
+		return {characters, classes}
 	}
 )
 
@@ -144,15 +138,18 @@ export const facetextureSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchFacetextureClass.fulfilled, (state, action) => {
-				state.class = action.payload.class
-			})
 			.addCase(fetchFacetexture.pending, (state) => {
 				state.loading = true
+				state.error = false
 			})
 			.addCase(fetchFacetexture.fulfilled, (state, action) => {
-				state.facetexture = action.payload.sort((a, b) => a.order - b.order)
+				state.class = action.payload.classes.class
+				state.facetexture = action.payload.characters.sort((a, b) => a.order - b.order)
 				state.loading = false
+			})
+			.addCase(fetchFacetexture.rejected, (state, action)=> {
+				state.loading = false
+				state.error = true
 			})
 	},
 })
