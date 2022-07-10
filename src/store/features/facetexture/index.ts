@@ -134,6 +134,13 @@ export const facetextureSlice = createSlice({
 		) => {
 			state.edited = action.payload
 		},
+		updateCharacterImageNameReducer : (state: IFacetextureState, action: PayloadAction<IUpdateCharacterImageNameAction>) => {
+			const facetextureIndex = state.facetexture.findIndex(
+				(item) => item.id === action.payload.id
+			)
+			state.facetexture[facetextureIndex].name = action.payload.name
+			state.edited = true
+		}
 	},
 	extraReducers: (builder) => {
 		builder
@@ -163,6 +170,7 @@ export const {
 	deleteCharacterReducer,
 	updateCharacterShowClassReducer,
 	setFacetextureIsEdited,
+	updateCharacterImageNameReducer,
 } = facetextureSlice.actions
 
 export default facetextureSlice.reducer

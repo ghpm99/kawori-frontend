@@ -2,7 +2,13 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Image, Select, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import { useSelector } from 'react-redux'
-import { deleteCharacterReducer, setFacetextureIsEdited, updateCharacterClassReducer, updateCharacterShowClassReducer, updateFacetextureUrlReducer } from '../../../../store/features/facetexture'
+import {
+    deleteCharacterReducer,
+    updateCharacterClassReducer,
+    updateCharacterImageNameReducer,
+    updateCharacterShowClassReducer,
+    updateFacetextureUrlReducer
+} from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import { db } from '../../../../util/db'
 import Styles from './Info.module.css'
@@ -13,7 +19,7 @@ const Info = () => {
 
     const updateCharacterClass = (id, value) => {
         dispatch(updateCharacterClassReducer({
-            id:id,
+            id: id,
             class: value
         }))
     }
@@ -29,7 +35,10 @@ const Info = () => {
             image: URL.createObjectURL(file),
             upload: true,
         }))
-        dispatch(setFacetextureIsEdited(true))
+        dispatch(updateCharacterImageNameReducer({
+            id: id,
+            name: file.name
+        }))
     }
 
     const deleteCharacter = (id) => {
@@ -66,10 +75,10 @@ const Info = () => {
                                     label: item.name
                                 })
                             ) }
-                            value={{
+                            value={ {
                                 value: selectedFacetexture?.class.id,
                                 label: selectedFacetexture?.class.name
-                            }}
+                            } }
                             style={ {
                                 width: '125px'
                             } }

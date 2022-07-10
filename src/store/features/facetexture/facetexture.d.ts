@@ -50,3 +50,8 @@ interface IUpdateCharacterShowClassAction {
 	id: number
     show: boolean
 }
+
+interface IUpdateCharacterImageNameAction {
+	id: number
+	name: string
+}
