@@ -42,7 +42,6 @@ export const facetextureSlice = createSlice({
 			if (action.payload.upload) {
 				state.facetexture[facetextureIndex].image = action.payload.image
 				state.facetexture[facetextureIndex].upload = action.payload.upload
-				state.edited = true
 			} else if (!state.facetexture[facetextureIndex].upload) {
 				state.facetexture[facetextureIndex].image = action.payload.image
 				state.facetexture[facetextureIndex].upload = action.payload.upload

@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Image, Select, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import { useSelector } from 'react-redux'
-import { deleteCharacterReducer, updateCharacterClassReducer, updateCharacterShowClassReducer, updateFacetextureUrlReducer } from '../../../../store/features/facetexture'
+import { deleteCharacterReducer, setFacetextureIsEdited, updateCharacterClassReducer, updateCharacterShowClassReducer, updateFacetextureUrlReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import { db } from '../../../../util/db'
 import Styles from './Info.module.css'
@@ -29,6 +29,7 @@ const Info = () => {
             image: URL.createObjectURL(file),
             upload: true,
         }))
+        dispatch(setFacetextureIsEdited(true))
     }
 
     const deleteCharacter = (id) => {
