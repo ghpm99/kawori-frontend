@@ -5,6 +5,7 @@ interface IFacetextureState {
 	selected?: number
 	backgroundUrl: string
     edited: boolean
+	error: boolean
 }
 
 interface IClass {

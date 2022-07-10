@@ -62,7 +62,7 @@ export default function MenuHeader(props) {
                                 Logar
                             </a>
                         </Link>
-                        <Link href='/signup'>
+                        <Link href='/register'>
                             <a className={ styles['user-option'] }>
                                 Cadastrar
                             </a>

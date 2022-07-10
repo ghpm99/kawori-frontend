@@ -2,6 +2,7 @@
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Table, Typography } from 'antd';
 import moment from 'moment';
+import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -137,7 +138,7 @@ function FinancialPage() {
             title: 'Ações',
             dataIndex: 'id',
             key: 'id',
-            render: value => <Link href={`/admin/financial/payments/details/${value}`}>Detalhes</Link>
+            render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
         }
     ]
 
@@ -177,7 +178,7 @@ function FinancialPage() {
                             dataSource={ financialStore.data }
                             loading={ financialStore.loading }
                             summary={
-                                paymentData => <TableSummary paymentData={paymentData}/>
+                                paymentData => <TableSummary paymentData={ paymentData } />
                             }
                         />
 
@@ -203,7 +204,7 @@ function FinancialPage() {
 
 function TableSummary(props) {
 
-    const {Text} = Typography
+    const { Text } = Typography
 
     let total = 0
     let totalCredit = 0
@@ -239,6 +240,22 @@ FinancialPage.auth = {
     role: 'admin',
     loading: <LoadingPage />,
     unauthorized: "/signin",
+}
+
+export const getServerSideProps = async ({ req, res }) => {
+    const session = await getSession({ req })
+
+    const isSuperuser = (session as unknown as ISession).user.isSuperuser
+
+    if (!isSuperuser) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+    return {}
 }
 
 export default FinancialPage

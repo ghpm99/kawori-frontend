@@ -8,8 +8,7 @@ import { Engine, ISourceOptions } from 'tsparticles-engine';
 import particlesOptions from '../../../public/particles.json';
 import { useCallback } from 'react';
 
-const { Header, Content } = Layout;
-const { Title } = Typography;
+const { Content } = Layout;
 
 export default function LoginPage(props) {
 

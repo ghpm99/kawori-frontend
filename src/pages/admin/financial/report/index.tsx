@@ -1,6 +1,7 @@
 
 import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from 'antd';
 import moment from 'moment';
+import { getSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingPage from '../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../components/loginHeader/Index';
@@ -114,6 +115,22 @@ FinancialPage.auth = {
 	role: 'admin',
 	loading: <LoadingPage />,
 	unauthorized: "/signin",
+}
+
+export const getServerSideProps = async ({ req, res }) => {
+	const session = await getSession({ req })
+
+	const isSuperuser = (session as unknown as ISession).user.isSuperuser
+
+	if (!isSuperuser) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		}
+	}
+	return {}
 }
 
 export default FinancialPage
