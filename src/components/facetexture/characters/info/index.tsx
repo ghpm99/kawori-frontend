@@ -1,5 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Image, Select, Upload } from 'antd'
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import { useSelector } from 'react-redux'
 import {
@@ -12,6 +14,8 @@ import {
 import { RootState, useAppDispatch } from '../../../../store/store'
 import { db } from '../../../../util/db'
 import Styles from './Info.module.css'
+
+const { Title } = Typography
 
 const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
@@ -58,8 +62,18 @@ const Info = () => {
         <div className={ Styles['character-info'] }>
             { selectedFacetexture &&
                 <>
-                    <div>
-                        <div>Propriedades</div>
+                    <div className={Styles['controllers-info']}>
+                        <Title level={ 4 }>Propriedades</Title>
+                        <Title level={ 5 }>
+                            Imagem atual do personagem
+                            <Tooltip title='Essa é a imagem atual do seu personagem.
+                                Caso ja tenha feito upload da imagem que fica em Meus Documentos/Black Desert/Facetexture
+                                e essa imagem voltou para a padrao, não se preocupe, esse é um erro conhecido e será ajustado em breve.
+                            '>
+                                <FontAwesomeIcon icon={ faCircleInfo } />
+                            </Tooltip>
+                            :
+                        </Title>
                         <Image
                             src={ selectedFacetexture.image }
                             alt={ selectedFacetexture.name }
@@ -67,7 +81,14 @@ const Info = () => {
                             height={ 160 }
                         />
                     </div>
-                    <div>
+                    <div className={Styles['controllers-info']}>
+                        <Title level={ 5 }>
+                            Classe do personagem
+                            <Tooltip title='Selecione a classe que voce quer que apareça no resultado final.'>
+                                <FontAwesomeIcon icon={ faCircleInfo } />
+                            </Tooltip>
+                            :
+                        </Title>
                         <Select
                             options={ facetextureStore.class.map(
                                 item => ({
@@ -85,7 +106,7 @@ const Info = () => {
                             onChange={ (value) => updateCharacterClass(selectedFacetexture.id, value) }
                         />
                     </div>
-                    <div>
+                    <div className={Styles['controllers-info']}>
                         <Checkbox
                             checked={ selectedFacetexture?.show }
                             onChange={ (e) => updateCharacterShowClass(selectedFacetexture.id, e) }
@@ -93,7 +114,17 @@ const Info = () => {
                             Mostrar icone da classe
                         </Checkbox>
                     </div>
-                    <div>
+                    <div className={Styles['controllers-info']}>
+                        <Title level={ 5 }>
+                            Facetexture do jogo
+                            <Tooltip title='Selecione a facetexture atual do personagem,
+                                esse arquivo geralmente fica dentro da pasta Meus Documentos/Black Desert/Facetexture.
+                                Essa é a imagem que aparece atualmente na sua tela de seleção de personagem.'>
+                                <FontAwesomeIcon icon={ faCircleInfo } />
+                            </Tooltip>
+                            :
+                        </Title>
+
                         <Upload
                             listType='picture-card'
                             beforeUpload={ (file) => updateImageSelectedCharacter(selectedFacetexture.id, file) }
@@ -105,7 +136,7 @@ const Info = () => {
                             </div>
                         </Upload>
                     </div>
-                    <div>
+                    <div className={Styles['controllers-info']}>
                         <Button
                             type='primary'
                             onClick={ () => deleteCharacter(selectedFacetexture.id) }
