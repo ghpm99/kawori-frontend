@@ -36,15 +36,12 @@ export const facetextureSlice = createSlice({
 			state: IFacetextureState,
 			action: PayloadAction<IUpdateFacetextureUrlAction>
 		) => {
-			const facetextureIndex = state.facetexture.findIndex(
-				(item) => item.id === action.payload.id
-			)
 			if (action.payload.upload) {
-				state.facetexture[facetextureIndex].image = action.payload.image
-				state.facetexture[facetextureIndex].upload = action.payload.upload
-			} else if (!state.facetexture[facetextureIndex].upload) {
-				state.facetexture[facetextureIndex].image = action.payload.image
-				state.facetexture[facetextureIndex].upload = action.payload.upload
+				state.facetexture[action.payload.index].image = action.payload.image
+				state.facetexture[action.payload.index].upload = action.payload.upload
+			} else if (!state.facetexture[action.payload.index].upload) {
+				state.facetexture[action.payload.index].image = action.payload.image
+				state.facetexture[action.payload.index].upload = action.payload.upload
 			}
 		},
 		updateBackgroundReducer: (
@@ -61,29 +58,21 @@ export const facetextureSlice = createSlice({
 			action: PayloadAction<IReorderCharacterAction>
 		) => {
 			let newFacetextureList = state.facetexture.filter(
-				(item) => item.id !== action.payload.facetexture.id
+				(item, index) => index !== action.payload.indexSource
 			)
 			newFacetextureList.splice(
-				action.payload.newOrder,
+				action.payload.indexDestination,
 				0,
-				action.payload.facetexture
+				state.facetexture[action.payload.indexSource]
 			)
-			newFacetextureList = newFacetextureList.map((item, index) => ({
-				...item,
-				order: index,
-			}))
-			state.facetexture = newFacetextureList.sort((a, b) => a.order - b.order)
+			state.facetexture = newFacetextureList
 			state.edited = true
 		},
 		includeNewCharacterReducer: (state: IFacetextureState) => {
 
-			const lastOrder = state.facetexture.length !== 0 ? Math.max(...state.facetexture.map((item) => item.order)) +1 : 0
-
 			state.facetexture.push({
-				id: lastOrder,
 				image: '/media/classimage/default.png',
-				order: lastOrder,
-				name: `default${lastOrder}.png`,
+				name: `default${state.facetexture.length + 1}.png`,
 				show: true,
 				class: state.class[0],
 				upload: false,
@@ -94,15 +83,13 @@ export const facetextureSlice = createSlice({
 			state: IFacetextureState,
 			action: PayloadAction<IUpdateCharacterClassAction>
 		) => {
-			const facetextureIndex = state.facetexture.findIndex(
-				(item) => item.id === action.payload.id
-			)
+
 			const newClass = state.class.find(
 				(item) => item.id === action.payload.class
 			)
-			state.facetexture[facetextureIndex].class = newClass
-			if (!state.facetexture[facetextureIndex].upload) {
-				state.facetexture[facetextureIndex].image = newClass.class_image
+			state.facetexture[action.payload.index].class = newClass
+			if (!state.facetexture[action.payload.index].upload) {
+				state.facetexture[action.payload.index].image = newClass.class_image
 			}
 			state.edited = true
 		},
@@ -111,21 +98,19 @@ export const facetextureSlice = createSlice({
 			action: PayloadAction<number>
 		) => {
 			let newFacetextureList = state.facetexture.filter(
-				(item) => item.id !== action.payload
+				(_, index) => index !== action.payload
 			)
 			newFacetextureList = newFacetextureList.map((item, index) => ({
 				...item,
 				order: index,
 			}))
-			state.facetexture = newFacetextureList.sort((a, b) => a.order - b.order)
 			state.edited = true
 		},
 		updateCharacterShowClassReducer: (
 			state: IFacetextureState,
 			action: PayloadAction<IUpdateCharacterShowClassAction>
 		) => {
-			state.facetexture.find((item) => item.id === action.payload.id).show =
-				action.payload.show
+			state.facetexture[action.payload.index].show = action.payload.show
 			state.edited = true
 		},
 		setFacetextureIsEdited: (
@@ -135,10 +120,7 @@ export const facetextureSlice = createSlice({
 			state.edited = action.payload
 		},
 		updateCharacterImageNameReducer : (state: IFacetextureState, action: PayloadAction<IUpdateCharacterImageNameAction>) => {
-			const facetextureIndex = state.facetexture.findIndex(
-				(item) => item.id === action.payload.id
-			)
-			state.facetexture[facetextureIndex].name = action.payload.name
+			state.facetexture[action.payload.index].name = action.payload.name
 			state.edited = true
 		}
 	},

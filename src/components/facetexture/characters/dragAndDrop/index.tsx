@@ -17,16 +17,14 @@ const DragAndDropCharacters = () => {
 
         const indexSource = result.source.index + (parseInt(result.source.droppableId) * 7)
         const indexDestination = result.destination.index + (parseInt(result.destination.droppableId) * 7)
-        const facetextureSource = facetextureStore.facetexture.find(item => item.order === indexSource)
-        const facetextureDestination = facetextureStore.facetexture.find(item => item.order === indexDestination)
 
-        if (!facetextureDestination || facetextureDestination.order <= 0) {
+        if (!indexDestination) {
             return
         }
 
         dispatch(reorderCharacterReducer({
-            facetexture: facetextureSource,
-            newOrder: facetextureDestination.order
+            indexSource,
+            indexDestination
         }))
     }
 

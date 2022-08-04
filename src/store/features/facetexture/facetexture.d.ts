@@ -16,7 +16,6 @@ interface IClass {
 }
 
 interface IFacetexture {
-	id: number
 	name: string
 	class: {
 		id: number
@@ -25,33 +24,32 @@ interface IFacetexture {
 		class_image: string
 	}
 	show: boolean
-	order: number
 	image: string
 	upload: boolean
 }
 
 interface IReorderCharacterAction {
-	facetexture: IFacetexture
-	newOrder: number
+	indexSource: number
+	indexDestination: number
 }
 
 interface IUpdateFacetextureUrlAction {
-	id: number
+	index: number
 	image: string
 	upload: boolean
 }
 
 interface IUpdateCharacterClassAction {
-	id: number
+	index: number
 	class: number
 }
 
 interface IUpdateCharacterShowClassAction {
-	id: number
+	index: number
     show: boolean
 }
 
 interface IUpdateCharacterImageNameAction {
-	id: number
+	index: number
 	name: string
 }
