@@ -30,6 +30,9 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 						credentials,
 					}
 				)
+				if(tokenRes.status !== 200){
+					return null
+				}
 				const token = await tokenRes.data.token
 				const res = await axios.get(
 					process.env.NEXT_PUBLIC_API_URL + '/auth/user',
@@ -52,7 +55,6 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 	const pages = {
 		signIn: '/signin',
 		signOut: '/signout',
-		error: '/',
 		verifyRequest: '/auth/verify-request',
 		newUser: '/auth/new-user',
 	}
@@ -74,7 +76,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 			if (user !== undefined) {
 				token.userSession = user.token
 				token.username = user.username
-				token.firstName= user.first_name
+				token.firstName = user.first_name
 				token.lastName = user.last_name
 				token.isStaff = user.is_staff
 				token.isActive = user.is_active

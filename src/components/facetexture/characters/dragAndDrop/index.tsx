@@ -65,8 +65,8 @@ const DragAndDropCharacters = () => {
                         >
                             { row.map((character, index) => (
                                 <Draggable
-                                    key={ character.id.toString() }
-                                    draggableId={ character.id.toString() }
+                                    key={ `${indexRow}-${index}` }
+                                    draggableId={ `${indexRow}-${index}` }
                                     index={ index }
 
                                 >
