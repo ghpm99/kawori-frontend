@@ -1,23 +1,43 @@
 
-import { Button, Card, Checkbox, Form, Input, Layout, Typography } from 'antd';
+import { Button, Card, Checkbox, Form, Input, Layout } from 'antd';
 import { signIn } from 'next-auth/react';
+import  Router from 'next/router';
+import { useCallback, useState } from 'react';
 import Particles from 'react-tsparticles';
-import MenuHeader from '../../components/menuHeader';
 import { loadFull } from 'tsparticles';
 import { Engine, ISourceOptions } from 'tsparticles-engine';
 import particlesOptions from '../../../public/particles.json';
-import { useCallback } from 'react';
+import MenuHeader from '../../components/menuHeader';
+import styles from './Signin.module.css';
 
 const { Content } = Layout;
 
 export default function LoginPage(props) {
 
+    const [error, setError] = useState(false)
+
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadFull(engine);
-      }, []);
+    }, []);
 
     const onFinish = (values: any) => {
-        signIn('credentials', { username: values.username, password: values.password, callbackUrl: '/' })
+        signIn(
+            'credentials',
+            {
+                username: values.username,
+                password: values.password,
+                redirect: false
+            }).then(e => {
+                console.log(e)
+                if (e.status !== 200) {
+                    setError(true)
+                } else {
+                   Router.push('/admin/user')
+                }
+            }).catch(err => {
+                console.log('error', err)
+                setError(true)
+            })
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -28,7 +48,7 @@ export default function LoginPage(props) {
         <Layout style={ {
             minHeight: '100vh',
             backgroundColor: 'rgb(0, 0, 27, 0.8)',
-            } }>
+        } }>
             <MenuHeader />
             <Content>
                 <Layout style={ {
@@ -51,6 +71,14 @@ export default function LoginPage(props) {
                                 onFinishFailed={ onFinishFailed }
                                 autoComplete="off"
                             >
+                                {
+                                    error &&
+                                    <div className={ styles['error'] }>
+                                        Usuario ou senha incorretos
+                                    </div>
+                                }
+
+
                                 <Form.Item
                                     label="Usuario"
                                     name="username"

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import styles from './AccountMenuInfo.module.css'
 import Link from 'next/link'
+import { signOut } from 'next-auth/react'
 
 const AccountMenuInfo = (props: IAccountMenuInfoProps) => {
 
@@ -22,7 +23,7 @@ const AccountMenuInfo = (props: IAccountMenuInfoProps) => {
                 <Link href={ '/admin/user' }>
                     <p>Conta</p>
                 </Link>
-                <p>Sair</p>
+                <p onClick={ () => signOut() }>Sair</p>
             </div>
         </div>
     )
