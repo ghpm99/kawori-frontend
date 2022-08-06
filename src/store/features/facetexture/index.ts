@@ -21,10 +21,9 @@ export const fetchFacetexture = createAsyncThunk(
 		const response = await fetchFacetextureService()
 		const characters = response.characters.map((item) => ({
 			...item,
-			image: item.class.class_image,
-			upload: false,
+			image: item.class.class_image
 		}))
-		return {characters, classes}
+		return { characters, classes }
 	}
 )
 
@@ -36,13 +35,7 @@ export const facetextureSlice = createSlice({
 			state: IFacetextureState,
 			action: PayloadAction<IUpdateFacetextureUrlAction>
 		) => {
-			if (action.payload.upload) {
-				state.facetexture[action.payload.index].image = action.payload.image
-				state.facetexture[action.payload.index].upload = action.payload.upload
-			} else if (!state.facetexture[action.payload.index].upload) {
-				state.facetexture[action.payload.index].image = action.payload.image
-				state.facetexture[action.payload.index].upload = action.payload.upload
-			}
+			state.facetexture[action.payload.index].image = action.payload.image
 		},
 		updateBackgroundReducer: (
 			state: IFacetextureState,
@@ -74,8 +67,7 @@ export const facetextureSlice = createSlice({
 				image: '/media/classimage/default.png',
 				name: `default${state.facetexture.length + 1}.png`,
 				show: true,
-				class: state.class[0],
-				upload: false,
+				class: state.class[0]
 			})
 			state.edited = true
 		},
@@ -88,9 +80,7 @@ export const facetextureSlice = createSlice({
 				(item) => item.id === action.payload.class
 			)
 			state.facetexture[action.payload.index].class = newClass
-			if (!state.facetexture[action.payload.index].upload) {
-				state.facetexture[action.payload.index].image = newClass.class_image
-			}
+			state.facetexture[action.payload.index].image = newClass.class_image
 			state.edited = true
 		},
 		deleteCharacterReducer: (
@@ -100,10 +90,7 @@ export const facetextureSlice = createSlice({
 			let newFacetextureList = state.facetexture.filter(
 				(_, index) => index !== action.payload
 			)
-			newFacetextureList = newFacetextureList.map((item, index) => ({
-				...item,
-				order: index,
-			}))
+			state.facetexture = newFacetextureList
 			state.edited = true
 		},
 		updateCharacterShowClassReducer: (
@@ -119,7 +106,7 @@ export const facetextureSlice = createSlice({
 		) => {
 			state.edited = action.payload
 		},
-		updateCharacterImageNameReducer : (state: IFacetextureState, action: PayloadAction<IUpdateCharacterImageNameAction>) => {
+		updateCharacterImageNameReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterImageNameAction>) => {
 			state.facetexture[action.payload.index].name = action.payload.name
 			state.edited = true
 		}
@@ -132,10 +119,10 @@ export const facetextureSlice = createSlice({
 			})
 			.addCase(fetchFacetexture.fulfilled, (state, action) => {
 				state.class = action.payload.classes.class
-				state.facetexture = action.payload.characters.sort((a, b) => a.order - b.order)
+				state.facetexture = action.payload.characters
 				state.loading = false
 			})
-			.addCase(fetchFacetexture.rejected, (state, action)=> {
+			.addCase(fetchFacetexture.rejected, (state, action) => {
 				state.loading = false
 				state.error = true
 			})

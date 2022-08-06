@@ -1,6 +1,5 @@
 
 import { Breadcrumb, Layout, message } from 'antd';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -14,11 +13,10 @@ import { updateFacetextureService } from '../../../services/facetextureService';
 import {
     fetchFacetexture,
     setFacetextureIsEdited,
-    updateBackgroundReducer,
-    updateFacetextureUrlReducer
+    updateBackgroundReducer
 } from '../../../store/features/facetexture';
 import { RootState, useAppDispatch } from '../../../store/store';
-import { db, Facetexture } from '../../../util/db';
+import { db } from '../../../util/db';
 import Styles from './Facetexture.module.css';
 
 const { Header, Content } = Layout;
@@ -35,12 +33,7 @@ function FaceTexture() {
     useEffect(() => {
 
         updateBackground()
-
-        dispatch(fetchFacetexture()).then(action => {
-            (action.payload as { characters: IFacetexture[] }).characters.map(item => {
-                updateFacetextureLocal(item)
-            })
-        })
+        dispatch(fetchFacetexture())
 
     }, [])
 
@@ -67,7 +60,6 @@ function FaceTexture() {
                 console.log(err)
             })
 
-            facetextureStore.facetexture.forEach(item => updateFacetextureLocal(item))
         }
     }, [facetextureStore.edited])
 
@@ -89,49 +81,6 @@ function FaceTexture() {
 
     }
 
-    const updateFacetextureLocal = async (facetexture: IFacetexture) => {
-        const facetextureLocal = await db.facetexture.where('id').equals(facetexture.id).first()
-
-        if (!facetextureLocal) {
-            includeNewCharacterLocal(facetexture)
-        } else {
-            updateCharacterLocal(facetexture, facetextureLocal)
-        }
-    }
-
-    const includeNewCharacterLocal = async (facetexture: IFacetexture) => {
-
-        const blob = await axios.get(facetexture.image, {
-            responseType: 'blob'
-        }).then(r => r.data)
-
-        await db.facetexture.add({
-            ...facetexture,
-            class: facetexture.class.id,
-            image: blob,
-        })
-    }
-
-    const updateCharacterLocal = (facetexture: IFacetexture, facetextureLocal: Facetexture) => {
-
-        if (facetextureLocal.upload) {
-            dispatch(updateFacetextureUrlReducer({
-                id: facetexture.id,
-                image: URL.createObjectURL(facetextureLocal.image),
-                upload: facetexture.upload,
-            }))
-        }
-        facetextureLocal = {
-            ...facetextureLocal,
-            class: facetexture.class.id,
-            name: facetexture.name,
-            order: facetexture.order,
-            show: facetexture.show,
-            upload: facetexture.upload
-        }
-
-        db.facetexture.update(facetextureLocal.id, facetextureLocal)
-    }
 
     useEffect(() => {
         if (facetextureStore.loading) {
