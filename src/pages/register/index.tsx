@@ -1,5 +1,6 @@
 
 import { Button, Card, Form, Input, Layout, message } from 'antd';
+import { signIn } from 'next-auth/react';
 import Router from 'next/router';
 import { useCallback } from 'react';
 import Particles from 'react-tsparticles';
@@ -19,15 +20,29 @@ export default function RegisterPage(props) {
 
     const [form] = Form.useForm()
 
+    const signin = (username :string, password: string) => {
+        signIn(
+            'credentials',
+            {
+                username: username,
+                password: password,
+                redirect: false
+            }).then(e => {
+                if (e.status !== 200) {
+                    message.error('Falhou em logar')
+                } else {
+                   Router.push('/admin/user')
+                }
+            }).catch(err => {
+                console.log('error', err)
+            })
+    }
+
     const onFinish = (values: any) => {
         registerService(values).then(response => {
-            if (response.status === 200) {
-                message.success(response.data.msg)
-            } else {
-                message.error(response.data.msg)
-            }
+            message.success(response.data.msg)
             form.resetFields()
-            Router.push('/signin')
+            signin(values.username, values.password)
         }).catch(error => {
             message.error(error.response.data.msg ?? 'Falhou em criar usuário')
         })
