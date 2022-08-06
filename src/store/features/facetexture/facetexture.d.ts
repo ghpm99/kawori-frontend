@@ -25,7 +25,6 @@ interface IFacetexture {
 	}
 	show: boolean
 	image: string
-	upload: boolean
 }
 
 interface IReorderCharacterAction {
@@ -36,7 +35,6 @@ interface IReorderCharacterAction {
 interface IUpdateFacetextureUrlAction {
 	index: number
 	image: string
-	upload: boolean
 }
 
 interface IUpdateCharacterClassAction {

@@ -73,9 +73,9 @@ const DragAndDropCharacters = () => {
                                             ref={ provided.innerRef }
                                             { ...provided.dragHandleProps }
                                             { ...provided.draggableProps }
-                                            key={ character.id.toString() }
+                                            key={ `${indexRow}-${index}` }
                                             className={ Styles['character'] }
-                                            onClick={ (event) => setSelectedCharacter(character.id) }
+                                            onClick={ (event) => setSelectedCharacter((indexRow * 7) + index) }
                                         >
                                             {
                                                 character.image &&

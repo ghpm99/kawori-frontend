@@ -21,42 +21,36 @@ const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const updateCharacterClass = (id, value) => {
+    const updateCharacterClass = (index, value) => {
         dispatch(updateCharacterClassReducer({
-            id: id,
+            index: index,
             class: value
         }))
     }
 
-    const updateImageSelectedCharacter = (id, file: RcFile) => {
-        db.facetexture.update(id, {
-            name: file.name,
-            image: file,
-            upload: true,
-        })
+    const updateImageSelectedCharacter = (index, file: RcFile) => {
         dispatch(updateFacetextureUrlReducer({
-            id: id,
-            image: URL.createObjectURL(file),
-            upload: true,
+            index: index,
+            image: URL.createObjectURL(file)
         }))
         dispatch(updateCharacterImageNameReducer({
-            id: id,
+            index: index,
             name: file.name
         }))
     }
 
-    const deleteCharacter = (id) => {
-        dispatch(deleteCharacterReducer(id))
+    const deleteCharacter = (index) => {
+        dispatch(deleteCharacterReducer(index))
     }
 
-    const updateCharacterShowClass = (id, event) => {
+    const updateCharacterShowClass = (index, event) => {
         dispatch(updateCharacterShowClassReducer({
-            id: id,
+            index: index,
             show: event.target.checked
         }))
     }
 
-    const selectedFacetexture = facetextureStore.facetexture.find(item => item.id === facetextureStore.selected)
+    const selectedFacetexture = facetextureStore.facetexture[facetextureStore.selected]
 
     return (
         <div className={ Styles['character-info'] }>
@@ -103,13 +97,13 @@ const Info = () => {
                             style={ {
                                 width: '125px'
                             } }
-                            onChange={ (value) => updateCharacterClass(selectedFacetexture.id, value) }
+                            onChange={ (value) => updateCharacterClass(facetextureStore.selected, value) }
                         />
                     </div>
                     <div className={Styles['controllers-info']}>
                         <Checkbox
                             checked={ selectedFacetexture?.show }
-                            onChange={ (e) => updateCharacterShowClass(selectedFacetexture.id, e) }
+                            onChange={ (e) => updateCharacterShowClass(facetextureStore.selected, e) }
                         >
                             Mostrar icone da classe
                         </Checkbox>
@@ -127,7 +121,7 @@ const Info = () => {
 
                         <Upload
                             listType='picture-card'
-                            beforeUpload={ (file) => updateImageSelectedCharacter(selectedFacetexture.id, file) }
+                            beforeUpload={ (file) => updateImageSelectedCharacter(facetextureStore.selected, file) }
                             fileList={ [] }
                         >
                             <div>
@@ -139,7 +133,7 @@ const Info = () => {
                     <div className={Styles['controllers-info']}>
                         <Button
                             type='primary'
-                            onClick={ () => deleteCharacter(selectedFacetexture.id) }
+                            onClick={ () => deleteCharacter(facetextureStore.selected) }
                         >
                             Deletar personagem
                         </Button>

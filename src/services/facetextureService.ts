@@ -47,7 +47,6 @@ interface IFacetextureApi {
 }
 
 export interface IFacetextureCharacterApi {
-	id: number
 	name: string
 	class: {
 		id: number
@@ -56,7 +55,6 @@ export interface IFacetextureCharacterApi {
 		class_image: string
 	}
 	show: boolean
-	order: number
 	image: {}
 }
 
