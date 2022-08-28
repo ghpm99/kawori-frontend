@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
 	fetchFaceTextureClassService,
 	fetchFacetextureService,
-} from '../../../services/facetextureService'
+} from '../../../services/facetexture'
 
 const initialState: IFacetextureState = {
 	loading: true,
