@@ -1,8 +1,19 @@
 import { apiDjango } from '..'
-import { IFacetextureCharacterApi } from '../facetextureService'
 
 interface IFacetextureApi {
 	characters: IFacetextureCharacterApi[]
+}
+
+export interface IFacetextureCharacterApi {
+	name: string
+	class: {
+		id: number
+		name: string
+		abbreviation: string
+		class_image: string
+	}
+	show: boolean
+	image: {}
 }
 
 export async function fetchFacetextureService() {

@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetextureService'
+import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetexture'
 import { db } from '../../../util/db'
 import Styles from './Preview.module.css'
 import { saveAs } from 'file-saver'

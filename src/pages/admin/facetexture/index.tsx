@@ -9,7 +9,7 @@ import Loading from '../../../components/facetexture/loading';
 import Preview from '../../../components/facetexture/preview';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
-import { updateFacetextureService } from '../../../services/facetextureService';
+import { updateFacetextureService } from '../../../services/facetexture';
 import {
     fetchFacetexture,
     setFacetextureIsEdited,

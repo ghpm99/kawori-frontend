@@ -8,7 +8,7 @@ import { loadFull } from 'tsparticles';
 import { Engine, ISourceOptions } from 'tsparticles-engine';
 import particlesOptions from '../../../public/particles.json';
 import MenuHeader from '../../components/menuHeader';
-import { registerService } from '../../services/registerService';
+import { signupService } from '../../services/auth';
 
 const { Content } = Layout;
 
@@ -39,7 +39,7 @@ export default function RegisterPage(props) {
     }
 
     const onFinish = (values: any) => {
-        registerService(values).then(response => {
+        signupService(values).then(response => {
             message.success(response.data.msg)
             form.resetFields()
             signin(values.username, values.password)

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
-import styles from './AccountMenuInfo.module.css'
+import styles from './AccountMenuInfo.module.scss'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 
