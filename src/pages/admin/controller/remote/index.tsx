@@ -14,7 +14,7 @@ import {
     mouseMoveService,
     mouseScrollService,
     screenSizeService
-} from '../../../../services/remoteService';
+} from '../../../../services/remote';
 import styles from './Remote.module.css';
 
 

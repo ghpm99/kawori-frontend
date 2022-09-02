@@ -12,8 +12,7 @@ import {
     updateFacetextureUrlReducer
 } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
-import { db } from '../../../../util/db'
-import Styles from './Info.module.css'
+import Styles from './Info.module.scss'
 
 const { Title } = Typography
 

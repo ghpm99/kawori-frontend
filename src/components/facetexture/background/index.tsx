@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { updateBackgroundReducer } from '../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../store/store'
 import { db } from '../../../util/db'
-import Styles from './Background.module.css'
+import Styles from './Background.module.scss'
 
 const Background = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)

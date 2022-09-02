@@ -4,7 +4,7 @@ import {
 	fetchDetailPaymentService,
 	fetchPaymentReportService,
 	saveNewPaymentService,
-} from '../../../services/financialService'
+} from '../../../services/financial'
 
 const initialState = {
 	payments: {

@@ -22,7 +22,7 @@ import MenuAdmin from '../../../../../components/menuAdmin/Index'
 import {
     savePaymentDetailService,
     payoffPaymentService
-} from '../../../../../services/financialService'
+} from '../../../../../services/financial'
 import {
     fetchPaymentDetails,
     changeNamePaymentDetails,

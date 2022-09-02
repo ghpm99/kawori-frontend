@@ -2,7 +2,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useSelector } from 'react-redux'
 import { reorderCharacterReducer, setSelectedFacetextureReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
-import Styles from './DnDCharacters.module.css'
+import Styles from './DnDCharacters.module.scss'
 
 const DragAndDropCharacters = () => {
 
