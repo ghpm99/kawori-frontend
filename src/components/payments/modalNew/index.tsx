@@ -1,5 +1,5 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select, Switch } from 'antd'
-import styles from './ModalNew.module.css'
+import styles from './ModalNew.module.scss'
 
 export default function ModalNew(props) {
 

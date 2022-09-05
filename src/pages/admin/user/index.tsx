@@ -2,7 +2,7 @@ import { Avatar, Breadcrumb, Layout, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import LoginHeader from '../../../components/loginHeader/Index';
 import MenuAdmin from '../../../components/menuAdmin/Index';
-import styles from './User.module.css';
+import styles from './User.module.scss';
 import { useSession } from 'next-auth/react';
 import LoadingPage from '../../../components/loadingPage/Index';
 

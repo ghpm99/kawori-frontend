@@ -17,7 +17,7 @@ import {
 } from '../../../store/features/facetexture';
 import { RootState, useAppDispatch } from '../../../store/store';
 import { db } from '../../../util/db';
-import Styles from './Facetexture.module.css';
+import Styles from './Facetexture.module.scss';
 
 const { Header, Content } = Layout;
 

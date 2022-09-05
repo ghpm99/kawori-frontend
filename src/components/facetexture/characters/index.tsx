@@ -1,7 +1,7 @@
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Tooltip, Typography } from 'antd'
-import Styles from './Characters.module.css'
+import Styles from './Characters.module.scss'
 import DragAndDropCharacters from './dragAndDrop'
 import Info from './info'
 import New from './new'

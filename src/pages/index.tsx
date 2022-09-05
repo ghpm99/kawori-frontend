@@ -2,7 +2,7 @@ import { Carousel } from 'antd';
 import Link from 'next/link';
 import { useCallback } from 'react';
 import MenuHeader from '../components/menuHeader';
-import styles from './Home.module.css';
+import styles from './Home.module.scss';
 import { loadFull } from 'tsparticles';
 import { Engine, ISourceOptions } from 'tsparticles-engine';
 import particlesOptions from '../../public/particles.json'

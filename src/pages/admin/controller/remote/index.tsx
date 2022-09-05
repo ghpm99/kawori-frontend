@@ -15,7 +15,7 @@ import {
     mouseScrollService,
     screenSizeService
 } from '../../../../services/remote';
-import styles from './Remote.module.css';
+import styles from './Remote.module.scss';
 
 
 const { Header, Content } = Layout;

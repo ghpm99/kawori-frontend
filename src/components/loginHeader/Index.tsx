@@ -1,7 +1,7 @@
 import { Avatar, Button, Popover } from 'antd'
 import { signOut, useSession } from 'next-auth/react'
 import React from 'react'
-import S from './Login.module.css'
+import S from './Login.module.scss'
 import { UserOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 

@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import Link from 'next/link';
-import styles from './Menu.module.css';
+import styles from './Menu.module.scss';
 import useMenu from './useMenu';
 
 const { Sider } = Layout;

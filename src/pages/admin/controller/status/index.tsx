@@ -8,7 +8,7 @@ import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../components/menuAdmin/Index';
 import { setCpuAndMemoryValue } from '../../../../store/features/status/Index';
 import { RootState } from '../../../../store/store';
-import S from './Status.module.css';
+import S from './Status.module.scss';
 
 
 const { Header, Content } = Layout;

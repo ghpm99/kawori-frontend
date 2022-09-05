@@ -8,7 +8,7 @@ import LoadingPage from '../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../components/menuAdmin/Index';
 import { sendCommandService } from '../../../../services/remote';
-import styles from './Command.module.css';
+import styles from './Command.module.scss';
 
 
 const { Header, Content } = Layout;
