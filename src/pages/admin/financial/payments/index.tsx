@@ -1,4 +1,3 @@
-
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Table, Typography } from 'antd';
 import moment from 'moment';
@@ -6,6 +5,7 @@ import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
 import LoadingPage from '../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../components/menuAdmin/Index';
@@ -14,6 +14,7 @@ import ModalNew from '../../../../components/payments/modalNew';
 import { changeVisibleModal, fetchAllPayment, saveNewPayment } from '../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../store/store';
 import styles from './Payments.module.scss';
+
 
 const { Header, Content } = Layout;
 
@@ -255,7 +256,9 @@ export const getServerSideProps = async ({ req, res }) => {
             },
         }
     }
-    return {}
+    return {
+        props: {}
+    }
 }
 
 export default FinancialPage

@@ -1,18 +1,29 @@
-import { Breadcrumb, Layout } from 'antd'
-import { Content, Header } from 'antd/lib/layout/layout'
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import MenuAdmin from '../../../../components/menuAdmin/Index'
-import LoadingPage from '../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../components/loginHeader/Index'
-import PaymentFixed from '../../../../components/overview/paymentFixed'
-import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
-import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
-import { fetchPaymentReport } from '../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../store/store'
-import styles from './Overview.module.scss'
-import { getSession } from 'next-auth/react'
+import { Breadcrumb, Layout } from 'antd';
+import { Content, Header } from 'antd/lib/layout/layout';
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js';
+import { getSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import LoadingPage from '../../../../components/loadingPage/Index';
+import LoginHeader from '../../../../components/loginHeader/Index';
+import MenuAdmin from '../../../../components/menuAdmin/Index';
+import PaymentFixed from '../../../../components/overview/paymentFixed';
+import PaymentWithFixed from '../../../../components/overview/paymentWithFixed';
+import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed';
+import { fetchPaymentReport } from '../../../../store/features/financial/Index';
+import { RootState, useAppDispatch } from '../../../../store/store';
+import styles from './Overview.module.scss';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -84,7 +95,9 @@ export const getServerSideProps = async ({ req, res }) => {
           },
         }
   }
-  return {}
+  return {
+    props:{}
+  }
 }
 
 export default Overview
