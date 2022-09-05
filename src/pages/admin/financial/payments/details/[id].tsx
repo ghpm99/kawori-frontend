@@ -33,7 +33,7 @@ import {
     changeValuePaymentDetails
 } from '../../../../../store/features/financial/Index'
 import { RootState, useAppDispatch } from '../../../../../store/store'
-import styles from './Details.module.css'
+import styles from './Details.module.scss'
 
 const { Paragraph } = Typography
 const { Option } = Select

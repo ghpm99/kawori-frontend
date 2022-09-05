@@ -3,7 +3,7 @@ import { Content, Header } from 'antd/lib/layout/layout'
 import SkeletonImage from 'antd/lib/skeleton/Image'
 import LoginHeader from '../../loginHeader/Index'
 import MenuAdmin from '../../menuAdmin/Index'
-import Styles from './Loading.module.css'
+import Styles from './Loading.module.scss'
 
 const Loading = () => {
 

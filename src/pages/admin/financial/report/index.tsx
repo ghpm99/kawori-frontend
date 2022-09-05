@@ -7,7 +7,7 @@ import LoadingPage from '../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuCollapsible from '../../../../components/menuAdmin/Index';
 import { RootState } from '../../../../store/store';
-import styles from './Report.module.css';
+import styles from './Report.module.scss';
 
 
 const { Header, Content, Footer } = Layout;

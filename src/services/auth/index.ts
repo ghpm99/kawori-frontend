@@ -11,7 +11,7 @@ export async function signinService(username, password) {
             password
         }
     })
-    return response.status
+    return response
 }
 
 interface INewUser {
@@ -29,4 +29,11 @@ export async function signupService(user: INewUser) {
         status: response.status,
         statusText: response.statusText
     }
+}
+
+export async function fetchUserDetails(token) {
+    const response = await apiLogin.get('/user', {
+        headers: { Authorization: 'Basic ' + token },
+    })
+    return response
 }

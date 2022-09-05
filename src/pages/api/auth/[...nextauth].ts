@@ -1,7 +1,9 @@
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+
+import { fetchUserDetails, signinService } from '../../../services/auth';
+
 import type { NextApiRequest, NextApiResponse } from 'next'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import NextAuth from 'next-auth'
-import axios from 'axios'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 	// Do whatever you want here, before the request is passed down to `NextAuth`
@@ -24,22 +26,14 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 				// e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
 				// You can also use the `req` object to obtain additional parameters
 				// (i.e., the request IP address)
-				const tokenRes = await axios.post(
-					process.env.NEXT_PUBLIC_API_URL + '/auth/login',
-					{
-						credentials,
-					}
-				)
+				const tokenRes = await signinService(credentials.username, credentials.password)
+
 				if(tokenRes.status !== 200){
 					return null
 				}
 				const token = await tokenRes.data.token
-				const res = await axios.get(
-					process.env.NEXT_PUBLIC_API_URL + '/auth/user',
-					{
-						headers: { Authorization: 'Basic ' + token },
-					}
-				)
+				const res = await fetchUserDetails(token)
+
 				const user = await res.data
 				user.token = token
 				// If no error and we have user data, return it

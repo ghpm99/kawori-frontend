@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { useSelector } from 'react-redux'
 import { includeNewCharacterReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
-import Styles from './New.module.css'
+import Styles from './New.module.scss'
 
 
 const New = () => {

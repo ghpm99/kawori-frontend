@@ -11,7 +11,7 @@ import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
 import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
 import { fetchPaymentReport } from '../../../../store/features/financial/Index'
 import { RootState, useAppDispatch } from '../../../../store/store'
-import styles from './Overview.module.css'
+import styles from './Overview.module.scss'
 import { getSession } from 'next-auth/react'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)

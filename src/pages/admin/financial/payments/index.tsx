@@ -13,7 +13,7 @@ import ModalFilter from '../../../../components/payments/modalFilter';
 import ModalNew from '../../../../components/payments/modalNew';
 import { changeVisibleModal, fetchAllPayment, saveNewPayment } from '../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../store/store';
-import styles from './Payments.module.css';
+import styles from './Payments.module.scss';
 
 const { Header, Content } = Layout;
 

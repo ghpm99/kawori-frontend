@@ -1,14 +1,15 @@
-
 import { Button, Card, Checkbox, Form, Input, Layout } from 'antd';
 import { signIn } from 'next-auth/react';
-import  Router from 'next/router';
+import Router from 'next/router';
 import { useCallback, useState } from 'react';
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
 import { Engine, ISourceOptions } from 'tsparticles-engine';
+
 import particlesOptions from '../../../public/particles.json';
 import MenuHeader from '../../components/menuHeader';
-import styles from './Signin.module.css';
+import styles from './Signin.module.scss';
+
 
 const { Content } = Layout;
 

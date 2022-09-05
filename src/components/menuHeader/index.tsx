@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import AccountMenuInfo from '../accountMenuInfo';
-import styles from './MenuHeader.module.css';
+import styles from './MenuHeader.module.scss';
 import useMenuHeader from './useMenuHeader';
 
 export default function MenuHeader(props) {

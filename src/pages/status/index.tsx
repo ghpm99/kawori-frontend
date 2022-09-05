@@ -1,7 +1,7 @@
 
 import Particles from 'react-tsparticles';
 import MenuHeader from '../../components/menuHeader';
-import styles from './Status.module.css';
+import styles from './Status.module.scss';
 import { loadFull } from 'tsparticles';
 import { Engine, ISourceOptions } from 'tsparticles-engine';
 import particlesOptions from '../../../public/particles.json';

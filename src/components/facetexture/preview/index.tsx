@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetexture'
 import { db } from '../../../util/db'
-import Styles from './Preview.module.css'
+import Styles from './Preview.module.scss'
 import { saveAs } from 'file-saver'
 import { DownloadOutlined } from '@ant-design/icons'
 

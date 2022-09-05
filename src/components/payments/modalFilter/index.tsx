@@ -1,6 +1,6 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select } from 'antd';
 import moment from 'moment';
-import styles from './ModalFilter.module.css'
+import styles from './ModalFilter.module.scss'
 
 export default function ModalFilter(props) {
 
