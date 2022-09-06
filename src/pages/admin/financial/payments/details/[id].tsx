@@ -1,39 +1,26 @@
+import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from 'antd';
+import { Content, Header } from 'antd/lib/layout/layout';
+import moment from 'moment';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import LoadingPage from '../../../../../components/loadingPage/Index';
+import LoginHeader from '../../../../../components/loginHeader/Index';
+import MenuAdmin from '../../../../../components/menuAdmin/Index';
+import { payoffPaymentService, savePaymentDetailService } from '../../../../../services/financial';
 import {
-    Breadcrumb,
-    Button,
-    Card,
-    Checkbox,
-    DatePicker,
-    InputNumber,
-    Layout,
-    message,
-    Select,
-    Typography
-} from 'antd'
-import { Content, Header } from 'antd/lib/layout/layout'
-import moment from 'moment'
-import { getSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import LoadingPage from '../../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../../components/menuAdmin/Index'
-import {
-    savePaymentDetailService,
-    payoffPaymentService
-} from '../../../../../services/financial'
-import {
-    fetchPaymentDetails,
-    changeNamePaymentDetails,
-    changeTypePaymentDetails,
-    changeFixedPaymentDetails,
     changeActivePaymentDetails,
+    changeFixedPaymentDetails,
+    changeNamePaymentDetails,
     changePaymentDatePaymentDetails,
-    changeValuePaymentDetails
-} from '../../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../../store/store'
-import styles from './Details.module.scss'
+    changeTypePaymentDetails,
+    changeValuePaymentDetails,
+    fetchPaymentDetails,
+} from '../../../../../store/features/financial/Index';
+import { RootState, useAppDispatch } from '../../../../../store/store';
+import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
 const { Option } = Select
@@ -261,5 +248,5 @@ export const getServerSideProps = async ({ req, res }) => {
             },
           }
     }
-    return {}
+    return {props:{}}
   }

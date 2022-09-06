@@ -1,13 +1,14 @@
-
 import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from 'antd';
 import moment from 'moment';
 import { getSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import LoadingPage from '../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuCollapsible from '../../../../components/menuAdmin/Index';
 import { RootState } from '../../../../store/store';
 import styles from './Report.module.scss';
+
 
 
 const { Header, Content, Footer } = Layout;
@@ -130,7 +131,7 @@ export const getServerSideProps = async ({ req, res }) => {
 			},
 		}
 	}
-	return {}
+	return {props:{}}
 }
 
 export default FinancialPage
