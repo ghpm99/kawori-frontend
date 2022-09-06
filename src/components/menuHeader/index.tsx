@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import AccountMenuInfo from '../accountMenuInfo';
 import styles from './MenuHeader.module.scss';
 import useMenuHeader from './useMenuHeader';
@@ -15,19 +16,9 @@ export default function MenuHeader(props) {
                         Início
                     </a>
                 </Link>
-                <Link href='/commands'>
-                    <a className={ styles['menu-item'] }>
-                        Comandos
-                    </a>
-                </Link>
                 <Link href='/facetexture'>
                     <a className={ styles['menu-item'] }>
                         FaceTexture editor
-                    </a>
-                </Link>
-                <Link href='/status'>
-                    <a className={ styles['menu-item'] }>
-                        Status
                     </a>
                 </Link>
                 <a
@@ -36,13 +27,6 @@ export default function MenuHeader(props) {
                     className={ styles['menu-item'] }
                 >
                     Comunidade
-                </a>
-                <a
-                    target='_blank'
-                    href='https://discordapp.com/api/oauth2/authorize?client_id=622218589243572224&permissions=8&scope=bot'
-                    className={ styles['menu-item'] }
-                >
-                    Incorporar Bot!
                 </a>
             </div>
             <div className={ styles['user-container'] }>
