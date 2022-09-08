@@ -1,10 +1,14 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import {
-	fetchAllPaymentService,
-	fetchDetailPaymentService,
-	fetchPaymentReportService,
-	saveNewPaymentService,
-} from '../../../services/financial'
+    fetchAllContractService,
+    fetchAllInvoiceService,
+    fetchAllPaymentService,
+    fetchDetailContractService,
+    fetchDetailPaymentService,
+    fetchPaymentReportService,
+    saveNewPaymentService,
+} from '../../../services/financial';
 
 const initialState = {
 	payments: {
@@ -29,12 +33,54 @@ const initialState = {
 		loading: true,
 		data: undefined
 	},
+	contracts: {
+		data: [],
+		loading: true,
+		modal: {
+			newPayment: {
+				visible: false,
+				error: false,
+				errorMsg: '',
+			},
+		},
+	},
+	contractDetail: {
+		data: undefined,
+		loading: true
+	},
+	invoices: {
+		data: [],
+		loading: true,
+		modal: {
+			newPayment: {
+				visible: false,
+				error: false,
+				errorMsg: '',
+			},
+		},
+	}
 }
 
 export const fetchAllPayment = createAsyncThunk(
 	'financial/fetchAllPayment',
 	async (filters?: financialFilter) => {
 		const response = await fetchAllPaymentService(filters)
+		return response
+	}
+)
+
+export const fetchAllContract = createAsyncThunk(
+	'financial/fetchAllContract',
+	async () => {
+		const response = await fetchAllContractService()
+		return response
+	}
+)
+
+export const fetchAllInvoice = createAsyncThunk(
+	'financial/fetchAllInvoice',
+	async () => {
+		const response = await fetchAllInvoiceService()
 		return response
 	}
 )
@@ -59,6 +105,14 @@ export const fetchPaymentReport = createAsyncThunk(
 	'financial/fetchPaymentReport',
 	async () => {
 		const response = await fetchPaymentReportService()
+		return response
+	}
+)
+
+export const fetchContractDetails = createAsyncThunk(
+	'financial/fetchContractDetails',
+	async (id: number) => {
+		const response = await fetchDetailContractService(id)
 		return response
 	}
 )
@@ -89,6 +143,14 @@ export const financialSlice = createSlice({
 		changeValuePaymentDetails: (state, action) => {
 			state.paymentDetail.data.value = action.payload
 		},
+		changeVisibleContractsModal: (state, action) => {
+			state.contracts.modal[action.payload.modal].visible =
+				action.payload.visible
+		},
+		changeVisibleInvoiceModal: (state, action) => {
+			state.invoices.modal[action.payload.modal].visible =
+				action.payload.visible
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -113,9 +175,29 @@ export const financialSlice = createSlice({
 				state.paymentReport.loading = true
 			})
 			.addCase(fetchPaymentReport.fulfilled, (state, action) => {
-
 				state.paymentReport.loading = false
 				state.paymentReport.data = action.payload.data
+			})
+			.addCase(fetchAllContract.pending, (state) => {
+				state.contracts.loading = true
+			})
+			.addCase(fetchAllContract.fulfilled, (state, action) => {
+				state.contracts.data = action.payload.data
+				state.contracts.loading = false
+			})
+			.addCase(fetchAllInvoice.pending, (state) => {
+				state.invoices.loading = true
+			})
+			.addCase(fetchAllInvoice.fulfilled, (state, action) => {
+				state.invoices.data = action.payload.data
+				state.invoices.loading = false
+			})
+			.addCase(fetchContractDetails.pending, (state) => {
+				state.contractDetail.loading = true
+			})
+			.addCase(fetchContractDetails.fulfilled, (state, action) => {
+				state.contractDetail.data = action.payload.data
+				state.contractDetail.loading = false
 			})
 	},
 })
@@ -128,6 +210,8 @@ export const {
 	changeActivePaymentDetails,
 	changePaymentDatePaymentDetails,
 	changeValuePaymentDetails,
+	changeVisibleContractsModal,
+	changeVisibleInvoiceModal,
 } = financialSlice.actions
 
 export default financialSlice.reducer

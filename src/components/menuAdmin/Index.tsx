@@ -1,17 +1,18 @@
-
 import {
-	DesktopOutlined,
-	HddOutlined,
-	HomeOutlined,
-	SettingOutlined,
-	SnippetsOutlined,
-	UserOutlined,
-	AppstoreOutlined
+    AppstoreOutlined,
+    DesktopOutlined,
+    HddOutlined,
+    HomeOutlined,
+    SettingOutlined,
+    SnippetsOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import Link from 'next/link';
+
 import styles from './Menu.module.scss';
 import useMenu from './useMenu';
+
 
 const { Sider } = Layout;
 
@@ -71,6 +72,16 @@ function MenuAdmin(props: { selected: string[] }) {
 									<Menu.Item key='overview'>
 										<Link href={ '/admin/financial/overview' }>
 											Overview
+										</Link>
+									</Menu.Item>
+									<Menu.Item key='contracts'>
+										<Link href={ '/admin/financial/contracts' }>
+											Contratos
+										</Link>
+									</Menu.Item>
+									<Menu.Item key='invoices'>
+										<Link href={ '/admin/financial/invoices' }>
+											Notas
 										</Link>
 									</Menu.Item>
 									<Menu.Item key='payments'>

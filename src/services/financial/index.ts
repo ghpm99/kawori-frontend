@@ -31,3 +31,23 @@ export async function fetchPaymentReportService(){
     const response = await apiDjango.get('/financial/report')
     return response.data
 }
+
+export async function fetchAllContractService(){
+    const response = await apiDjango.get('/financial/contract/')
+    return response.data
+}
+
+export async function fetchAllInvoiceService(){
+    const response = await apiDjango.get('/financial/invoice/')
+    return response.data
+}
+
+export async function saveNewContractService(data){
+    const response = await apiDjango.post('/financial/contract/new', data)
+    return response.data
+}
+
+export async function fetchDetailContractService(id){
+    const response = await apiDjango.get(`/financial/contract/${id}/`)
+    return response.data
+}
