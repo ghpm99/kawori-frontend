@@ -10,3 +10,4 @@ declare type financialFilter = {
     fixed?: boolean,
     active?: boolean
 }
+
