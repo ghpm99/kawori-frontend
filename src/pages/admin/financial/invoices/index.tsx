@@ -64,7 +64,7 @@ function FinancialPage() {
             title: 'Ações',
             dataIndex: 'id',
             key: 'id',
-            render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
+            render: value => <Link href={ `/admin/financial/invoices/details/${value}` }>Detalhes</Link>
         }
     ]
 

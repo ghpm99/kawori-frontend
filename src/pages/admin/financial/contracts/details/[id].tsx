@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Card, Layout, message, Select, Table, Typography } from 'antd';
+import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
 import { getSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -9,26 +9,17 @@ import { useSelector } from 'react-redux';
 import LoadingPage from '../../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
-import { payoffPaymentService, savePaymentDetailService } from '../../../../../services/financial';
-import {
-    changeActivePaymentDetails,
-    changeFixedPaymentDetails,
-    changeNamePaymentDetails,
-    changePaymentDatePaymentDetails,
-    changeTypePaymentDetails,
-    changeValuePaymentDetails,
-    fetchContractDetails,
-    fetchPaymentDetails,
-} from '../../../../../store/features/financial/Index';
+import { includeNewInvoiceService } from '../../../../../services/financial';
+import { fetchContractDetails } from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
 import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
 const { Option } = Select
 
-export default function PaymentDetails() {
+export default function ContractDetails() {
 
-    const msgRef = 'payment-details-msg'
+    const msgRef = 'contract-details-msg'
 
     const router = useRouter()
     const { id } = router.query
@@ -43,56 +34,49 @@ export default function PaymentDetails() {
         }
     }, [id])
 
-    const date = new Date(financialStore.data?.date).toLocaleDateString()
-
     const save = (event) => {
-        savePaymentDetailService(id, financialStore.data).then(response => {
-            message.success({
-                content: response.msg,
-                key: msgRef
-            })
-        })
+        console.log(event)
     }
 
     const changeName = (event) => {
-        dispatch(changeNamePaymentDetails(event))
+        console.log(event)
     }
 
-    const changeType = (event) => {
-        dispatch(changeTypePaymentDetails(event))
-    }
-
-    const changeFixed = (event) => {
-        const { checked } = event.target
-        dispatch(changeFixedPaymentDetails(checked))
-    }
-
-    const changeActive = (event) => {
-        const { checked } = event.target
-        dispatch(changeActivePaymentDetails(checked))
-    }
-
-    const changePaymentDate = (date) => {
-        dispatch(changePaymentDatePaymentDetails(date.format('YYYY-MM-DD')))
-    }
-
-    const changeValue = (event) => {
-        dispatch(changeValuePaymentDetails(event))
-    }
-
-    const payoff = (event) => {
-        payoffPaymentService(financialStore.data.id).then(data => {
-            message.success({
-                content: data.msg,
-                key: msgRef
-            })
-            dispatch(fetchPaymentDetails(financialStore.data.id))
+    const includeNewInvoice = () => {
+        const date = new Date().toISOString().split('T')[0]
+        includeNewInvoiceService({
+            id: financialStore.data.id,
+            name: '',
+            installments: 1,
+            value: 0,
+            date: date
+        }).then(e => {
+            dispatch(fetchContractDetails(financialStore.data.id))
         })
     }
 
+    const onMenuClick: MenuProps['onClick'] = e => {
+        console.log('click', e)
+        if (e.key === '1') {
+            includeNewInvoice()
+        }
+    }
+
+    const menu = (
+        <Menu
+            onClick={ onMenuClick }
+            items={ [
+                {
+                    key: '1',
+                    label: 'Incluir nova nota',
+                }
+            ] }
+        />
+    )
+
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['sub2', 'payments'] } />
+            <MenuAdmin selected={ ['sub2', 'contracts'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />
@@ -106,90 +90,84 @@ export default function PaymentDetails() {
                     </Breadcrumb>
                     <Layout className={ styles.container_labels }>
                         <Card loading={ financialStore.loading }>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    ID: { financialStore.data?.id }
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        ID: { financialStore.data?.id }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Nome:
+                                    </div>
+                                    <Paragraph
+                                        style={ { margin: '0' } }
+                                        editable={ { onChange: changeName } }
+                                    >
+                                        { financialStore.data?.name }
+                                    </Paragraph>
+                                </div>
+                                <div className={ `${styles['label-detail']} ${styles['action-Button']}` }>
+                                    <Dropdown.Button
+                                        overlay={ menu }
+                                        type='primary'
+                                        onClick={ save }
+                                        className={ styles.button_save }
+                                    >
+                                        Salvar
+                                    </Dropdown.Button>
                                 </div>
                             </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Nome:
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Notas:
+                                    </div>
                                 </div>
-                                <Paragraph
-                                    style={ { margin: '0' } }
-                                    editable={ { onChange: changeName } }
-                                >
-                                    { financialStore.data?.name }
-                                </Paragraph>
                             </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Notas:
-                                </div>
-                                <Table
-                                    columns={[
-                                        {
-                                            title: 'Status',
-                                            dataIndex: 'status',
-                                            key: 'status',
-                                            render: value => value === 0 ? 'Em aberto' : 'Baixado'
-                                        },
-                                        {
-                                            title: 'Id',
-                                            dataIndex: 'id',
-                                            key: 'id'
-                                        },
-                                        {
-                                            title: 'Nome',
-                                            dataIndex: 'name',
-                                            key: 'name'
-                                        },
-                                        {
-                                            title: 'Valor',
-                                            dataIndex: 'value',
-                                            key: 'value',
-                                            render: text => `R$ ${text}`
-                                        },
-                                        {
-                                            title: 'Parcelas',
-                                            dataIndex: 'installments',
-                                            key: 'installments'
-                                        },
-                                        {
-                                            title: 'Dia',
-                                            dataIndex: 'date',
-                                            key: 'date'
-                                        },
-                                        {
-                                            title: 'Ações',
-                                            dataIndex: 'id',
-                                            key: 'id',
-                                            render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
-                                        }
-                                    ]}
-                                    dataSource={financialStore.data?.invoices}
-                                />
-                            </div>
-                            <div className={ styles.buttons }>
-                                {
-                                    financialStore.data?.status === 0 ? (
-                                        <Button
-                                            danger
-                                            type='default'
-                                            onClick={ payoff }
-                                        >
-                                            Baixar pagamento
-                                        </Button>
-                                    ) : (<></>)
-                                }
-                                <Button
-                                    type='primary'
-                                    onClick={ save }
-                                    className={ styles.button_save }
-                                >
-                                    Salvar
-                                </Button>
-                            </div>
+                            <Table
+                                columns={ [
+                                    {
+                                        title: 'Status',
+                                        dataIndex: 'status',
+                                        key: 'status',
+                                        render: value => value === 0 ? 'Em aberto' : 'Baixado'
+                                    },
+                                    {
+                                        title: 'Id',
+                                        dataIndex: 'id',
+                                        key: 'id'
+                                    },
+                                    {
+                                        title: 'Nome',
+                                        dataIndex: 'name',
+                                        key: 'name'
+                                    },
+                                    {
+                                        title: 'Valor',
+                                        dataIndex: 'value',
+                                        key: 'value',
+                                        render: text => `R$ ${text}`
+                                    },
+                                    {
+                                        title: 'Parcelas',
+                                        dataIndex: 'installments',
+                                        key: 'installments'
+                                    },
+                                    {
+                                        title: 'Dia',
+                                        dataIndex: 'date',
+                                        key: 'date'
+                                    },
+                                    {
+                                        title: 'Ações',
+                                        dataIndex: 'id',
+                                        key: 'id',
+                                        render: value => <Link href={ `/admin/financial/invoices/details/${value}` }>Detalhes</Link>
+                                    }
+                                ] }
+                                dataSource={ financialStore.data?.invoices }
+                            />
                         </Card>
                     </Layout>
                 </Content>
@@ -198,7 +176,7 @@ export default function PaymentDetails() {
     )
 }
 
-PaymentDetails.auth = {
+ContractDetails.auth = {
     role: 'admin',
     loading: <LoadingPage />,
     unauthorized: "/signin",
