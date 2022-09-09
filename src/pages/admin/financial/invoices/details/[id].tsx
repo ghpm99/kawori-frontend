@@ -10,27 +10,27 @@ import LoadingPage from '../../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
 import { includeNewInvoiceService } from '../../../../../services/financial';
-import { fetchContractDetails } from '../../../../../store/features/financial/Index';
+import { fetchContractDetails, fetchInvoiceDetails } from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
 import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
 const { Option } = Select
 
-export default function ContractDetails() {
+export default function InvoiceDetails() {
 
-    const msgRef = 'contract-details-msg'
+    const msgRef = 'invoice-details-msg'
 
     const router = useRouter()
     const { id } = router.query
 
-    const financialStore = useSelector((state: RootState) => state.financial.contractDetail)
+    const financialStore = useSelector((state: RootState) => state.financial.invoiceDetail)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (id) {
-            const idContract = parseInt(id as string)
-            dispatch(fetchContractDetails(idContract))
+            const idInvoice = parseInt(id as string)
+            dispatch(fetchInvoiceDetails(idInvoice))
         }
     }, [id])
 
@@ -76,7 +76,7 @@ export default function ContractDetails() {
 
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['sub2', 'contracts'] } />
+            <MenuAdmin selected={ ['sub2', 'invoices'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />
@@ -121,7 +121,24 @@ export default function ContractDetails() {
                             <div className={ styles['row'] }>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Notas:
+                                        Status: { financialStore.data?.status }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Parcelas:{ financialStore.data?.installments }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor: R${ financialStore.data?.value }
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Pagamentos:
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +180,7 @@ export default function ContractDetails() {
                                         title: 'Ações',
                                         dataIndex: 'id',
                                         key: 'id',
-                                        render: value => <Link href={ `/admin/financial/invoices/details/${value}` }>Detalhes</Link>
+                                        render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
                                     }
                                 ] }
                                 dataSource={ financialStore.data?.invoices }
@@ -176,7 +193,7 @@ export default function ContractDetails() {
     )
 }
 
-ContractDetails.auth = {
+InvoiceDetails.auth = {
     role: 'admin',
     loading: <LoadingPage />,
     unauthorized: "/signin",

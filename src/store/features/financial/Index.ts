@@ -5,6 +5,7 @@ import {
     fetchAllInvoiceService,
     fetchAllPaymentService,
     fetchDetailContractService,
+    fetchDetailInvoiceService,
     fetchDetailPaymentService,
     fetchPaymentReportService,
     saveNewPaymentService,
@@ -58,6 +59,10 @@ const initialState = {
 				errorMsg: '',
 			},
 		},
+	},
+	invoiceDetail: {
+		data: undefined,
+		loading: true
 	}
 }
 
@@ -113,6 +118,14 @@ export const fetchContractDetails = createAsyncThunk(
 	'financial/fetchContractDetails',
 	async (id: number) => {
 		const response = await fetchDetailContractService(id)
+		return response
+	}
+)
+
+export const fetchInvoiceDetails = createAsyncThunk(
+	'financial/fetchInvoiceDetails',
+	async (id: number) => {
+		const response = await fetchDetailInvoiceService(id)
 		return response
 	}
 )
@@ -198,6 +211,13 @@ export const financialSlice = createSlice({
 			.addCase(fetchContractDetails.fulfilled, (state, action) => {
 				state.contractDetail.data = action.payload.data
 				state.contractDetail.loading = false
+			})
+			.addCase(fetchInvoiceDetails.pending, (state) => {
+				state.invoiceDetail.loading = true
+			})
+			.addCase(fetchInvoiceDetails.fulfilled, (state, action) => {
+				state.invoiceDetail.data = action.payload.data
+				state.invoiceDetail.loading = false
 			})
 	},
 })
