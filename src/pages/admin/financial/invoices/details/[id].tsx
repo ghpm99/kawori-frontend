@@ -9,8 +9,7 @@ import { useSelector } from 'react-redux';
 import LoadingPage from '../../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
-import { includeNewInvoiceService } from '../../../../../services/financial';
-import { fetchContractDetails, fetchInvoiceDetails } from '../../../../../store/features/financial/Index';
+import { fetchInvoiceDetails } from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
 import styles from './Details.module.scss';
 
@@ -43,16 +42,7 @@ export default function InvoiceDetails() {
     }
 
     const includeNewInvoice = () => {
-        const date = new Date().toISOString().split('T')[0]
-        includeNewInvoiceService({
-            id: financialStore.data.id,
-            name: '',
-            installments: 1,
-            value: 0,
-            date: date
-        }).then(e => {
-            dispatch(fetchContractDetails(financialStore.data.id))
-        })
+        console.log('includeNewInvoice')
     }
 
     const onMenuClick: MenuProps['onClick'] = e => {
@@ -85,7 +75,7 @@ export default function InvoiceDetails() {
                     <Breadcrumb className={ styles.breadcrumb }>
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-                        <Breadcrumb.Item>Contrato</Breadcrumb.Item>
+                        <Breadcrumb.Item>Nota</Breadcrumb.Item>
                         <Breadcrumb.Item>Detalhes</Breadcrumb.Item>
                     </Breadcrumb>
                     <Layout className={ styles.container_labels }>
@@ -151,9 +141,15 @@ export default function InvoiceDetails() {
                                         render: value => value === 0 ? 'Em aberto' : 'Baixado'
                                     },
                                     {
-                                        title: 'Id',
-                                        dataIndex: 'id',
-                                        key: 'id'
+                                        title: 'Tipo',
+                                        dataIndex: 'type',
+                                        key: 'type',
+                                        render: text => text === 0 ? 'Credito' : 'Debito'
+                                    },
+                                    {
+                                        title: 'Data',
+                                        dataIndex: 'date',
+                                        key: 'dataIndex'
                                     },
                                     {
                                         title: 'Nome',
@@ -172,9 +168,15 @@ export default function InvoiceDetails() {
                                         key: 'installments'
                                     },
                                     {
-                                        title: 'Dia',
-                                        dataIndex: 'date',
-                                        key: 'date'
+                                        title: 'Dia de pagamento',
+                                        dataIndex: 'payment_date',
+                                        key: 'payment_date'
+                                    },
+                                    {
+                                        title: 'Fixo',
+                                        dataIndex: 'fixed',
+                                        key: 'fixed',
+                                        render: value => value ? 'Sim' : 'Não'
                                     },
                                     {
                                         title: 'Ações',
@@ -183,7 +185,7 @@ export default function InvoiceDetails() {
                                         render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
                                     }
                                 ] }
-                                dataSource={ financialStore.data?.invoices }
+                                dataSource={ financialStore.data?.payments }
                             />
                         </Card>
                     </Layout>

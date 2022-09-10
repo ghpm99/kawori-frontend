@@ -46,10 +46,15 @@ export default function ContractDetails() {
         const date = new Date().toISOString().split('T')[0]
         includeNewInvoiceService({
             id: financialStore.data.id,
+            status: 0,
+            type:1,
             name: '',
-            installments: 1,
-            value: 0,
-            date: date
+            date: date,
+            installments: 2,
+            payment_date: date,
+            fixed:false,
+            active: true,
+            value: 100,
         }).then(e => {
             dispatch(fetchContractDetails(financialStore.data.id))
         })
