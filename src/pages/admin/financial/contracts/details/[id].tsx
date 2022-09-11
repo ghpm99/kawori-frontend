@@ -1,17 +1,23 @@
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd';
+import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Typography } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
 import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import LoadingPage from '../../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
-import { includeNewInvoiceService } from '../../../../../services/financial';
-import { fetchContractDetails } from '../../../../../store/features/financial/Index';
+import { includeNewInvoiceService, mergeContractService } from '../../../../../services/financial';
+import {
+    changeValueMergeModal,
+    changeVisibleMergeModal,
+    fetchAllContract,
+    fetchContractDetails,
+} from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
+import { formatMoney } from '../../../../../util';
 import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
@@ -27,12 +33,23 @@ export default function ContractDetails() {
     const financialStore = useSelector((state: RootState) => state.financial.contractDetail)
     const dispatch = useAppDispatch()
 
+    const [searchText, setSearchText] = useState('')
+
+    const mergeContractOption = financialStore.contracts.filter(item => item.id !== financialStore.data?.id).map(item => ({
+        value: item.id,
+        label: `Id: ${item.id} Name: ${item.name}`
+    }))
+
     useEffect(() => {
         if (id) {
             const idContract = parseInt(id as string)
             dispatch(fetchContractDetails(idContract))
         }
     }, [id])
+
+    useEffect(() => {
+        dispatch(fetchAllContract())
+    }, [])
 
     const save = (event) => {
         console.log(event)
@@ -47,12 +64,12 @@ export default function ContractDetails() {
         includeNewInvoiceService({
             id: financialStore.data.id,
             status: 0,
-            type:1,
+            type: 1,
             name: '',
             date: date,
             installments: 2,
             payment_date: date,
-            fixed:false,
+            fixed: false,
             active: true,
             value: 100,
         }).then(e => {
@@ -61,10 +78,38 @@ export default function ContractDetails() {
     }
 
     const onMenuClick: MenuProps['onClick'] = e => {
-        console.log('click', e)
-        if (e.key === '1') {
-            includeNewInvoice()
+        switch (e.key) {
+            case '1':
+                includeNewInvoice()
+                break
+            case '2':
+                dispatch(changeVisibleMergeModal(true))
+                break
         }
+    }
+
+    const handleMergeSelectEvent = (value) => {
+        dispatch(changeValueMergeModal(value))
+    }
+
+    const onSearch = (value: string) => {
+        setSearchText(value)
+    }
+
+    const closeMergeModal = () => {
+        dispatch(changeVisibleMergeModal(false))
+    }
+
+    const mergeContractEvent = () => {
+        console.log(financialStore.modal.mergeContract.id)
+        mergeContractService({
+            id: financialStore.data.id,
+            contracts: financialStore.modal.mergeContract.id
+        }).then(e => {
+            closeMergeModal()
+            message.success(e.msg)
+            dispatch(fetchContractDetails(financialStore.data.id))
+        })
     }
 
     const menu = (
@@ -74,6 +119,10 @@ export default function ContractDetails() {
                 {
                     key: '1',
                     label: 'Incluir nova nota',
+                },
+                {
+                    key: '2',
+                    label: 'Mesclar contrato',
                 }
             ] }
         />
@@ -121,6 +170,23 @@ export default function ContractDetails() {
                                     >
                                         Salvar
                                     </Dropdown.Button>
+                                </div>
+                            </div>
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor Total: { formatMoney(financialStore.data?.value) }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor Baixado: { formatMoney(financialStore.data?.value_closed) }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor em Aberto: { formatMoney(financialStore.data?.value_open) }
+                                    </div>
                                 </div>
                             </div>
                             <div className={ styles['row'] }>
@@ -177,6 +243,28 @@ export default function ContractDetails() {
                     </Layout>
                 </Content>
             </Layout>
+            <Modal
+                title='Mesclar contrato'
+                visible={ financialStore.modal.mergeContract.visible }
+                onCancel={ closeMergeModal }
+                onOk={ mergeContractEvent }
+            >
+                <div>
+                    Contrato:
+                </div>
+                <Select
+                    showSearch
+                    placeholder='Selecione um contrato:'
+                    mode='multiple'
+                    onChange={ handleMergeSelectEvent }
+                    onSearch={ onSearch }
+                    filterOption={ (input, option) => (option!.label as unknown as string)?.toLowerCase().includes(input.toLowerCase()) }
+                    options={ mergeContractOption }
+                    style={ {
+                        width: '100%'
+                    } }
+                />
+            </Modal>
         </Layout>
     )
 }

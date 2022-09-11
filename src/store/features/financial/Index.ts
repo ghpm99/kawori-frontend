@@ -47,7 +47,16 @@ const initialState = {
 	},
 	contractDetail: {
 		data: undefined,
-		loading: true
+		contracts: [],
+		loading: true,
+		modal: {
+			mergeContract: {
+				id: undefined,
+				visible: false,
+				error: false,
+				errorMsg: ''
+			}
+		}
 	},
 	invoices: {
 		data: [],
@@ -130,6 +139,7 @@ export const fetchInvoiceDetails = createAsyncThunk(
 	}
 )
 
+
 export const financialSlice = createSlice({
 	name: 'financial',
 	initialState,
@@ -164,6 +174,12 @@ export const financialSlice = createSlice({
 			state.invoices.modal[action.payload.modal].visible =
 				action.payload.visible
 		},
+		changeVisibleMergeModal: (state, action) => {
+			state.contractDetail.modal.mergeContract.visible = action.payload
+		},
+		changeValueMergeModal: (state, action) => {
+			state.contractDetail.modal.mergeContract.id = action.payload
+		}
 	},
 	extraReducers: (builder) => {
 		builder
@@ -196,6 +212,7 @@ export const financialSlice = createSlice({
 			})
 			.addCase(fetchAllContract.fulfilled, (state, action) => {
 				state.contracts.data = action.payload.data
+				state.contractDetail.contracts = action.payload.data
 				state.contracts.loading = false
 			})
 			.addCase(fetchAllInvoice.pending, (state) => {
@@ -232,6 +249,8 @@ export const {
 	changeValuePaymentDetails,
 	changeVisibleContractsModal,
 	changeVisibleInvoiceModal,
+	changeVisibleMergeModal,
+	changeValueMergeModal,
 } = financialSlice.actions
 
 export default financialSlice.reducer
