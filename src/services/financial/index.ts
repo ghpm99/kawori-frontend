@@ -61,3 +61,8 @@ export async function fetchDetailInvoiceService(id){
     const response = await apiDjango.get(`/financial/invoice/${id}/`)
     return response.data
 }
+
+export async function mergeContractService(data){
+    const response = await apiDjango.post(`/financial/contract/${data.id}/merge/`, data)
+    return response.data
+}
