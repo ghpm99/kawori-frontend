@@ -11,6 +11,7 @@ import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
 import { fetchInvoiceDetails } from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
+import { formatMoney } from '../../../../../util';
 import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
@@ -111,17 +112,34 @@ export default function InvoiceDetails() {
                             <div className={ styles['row'] }>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Status: { financialStore.data?.status }
+                                        <strong>Status:</strong> { financialStore.data?.status === 0 ? 'Em aberto' : 'Baixado' }
                                     </div>
                                 </div>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Parcelas:{ financialStore.data?.installments }
+                                        Parcelas: { financialStore.data?.installments }
                                     </div>
                                 </div>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Valor: R${ financialStore.data?.value }
+                                        Data: { financialStore.data?.date }
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor: { formatMoney(financialStore.data?.value) }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor em Aberto: { formatMoney(financialStore.data?.value_open) }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor Baixado: { formatMoney(financialStore.data?.value_closed) }
                                     </div>
                                 </div>
                             </div>
