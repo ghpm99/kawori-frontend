@@ -89,6 +89,11 @@ export default function InvoiceDetails() {
                                 </div>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
+                                        Contrato: { `${financialStore.data?.contract} - ${financialStore.data?.contract_name}` }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
                                         Nome:
                                     </div>
                                     <Paragraph
@@ -98,16 +103,7 @@ export default function InvoiceDetails() {
                                         { financialStore.data?.name }
                                     </Paragraph>
                                 </div>
-                                <div className={ `${styles['label-detail']} ${styles['action-Button']}` }>
-                                    <Dropdown.Button
-                                        overlay={ menu }
-                                        type='primary'
-                                        onClick={ save }
-                                        className={ styles.button_save }
-                                    >
-                                        Salvar
-                                    </Dropdown.Button>
-                                </div>
+
                             </div>
                             <div className={ styles['row'] }>
                                 <div className={ styles['label-detail'] }>
@@ -148,6 +144,16 @@ export default function InvoiceDetails() {
                                     <div className={ styles.label }>
                                         Pagamentos:
                                     </div>
+                                </div>
+                                <div className={ `${styles['label-detail']} ${styles['action-Button']}` }>
+                                    <Dropdown.Button
+                                        overlay={ menu }
+                                        type='primary'
+                                        onClick={ save }
+                                        className={ styles.button_save }
+                                    >
+                                        Salvar
+                                    </Dropdown.Button>
                                 </div>
                             </div>
                             <Table

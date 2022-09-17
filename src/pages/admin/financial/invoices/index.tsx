@@ -98,7 +98,8 @@ function FinancialPage() {
                         </div>
                         <Table
                             pagination={ {
-                                showSizeChanger: true
+                                showSizeChanger: true,
+                                defaultPageSize: 20
                             } }
                             columns={ headerTableFinancial }
                             dataSource={ financialStore.data }

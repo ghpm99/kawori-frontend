@@ -112,6 +112,16 @@ export default function PaymentDetails() {
                             </div>
                             <div className={ styles.label_detail }>
                                 <div className={ styles.label }>
+                                    Contrato: { `${financialStore.data?.contract} - ${financialStore.data?.contract_name}` }
+                                </div>
+                            </div>
+                            <div className={ styles.label_detail }>
+                                <div className={ styles.label }>
+                                    Nota: { `${financialStore.data?.invoice} - ${financialStore.data?.invoice_name}` }
+                                </div>
+                            </div>
+                            <div className={ styles.label_detail }>
+                                <div className={ styles.label }>
                                     Nome:
                                 </div>
                                 <Paragraph
