@@ -11,7 +11,7 @@ import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
 import { fetchInvoiceDetails } from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
-import { formatMoney } from '../../../../../util';
+import { formatMoney, formatterDate } from '../../../../../util';
 import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
@@ -173,7 +173,8 @@ export default function InvoiceDetails() {
                                     {
                                         title: 'Data',
                                         dataIndex: 'date',
-                                        key: 'dataIndex'
+                                        key: 'dataIndex',
+                                        render: value => formatterDate(value)
                                     },
                                     {
                                         title: 'Nome',
@@ -184,7 +185,7 @@ export default function InvoiceDetails() {
                                         title: 'Valor',
                                         dataIndex: 'value',
                                         key: 'value',
-                                        render: text => `R$ ${text}`
+                                        render: value => formatMoney(value)
                                     },
                                     {
                                         title: 'Parcelas',
@@ -194,7 +195,8 @@ export default function InvoiceDetails() {
                                     {
                                         title: 'Dia de pagamento',
                                         dataIndex: 'payment_date',
-                                        key: 'payment_date'
+                                        key: 'payment_date',
+                                        render: value => formatterDate(value)
                                     },
                                     {
                                         title: 'Fixo',

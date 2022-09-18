@@ -15,16 +15,7 @@ const initialState = {
 	payments: {
 		data: [],
 		loading: true,
-		modal: {
-			newPayment: {
-				visible: false,
-				error: false,
-				errorMsg: '',
-			},
-			modalFilters: {
-				visible: false,
-			},
-		},
+		filters: undefined,
 	},
 	paymentDetail: {
 		data: undefined,
@@ -55,7 +46,12 @@ const initialState = {
 				visible: false,
 				error: false,
 				errorMsg: ''
-			}
+			},
+			newInvoice: {
+				visible: false,
+				error: false,
+				errorMsg: '',
+			},
 		}
 	},
 	invoices: {
@@ -144,10 +140,6 @@ export const financialSlice = createSlice({
 	name: 'financial',
 	initialState,
 	reducers: {
-		changeVisibleModal: (state, action) => {
-			state.payments.modal[action.payload.modal].visible =
-				action.payload.visible
-		},
 		changeNamePaymentDetails: (state, action) => {
 			state.paymentDetail.data.name = action.payload
 		},
@@ -174,11 +166,20 @@ export const financialSlice = createSlice({
 			state.invoices.modal[action.payload.modal].visible =
 				action.payload.visible
 		},
-		changeVisibleMergeModal: (state, action) => {
-			state.contractDetail.modal.mergeContract.visible = action.payload
+		changeVisibleModalContract: (state, action) => {
+			state.contractDetail.modal[action.payload.name].visible = action.payload.value
 		},
 		changeValueMergeModal: (state, action) => {
 			state.contractDetail.modal.mergeContract.id = action.payload
+		},
+		setFilterPayments: (state, action) => {
+			state.payments.filters = {
+				...state.payments.filters,
+				[action.payload.name]: action.payload.value ?? '',
+			}
+		},
+		cleanFilterPayments: (state) => {
+			state.payments.filters = undefined
 		}
 	},
 	extraReducers: (builder) => {
@@ -240,7 +241,6 @@ export const financialSlice = createSlice({
 })
 
 export const {
-	changeVisibleModal,
 	changeNamePaymentDetails,
 	changeTypePaymentDetails,
 	changeFixedPaymentDetails,
@@ -249,8 +249,10 @@ export const {
 	changeValuePaymentDetails,
 	changeVisibleContractsModal,
 	changeVisibleInvoiceModal,
-	changeVisibleMergeModal,
+	changeVisibleModalContract,
 	changeValueMergeModal,
+	setFilterPayments,
+	cleanFilterPayments,
 } = financialSlice.actions
 
 export default financialSlice.reducer

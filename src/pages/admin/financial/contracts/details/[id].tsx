@@ -1,23 +1,25 @@
 import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Typography } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
+import moment from 'moment';
 import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import ModalNewInvoice from '../../../../../components/contracts/modalNewInvoice';
 import LoadingPage from '../../../../../components/loadingPage/Index';
 import LoginHeader from '../../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../../components/menuAdmin/Index';
 import { includeNewInvoiceService, mergeContractService } from '../../../../../services/financial';
 import {
     changeValueMergeModal,
-    changeVisibleMergeModal,
+    changeVisibleModalContract,
     fetchAllContract,
     fetchContractDetails,
 } from '../../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../../store/store';
-import { formatMoney } from '../../../../../util';
+import { formatMoney, formatterDate } from '../../../../../util';
 import styles from './Details.module.scss';
 
 const { Paragraph } = Typography
@@ -59,31 +61,37 @@ export default function ContractDetails() {
         console.log(event)
     }
 
-    const includeNewInvoice = () => {
-        const date = new Date().toISOString().split('T')[0]
+    const includeNewInvoice = (values) => {
         includeNewInvoiceService({
             id: financialStore.data.id,
             status: 0,
-            type: 1,
-            name: '',
-            date: date,
-            installments: 2,
-            payment_date: date,
-            fixed: false,
+            type: values.type,
+            name: values.name,
+            date: moment(values.date).format('YYYY-MM-DD'),
+            installments: values.installments,
+            payment_date: moment(values.payment_date).format('YYYY-MM-DD'),
+            fixed: values.fixed ? true : false,
             active: true,
-            value: 100,
+            value: values.value,
         }).then(e => {
             dispatch(fetchContractDetails(financialStore.data.id))
+            closeModal('newInvoice')
         })
     }
 
     const onMenuClick: MenuProps['onClick'] = e => {
         switch (e.key) {
             case '1':
-                includeNewInvoice()
+                dispatch(changeVisibleModalContract({
+                    name: 'newInvoice',
+                    value: true
+                }))
                 break
             case '2':
-                dispatch(changeVisibleMergeModal(true))
+                dispatch(changeVisibleModalContract({
+                    name: 'mergeContract',
+                    value: true
+                }))
                 break
         }
     }
@@ -96,8 +104,11 @@ export default function ContractDetails() {
         setSearchText(value)
     }
 
-    const closeMergeModal = () => {
-        dispatch(changeVisibleMergeModal(false))
+    const closeModal = (modal) => {
+        dispatch(changeVisibleModalContract({
+            name: modal,
+            visible: false
+        }))
     }
 
     const mergeContractEvent = () => {
@@ -106,7 +117,7 @@ export default function ContractDetails() {
             id: financialStore.data.id,
             contracts: financialStore.modal.mergeContract.id
         }).then(e => {
-            closeMergeModal()
+            closeModal('mergeContract')
             message.success(e.msg)
             dispatch(fetchContractDetails(financialStore.data.id))
         })
@@ -199,12 +210,6 @@ export default function ContractDetails() {
                             <Table
                                 columns={ [
                                     {
-                                        title: 'Status',
-                                        dataIndex: 'status',
-                                        key: 'status',
-                                        render: value => value === 0 ? 'Em aberto' : 'Baixado'
-                                    },
-                                    {
                                         title: 'Id',
                                         dataIndex: 'id',
                                         key: 'id'
@@ -218,7 +223,19 @@ export default function ContractDetails() {
                                         title: 'Valor',
                                         dataIndex: 'value',
                                         key: 'value',
-                                        render: text => `R$ ${text}`
+                                        render: value => formatMoney(value)
+                                    },
+                                    {
+                                        title: 'Baixado',
+                                        dataIndex: 'value_closed',
+                                        key: 'value_closed',
+                                        render: value => formatMoney(value)
+                                    },
+                                    {
+                                        title: 'Em aberto',
+                                        dataIndex: 'value_open',
+                                        key: 'value_open',
+                                        render: value => formatMoney(value)
                                     },
                                     {
                                         title: 'Parcelas',
@@ -228,7 +245,8 @@ export default function ContractDetails() {
                                     {
                                         title: 'Dia',
                                         dataIndex: 'date',
-                                        key: 'date'
+                                        key: 'date',
+                                        render: value => formatterDate(value)
                                     },
                                     {
                                         title: 'Ações',
@@ -246,7 +264,7 @@ export default function ContractDetails() {
             <Modal
                 title='Mesclar contrato'
                 visible={ financialStore.modal.mergeContract.visible }
-                onCancel={ closeMergeModal }
+                onCancel={ () => closeModal('mergeContract') }
                 onOk={ mergeContractEvent }
             >
                 <div>
@@ -265,6 +283,11 @@ export default function ContractDetails() {
                     } }
                 />
             </Modal>
+            <ModalNewInvoice
+                visible={ financialStore.modal.newInvoice.visible }
+                onCancel={ () => closeModal('newInvoice') }
+                onFinish={ includeNewInvoice }
+            />
         </Layout>
     )
 }

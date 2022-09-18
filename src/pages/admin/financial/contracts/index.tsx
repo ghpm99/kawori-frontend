@@ -12,6 +12,7 @@ import MenuAdmin from '../../../../components/menuAdmin/Index';
 import { saveNewContractService } from '../../../../services/financial';
 import { changeVisibleContractsModal, fetchAllContract } from '../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../store/store';
+import { formatMoney } from '../../../../util';
 import styles from './Contracts.module.scss';
 
 
@@ -61,6 +62,24 @@ function FinancialPage() {
             key: 'name'
         },
         {
+            title: 'Total',
+            dataIndex: 'value',
+            key: 'value',
+            render: value => formatMoney(value)
+        },
+        {
+            title: 'Baixado',
+            dataIndex: 'value_closed',
+            key: 'value_closed',
+            render: value => formatMoney(value)
+        },
+        {
+            title: 'Em aberto',
+            dataIndex: 'value_open',
+            key: 'value_open',
+            render: value => formatMoney(value)
+        },
+        {
             title: 'Ações',
             dataIndex: 'id',
             key: 'id',
@@ -102,7 +121,7 @@ function FinancialPage() {
                             dataSource={ financialStore.data }
                             loading={ financialStore.loading }
                             summary={
-                                paymentData => <TableSummary paymentData={ paymentData } />
+                                contractData => <TableSummary contractData={ contractData } />
                             }
                         />
                         <ModalNew
@@ -123,29 +142,25 @@ function TableSummary(props) {
     const { Text } = Typography
 
     let total = 0
-    let totalCredit = 0
-    let totalDebit = 0
-    props.paymentData.forEach((payment) => {
-        if (payment.type === 0) {
-            total = total + parseFloat(payment.value)
-            totalCredit = totalCredit + parseFloat(payment.value)
-        } else {
-            total = total - parseFloat(payment.value)
-            totalDebit = totalDebit + parseFloat(payment.value)
-        }
+    let totalOpen = 0
+    let totalClosed = 0
+    props.contractData.forEach((contract) => {
+        total = total + parseFloat(contract.value)
+        totalOpen = totalOpen + parseFloat(contract.value_open)
+        totalClosed = totalClosed + parseFloat(contract.value_closed)
     })
 
     return (
         <>
             <Table.Summary.Row>
                 <Table.Summary.Cell index={ 0 }>
-                    <Text>Total: R$ { total.toFixed(2) }</Text>
+                    <Text>Total: { formatMoney(total) }</Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={ 1 }>
-                    <Text>Total Credito: R$ { totalCredit.toFixed(2) }</Text>
+                    <Text>Em aberto: { formatMoney(totalOpen) }</Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={ 2 }>
-                    <Text>Total Debito: R$ { totalDebit.toFixed(2) }</Text>
+                    <Text>Baixado: { formatMoney(totalClosed) }</Text>
                 </Table.Summary.Cell>
             </Table.Summary.Row>
         </>

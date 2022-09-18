@@ -1,4 +1,4 @@
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Table, Typography } from 'antd';
 import { getSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -10,6 +10,7 @@ import LoginHeader from '../../../../components/loginHeader/Index';
 import MenuAdmin from '../../../../components/menuAdmin/Index';
 import { fetchAllInvoice } from '../../../../store/features/financial/Index';
 import { RootState, useAppDispatch } from '../../../../store/store';
+import { formatMoney, formatterDate } from '../../../../util';
 import styles from './Invoices.module.scss';
 
 
@@ -29,12 +30,6 @@ function FinancialPage() {
 
     const headerTableFinancial = [
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: value => value === 0 ? 'Em aberto' : 'Baixado'
-        },
-        {
             title: 'Id',
             dataIndex: 'id',
             key: 'id'
@@ -48,7 +43,19 @@ function FinancialPage() {
             title: 'Valor',
             dataIndex: 'value',
             key: 'value',
-            render: text => `R$ ${text}`
+            render: value => formatMoney(value)
+        },
+        {
+            title: 'Baixado',
+            dataIndex: 'value_closed',
+            key: 'value_closed',
+            render: value => formatMoney(value)
+        },
+        {
+            title: 'Em aberto',
+            dataIndex: 'value_open',
+            key: 'value_open',
+            render: value => formatMoney(value)
         },
         {
             title: 'Parcelas',
@@ -58,7 +65,8 @@ function FinancialPage() {
         {
             title: 'Dia',
             dataIndex: 'date',
-            key: 'date'
+            key: 'date',
+            render: value => formatterDate(value)
         },
         {
             title: 'Ações',
@@ -87,9 +95,6 @@ function FinancialPage() {
                                 Valores em aberto
                             </Title>
                             <div>
-                                <Button icon={ <PlusOutlined /> } >
-                                    Novo
-                                </Button>
                                 <Button icon={ <SearchOutlined /> } >
                                     Filtrar
                                 </Button>
@@ -105,7 +110,7 @@ function FinancialPage() {
                             dataSource={ financialStore.data }
                             loading={ financialStore.loading }
                             summary={
-                                paymentData => <TableSummary paymentData={ paymentData } />
+                                invoiceData => <TableSummary invoiceData={ invoiceData } />
                             }
                         />
                     </Layout>
@@ -121,29 +126,25 @@ function TableSummary(props) {
     const { Text } = Typography
 
     let total = 0
-    let totalCredit = 0
-    let totalDebit = 0
-    props.paymentData.forEach((payment) => {
-        if (payment.type === 0) {
-            total = total + parseFloat(payment.value)
-            totalCredit = totalCredit + parseFloat(payment.value)
-        } else {
-            total = total - parseFloat(payment.value)
-            totalDebit = totalDebit + parseFloat(payment.value)
-        }
+    let totalOpen = 0
+    let totalClosed = 0
+    props.invoiceData.forEach((invoice) => {
+        total = total + parseFloat(invoice.value)
+        totalOpen = totalOpen + parseFloat(invoice.value_open)
+        totalClosed = totalClosed + parseFloat(invoice.value_closed)
     })
 
     return (
         <>
             <Table.Summary.Row>
                 <Table.Summary.Cell index={ 0 }>
-                    <Text>Total: R$ { total.toFixed(2) }</Text>
+                    <Text>Total: { formatMoney(total) }</Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={ 1 }>
-                    <Text>Total Credito: R$ { totalCredit.toFixed(2) }</Text>
+                    <Text>Em aberto: { formatMoney(totalOpen) }</Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={ 2 }>
-                    <Text>Total Debito: R$ { totalDebit.toFixed(2) }</Text>
+                    <Text>Baixado: { formatMoney(totalClosed) }</Text>
                 </Table.Summary.Cell>
             </Table.Summary.Row>
         </>

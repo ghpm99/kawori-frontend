@@ -36,3 +36,16 @@ export const formatMoney = (
     }
     return amount
 }
+
+export const formatterDate = (dateString) => {
+	let date = new Date(dateString + ' GMT-0300')
+	if (isNaN(date.getTime())) {
+		date = new Date(dateString)
+	}
+	return date.toLocaleDateString('pt-BR')
+}
+
+export const formatterDetailedDate = (dateString) => {
+	const date = new Date(dateString)
+	return date.toLocaleString('pt-BR')
+}

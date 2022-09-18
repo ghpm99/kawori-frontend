@@ -105,111 +105,120 @@ export default function PaymentDetails() {
                     </Breadcrumb>
                     <Layout className={ styles.container_labels }>
                         <Card loading={ financialStore.loading }>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    ID: { financialStore.data?.id }
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        ID: { financialStore.data?.id }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Contrato: { `${financialStore.data?.contract} - ${financialStore.data?.contract_name}` }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Nota: { `${financialStore.data?.invoice} - ${financialStore.data?.invoice_name}` }
+                                    </div>
                                 </div>
                             </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Contrato: { `${financialStore.data?.contract} - ${financialStore.data?.contract_name}` }
-                                </div>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Nota: { `${financialStore.data?.invoice} - ${financialStore.data?.invoice_name}` }
-                                </div>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Nome:
-                                </div>
-                                <Paragraph
-                                    style={ { margin: '0' } }
-                                    editable={ { onChange: changeName } }
-                                >
-                                    { financialStore.data?.name }
-                                </Paragraph>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Dia de lançamento:
-                                </div>
-                                <div>
-                                    { date }
-                                </div>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Status:
-                                </div>
-                                <div>
-                                    { financialStore.data?.status === 0 ? 'Em aberto' : 'Baixado' }
-                                </div>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Dia de pagamento:
-                                </div>
-                                <DatePicker
-                                    value={ moment(financialStore.data?.payment_date) }
-                                    format='DD/MM/YYYY'
-                                    onChange={ changePaymentDate }
-                                />
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Tipo:
-                                </div>
-                                <Select
-                                    placeholder='Selecione o tipo de entrada'
-                                    value={ financialStore.data?.type }
-                                    onChange={ changeType }
-                                >
-                                    <Option value={ 0 }>
-                                        Credito
-                                    </Option>
-                                    <Option value={ 1 }>
-                                        Debito
-                                    </Option>
-                                </Select>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Parcelas:
-                                </div>
-                                <div>
-                                    { financialStore.data?.installments }
-                                </div>
-                            </div>
-                            <div className={ styles.label_detail }>
-                                <div>
-                                    <Checkbox
-                                        checked={ financialStore.data?.fixed }
-                                        onChange={ changeFixed }
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Nome:
+                                    </div>
+                                    <Paragraph
+                                        style={ { margin: '0' } }
+                                        editable={ { onChange: changeName } }
                                     >
-                                        Fixo
-                                    </Checkbox>
+                                        { financialStore.data?.name }
+                                    </Paragraph>
                                 </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Dia de lançamento:
+                                    </div>
+                                    <div>
+                                        { date }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Dia de pagamento:
+                                    </div>
+                                    <DatePicker
+                                        value={ moment(financialStore.data?.payment_date) }
+                                        format='DD/MM/YYYY'
+                                        onChange={ changePaymentDate }
+                                    />
+                                </div>
+
                             </div>
-                            <div className={ styles.label_detail }>
-                                <div>
-                                    <Checkbox
-                                        checked={ financialStore.data?.active }
-                                        onChange={ changeActive }
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Status:
+                                    </div>
+                                    <div>
+                                        { financialStore.data?.status === 0 ? 'Em aberto' : 'Baixado' }
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Tipo:
+                                    </div>
+                                    <Select
+                                        placeholder='Selecione o tipo de entrada'
+                                        value={ financialStore.data?.type }
+                                        onChange={ changeType }
                                     >
-                                        Ativo
-                                    </Checkbox>
+                                        <Option value={ 0 }>
+                                            Credito
+                                        </Option>
+                                        <Option value={ 1 }>
+                                            Debito
+                                        </Option>
+                                    </Select>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Parcelas:
+                                    </div>
+                                    <div>
+                                        { financialStore.data?.installments }
+                                    </div>
                                 </div>
                             </div>
-                            <div className={ styles.label_detail }>
-                                <div className={ styles.label }>
-                                    Valor:
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <div className={ styles.label }>
+                                        Valor:
+                                    </div>
+                                    <InputNumber
+                                        value={ financialStore.data?.value }
+                                        onChange={ changeValue }
+                                    />
                                 </div>
-                                <InputNumber
-                                    value={ financialStore.data?.value }
-                                    onChange={ changeValue }
-                                />
+                                <div className={ styles['label-detail'] }>
+                                    <div>
+                                        <Checkbox
+                                            checked={ financialStore.data?.fixed }
+                                            onChange={ changeFixed }
+                                        >
+                                            Fixo
+                                        </Checkbox>
+                                    </div>
+                                </div>
+                                <div className={ styles['label-detail'] }>
+                                    <div>
+                                        <Checkbox
+                                            checked={ financialStore.data?.active }
+                                            onChange={ changeActive }
+                                        >
+                                            Ativo
+                                        </Checkbox>
+                                    </div>
+                                </div>
                             </div>
                             <div className={ styles.buttons }>
                                 {
@@ -250,13 +259,13 @@ export const getServerSideProps = async ({ req, res }) => {
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser
 
-    if(!isSuperuser){
+    if (!isSuperuser) {
         return {
             redirect: {
-              destination: '/',
-              permanent: false,
+                destination: '/',
+                permanent: false,
             },
-          }
+        }
     }
-    return {props:{}}
-  }
+    return { props: {} }
+}
