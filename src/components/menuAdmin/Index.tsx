@@ -91,7 +91,7 @@ function MenuAdmin(props: { selected: string[] }) {
 									</Menu.Item>
 									<Menu.Item key='report'>
 										<Link href={ '/admin/financial/report' }>
-											Relatorio por mês
+											Tags
 										</Link>
 									</Menu.Item>
 								</Menu.SubMenu>
