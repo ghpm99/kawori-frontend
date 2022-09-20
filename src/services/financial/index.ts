@@ -66,3 +66,13 @@ export async function mergeContractService(data){
     const response = await apiDjango.post(`/financial/contract/${data.id}/merge/`, data)
     return response.data
 }
+
+export async function fetchTagsService(){
+    const response = await apiDjango.get('/financial/tag/')
+    return response.data
+}
+
+export async function includeNewTagService(tag: {name: string}){
+    const response = await apiDjango.post('/financial/tag/new',tag)
+    return response.data
+}
