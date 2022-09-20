@@ -8,6 +8,7 @@ import {
     fetchDetailInvoiceService,
     fetchDetailPaymentService,
     fetchPaymentReportService,
+    fetchTagsService,
     saveNewPaymentService,
 } from '../../../services/financial';
 
@@ -68,6 +69,17 @@ const initialState = {
 	invoiceDetail: {
 		data: undefined,
 		loading: true
+	},
+	tags: {
+		data: [],
+		loading: true,
+		modal: {
+			newTag: {
+				visible: false,
+				error: false,
+				errorMsg: '',
+			}
+		}
 	}
 }
 
@@ -135,6 +147,13 @@ export const fetchInvoiceDetails = createAsyncThunk(
 	}
 )
 
+export const fetchTags = createAsyncThunk(
+	'financial/fetchTags',
+	async () => {
+		const response = await fetchTagsService()
+		return response
+	}
+)
 
 export const financialSlice = createSlice({
 	name: 'financial',
@@ -180,7 +199,10 @@ export const financialSlice = createSlice({
 		},
 		cleanFilterPayments: (state) => {
 			state.payments.filters = undefined
-		}
+		},
+		changeVisibleModalTag: (state, action) => {
+			state.tags.modal[action.payload.name].visible = action.payload.value
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -237,6 +259,13 @@ export const financialSlice = createSlice({
 				state.invoiceDetail.data = action.payload.data
 				state.invoiceDetail.loading = false
 			})
+			.addCase(fetchTags.pending, (state)=> {
+				state.tags.loading = true
+			})
+			.addCase(fetchTags.fulfilled, (state, action) => {
+				state.tags.data = action.payload.data
+				state.tags.loading = false
+			})
 	},
 })
 
@@ -253,6 +282,7 @@ export const {
 	changeValueMergeModal,
 	setFilterPayments,
 	cleanFilterPayments,
+	changeVisibleModalTag,
 } = financialSlice.actions
 
 export default financialSlice.reducer
