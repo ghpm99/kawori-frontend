@@ -1,4 +1,4 @@
-import { apiDjango } from '..';
+import { apiDjango } from '..'
 
 export async function fetchAllPaymentService(filters?){
     const response = await apiDjango.get('/financial/',{
@@ -75,4 +75,9 @@ export async function fetchTagsService(){
 export async function includeNewTagService(tag: {name: string}){
     const response = await apiDjango.post('/financial/tag/new',tag)
     return response.data
+}
+
+export async function saveInvoiceTagsService(idInvoice, tags){
+    const response = await apiDjango.post(`/financial/invoice/${idInvoice}/tags`, tags)
+    return response
 }

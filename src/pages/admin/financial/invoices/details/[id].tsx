@@ -1,18 +1,19 @@
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd';
-import { Content, Header } from 'antd/lib/layout/layout';
-import { getSession } from 'next-auth/react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd'
+import { Content, Header } from 'antd/lib/layout/layout'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import LoadingPage from '../../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../../components/menuAdmin/Index';
-import { fetchInvoiceDetails } from '../../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../../store/store';
-import { formatMoney, formatterDate } from '../../../../../util';
-import styles from './Details.module.scss';
+import LoadingPage from '../../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../../components/menuAdmin/Index'
+import { saveInvoiceTagsService } from '../../../../../services/financial'
+import { fetchInvoiceDetails, fetchTags } from '../../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../../store/store'
+import { formatMoney, formatterDate } from '../../../../../util'
+import styles from './Details.module.scss'
 
 const { Paragraph } = Typography
 const { Option } = Select
@@ -25,7 +26,12 @@ export default function InvoiceDetails() {
     const { id } = router.query
 
     const financialStore = useSelector((state: RootState) => state.financial.invoiceDetail)
+    const tagsStore = useSelector((state: RootState) => state.financial.tags)
     const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTags())
+    }, [])
 
     useEffect(() => {
         if (id) {
@@ -51,6 +57,13 @@ export default function InvoiceDetails() {
         if (e.key === '1') {
             includeNewInvoice()
         }
+    }
+
+    const handleChangeTags = (value: string, option) => {
+        console.log(`selected ${value}`, option)
+        saveInvoiceTagsService(financialStore.data.id, option.map(item => item.value)).then(() => {
+            dispatch(fetchInvoiceDetails(financialStore.data.id))
+        })
     }
 
     const menu = (
@@ -138,6 +151,23 @@ export default function InvoiceDetails() {
                                         Valor Baixado: { formatMoney(financialStore.data?.value_closed) }
                                     </div>
                                 </div>
+                            </div>
+                            <div className={ styles['row'] }>
+                                <div className={ styles['label-detail'] }>
+                                    <Select
+                                        mode="tags"
+                                        style={ { width: '100%' } }
+                                        placeholder="Tags"
+                                        onChange={ handleChangeTags }
+                                        value={ financialStore.data?.tags.map(item => ({ value: item.id })) }>
+                                        { tagsStore.data?.map((item, index) =>
+                                            <Option key={ item.name.toString(36) + index } value={ item.id }>
+                                                { item.name }
+                                            </Option>
+                                        ) }
+                                    </Select>
+                                </div>
+
                             </div>
                             <div className={ styles['row'] }>
                                 <div className={ styles['label-detail'] }>

@@ -1,22 +1,22 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Layout, Table, Typography } from 'antd';
-import { getSession } from 'next-auth/react';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { SearchOutlined } from '@ant-design/icons'
+import { Breadcrumb, Button, Layout, Table, Tag, Typography } from 'antd'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
-import { fetchAllInvoice } from '../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../store/store';
-import { formatMoney, formatterDate } from '../../../../util';
-import styles from './Invoices.module.scss';
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import { fetchAllInvoice } from '../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../store/store'
+import { formatMoney, formatterDate } from '../../../../util'
+import styles from './Invoices.module.scss'
 
 
-const { Header, Content } = Layout;
+const { Header, Content } = Layout
 
-const { Title } = Typography;
+const { Title } = Typography
 
 function FinancialPage() {
 
@@ -67,6 +67,20 @@ function FinancialPage() {
             dataIndex: 'date',
             key: 'date',
             render: value => formatterDate(value)
+        },
+        {
+            title: 'Tags',
+            dataIndex: 'tags',
+            key: 'tags',
+            render: (_, { tags }) => (
+                <>
+                    { tags.map(tag =>
+                        <Tag key={ tag }>
+                            { tag.name }
+                        </Tag>
+                    ) }
+                </>
+            ),
         },
         {
             title: 'Ações',
