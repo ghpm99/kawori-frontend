@@ -1,6 +1,6 @@
-import { DatePicker, Form, Input, InputNumber, Modal, Select, Switch } from 'antd';
+import { DatePicker, Form, Input, InputNumber, Modal, Select, Switch } from 'antd'
 
-import styles from './ModalNew.module.scss';
+import styles from './ModalNew.module.scss'
 
 export default function ModalNewInvoice(props) {
 
@@ -91,6 +91,22 @@ export default function ModalNewInvoice(props) {
                     rules={ [{ required: true, message: 'Digite o valor' }] }
                 >
                     <InputNumber style={ { width: '100%' } } />
+                </Form.Item>
+                <Form.Item
+                    label='Tags'
+                    name='tags'
+                >
+                    <Select
+                        mode="tags"
+                        style={ { width: '100%' } }
+                        placeholder="Tags"
+                        >
+                        { props.tags?.map((item, index) =>
+                            <Option key={ item.name.toString(36) + index } value={ item.id }>
+                                { item.name }
+                            </Option>
+                        ) }
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     label='Entrada mensal'

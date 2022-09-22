@@ -1,26 +1,27 @@
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Typography } from 'antd';
-import { Content, Header } from 'antd/lib/layout/layout';
-import moment from 'moment';
-import { getSession } from 'next-auth/react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Tag, Typography } from 'antd'
+import { Content, Header } from 'antd/lib/layout/layout'
+import moment from 'moment'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import ModalNewInvoice from '../../../../../components/contracts/modalNewInvoice';
-import LoadingPage from '../../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../../components/menuAdmin/Index';
-import { includeNewInvoiceService, mergeContractService } from '../../../../../services/financial';
+import ModalNewInvoice from '../../../../../components/contracts/modalNewInvoice'
+import LoadingPage from '../../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../../components/menuAdmin/Index'
+import { includeNewInvoiceService, mergeContractService } from '../../../../../services/financial'
 import {
     changeValueMergeModal,
     changeVisibleModalContract,
     fetchAllContract,
     fetchContractDetails,
-} from '../../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../../store/store';
-import { formatMoney, formatterDate } from '../../../../../util';
-import styles from './Details.module.scss';
+    fetchTags,
+} from '../../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../../store/store'
+import { formatMoney, formatterDate } from '../../../../../util'
+import styles from './Details.module.scss'
 
 const { Paragraph } = Typography
 const { Option } = Select
@@ -33,6 +34,7 @@ export default function ContractDetails() {
     const { id } = router.query
 
     const financialStore = useSelector((state: RootState) => state.financial.contractDetail)
+    const tagStore = useSelector((state: RootState) => state.financial.tags)
     const dispatch = useAppDispatch()
 
     const [searchText, setSearchText] = useState('')
@@ -51,6 +53,7 @@ export default function ContractDetails() {
 
     useEffect(() => {
         dispatch(fetchAllContract())
+        dispatch(fetchTags())
     }, [])
 
     const save = (event) => {
@@ -73,6 +76,7 @@ export default function ContractDetails() {
             fixed: values.fixed ? true : false,
             active: true,
             value: values.value,
+            tags: values.tags
         }).then(e => {
             dispatch(fetchContractDetails(financialStore.data.id))
             closeModal('newInvoice')
@@ -249,6 +253,23 @@ export default function ContractDetails() {
                                         render: value => formatterDate(value)
                                     },
                                     {
+                                        title: 'Tags',
+                                        dataIndex: 'tags',
+                                        key: 'tags',
+                                        render: (_, { tags }) => (
+                                            <>
+                                                { tags.map(tag =>
+                                                    <Tag
+                                                        color={ tag.color }
+                                                        key={ `contract-tags-${tag.id}` }
+                                                    >
+                                                        { tag.name }
+                                                    </Tag>
+                                                ) }
+                                            </>
+                                        ),
+                                    },
+                                    {
                                         title: 'Ações',
                                         dataIndex: 'id',
                                         key: 'id',
@@ -287,6 +308,7 @@ export default function ContractDetails() {
                 visible={ financialStore.modal.newInvoice.visible }
                 onCancel={ () => closeModal('newInvoice') }
                 onFinish={ includeNewInvoice }
+                tags={tagStore.data}
             />
         </Layout>
     )

@@ -75,7 +75,10 @@ function FinancialPage() {
             render: (_, { tags }) => (
                 <>
                     { tags.map(tag =>
-                        <Tag key={ tag }>
+                        <Tag
+                            color={ tag.color }
+                            key={ `invoice-tags-${tag.id}` }
+                        >
                             { tag.name }
                         </Tag>
                     ) }

@@ -1,17 +1,17 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Layout, message, Table, Typography } from 'antd';
-import { getSession } from 'next-auth/react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { PlusOutlined } from '@ant-design/icons'
+import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from 'antd'
+import { getSession } from 'next-auth/react'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import ModalNew from '../../../../components/contracts/modalNew';
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
-import { includeNewTagService } from '../../../../services/financial';
-import { changeVisibleModalTag, fetchTags } from '../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../store/store';
-import styles from './tags.module.scss';
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import ModalNewTag from '../../../../components/tags/modalNew'
+import { includeNewTagService } from '../../../../services/financial'
+import { changeVisibleModalTag, fetchTags } from '../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../store/store'
+import styles from './tags.module.scss'
 
 
 const { Header, Content } = Layout
@@ -36,8 +36,10 @@ function TagPage() {
     }
 
     const onFinish = (values) => {
+        console.log(values)
         const newTag = {
             'name': values.name,
+            'color': values.color
         }
 
         includeNewTagService(newTag).then(e => {
@@ -57,7 +59,14 @@ function TagPage() {
         {
             title: 'Nome',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            render: (_, tag) => (
+                <Tag
+                    color={tag.color}
+                >
+                    { tag.name }
+                </Tag>
+            ),
         }
     ]
 
@@ -95,7 +104,7 @@ function TagPage() {
                             dataSource={ financialStore.data }
                             loading={ financialStore.loading }
                         />
-                        <ModalNew
+                        <ModalNewTag
                             visible={ financialStore.modal.newTag.visible }
                             onCancel={ () => closeModal('newTag') }
                             onFinish={ onFinish }
