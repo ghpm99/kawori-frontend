@@ -24,7 +24,9 @@ function FinancialPage() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchAllInvoice())
+        dispatch(fetchAllInvoice({
+            status: 0
+        }))
     }, [])
 
 

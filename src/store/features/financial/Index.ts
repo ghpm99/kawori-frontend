@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import {
     fetchAllContractService,
@@ -10,7 +10,7 @@ import {
     fetchPaymentReportService,
     fetchTagsService,
     saveNewPaymentService,
-} from '../../../services/financial';
+} from '../../../services/financial'
 
 const initialState = {
 	payments: {
@@ -93,16 +93,16 @@ export const fetchAllPayment = createAsyncThunk(
 
 export const fetchAllContract = createAsyncThunk(
 	'financial/fetchAllContract',
-	async () => {
-		const response = await fetchAllContractService()
+	async (filters: IContractFilters) => {
+		const response = await fetchAllContractService(filters)
 		return response
 	}
 )
 
 export const fetchAllInvoice = createAsyncThunk(
 	'financial/fetchAllInvoice',
-	async () => {
-		const response = await fetchAllInvoiceService()
+	async (filters: IInvoiceFilters) => {
+		const response = await fetchAllInvoiceService(filters)
 		return response
 	}
 )

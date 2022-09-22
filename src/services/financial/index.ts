@@ -32,13 +32,17 @@ export async function fetchPaymentReportService(){
     return response.data
 }
 
-export async function fetchAllContractService(){
-    const response = await apiDjango.get('/financial/contract/')
+export async function fetchAllContractService(filters: IContractFilters){
+    const response = await apiDjango.get('/financial/contract/',{
+        params: filters
+    })
     return response.data
 }
 
-export async function fetchAllInvoiceService(){
-    const response = await apiDjango.get('/financial/invoice/')
+export async function fetchAllInvoiceService(filters: IInvoiceFilters){
+    const response = await apiDjango.get('/financial/invoice/',{
+        params: filters
+    })
     return response.data
 }
 
