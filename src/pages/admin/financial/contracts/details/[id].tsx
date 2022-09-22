@@ -52,7 +52,7 @@ export default function ContractDetails() {
     }, [id])
 
     useEffect(() => {
-        dispatch(fetchAllContract())
+        dispatch(fetchAllContract({}))
         dispatch(fetchTags())
     }, [])
 
