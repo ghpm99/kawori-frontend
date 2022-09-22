@@ -1,19 +1,19 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Layout, message, Table, Typography } from 'antd';
-import { getSession } from 'next-auth/react';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { PlusOutlined } from '@ant-design/icons'
+import { Breadcrumb, Button, Layout, message, Table, Typography } from 'antd'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import ModalNew from '../../../../components/contracts/modalNew';
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
-import { saveNewContractService } from '../../../../services/financial';
-import { changeVisibleContractsModal, fetchAllContract } from '../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../store/store';
-import { formatMoney } from '../../../../util';
-import styles from './Contracts.module.scss';
+import ModalNew from '../../../../components/contracts/modalNew'
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import { saveNewContractService } from '../../../../services/financial'
+import { changeVisibleContractsModal, fetchAllContract } from '../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../store/store'
+import { formatMoney } from '../../../../util'
+import styles from './Contracts.module.scss'
 
 
 const { Header, Content } = Layout
@@ -26,7 +26,7 @@ function FinancialPage() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchAllContract())
+        dispatch(fetchAllContract({}))
     }, [])
 
     const openModal = (modal) => {
@@ -46,7 +46,7 @@ function FinancialPage() {
             console.log(e)
             message.success(e.msg)
             closeModal('newPayment')
-            dispatch(fetchAllContract())
+            dispatch(fetchAllContract({}))
         })
     }
 
