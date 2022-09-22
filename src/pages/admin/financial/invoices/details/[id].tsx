@@ -131,7 +131,7 @@ export default function InvoiceDetails() {
                                 </div>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Data: { financialStore.data?.date }
+                                        Data: { formatterDate(financialStore.data?.date) }
                                     </div>
                                 </div>
                             </div>
