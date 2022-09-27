@@ -85,7 +85,7 @@ const initialState = {
 
 export const fetchAllPayment = createAsyncThunk(
 	'financial/fetchAllPayment',
-	async (filters?: financialFilter) => {
+	async (filters: IPaymentFilters) => {
 		const response = await fetchAllPaymentService(filters)
 		return response
 	}
@@ -117,7 +117,7 @@ export const fetchPaymentDetails = createAsyncThunk(
 
 export const saveNewPayment = createAsyncThunk(
 	'financial/saveNewPayment',
-	async (args: { payment }) => {
+	async (args: { payment: INewPaymentRequest }) => {
 		await saveNewPaymentService(args.payment)
 		return args.payment
 	}

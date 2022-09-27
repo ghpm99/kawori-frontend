@@ -1,87 +1,87 @@
 import { apiDjango } from '..'
 
-export async function fetchAllPaymentService(filters?){
-    const response = await apiDjango.get('/financial/',{
+export async function fetchAllPaymentService(filters: IPaymentFilters) {
+    const response = await apiDjango.get('/financial/', {
         params: filters,
     })
     return response.data
 }
 
-export async function saveNewPaymentService(data){
+export async function saveNewPaymentService(data: INewPaymentRequest) {
     const response = await apiDjango.post('/financial/', data)
     return response.data
 }
 
-export async function fetchDetailPaymentService(id){
+export async function fetchDetailPaymentService(id: number) {
     const response = await apiDjango.get(`/financial/${id}/`)
     return response.data
 }
 
-export async function savePaymentDetailService(id, payment){
+export async function savePaymentDetailService(id: number, payment: ISavePaymentRequest) {
     const response = await apiDjango.post(`/financial/${id}/save`, payment)
     return response.data
 }
 
-export async function payoffPaymentService(id){
+export async function payoffPaymentService(id: number) {
     const response = await apiDjango.post(`/financial/${id}/payoff`)
     return response.data
 }
 
-export async function fetchPaymentReportService(){
+export async function fetchPaymentReportService() {
     const response = await apiDjango.get('/financial/report')
     return response.data
 }
 
-export async function fetchAllContractService(filters: IContractFilters){
-    const response = await apiDjango.get('/financial/contract/',{
+export async function fetchAllContractService(filters: IContractFilters) {
+    const response = await apiDjango.get('/financial/contract/', {
         params: filters
     })
     return response.data
 }
 
-export async function fetchAllInvoiceService(filters: IInvoiceFilters){
-    const response = await apiDjango.get('/financial/invoice/',{
+export async function fetchAllInvoiceService(filters: IInvoiceFilters) {
+    const response = await apiDjango.get('/financial/invoice/', {
         params: filters
     })
     return response.data
 }
 
-export async function saveNewContractService(data){
+export async function saveNewContractService(data: INewContractRequest) {
     const response = await apiDjango.post('/financial/contract/new', data)
     return response.data
 }
 
-export async function fetchDetailContractService(id){
+export async function fetchDetailContractService(id: number) {
     const response = await apiDjango.get(`/financial/contract/${id}/`)
     return response.data
 }
 
-export async function includeNewInvoiceService(data){
-    const response = await apiDjango.post(`/financial/contract/${data.id}/invoice/`, data)
+export async function includeNewInvoiceService(data: INewInvoiceRequest) {
+    const response = await apiDjango.post(`/financial/contract/${data.idContract}/invoice/`, data)
     return response.data
 }
 
-export async function fetchDetailInvoiceService(id){
+export async function fetchDetailInvoiceService(id: number) {
     const response = await apiDjango.get(`/financial/invoice/${id}/`)
     return response.data
 }
 
-export async function mergeContractService(data){
+export async function mergeContractService(data: IMergeContractRequest) {
     const response = await apiDjango.post(`/financial/contract/${data.id}/merge/`, data)
     return response.data
 }
 
-export async function fetchTagsService(){
+export async function fetchTagsService() {
     const response = await apiDjango.get('/financial/tag/')
     return response.data
 }
 
-export async function includeNewTagService(tag: {name: string}){
-    const response = await apiDjango.post('/financial/tag/new',tag)
+export async function includeNewTagService(tag: { name: string }) {
+    const response = await apiDjango.post('/financial/tag/new', tag)
     return response.data
 }
 
-export async function saveInvoiceTagsService(idInvoice, tags){
+export async function saveInvoiceTagsService(idInvoice: number, tags: number[]) {
     const response = await apiDjango.post(`/financial/invoice/${idInvoice}/tags`, tags)
     return response
 }
