@@ -1,4 +1,4 @@
-import Dexie, { Table } from 'dexie';
+import Dexie, { Table } from 'dexie'
 
 export interface Facetexture {
   id?: number
@@ -11,7 +11,7 @@ export interface Facetexture {
 }
 
 export interface Background {
-  id?:number
+  id:number
   image: Blob
 }
 

@@ -1,13 +1,14 @@
 import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Tag, Typography } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import moment from 'moment'
+import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import ModalNewInvoice from '../../../../../components/contracts/modalNewInvoice'
+import ModalNewInvoice, { IFormNewInvoice } from '../../../../../components/contracts/modalNewInvoice'
 import LoadingPage from '../../../../../components/loadingPage/Index'
 import LoginHeader from '../../../../../components/loginHeader/Index'
 import MenuAdmin from '../../../../../components/menuAdmin/Index'
@@ -56,17 +57,17 @@ export default function ContractDetails() {
         dispatch(fetchTags())
     }, [])
 
-    const save = (event) => {
+    const save: MouseEventHandler<HTMLButtonElement> = (event) => {
         console.log(event)
     }
 
-    const changeName = (event) => {
+    const changeName = (event: string) => {
         console.log(event)
     }
 
-    const includeNewInvoice = (values) => {
+    const includeNewInvoice = (values: IFormNewInvoice) => {
         includeNewInvoiceService({
-            id: financialStore.data.id,
+            idContract: financialStore.data.id,
             status: 0,
             type: values.type,
             name: values.name,
@@ -87,20 +88,20 @@ export default function ContractDetails() {
         switch (e.key) {
             case '1':
                 dispatch(changeVisibleModalContract({
-                    name: 'newInvoice',
-                    value: true
+                    modal: 'newInvoice',
+                    visible: true
                 }))
                 break
             case '2':
                 dispatch(changeVisibleModalContract({
-                    name: 'mergeContract',
-                    value: true
+                    modal: 'mergeContract',
+                    visible: true
                 }))
                 break
         }
     }
 
-    const handleMergeSelectEvent = (value) => {
+    const handleMergeSelectEvent = (value: any) => {
         dispatch(changeValueMergeModal(value))
     }
 
@@ -108,9 +109,9 @@ export default function ContractDetails() {
         setSearchText(value)
     }
 
-    const closeModal = (modal) => {
+    const closeModal = (modal: keyof IModalContract) => {
         dispatch(changeVisibleModalContract({
-            name: modal,
+            modal: modal,
             visible: false
         }))
     }
@@ -308,7 +309,7 @@ export default function ContractDetails() {
                 visible={ financialStore.modal.newInvoice.visible }
                 onCancel={ () => closeModal('newInvoice') }
                 onFinish={ includeNewInvoice }
-                tags={tagStore.data}
+                tags={ tagStore.data }
             />
         </Layout>
     )
@@ -320,7 +321,7 @@ ContractDetails.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser
