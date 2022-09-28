@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {
     fetchAllContractService,
@@ -12,14 +12,29 @@ import {
     saveNewPaymentService,
 } from '../../../services/financial'
 
-const initialState = {
+const initialState: IFinancialStore = {
 	payments: {
 		data: [],
 		loading: true,
-		filters: undefined,
+		filters: {},
 	},
 	paymentDetail: {
-		data: undefined,
+		data: {
+			id: 0,
+			status: 0,
+			type: 0,
+			name: '',
+			date: '',
+			installments: 0,
+			payment_date: '',
+			fixed: false,
+			active: false,
+			value: 0,
+			invoice: 0,
+			invoice_name: '',
+			contract: 0,
+			contract_name: '',
+		},
 		loading: true,
 	},
 	paymentReport: {
@@ -38,12 +53,19 @@ const initialState = {
 		},
 	},
 	contractDetail: {
-		data: undefined,
+		data: {
+			id: 0,
+			name: '',
+			value: 0,
+			value_open: 0,
+			value_closed: 0,
+			invoices: []
+		},
 		contracts: [],
 		loading: true,
 		modal: {
 			mergeContract: {
-				id: undefined,
+				id: [],
 				visible: false,
 				error: false,
 				errorMsg: ''
@@ -67,7 +89,20 @@ const initialState = {
 		},
 	},
 	invoiceDetail: {
-		data: undefined,
+		data: {
+			id: 0,
+			status: 0,
+			name: '',
+			installments: 0,
+			value: 0,
+			value_open: 0,
+			value_closed: 0,
+			date: '',
+			contract: 0,
+			contract_name: '',
+			payments: [],
+			tags: []
+		},
 		loading: true
 	},
 	tags: {
@@ -118,8 +153,8 @@ export const fetchPaymentDetails = createAsyncThunk(
 export const saveNewPayment = createAsyncThunk(
 	'financial/saveNewPayment',
 	async (args: { payment: INewPaymentRequest }) => {
-		await saveNewPaymentService(args.payment)
-		return args.payment
+		const response = await saveNewPaymentService(args.payment)
+		return response
 	}
 )
 
@@ -159,49 +194,49 @@ export const financialSlice = createSlice({
 	name: 'financial',
 	initialState,
 	reducers: {
-		changeNamePaymentDetails: (state, action) => {
+		changeNamePaymentDetails: (state: IFinancialStore, action: PayloadAction<string>) => {
 			state.paymentDetail.data.name = action.payload
 		},
-		changeTypePaymentDetails: (state, action) => {
+		changeTypePaymentDetails: (state: IFinancialStore, action: PayloadAction<number>) => {
 			state.paymentDetail.data.type = action.payload
 		},
-		changeFixedPaymentDetails: (state, action) => {
+		changeFixedPaymentDetails: (state: IFinancialStore, action: PayloadAction<boolean>) => {
 			state.paymentDetail.data.fixed = action.payload
 		},
-		changeActivePaymentDetails: (state, action) => {
+		changeActivePaymentDetails: (state: IFinancialStore, action: PayloadAction<boolean>) => {
 			state.paymentDetail.data.active = action.payload
 		},
-		changePaymentDatePaymentDetails: (state, action) => {
+		changePaymentDatePaymentDetails: (state: IFinancialStore, action: PayloadAction<string>) => {
 			state.paymentDetail.data.payment_date = action.payload
 		},
-		changeValuePaymentDetails: (state, action) => {
+		changeValuePaymentDetails: (state: IFinancialStore, action: PayloadAction<number>) => {
 			state.paymentDetail.data.value = action.payload
 		},
-		changeVisibleContractsModal: (state, action) => {
+		changeVisibleContractsModal: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalContractsAction>) => {
 			state.contracts.modal[action.payload.modal].visible =
 				action.payload.visible
 		},
-		changeVisibleInvoiceModal: (state, action) => {
+		changeVisibleInvoiceModal: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalInvoiceAction>) => {
 			state.invoices.modal[action.payload.modal].visible =
 				action.payload.visible
 		},
-		changeVisibleModalContract: (state, action) => {
-			state.contractDetail.modal[action.payload.name].visible = action.payload.value
+		changeVisibleModalContract: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalContractAction>) => {
+			state.contractDetail.modal[action.payload.modal].visible = action.payload.visible
 		},
-		changeValueMergeModal: (state, action) => {
+		changeValueMergeModal: (state: IFinancialStore, action: PayloadAction<number[]>) => {
 			state.contractDetail.modal.mergeContract.id = action.payload
 		},
-		setFilterPayments: (state, action) => {
+		setFilterPayments: (state: IFinancialStore, action) => {
 			state.payments.filters = {
 				...state.payments.filters,
 				[action.payload.name]: action.payload.value ?? '',
 			}
 		},
-		cleanFilterPayments: (state) => {
-			state.payments.filters = undefined
+		cleanFilterPayments: (state: IFinancialStore) => {
+			state.payments.filters = {}
 		},
-		changeVisibleModalTag: (state, action) => {
-			state.tags.modal[action.payload.name].visible = action.payload.value
+		changeVisibleModalTag: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalTagsAction>) => {
+			state.tags.modal[action.payload.modal].visible = action.payload.visible
 		},
 	},
 	extraReducers: (builder) => {
@@ -259,7 +294,7 @@ export const financialSlice = createSlice({
 				state.invoiceDetail.data = action.payload.data
 				state.invoiceDetail.loading = false
 			})
-			.addCase(fetchTags.pending, (state)=> {
+			.addCase(fetchTags.pending, (state) => {
 				state.tags.loading = true
 			})
 			.addCase(fetchTags.fulfilled, (state, action) => {

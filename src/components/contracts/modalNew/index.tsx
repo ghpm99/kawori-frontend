@@ -1,8 +1,18 @@
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal } from 'antd'
+import { MouseEvent } from 'react'
 
-import styles from './ModalNew.module.scss';
+import styles from './ModalNew.module.scss'
 
-export default function ModalNew(props) {
+interface INewContractForm {
+    name: string
+}
+interface IModalNewProps {
+    visible: boolean
+    onCancel?: (e: React.MouseEvent<HTMLElement>) => void
+    onFinish?: ((values: INewContractForm) => void) | undefined
+}
+
+export default function ModalNew(props: IModalNewProps) {
 
     const [form] = Form.useForm()
 

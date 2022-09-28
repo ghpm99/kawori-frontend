@@ -1,10 +1,10 @@
-import { Button } from 'antd';
-import React from 'react';
+import { Button } from 'antd'
+import React from 'react'
 
-import styles from './filterDropdown.module.scss';
+import styles from './filterDropdown.module.scss'
 
 interface IFilterDropdownProps {
-    applyFilter: (event) => void
+    applyFilter: React.MouseEventHandler<HTMLElement>
     children: React.ReactNode
 }
 

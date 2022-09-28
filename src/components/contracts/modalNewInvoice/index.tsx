@@ -1,8 +1,24 @@
-import { DatePicker, Form, Input, InputNumber, Modal, Select, Switch } from 'antd'
+import { DatePicker, Form, Input, InputNumber, Modal, ModalProps, Select, Switch } from 'antd'
 
 import styles from './ModalNew.module.scss'
 
-export default function ModalNewInvoice(props) {
+interface IModalNewInvoiceProps extends ModalProps{
+    onFinish: ((values: any) => void) | undefined
+    tags: ITags[]
+}
+
+export interface IFormNewInvoice {
+    type: number
+    name: string
+    date: Date
+    installments: number
+    payment_date: Date
+    value: number
+    tags: number[]
+    fixed: boolean
+}
+
+export default function ModalNewInvoice(props: IModalNewInvoiceProps) {
 
     const { Option } = Select
 
@@ -24,7 +40,7 @@ export default function ModalNewInvoice(props) {
     }
 
     const dateFormat = 'DD/MM/YYYY'
-    const customFormat = value => `${value.format(dateFormat)}`
+    const customFormat = (value: any) => `${value.format(dateFormat)}`
 
     return (
         <Modal
@@ -41,6 +57,7 @@ export default function ModalNewInvoice(props) {
                 name='payment'
                 onFinish={ props.onFinish }
                 preserve={ false }
+
             >
                 <Form.Item
                     style={ { width: 'auto' } }
@@ -102,7 +119,7 @@ export default function ModalNewInvoice(props) {
                         placeholder="Tags"
                         >
                         { props.tags?.map((item, index) =>
-                            <Option key={ item.name.toString(36) + index } value={ item.id }>
+                            <Option key={ item.name + index } value={ item.id }>
                                 { item.name }
                             </Option>
                         ) }
