@@ -2,7 +2,18 @@ import { Form, Input, Modal } from 'antd'
 
 import styles from './ModalNew.module.scss'
 
-export default function ModalNewTag(props) {
+interface IModalNewTagProps {
+    visible: boolean
+    onCancel: (e: React.MouseEvent<HTMLElement>) => void
+    onFinish: ((values: IFormModalNewTag) => void) | undefined
+}
+
+interface IFormModalNewTag {
+    name: string
+    color: string
+}
+
+export default function ModalNewTag(props: IModalNewTagProps) {
 
     const [form] = Form.useForm()
 

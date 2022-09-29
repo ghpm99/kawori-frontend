@@ -1,9 +1,10 @@
+import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Popover } from 'antd'
 import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 import React from 'react'
+
 import S from './Login.module.scss'
-import { UserOutlined } from '@ant-design/icons';
-import Link from 'next/link';
 
 
 export default function LoginHeader() {
@@ -12,7 +13,7 @@ export default function LoginHeader() {
 
     const content = (
         <div>
-            <div>{data?.user.name}</div>
+            <div>{data?.user?.name}</div>
             <Button onClick={ () => signOut() }>Deslogar</Button>
         </div>
     )

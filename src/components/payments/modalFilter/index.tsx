@@ -1,8 +1,28 @@
-import { DatePicker, Form, Input, InputNumber, Modal, Select } from 'antd';
-import moment from 'moment';
+import { DatePicker, Form, Input, InputNumber, Modal, Select } from 'antd'
+import moment from 'moment'
+import { MouseEvent } from 'react'
+
 import styles from './ModalFilter.module.scss'
 
-export default function ModalFilter(props) {
+interface IModalFilterProps {
+    visible: boolean
+    onCancel: (e: React.MouseEvent<HTMLElement>) => void
+    setFilters: ((values: IFormModalFilter) => void) | undefined
+}
+
+interface IFormModalFilter {
+    status: number
+    type: number
+    name: string
+    date: Date
+    installments: number
+    payment_date: Date
+    value: number
+    fixed: boolean
+    active: boolean
+}
+
+export default function ModalFilter(props: IModalFilterProps) {
 
     const [formFilters] = Form.useForm()
 
@@ -25,7 +45,7 @@ export default function ModalFilter(props) {
     }
 
     const dateFormat = 'DD/MM/YYYY'
-    const customFormat = value => `${value.format(dateFormat)}`
+    const customFormat = (value: any) => `${value.format(dateFormat)}`
 
     return (
         <Modal

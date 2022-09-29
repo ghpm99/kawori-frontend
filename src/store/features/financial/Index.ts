@@ -39,7 +39,12 @@ const initialState: IFinancialStore = {
 	},
 	paymentReport: {
 		loading: true,
-		data: undefined
+		data: {
+			open: [],
+			closed: [],
+			fixed_credit: 0,
+			fixed_debit: 0
+		}
 	},
 	contracts: {
 		data: [],

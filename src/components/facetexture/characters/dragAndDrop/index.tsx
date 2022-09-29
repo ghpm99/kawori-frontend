@@ -1,5 +1,6 @@
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from 'react-beautiful-dnd'
 import { useSelector } from 'react-redux'
+
 import { reorderCharacterReducer, setSelectedFacetextureReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import Styles from './DnDCharacters.module.scss'
@@ -9,7 +10,7 @@ const DragAndDropCharacters = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const onDragEnd = async (result, provider) => {
+    const onDragEnd = async (result: DropResult, provided: ResponderProvided) => {
 
         if (!result.destination) {
             return
@@ -28,17 +29,18 @@ const DragAndDropCharacters = () => {
         }))
     }
 
-    const setSelectedCharacter = (id) => {
+    const setSelectedCharacter = (id: number) => {
         dispatch(setSelectedFacetextureReducer(id))
     }
 
-    function listToMatrix(list, elementsPerSubArray) {
+    function listToMatrix(list: IFacetexture[], elementsPerSubArray: number) {
         var matrix = [], i, k
 
         for (i = 0, k = -1; i < list.length; i++) {
             if (i % elementsPerSubArray === 0) {
                 k++;
-                matrix[k] = []
+                const emptyArray: IFacetexture[] = []
+                matrix[k] = emptyArray
             }
             matrix[k].push(list[i])
         }

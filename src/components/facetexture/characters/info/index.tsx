@@ -2,14 +2,16 @@ import { PlusOutlined } from '@ant-design/icons'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload } from 'antd'
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import { RcFile } from 'antd/lib/upload'
 import { useSelector } from 'react-redux'
+
 import {
     deleteCharacterReducer,
     updateCharacterClassReducer,
     updateCharacterImageNameReducer,
     updateCharacterShowClassReducer,
-    updateFacetextureUrlReducer
+    updateFacetextureUrlReducer,
 } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import Styles from './Info.module.scss'
@@ -20,14 +22,20 @@ const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const updateCharacterClass = (index, value) => {
+    const updateCharacterClass = (index: number | undefined, value: { value: number, label: string }) => {
+        if(!index){
+            return
+        }
         dispatch(updateCharacterClassReducer({
             index: index,
-            class: value
+            class: value.value
         }))
     }
 
-    const updateImageSelectedCharacter = (index, file: RcFile) => {
+    const updateImageSelectedCharacter = (index: number | undefined, file: RcFile) => {
+        if(!index){
+            return
+        }
         dispatch(updateFacetextureUrlReducer({
             index: index,
             image: URL.createObjectURL(file)
@@ -38,18 +46,24 @@ const Info = () => {
         }))
     }
 
-    const deleteCharacter = (index) => {
+    const deleteCharacter = (index: number | undefined) => {
+        if(!index){
+            return
+        }
         dispatch(deleteCharacterReducer(index))
     }
 
-    const updateCharacterShowClass = (index, event) => {
+    const updateCharacterShowClass = (index: number | undefined, event: CheckboxChangeEvent) => {
+        if(!index){
+            return
+        }
         dispatch(updateCharacterShowClassReducer({
             index: index,
             show: event.target.checked
         }))
     }
 
-    const selectedFacetexture = facetextureStore.facetexture[facetextureStore.selected]
+    const selectedFacetexture = facetextureStore.selected ? facetextureStore.facetexture[facetextureStore.selected] : undefined
 
     return (
         <div className={ Styles['character-info'] }>

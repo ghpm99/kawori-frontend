@@ -1,7 +1,12 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
 
-export default function PaymentFixed(props) {
+interface IPaymentFixedProps {
+  fixedCredit: number
+  fixedDebit: number
+}
+
+export default function PaymentFixed(props: IPaymentFixedProps) {
 
     const labels = ['Ativo']
 
