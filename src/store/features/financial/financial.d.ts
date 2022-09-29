@@ -10,7 +10,12 @@ interface IFinancialStore {
     }
     paymentReport: {
         loading: boolean
-        data: undefined
+        data: {
+            open: IPaymentReportOpen[]
+            closed: IPaymentReportClosed[]
+            fixed_debit: number
+            fixed_credit: number
+        }
     }
     contracts: {
         data: IContractPagination[]
@@ -75,6 +80,20 @@ interface IModalTags {
         error: boolean
         errorMsg: string
     }
+}
+
+interface IPaymentReportOpen {
+    label: string
+    debit: number
+    credit: number
+    fixed_debit_open: number
+    fixed_credit_open: number
+}
+
+interface IPaymentReportClosed {
+    label: string
+    debit: number
+    credit: number
 }
 
 interface IPaymentPagination {

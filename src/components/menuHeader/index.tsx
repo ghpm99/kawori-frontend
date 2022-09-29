@@ -1,10 +1,11 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
-import AccountMenuInfo from '../accountMenuInfo';
-import styles from './MenuHeader.module.scss';
-import useMenuHeader from './useMenuHeader';
+import AccountMenuInfo from '../accountMenuInfo'
+import styles from './MenuHeader.module.scss'
+import useMenuHeader from './useMenuHeader'
 
-export default function MenuHeader(props) {
+
+export default function MenuHeader() {
 
     const context = useMenuHeader();
 
@@ -35,9 +36,9 @@ export default function MenuHeader(props) {
                 { context.status === 'authenticated'
                     ? <div className={ styles['user-options'] }>
                         <AccountMenuInfo user={ {
-                            avatar: context.data.user.image,
-                            name: context.data.user.name ?? '',
-                            email: context.data.user.email ?? ''
+                            avatar: context.data?.user?.image,
+                            name: context.data?.user?.name ?? '',
+                            email: context.data?.user?.email ?? ''
                         } } />
                     </div>
                     : <div className={ styles['user-options'] }>

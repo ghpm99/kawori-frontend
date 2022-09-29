@@ -1,12 +1,12 @@
-import { DownloadOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { saveAs } from 'file-saver';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { DownloadOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
+import { saveAs } from 'file-saver'
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 
-import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetexture';
-import { db } from '../../../util/db';
-import Styles from './Preview.module.scss';
+import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetexture'
+import { db } from '../../../util/db'
+import Styles from './Preview.module.scss'
 
 const Preview = () => {
 
@@ -36,7 +36,7 @@ const Preview = () => {
         }
         setDownloading(true)
         const background = (await db.background.toArray())[0]
-        downloadFacetextureService(data.accessToken, {
+        downloadFacetextureService(data?.accessToken, {
             'background': background.image
         }).then(response => {
             saveAs(response, 'export.zip')

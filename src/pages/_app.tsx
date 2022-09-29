@@ -1,16 +1,19 @@
-import { ConfigProvider } from 'antd'
+import '../../styles/globals.scss'
 import 'antd/dist/antd.css'
+
+import { ConfigProvider } from 'antd'
 import ptBr from 'antd/lib/locale/pt_BR'
 import { SessionProvider, useSession } from 'next-auth/react'
+import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Provider } from 'react-redux'
-import '../../styles/globals.scss'
+
 import LoadingPage from '../components/loadingPage/Index'
 import PusherProvider from '../components/pusherProvider/Index'
 import { store } from '../store/store'
 
 
-export default function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (
     <SessionProvider session={ session }>
@@ -45,7 +48,11 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   )
 }
 
-function Auth({ children }) {
+interface IAuthProps {
+  children: JSX.Element
+}
+
+function Auth({ children }: IAuthProps) {
   const { data: session, status } = useSession({ required: true })
   const isUser = !!session?.user
 

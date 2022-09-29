@@ -25,11 +25,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "webpack.prod.js",
-    "webpack.dev.js",
-    "webpack.config.js"
+    "additional.d.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-	fetchFaceTextureClassService,
-	fetchFacetextureService,
-} from '../../../services/facetexture'
+
+import { fetchFaceTextureClassService, fetchFacetextureService } from '../../../services/facetexture'
 
 const initialState: IFacetextureState = {
 	loading: true,
@@ -43,7 +41,7 @@ export const facetextureSlice = createSlice({
 		) => {
 			state.backgroundUrl = action.payload
 		},
-		setSelectedFacetextureReducer: (state: IFacetextureState, action) => {
+		setSelectedFacetextureReducer: (state: IFacetextureState, action: PayloadAction<number>) => {
 			state.selected = action.payload
 		},
 		reorderCharacterReducer: (
@@ -79,6 +77,10 @@ export const facetextureSlice = createSlice({
 			const newClass = state.class.find(
 				(item) => item.id === action.payload.class
 			)
+
+			if(!newClass){
+				return
+			}
 			state.facetexture[action.payload.index].class = newClass
 			state.facetexture[action.payload.index].image = newClass.class_image
 			state.edited = true
