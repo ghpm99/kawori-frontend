@@ -3,6 +3,7 @@ import ImgCrop from 'antd-img-crop'
 import { RcFile } from 'antd/lib/upload'
 import Dragger from 'antd/lib/upload/Dragger'
 import { useSelector } from 'react-redux'
+
 import { updateBackgroundReducer } from '../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../store/store'
 import { db } from '../../../util/db'
@@ -14,7 +15,7 @@ const Background = () => {
 
     const uploadNewBackground = async (file: RcFile) => {
         const firstBackground = (await db.background.toArray())[0]
-        db.background.update(firstBackground.id, {
+        db.background.update(firstBackground.id?? 0, {
             image: file
         })
         const backgroundUrl = URL.createObjectURL(file)

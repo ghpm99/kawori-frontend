@@ -1,15 +1,15 @@
 import { Breadcrumb, Layout } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
 } from 'chart.js'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
@@ -29,76 +29,76 @@ import styles from './Overview.module.scss'
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)
 
 function Overview() {
-  const financialStore = useSelector((state: RootState) => state.financial.paymentReport)
-  const dispatch = useAppDispatch()
+    const financialStore = useSelector((state: RootState) => state.financial.paymentReport)
+    const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(fetchPaymentReport())
-  }, [])
+    useEffect(() => {
+        dispatch(fetchPaymentReport())
+    }, [])
 
-  function OverviewReport() {
+    function OverviewReport() {
+        return (
+            <>
+                <PaymentWithFixed data={ financialStore.data } />
+                <PaymentWithoutFixed payments={ financialStore.data.open } />
+                <PaymentFixed
+                    fixedCredit={ financialStore.data.fixed_credit }
+                    fixedDebit={ financialStore.data.fixed_debit }
+                />
+            </>
+        )
+    }
+
     return (
-      <>
-        <PaymentWithFixed data={ financialStore.data } />
-        <PaymentWithoutFixed payments={ financialStore.data.open } />
-        <PaymentFixed
-          fixedCredit={ financialStore.data.fixed_credit }
-          fixedDebit={ financialStore.data.fixed_debit }
-        />
-      </>
+        <Layout className={ styles.container }>
+            <MenuAdmin selected={ ['overview'] } />
+            <Layout>
+                <Header className={ styles.header }>
+                    <LoginHeader />
+                </Header>
+                <Content>
+                    <Breadcrumb className={ styles.breadcrumb }>
+                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                        <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
+                        <Breadcrumb.Item>Overview</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <Layout>
+                        { financialStore.loading ?
+                            <>
+                                Carregando
+                            </> :
+                            <OverviewReport />
+                        }
+
+                    </Layout>
+                </Content>
+            </Layout>
+        </Layout>
     )
-  }
-
-  return (
-    <Layout className={ styles.container }>
-      <MenuAdmin selected={ ['overview'] } />
-      <Layout>
-        <Header className={ styles.header }>
-          <LoginHeader />
-        </Header>
-        <Content>
-          <Breadcrumb className={ styles.breadcrumb }>
-            <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-            <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-            <Breadcrumb.Item>Overview</Breadcrumb.Item>
-          </Breadcrumb>
-          <Layout>
-            { financialStore.loading ?
-              <>
-                Carregando
-              </> :
-              <OverviewReport />
-            }
-
-          </Layout>
-        </Content>
-      </Layout>
-    </Layout>
-  )
 }
 
 Overview.auth = {
-  role: 'admin',
-  loading: <LoadingPage />,
-  unauthorized: '/signin',
+    role: 'admin',
+    loading: <LoadingPage />,
+    unauthorized: '/signin',
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getSession({ req })
+    const session = await getSession({ req })
 
-  const isSuperuser = (session as unknown as ISession).user.isSuperuser
+    const isSuperuser = (session as unknown as ISession).user.isSuperuser
 
-  if(!isSuperuser){
-      return {
-          redirect: {
-            destination: '/',
-            permanent: false,
-          },
+    if (!isSuperuser) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
         }
-  }
-  return {
-    props:{}
-  }
+    }
+    return {
+        props: {}
+    }
 }
 
 export default Overview

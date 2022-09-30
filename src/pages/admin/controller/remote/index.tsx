@@ -1,11 +1,12 @@
+import { Breadcrumb, Button, Input, Layout, Slider, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react'
+import Pusher from 'react-pusher'
 
-import { Breadcrumb, Button, Input, Layout, Slider, Typography } from 'antd';
-import { getSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import Pusher from 'react-pusher';
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
 import {
     hotkeyService,
     keyPressService,
@@ -13,9 +14,10 @@ import {
     mouseMoveButtonService,
     mouseMoveService,
     mouseScrollService,
-    screenSizeService
-} from '../../../../services/remote';
-import styles from './Remote.module.scss';
+    screenSizeService,
+} from '../../../../services/remote'
+import styles from './Remote.module.scss'
+
 
 
 const { Header, Content } = Layout;
@@ -23,7 +25,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 
-function RemotePage(props) {
+function RemotePage() {
 
     const [hook, setHook] = useState({
         src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png`
@@ -45,13 +47,13 @@ function RemotePage(props) {
 
     }, [])
 
-    const onNewScreenshot = (data) => {
+    const onNewScreenshot = () => {
         setHook({
             src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png?${Date.now()}`
         })
     }
 
-    const onClickScreenshot = (event) => {
+    const onClickScreenshot = (event: any) => {
 
         setScreenSize({
             ...screenSize,
@@ -66,7 +68,7 @@ function RemotePage(props) {
         }
     }
 
-    const onContextScreenshot = (event) => {
+    const onContextScreenshot = (event: any) => {
 
         event.preventDefault()
 
@@ -235,7 +237,7 @@ RemotePage.pusher = {
     name: 'Remote'
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

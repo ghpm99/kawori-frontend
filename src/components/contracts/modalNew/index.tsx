@@ -3,7 +3,7 @@ import { MouseEvent } from 'react'
 
 import styles from './ModalNew.module.scss'
 
-interface INewContractForm {
+export interface INewContractForm {
     name: string
 }
 interface IModalNewProps {

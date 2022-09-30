@@ -1,14 +1,16 @@
+import { Breadcrumb, Button, Input, Layout, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import { redirect } from 'next/dist/server/api-utils'
+import { useState } from 'react'
+import Pusher from 'react-pusher'
 
-import { Breadcrumb, Button, Input, Layout, Typography } from 'antd';
-import { getSession, useSession } from 'next-auth/react';
-import { redirect } from 'next/dist/server/api-utils';
-import { useState } from 'react';
-import Pusher from 'react-pusher';
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
-import { sendCommandService } from '../../../../services/remote';
-import styles from './Command.module.scss';
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import { sendCommandService } from '../../../../services/remote'
+import styles from './Command.module.scss'
+
 
 
 const { Header, Content } = Layout;
@@ -17,12 +19,10 @@ const { TextArea } = Input;
 
 let pusher
 
-function CommandPage(props) {
+function CommandPage() {
 
     const [command, setCommand] = useState('')
     const [commandReturn, setCommandReturn] = useState('')
-    const { data, status } = useSession()
-
 
     const sendCommand = () => {
         sendCommandService(command)
@@ -75,7 +75,7 @@ function CommandPage(props) {
             <Pusher
                 channel='private-display'
                 event='command-return'
-                onUpdate={ (data) => setCommandReturn(data.output) }
+                onUpdate={ (data: any) => setCommandReturn(data.output) }
             />
         </Layout>
 
@@ -94,7 +94,7 @@ CommandPage.pusher = {
     name: 'command'
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

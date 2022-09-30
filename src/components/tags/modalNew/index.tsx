@@ -8,7 +8,7 @@ interface IModalNewTagProps {
     onFinish: ((values: IFormModalNewTag) => void) | undefined
 }
 
-interface IFormModalNewTag {
+export interface IFormModalNewTag {
     name: string
     color: string
 }

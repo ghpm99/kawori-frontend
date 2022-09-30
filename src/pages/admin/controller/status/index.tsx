@@ -1,26 +1,29 @@
+import { Breadcrumb, Layout, Progress, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import Pusher from 'react-pusher'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Breadcrumb, Layout, Progress, Typography } from 'antd';
-import { getSession } from 'next-auth/react';
-import Pusher from 'react-pusher';
-import { useDispatch, useSelector } from 'react-redux';
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
-import { setCpuAndMemoryValue } from '../../../../store/features/status/Index';
-import { RootState } from '../../../../store/store';
-import S from './Status.module.scss';
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import { setCpuAndMemoryValue } from '../../../../store/features/status/Index'
+import { RootState } from '../../../../store/store'
+import { NextPageCustom } from '../../../../types/commonTypes'
+import S from './Status.module.scss'
+
 
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 
-function StatusPage(props) {
+function StatusPage(): NextPageCustom {
 
 	const statusStore = useSelector((state: RootState) => state.status)
 	const dispatch = useDispatch()
 
-	const statusEvent = (data) => {
+	const statusEvent = (data: any) => {
 		const usedMemory = (100 - data.memory).toFixed(1)
 		dispatch(setCpuAndMemoryValue({
 			cpu: data.cpu,
@@ -86,7 +89,7 @@ StatusPage.pusher = {
 	name: 'status'
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	const session = await getSession({ req })
 
 	const isSuperuser = (session as unknown as ISession).user.isSuperuser

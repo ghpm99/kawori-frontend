@@ -1,13 +1,14 @@
-import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from 'antd';
-import moment from 'moment';
-import { getSession } from 'next-auth/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from 'antd'
+import moment from 'moment'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuCollapsible from '../../../../components/menuAdmin/Index';
-import { RootState } from '../../../../store/store';
-import styles from './Report.module.scss';
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuCollapsible from '../../../../components/menuAdmin/Index'
+import { RootState } from '../../../../store/store'
+import styles from './Report.module.scss'
 
 
 
@@ -22,33 +23,19 @@ function FinancialPage() {
 	const dispatch = useDispatch()
 
 	const dateFormat = 'DD/MM/YYYY'
-	const customFormat = value => `${value.format(dateFormat)}`
+	const customFormat = (value: any) => `${value.format(dateFormat)}`
 
 	const formatter = new Intl.NumberFormat('pt-BR', {
 		style: 'currency',
 		currency: 'BRL'
 	})
 
-
-
-	const onFinish = (values) => {
-		const newPayment = {
-			'type': values.type,
-			'name': values.name,
-			'date': moment(values.date).format('YYYY-MM-DD'),
-			'installments': values.installments,
-			'payment_date': moment(values.payment_date).format('YYYY-MM-DD'),
-			'fixed': values.fixed ? true : false,
-			'value': values.value
-		}
-	}
-
 	const headerTableFinancial = [
 		{
 			title: 'Tipo',
 			dataIndex: 'type',
 			key: 'type',
-			render: text => text === 0 ? 'Credito' : 'Debito'
+			render: (text: any) => text === 0 ? 'Credito' : 'Debito'
 		},
 		{
 			title: 'Data',
@@ -79,7 +66,7 @@ function FinancialPage() {
 			title: 'Fixo',
 			dataIndex: 'fixed',
 			key: 'fixed',
-			render: value => value ? 'Sim' : 'Não'
+			render: (value: any) => value ? 'Sim' : 'Não'
 		}
 	]
 
@@ -118,7 +105,7 @@ FinancialPage.auth = {
 	unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	const session = await getSession({ req })
 
 	const isSuperuser = (session as unknown as ISession).user.isSuperuser

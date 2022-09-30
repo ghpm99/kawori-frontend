@@ -1,5 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
@@ -7,7 +8,7 @@ import { useSelector } from 'react-redux'
 import LoadingPage from '../../../../components/loadingPage/Index'
 import LoginHeader from '../../../../components/loginHeader/Index'
 import MenuAdmin from '../../../../components/menuAdmin/Index'
-import ModalNewTag from '../../../../components/tags/modalNew'
+import ModalNewTag, { IFormModalNewTag } from '../../../../components/tags/modalNew'
 import { includeNewTagService } from '../../../../services/financial'
 import { changeVisibleModalTag, fetchTags } from '../../../../store/features/financial/Index'
 import { RootState, useAppDispatch } from '../../../../store/store'
@@ -27,15 +28,15 @@ function TagPage() {
         dispatch(fetchTags())
     }, [])
 
-    const openModal = (modal) => {
-        dispatch(changeVisibleModalTag({ name: modal, value: true }))
+    const openModal = (modal: keyof IModalTags) => {
+        dispatch(changeVisibleModalTag({ modal, visible: true }))
     }
 
-    const closeModal = (modal) => {
-        dispatch(changeVisibleModalTag({ name: modal, value: false }))
+    const closeModal = (modal: keyof IModalTags) => {
+        dispatch(changeVisibleModalTag({  modal, visible: false }))
     }
 
-    const onFinish = (values) => {
+    const onFinish = (values: IFormModalNewTag) => {
         console.log(values)
         const newTag = {
             'name': values.name,
@@ -60,7 +61,7 @@ function TagPage() {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name',
-            render: (_, tag) => (
+            render: (_: any, tag: ITags) => (
                 <Tag
                     color={tag.color}
                 >
@@ -123,7 +124,7 @@ TagPage.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

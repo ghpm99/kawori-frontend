@@ -11,7 +11,7 @@ export interface Facetexture {
 }
 
 export interface Background {
-  id:number
+  id?:number
   image: Blob
 }
 

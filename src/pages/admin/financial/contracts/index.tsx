@@ -1,11 +1,12 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Breadcrumb, Button, Layout, message, Table, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import ModalNew from '../../../../components/contracts/modalNew'
+import ModalNew, { INewContractForm } from '../../../../components/contracts/modalNew'
 import LoadingPage from '../../../../components/loadingPage/Index'
 import LoginHeader from '../../../../components/loginHeader/Index'
 import MenuAdmin from '../../../../components/menuAdmin/Index'
@@ -29,15 +30,15 @@ function FinancialPage() {
         dispatch(fetchAllContract({}))
     }, [])
 
-    const openModal = (modal) => {
+    const openModal = (modal: keyof IModalContracts) => {
         dispatch(changeVisibleContractsModal({ modal: modal, visible: true }))
     }
 
-    const closeModal = (modal) => {
+    const closeModal = (modal: keyof IModalContracts) => {
         dispatch(changeVisibleContractsModal({ modal: modal, visible: false }))
     }
 
-    const onFinish = (values) => {
+    const onFinish = (values: INewContractForm) => {
         const newContract = {
             'name': values.name,
         }
@@ -65,25 +66,25 @@ function FinancialPage() {
             title: 'Total',
             dataIndex: 'value',
             key: 'value',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Baixado',
             dataIndex: 'value_closed',
             key: 'value_closed',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Em aberto',
             dataIndex: 'value_open',
             key: 'value_open',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Ações',
             dataIndex: 'id',
             key: 'id',
-            render: value => <Link href={ `/admin/financial/contracts/details/${value}` }>Detalhes</Link>
+            render: (value: any) => <Link href={ `/admin/financial/contracts/details/${value}` }>Detalhes</Link>
         }
     ]
 
@@ -137,17 +138,19 @@ function FinancialPage() {
     )
 }
 
-function TableSummary(props) {
+
+
+function TableSummary({contractData}: {contractData: readonly IContractPagination[]}) {
 
     const { Text } = Typography
 
     let total = 0
     let totalOpen = 0
     let totalClosed = 0
-    props.contractData.forEach((contract) => {
-        total = total + parseFloat(contract.value)
-        totalOpen = totalOpen + parseFloat(contract.value_open)
-        totalClosed = totalClosed + parseFloat(contract.value_closed)
+    contractData.forEach((contract) => {
+        total = total + contract.value
+        totalOpen = totalOpen + contract.value_open
+        totalClosed = totalClosed + contract.value_closed
     })
 
     return (
@@ -173,7 +176,7 @@ FinancialPage.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

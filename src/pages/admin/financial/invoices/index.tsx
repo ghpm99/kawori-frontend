@@ -1,5 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Breadcrumb, Button, Layout, Table, Tag, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useEffect } from 'react'
@@ -45,19 +46,19 @@ function FinancialPage() {
             title: 'Valor',
             dataIndex: 'value',
             key: 'value',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Baixado',
             dataIndex: 'value_closed',
             key: 'value_closed',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Em aberto',
             dataIndex: 'value_open',
             key: 'value_open',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Parcelas',
@@ -68,13 +69,13 @@ function FinancialPage() {
             title: 'Dia',
             dataIndex: 'date',
             key: 'date',
-            render: value => formatterDate(value)
+            render: (value: any) => formatterDate(value)
         },
         {
             title: 'Tags',
             dataIndex: 'tags',
             key: 'tags',
-            render: (_, { tags }) => (
+            render: (_: any, { tags }: IInvoicePagination) => (
                 <>
                     { tags.map(tag =>
                         <Tag
@@ -91,7 +92,7 @@ function FinancialPage() {
             title: 'Ações',
             dataIndex: 'id',
             key: 'id',
-            render: value => <Link href={ `/admin/financial/invoices/details/${value}` }>Detalhes</Link>
+            render: (value: any) => <Link href={ `/admin/financial/invoices/details/${value}` }>Detalhes</Link>
         }
     ]
 
@@ -140,17 +141,17 @@ function FinancialPage() {
     )
 }
 
-function TableSummary(props) {
+function TableSummary({invoiceData}: {invoiceData: readonly IInvoicePagination[]}) {
 
     const { Text } = Typography
 
     let total = 0
     let totalOpen = 0
     let totalClosed = 0
-    props.invoiceData.forEach((invoice) => {
-        total = total + parseFloat(invoice.value)
-        totalOpen = totalOpen + parseFloat(invoice.value_open)
-        totalClosed = totalClosed + parseFloat(invoice.value_closed)
+    invoiceData.forEach((invoice) => {
+        total = total + invoice.value
+        totalOpen = totalOpen + invoice.value_open
+        totalClosed = totalClosed + invoice.value_closed
     })
 
     return (
@@ -176,7 +177,7 @@ FinancialPage.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

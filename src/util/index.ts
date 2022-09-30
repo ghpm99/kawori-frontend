@@ -1,6 +1,6 @@
 
 export const formatMoney = (
-    amount,
+    amount: number,
     decimalCount = 2,
     decimal = '.',
     thousands = ',',
@@ -37,7 +37,7 @@ export const formatMoney = (
     return amount
 }
 
-export const formatterDate = (dateString) => {
+export const formatterDate = (dateString: string) => {
 	let date = new Date(dateString + ' GMT-0300')
 	if (isNaN(date.getTime())) {
 		date = new Date(dateString)
@@ -45,7 +45,7 @@ export const formatterDate = (dateString) => {
 	return date.toLocaleDateString('pt-BR')
 }
 
-export const formatterDetailedDate = (dateString) => {
+export const formatterDetailedDate = (dateString: string) => {
 	const date = new Date(dateString)
 	return date.toLocaleString('pt-BR')
 }

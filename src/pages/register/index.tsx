@@ -1,18 +1,19 @@
+import { Button, Card, Form, Input, Layout, message } from 'antd'
+import { signIn } from 'next-auth/react'
+import Router from 'next/router'
+import { useCallback } from 'react'
+import Particles from 'react-tsparticles'
+import { loadFull } from 'tsparticles'
+import { Engine, ISourceOptions } from 'tsparticles-engine'
 
-import { Button, Card, Form, Input, Layout, message } from 'antd';
-import { signIn } from 'next-auth/react';
-import Router from 'next/router';
-import { useCallback } from 'react';
-import Particles from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
-import { Engine, ISourceOptions } from 'tsparticles-engine';
-import particlesOptions from '../../../public/particles.json';
-import MenuHeader from '../../components/menuHeader';
-import { signupService } from '../../services/auth';
+import particlesOptions from '../../../public/particles.json'
+import MenuHeader from '../../components/menuHeader'
+import { signupService } from '../../services/auth'
+
 
 const { Content } = Layout;
 
-export default function RegisterPage(props) {
+export default function RegisterPage() {
 
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadFull(engine);
@@ -28,7 +29,7 @@ export default function RegisterPage(props) {
                 password: password,
                 redirect: false
             }).then(e => {
-                if (e.status !== 200) {
+                if (e?.status !== 200) {
                     message.error('Falhou em logar')
                 } else {
                    Router.push('/admin/user')

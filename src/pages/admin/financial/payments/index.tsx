@@ -1,19 +1,20 @@
-import { ClearOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, DatePicker, Input, Layout, Select, Table, Typography } from 'antd';
-import moment from 'moment';
-import { getSession } from 'next-auth/react';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { ClearOutlined } from '@ant-design/icons'
+import { Breadcrumb, Button, DatePicker, Input, Layout, Select, Table, Typography } from 'antd'
+import moment from 'moment'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { ChangeEvent, MouseEventHandler, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import FilterDropdown from '../../../../components/common/filterDropdown/Index';
-import LoadingPage from '../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../components/menuAdmin/Index';
-import { cleanFilterPayments, fetchAllPayment, setFilterPayments } from '../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../store/store';
-import { formatMoney, formatterDate } from '../../../../util';
-import styles from './Payments.module.scss';
+import FilterDropdown from '../../../../components/common/filterDropdown/Index'
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import { cleanFilterPayments, fetchAllPayment, setFilterPayments } from '../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../store/store'
+import { formatMoney, formatterDate } from '../../../../util'
+import styles from './Payments.module.scss'
 
 
 const { Header, Content } = Layout
@@ -44,7 +45,7 @@ function FinancialPage() {
         }))
     }
 
-    const applyFilter = (event) => {
+    const applyFilter = (event: any) => {
         event.preventDefault()
         dispatch(fetchAllPayment({
             ...financialStore.filters,
@@ -52,13 +53,13 @@ function FinancialPage() {
         }))
     }
 
-    const handleChangeFilter = (e) => {
+    const handleChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
 
         dispatch(setFilterPayments({ name, value }))
     }
 
-    const handleSelectFilter = (name, value) => {
+    const handleSelectFilter = (name: string, value: string | number) => {
         dispatch(setFilterPayments({ name, value }))
     }
 
@@ -76,8 +77,8 @@ function FinancialPage() {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: value => value === 0 ? 'Em aberto' : 'Baixado',
-            filterDropdown: (props) => (
+            render: (value: any) => value === 0 ? 'Em aberto' : 'Baixado',
+            filterDropdown: () => (
                 <FilterDropdown applyFilter={ applyFilter }>
                     <Select
                         style={ { width: 220 } }
@@ -96,8 +97,8 @@ function FinancialPage() {
             title: 'Tipo',
             dataIndex: 'type',
             key: 'type',
-            render: text => text === 0 ? 'Credito' : 'Debito',
-            filterDropdown: (props) => (
+            render: (text: any) => text === 0 ? 'Credito' : 'Debito',
+            filterDropdown: () => (
                 <FilterDropdown applyFilter={ applyFilter }>
                     <Select
                         style={ { width: 220 } }
@@ -116,8 +117,8 @@ function FinancialPage() {
             title: 'Data',
             dataIndex: 'date',
             key: 'dataIndex',
-            render: value => formatterDate(value),
-            filterDropdown: (props) => (
+            render: (value: any) => formatterDate(value),
+            filterDropdown: () => (
                 <FilterDropdown applyFilter={ applyFilter }>
                     <RangePicker
                         name={ 'date' }
@@ -137,7 +138,7 @@ function FinancialPage() {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name',
-            filterDropdown: (props) => (
+            filterDropdown: () => (
                 <FilterDropdown applyFilter={ applyFilter }>
                     <Input
                         name='name__icontains'
@@ -152,7 +153,7 @@ function FinancialPage() {
             title: 'Valor',
             dataIndex: 'value',
             key: 'value',
-            render: value => formatMoney(value)
+            render: (value: any) => formatMoney(value)
         },
         {
             title: 'Parcelas',
@@ -163,8 +164,8 @@ function FinancialPage() {
             title: 'Dia de pagamento',
             dataIndex: 'payment_date',
             key: 'payment_date',
-            render: value => formatterDate(value),
-            filterDropdown: (props) => (
+            render: (value: any) => formatterDate(value),
+            filterDropdown: () => (
                 <FilterDropdown applyFilter={ applyFilter }>
                     <RangePicker
                         name={ 'payment_date' }
@@ -184,13 +185,13 @@ function FinancialPage() {
             title: 'Fixo',
             dataIndex: 'fixed',
             key: 'fixed',
-            render: value => value ? 'Sim' : 'Não'
+            render: (value: any) => value ? 'Sim' : 'Não'
         },
         {
             title: 'Ações',
             dataIndex: 'id',
             key: 'id',
-            render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
+            render: (value: any) => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
         }
     ]
 
@@ -239,20 +240,20 @@ function FinancialPage() {
     )
 }
 
-function TableSummary(props) {
+function TableSummary({paymentData}: {paymentData: readonly IPaymentPagination[]}) {
 
     const { Text } = Typography
 
     let total = 0
     let totalCredit = 0
     let totalDebit = 0
-    props.paymentData.forEach((payment) => {
+    paymentData.forEach((payment) => {
         if (payment.type === 0) {
-            total = total + parseFloat(payment.value)
-            totalCredit = totalCredit + parseFloat(payment.value)
+            total = total + payment.value
+            totalCredit = totalCredit + payment.value
         } else {
-            total = total - parseFloat(payment.value)
-            totalDebit = totalDebit + parseFloat(payment.value)
+            total = total - payment.value
+            totalDebit = totalDebit + payment.value
         }
     })
 
@@ -279,7 +280,7 @@ FinancialPage.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser
