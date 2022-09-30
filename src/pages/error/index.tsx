@@ -1,15 +1,16 @@
-import { Card, Layout, Typography } from 'antd';
-import { useCallback } from 'react';
-import Particles from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
-import { Engine, ISourceOptions } from 'tsparticles-engine';
-import particlesOptions from '../../../public/particles.json';
-import MenuHeader from '../../components/menuHeader';
+import { Card, Layout, Typography } from 'antd'
+import { useCallback } from 'react'
+import Particles from 'react-tsparticles'
+import { loadFull } from 'tsparticles'
+import { Engine, ISourceOptions } from 'tsparticles-engine'
+
+import particlesOptions from '../../../public/particles.json'
+import MenuHeader from '../../components/menuHeader'
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
 
-export default function ErrorPage(props) {
+export default function ErrorPage() {
 
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadFull(engine);

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { getSession } from 'next-auth/react';
+import axios from 'axios'
+import { getSession } from 'next-auth/react'
 
 export const apiDjango = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_API_URL + '/admin-api',
@@ -9,7 +9,7 @@ let tried = 0
 const retryMaxCount = 3
 const retryDelay = 1500
 
-const sleepRequest = (milliseconds, originalRequest) => {
+const sleepRequest = (milliseconds: number, originalRequest: any) => {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => resolve(apiDjango(originalRequest)), milliseconds)
 	})
@@ -17,7 +17,7 @@ const sleepRequest = (milliseconds, originalRequest) => {
 
 apiDjango.interceptors.request.use(async (request) => {
     const session = await getSession()
-	const token = session.accessToken
+	const token = session?.accessToken
 	if (token) {
 		request.headers!.Authorization = `Bearer ${token}`
 	}

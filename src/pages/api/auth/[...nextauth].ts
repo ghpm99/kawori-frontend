@@ -1,7 +1,7 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 
-import { fetchUserDetails, signinService } from '../../../services/auth';
+import { fetchUserDetails, signinService } from '../../../services/auth'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -26,7 +26,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 				// e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
 				// You can also use the `req` object to obtain additional parameters
 				// (i.e., the request IP address)
-				const tokenRes = await signinService(credentials.username, credentials.password)
+				const tokenRes = await signinService(credentials?.username?? '', credentials?.password?? '')
 
 				if(tokenRes.status !== 200){
 					return null
@@ -54,7 +54,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 	}
 
 	const callbacks = {
-		async session({ session, user, token }) {
+		async session({ session, user, token }: any) {
 			session.accessToken = token.userSession
 			session.user.username = token.username
 			session.user.firstName = token.firstName
@@ -66,7 +66,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 			session.user.dateJoined = token.dateJoined
 			return session
 		},
-		async jwt({ token, user, account, profile, isNewUser }) {
+		async jwt({ token, user, account, profile, isNewUser }: any) {
 			if (user !== undefined) {
 				token.userSession = user.token
 				token.username = user.username

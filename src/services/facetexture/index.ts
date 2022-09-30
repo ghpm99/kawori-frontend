@@ -1,4 +1,4 @@
-import { apiDjango } from '..';
+import { apiDjango } from '..'
 
 interface IFacetextureApi {
 	characters: IFacetextureCharacterApi[]
@@ -21,19 +21,17 @@ export async function fetchFacetextureService() {
 	return response.data as IFacetextureApi
 }
 
-export async function updateFacetextureService(characters) {
+export async function updateFacetextureService(characters: updateFacetexturePayload) {
 	const response = await apiDjango.post('/facetexture/save', characters)
 	return response.data
 }
 
-export async function fetchFaceTextureClassService(params?) {
-	const response = await apiDjango.get('/facetexture/class', {
-		params: params,
-	})
+export async function fetchFaceTextureClassService() {
+	const response = await apiDjango.get('/facetexture/class')
 	return response.data
 }
 
-export async function previewFacetextureService(args) {
+export async function previewFacetextureService(args: any) {
 	const response = await apiDjango.post(
 		'/facetexture/preview',
 		{ ...args },
@@ -49,7 +47,7 @@ export async function previewFacetextureService(args) {
 	return response.data
 }
 
-export async function downloadFacetextureService(token, args) {
+export async function downloadFacetextureService( args: any) {
 	const response = await apiDjango.post(
 		'/facetexture/download',
 		{ ...args },

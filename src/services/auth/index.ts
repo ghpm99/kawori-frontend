@@ -4,7 +4,7 @@ const apiLogin = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + '/auth',
 })
 
-export async function signinService(username, password) {
+export async function signinService(username: string, password: string) {
     const response = await apiLogin.post('/signin', {
         credentials: {
             username,
@@ -31,7 +31,7 @@ export async function signupService(user: INewUser) {
     }
 }
 
-export async function fetchUserDetails(token) {
+export async function fetchUserDetails(token: string) {
     const response = await apiLogin.get('/user', {
         headers: { Authorization: 'Basic ' + token },
     })

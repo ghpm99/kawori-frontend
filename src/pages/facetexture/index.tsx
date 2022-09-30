@@ -1,14 +1,15 @@
+import Link from 'next/link'
+import { useCallback } from 'react'
+import Particles from 'react-tsparticles'
+import { loadFull } from 'tsparticles'
+import { Engine, ISourceOptions } from 'tsparticles-engine'
 
-import Link from 'next/link';
-import Particles from 'react-tsparticles';
-import MenuHeader from '../../components/menuHeader';
-import styles from './Facetexture.module.scss';
-import { loadFull } from 'tsparticles';
-import { Engine, ISourceOptions } from 'tsparticles-engine';
-import particlesOptions from '../../../public/particles.json';
-import { useCallback } from 'react';
+import particlesOptions from '../../../public/particles.json'
+import MenuHeader from '../../components/menuHeader'
+import styles from './Facetexture.module.scss'
 
-export default function Facetexture(props) {
+
+export default function Facetexture() {
 
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);

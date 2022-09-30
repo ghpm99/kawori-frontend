@@ -1,19 +1,19 @@
-import { Button, Card, Checkbox, Form, Input, Layout } from 'antd';
-import { signIn } from 'next-auth/react';
-import Router from 'next/router';
-import { useCallback, useState } from 'react';
-import Particles from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
-import { Engine, ISourceOptions } from 'tsparticles-engine';
+import { Button, Card, Checkbox, Form, Input, Layout } from 'antd'
+import { signIn } from 'next-auth/react'
+import Router from 'next/router'
+import { useCallback, useState } from 'react'
+import Particles from 'react-tsparticles'
+import { loadFull } from 'tsparticles'
+import { Engine, ISourceOptions } from 'tsparticles-engine'
 
-import particlesOptions from '../../../public/particles.json';
-import MenuHeader from '../../components/menuHeader';
-import styles from './Signin.module.scss';
+import particlesOptions from '../../../public/particles.json'
+import MenuHeader from '../../components/menuHeader'
+import styles from './Signin.module.scss'
 
 
 const { Content } = Layout;
 
-export default function LoginPage(props) {
+export default function LoginPage() {
 
     const [error, setError] = useState(false)
 
@@ -30,7 +30,7 @@ export default function LoginPage(props) {
                 redirect: false
             }).then(e => {
                 console.log(e)
-                if (e.status !== 200) {
+                if (e?.status !== 200) {
                     setError(true)
                 } else {
                    Router.push('/admin/user')

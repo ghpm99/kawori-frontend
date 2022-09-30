@@ -1,7 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { saveAs } from 'file-saver'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 import { downloadFacetextureService, previewFacetextureService } from '../../../services/facetexture'
@@ -10,7 +9,6 @@ import Styles from './Preview.module.scss'
 
 const Preview = () => {
 
-    const { data } = useSession()
     const [previewBackground, setPreviewBackground] = useState()
     const [loading, setLoading] = useState(false)
     const [downloading, setDownloading] = useState(false)
@@ -36,7 +34,7 @@ const Preview = () => {
         }
         setDownloading(true)
         const background = (await db.background.toArray())[0]
-        downloadFacetextureService(data?.accessToken, {
+        downloadFacetextureService({
             'background': background.image
         }).then(response => {
             saveAs(response, 'export.zip')

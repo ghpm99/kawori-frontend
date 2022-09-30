@@ -1,5 +1,6 @@
 import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
+import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -40,11 +41,11 @@ export default function InvoiceDetails() {
         }
     }, [id])
 
-    const save = (event) => {
+    const save = (event: any) => {
         console.log(event)
     }
 
-    const changeName = (event) => {
+    const changeName = (event: any) => {
         console.log(event)
     }
 
@@ -59,9 +60,9 @@ export default function InvoiceDetails() {
         }
     }
 
-    const handleChangeTags = (value: string, option) => {
+    const handleChangeTags = (value: string, option: any) => {
         console.log(`selected ${value}`, option)
-        saveInvoiceTagsService(financialStore.data.id, option.map(item => item.value)).then(() => {
+        saveInvoiceTagsService(financialStore.data.id, option.map((item: any) => item.value)).then(() => {
             dispatch(fetchInvoiceDetails(financialStore.data.id))
         })
     }
@@ -159,9 +160,9 @@ export default function InvoiceDetails() {
                                         style={ { width: '100%' } }
                                         placeholder="Tags"
                                         onChange={ handleChangeTags }
-                                        value={ financialStore.data?.tags.map(item => ({ value: item.id })) }>
-                                        { tagsStore.data?.map((item, index) =>
-                                            <Option key={ item.name.toString(36) + index } value={ item.id }>
+                                        defaultValue={ financialStore.data?.tags.map(item => (`${item.id}`)).join(',') }>
+                                        { tagsStore.data?.map(item =>
+                                            <Option key={ item.id } value={ item.id }>
                                                 { item.name }
                                             </Option>
                                         ) }
@@ -257,7 +258,7 @@ InvoiceDetails.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

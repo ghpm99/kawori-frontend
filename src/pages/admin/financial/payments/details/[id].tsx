@@ -1,15 +1,17 @@
-import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from 'antd';
-import { Content, Header } from 'antd/lib/layout/layout';
-import moment from 'moment';
-import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from 'antd'
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
+import { Content, Header } from 'antd/lib/layout/layout'
+import moment from 'moment'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import LoadingPage from '../../../../../components/loadingPage/Index';
-import LoginHeader from '../../../../../components/loginHeader/Index';
-import MenuAdmin from '../../../../../components/menuAdmin/Index';
-import { payoffPaymentService, savePaymentDetailService } from '../../../../../services/financial';
+import LoadingPage from '../../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../../components/menuAdmin/Index'
+import { payoffPaymentService, savePaymentDetailService } from '../../../../../services/financial'
 import {
     changeActivePaymentDetails,
     changeFixedPaymentDetails,
@@ -18,9 +20,9 @@ import {
     changeTypePaymentDetails,
     changeValuePaymentDetails,
     fetchPaymentDetails,
-} from '../../../../../store/features/financial/Index';
-import { RootState, useAppDispatch } from '../../../../../store/store';
-import styles from './Details.module.scss';
+} from '../../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../../store/store'
+import styles from './Details.module.scss'
 
 const { Paragraph } = Typography
 const { Option } = Select
@@ -44,8 +46,8 @@ export default function PaymentDetails() {
 
     const date = new Date(financialStore.data?.date).toLocaleDateString()
 
-    const save = (event) => {
-        savePaymentDetailService(id, financialStore.data).then(response => {
+    const save = () => {
+        savePaymentDetailService(financialStore.data.id, financialStore.data).then(response => {
             message.success({
                 content: response.msg,
                 key: msgRef
@@ -53,33 +55,36 @@ export default function PaymentDetails() {
         })
     }
 
-    const changeName = (event) => {
+    const changeName = (event: string) => {
         dispatch(changeNamePaymentDetails(event))
     }
 
-    const changeType = (event) => {
+    const changeType = (event: number) => {
         dispatch(changeTypePaymentDetails(event))
     }
 
-    const changeFixed = (event) => {
+    const changeFixed = (event: CheckboxChangeEvent) => {
         const { checked } = event.target
         dispatch(changeFixedPaymentDetails(checked))
     }
 
-    const changeActive = (event) => {
+    const changeActive = (event: CheckboxChangeEvent) => {
         const { checked } = event.target
         dispatch(changeActivePaymentDetails(checked))
     }
 
-    const changePaymentDate = (date) => {
+    const changePaymentDate = (date: any) => {
         dispatch(changePaymentDatePaymentDetails(date.format('YYYY-MM-DD')))
     }
 
-    const changeValue = (event) => {
+    const changeValue = (event: number | null) => {
+        if(!event){
+            return
+        }
         dispatch(changeValuePaymentDetails(event))
     }
 
-    const payoff = (event) => {
+    const payoff = () => {
         payoffPaymentService(financialStore.data.id).then(data => {
             message.success({
                 content: data.msg,
@@ -254,7 +259,7 @@ PaymentDetails.auth = {
     unauthorized: "/signin",
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
     const isSuperuser = (session as unknown as ISession).user.isSuperuser

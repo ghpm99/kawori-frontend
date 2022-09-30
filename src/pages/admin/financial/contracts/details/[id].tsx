@@ -191,17 +191,23 @@ export default function ContractDetails() {
                             <div className={ styles['row'] }>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Valor Total: { formatMoney(financialStore.data?.value) }
+                                        <>
+                                            Valor Total: { formatMoney(financialStore.data?.value) }
+                                        </>
                                     </div>
                                 </div>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Valor Baixado: { formatMoney(financialStore.data?.value_closed) }
+                                        <>
+                                            Valor Baixado: { formatMoney(financialStore.data?.value_closed) }
+                                        </>
                                     </div>
                                 </div>
                                 <div className={ styles['label-detail'] }>
                                     <div className={ styles.label }>
-                                        Valor em Aberto: { formatMoney(financialStore.data?.value_open) }
+                                        <>
+                                            Valor em Aberto: { formatMoney(financialStore.data?.value_open) }
+                                        </>
                                     </div>
                                 </div>
                             </div>
