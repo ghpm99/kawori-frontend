@@ -291,7 +291,7 @@ export default function ContractDetails() {
             </Layout>
             <Modal
                 title='Mesclar contrato'
-                visible={ financialStore.modal.mergeContract.visible }
+                open={ financialStore.modal.mergeContract.visible }
                 onCancel={ () => closeModal('mergeContract') }
                 onOk={ mergeContractEvent }
             >
