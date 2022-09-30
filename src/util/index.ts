@@ -38,14 +38,14 @@ export const formatMoney = (
 }
 
 export const formatterDate = (dateString: string) => {
-	let date = new Date(dateString + ' GMT-0300')
-	if (isNaN(date.getTime())) {
-		date = new Date(dateString)
-	}
-	return date.toLocaleDateString('pt-BR')
+    let date = new Date(dateString + ' GMT-0300')
+    if (isNaN(date.getTime())) {
+        date = new Date(dateString)
+    }
+    return date.toLocaleDateString('pt-BR')
 }
 
 export const formatterDetailedDate = (dateString: string) => {
-	const date = new Date(dateString)
-	return date.toLocaleString('pt-BR')
+    const date = new Date(dateString)
+    return date.toLocaleString('pt-BR')
 }
