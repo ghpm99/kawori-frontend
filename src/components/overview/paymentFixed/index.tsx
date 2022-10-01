@@ -2,46 +2,48 @@ import React from 'react'
 import { Bar } from 'react-chartjs-2'
 
 interface IPaymentFixedProps {
-  fixedCredit: number
-  fixedDebit: number
+    fixedCredit: number
+    fixedDebit: number
 }
 
 export default function PaymentFixed(props: IPaymentFixedProps) {
+
+    console.log(props)
 
     const labels = ['Ativo']
 
     const options = {
         responsive: true,
         plugins: {
-          legend: {
-            position: 'top' as const,
-          },
-          title: {
-            display: true,
-            text: 'Relatorio pagamentos mensais',
-          },
+            legend: {
+                position: 'top' as const,
+            },
+            title: {
+                display: true,
+                text: 'Relatorio pagamentos mensais',
+            },
         },
-      }
+    }
 
-      const data = {
+    const data = {
         labels,
         datasets: [
-          {
-            label: 'Credito',
-            data: props.fixedCredit,
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-          {
-            label: 'Debito',
-            data: props.fixedDebit,
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          },
+            {
+                label: 'Credito',
+                data: [props.fixedCredit],
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                label: 'Debito',
+                data: [props.fixedDebit],
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
         ],
-      }
+    }
 
-    return(
+    return (
         <>
-        <Bar data={ data } options={ options } width={ 400 } height={ 200 } />
+            <Bar data={ data } options={ options } width={ 400 } height={ 200 } />
         </>
     )
 }
