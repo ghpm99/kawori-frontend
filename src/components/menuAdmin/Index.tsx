@@ -6,12 +6,12 @@ import {
     SettingOutlined,
     SnippetsOutlined,
     UserOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
-import Link from 'next/link';
+} from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
+import Link from 'next/link'
 
-import styles from './Menu.module.scss';
-import useMenu from './useMenu';
+import styles from './Menu.module.scss'
+import useMenu from './useMenu'
 
 
 const { Sider } = Layout;
@@ -89,7 +89,7 @@ function MenuAdmin(props: { selected: string[] }) {
 											Pagamentos
 										</Link>
 									</Menu.Item>
-									<Menu.Item key='report'>
+									<Menu.Item key='tags'>
 										<Link href={ '/admin/financial/tags' }>
 											Tags
 										</Link>

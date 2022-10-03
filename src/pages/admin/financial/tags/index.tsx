@@ -73,7 +73,7 @@ function TagPage() {
 
     return (
         <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['contracts'] } />
+            <MenuAdmin selected={ ['tags'] } />
             <Layout>
                 <Header className={ styles.header } >
                     <LoginHeader />

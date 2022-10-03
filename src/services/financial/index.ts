@@ -85,3 +85,8 @@ export async function saveInvoiceTagsService(idInvoice: number, tags: number[]) 
     const response = await apiDjango.post(`/financial/invoice/${idInvoice}/tags`, tags)
     return response
 }
+
+export async function updateAllContractsValue() {
+    const response = await apiDjango.post('/financial/update_all_contracts_value')
+    return response
+}
