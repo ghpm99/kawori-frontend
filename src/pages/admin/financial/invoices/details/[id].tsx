@@ -1,5 +1,6 @@
 import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
+import { DefaultOptionType } from 'antd/lib/select'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -60,7 +61,7 @@ export default function InvoiceDetails() {
         }
     }
 
-    const handleChangeTags = (value: string, option: any) => {
+    const handleChangeTags = (value: number[], option: DefaultOptionType | DefaultOptionType[]) => {
         console.log(`selected ${value}`, option)
         saveInvoiceTagsService(financialStore.data.id, option.map((item: any) => item.value)).then(() => {
             dispatch(fetchInvoiceDetails(financialStore.data.id))
@@ -156,11 +157,12 @@ export default function InvoiceDetails() {
                             <div className={ styles['row'] }>
                                 <div className={ styles['label-detail'] }>
                                     <Select
+
                                         mode="tags"
                                         style={ { width: '100%' } }
                                         placeholder="Tags"
                                         onChange={ handleChangeTags }
-                                        defaultValue={ financialStore.data?.tags.map(item => (`${item.id}`)).join(',') }>
+                                        defaultValue={ financialStore.data?.tags.map(item => (item.id)) }>
                                         { tagsStore.data?.map(item =>
                                             <Option key={ item.id } value={ item.id }>
                                                 { item.name }

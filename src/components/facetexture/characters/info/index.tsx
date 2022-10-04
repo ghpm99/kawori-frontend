@@ -22,18 +22,19 @@ const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const updateCharacterClass = (index: number | undefined, value: { value: number, label: string }) => {
-        if(!index){
+    const updateCharacterClass = (index: number | undefined, value: number) => {
+        console.log(index, value)
+        if (index == undefined) {
             return
         }
         dispatch(updateCharacterClassReducer({
             index: index,
-            class: value.value
+            class: value
         }))
     }
 
     const updateImageSelectedCharacter = (index: number | undefined, file: RcFile) => {
-        if(!index){
+        if (index === undefined) {
             return
         }
         dispatch(updateFacetextureUrlReducer({
@@ -47,14 +48,14 @@ const Info = () => {
     }
 
     const deleteCharacter = (index: number | undefined) => {
-        if(!index){
+        if (!index) {
             return
         }
         dispatch(deleteCharacterReducer(index))
     }
 
     const updateCharacterShowClass = (index: number | undefined, event: CheckboxChangeEvent) => {
-        if(!index){
+        if (!index) {
             return
         }
         dispatch(updateCharacterShowClassReducer({
@@ -63,13 +64,13 @@ const Info = () => {
         }))
     }
 
-    const selectedFacetexture = facetextureStore.selected ? facetextureStore.facetexture[facetextureStore.selected] : undefined
+    const selectedFacetexture = facetextureStore.selected !== undefined ? facetextureStore.facetexture[facetextureStore.selected] : undefined
 
     return (
         <div className={ Styles['character-info'] }>
             { selectedFacetexture &&
                 <>
-                    <div className={Styles['controllers-info']}>
+                    <div className={ Styles['controllers-info'] }>
                         <Title level={ 4 }>Propriedades</Title>
                         <Title level={ 5 }>
                             Imagem atual do personagem
@@ -88,7 +89,7 @@ const Info = () => {
                             height={ 160 }
                         />
                     </div>
-                    <div className={Styles['controllers-info']}>
+                    <div className={ Styles['controllers-info'] }>
                         <Title level={ 5 }>
                             Classe do personagem
                             <Tooltip title='Selecione a classe que voce quer que apareça no resultado final.'>
@@ -103,17 +104,14 @@ const Info = () => {
                                     label: item.name
                                 })
                             ) }
-                            value={ {
-                                value: selectedFacetexture?.class.id,
-                                label: selectedFacetexture?.class.name
-                            } }
+                            value={ selectedFacetexture?.class.id }
                             style={ {
                                 width: '125px'
                             } }
-                            onChange={ (value) => updateCharacterClass(facetextureStore.selected, value) }
+                            onChange={ (value: number) => updateCharacterClass(facetextureStore.selected, value) }
                         />
                     </div>
-                    <div className={Styles['controllers-info']}>
+                    <div className={ Styles['controllers-info'] }>
                         <Checkbox
                             checked={ selectedFacetexture?.show }
                             onChange={ (e) => updateCharacterShowClass(facetextureStore.selected, e) }
@@ -121,7 +119,7 @@ const Info = () => {
                             Mostrar icone da classe
                         </Checkbox>
                     </div>
-                    <div className={Styles['controllers-info']}>
+                    <div className={ Styles['controllers-info'] }>
                         <Title level={ 5 }>
                             Facetexture do jogo
                             <Tooltip title='Selecione a facetexture atual do personagem,
@@ -143,7 +141,7 @@ const Info = () => {
                             </div>
                         </Upload>
                     </div>
-                    <div className={Styles['controllers-info']}>
+                    <div className={ Styles['controllers-info'] }>
                         <Button
                             type='primary'
                             onClick={ () => deleteCharacter(facetextureStore.selected) }
