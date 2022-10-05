@@ -14,6 +14,7 @@ import {
     updateFacetextureUrlReducer,
 } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
+import { db } from '../../../../util/db'
 import Styles from './Info.module.scss'
 
 const { Title } = Typography
@@ -23,7 +24,7 @@ const Info = () => {
     const dispatch = useAppDispatch()
 
     const updateCharacterClass = (index: number | undefined, value: number) => {
-        console.log(index, value)
+
         if (index == undefined) {
             return
         }
@@ -45,6 +46,20 @@ const Info = () => {
             index: index,
             name: file.name
         }))
+        updateImageLocal(file.name, file)
+    }
+
+    const updateImageLocal = async (name: string, file: Blob) => {
+        const localImage = await db.image.filter(image => image.name === name).first()
+
+        if(localImage && localImage.id){
+            db.image.update(localImage.id, {image: file})
+        }else{
+            db.image.add({
+                name: name,
+                imagem: file
+            })
+        }
     }
 
     const deleteCharacter = (index: number | undefined) => {
