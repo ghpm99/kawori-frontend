@@ -9,14 +9,19 @@ import Loading from '../../../components/facetexture/loading'
 import Preview from '../../../components/facetexture/preview'
 import LoginHeader from '../../../components/loginHeader/Index'
 import MenuAdmin from '../../../components/menuAdmin/Index'
-import { updateFacetextureService } from '../../../services/facetexture'
-import { fetchFacetexture, setFacetextureIsEdited, updateBackgroundReducer } from '../../../store/features/facetexture'
+import { IFacetextureCharacterApi, updateFacetextureService } from '../../../services/facetexture'
+import {
+    fetchFacetexture,
+    setFacetextureIsEdited,
+    updateBackgroundReducer,
+    updateFacetextureUrlReducer,
+} from '../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../store/store'
 import { db } from '../../../util/db'
 import Styles from './Facetexture.module.scss'
 
 
-const { Header, Content } = Layout;
+const { Header, Content } = Layout
 
 function FaceTexture() {
 
@@ -30,7 +35,22 @@ function FaceTexture() {
     useEffect(() => {
 
         updateBackground()
-        dispatch(fetchFacetexture())
+        dispatch(fetchFacetexture()).then((action) => {
+            const payload = (action.payload) as {
+                characters: IFacetextureCharacterApi[]
+                classes: {
+                    class: {
+                        id: number
+                        name: string
+                        abbreviation: string
+                        class_image: string
+                    }[]
+                }
+            }
+            payload.characters.forEach((value, index) => {
+                updateCharacterImage(index, value.name)
+            })
+        })
 
     }, [])
 
@@ -76,6 +96,17 @@ function FaceTexture() {
         }
         dispatch(updateBackgroundReducer(backgroundImage))
 
+    }
+
+    const updateCharacterImage = async (index: number, name: string) => {
+        const image = await db.image.where('name').equals(name).first()
+        if (image) {
+            const imageUrl = URL.createObjectURL(image.imagem)
+            dispatch(updateFacetextureUrlReducer({
+                index: index,
+                image: imageUrl,
+            }))
+        }
     }
 
 
