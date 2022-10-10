@@ -1,4 +1,4 @@
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, Select, Table, Typography } from 'antd'
+import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Select, Table, Typography } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import { DefaultOptionType } from 'antd/lib/select'
 import { GetServerSideProps } from 'next'
@@ -63,8 +63,13 @@ export default function InvoiceDetails() {
 
     const handleChangeTags = (value: number[], option: DefaultOptionType | DefaultOptionType[]) => {
         console.log(`selected ${value}`, option)
-        saveInvoiceTagsService(financialStore.data.id, option.map((item: any) => item.value)).then(() => {
-            dispatch(fetchInvoiceDetails(financialStore.data.id))
+        saveInvoiceTagsService(financialStore.data.id, option.map((item: any) => item.value)).then((response) => {
+            if(response.status === 200){
+                message.success(response.data.msg)
+            }
+        }, (reason) => {
+            console.log(reason)
+            message.error('Falhou em atualizar tags')
         })
     }
 
