@@ -17,6 +17,7 @@ import {
     changeFixedPaymentDetails,
     changeNamePaymentDetails,
     changePaymentDatePaymentDetails,
+    changeStatusPaymentDetails,
     changeTypePaymentDetails,
     changeValuePaymentDetails,
     fetchPaymentDetails,
@@ -90,7 +91,7 @@ export default function PaymentDetails() {
                 content: data.msg,
                 key: msgRef
             })
-            dispatch(fetchPaymentDetails(financialStore.data.id))
+            dispatch(changeStatusPaymentDetails(1))
         })
     }
 

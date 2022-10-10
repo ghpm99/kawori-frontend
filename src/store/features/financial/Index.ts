@@ -199,6 +199,9 @@ export const financialSlice = createSlice({
 	name: 'financial',
 	initialState,
 	reducers: {
+		changeStatusPaymentDetails: (state: IFinancialStore, action: PayloadAction<number>) => {
+			state.paymentDetail.data.status = action.payload
+		},
 		changeNamePaymentDetails: (state: IFinancialStore, action: PayloadAction<string>) => {
 			state.paymentDetail.data.name = action.payload
 		},
@@ -310,6 +313,7 @@ export const financialSlice = createSlice({
 })
 
 export const {
+	changeStatusPaymentDetails,
 	changeNamePaymentDetails,
 	changeTypePaymentDetails,
 	changeFixedPaymentDetails,
