@@ -16,6 +16,7 @@ interface IFinancialStore {
             fixed_debit: number
             fixed_credit: number
         }
+        cards: IPaymentReportCards
     }
     contracts: {
         data: IContractPagination[]
@@ -94,6 +95,25 @@ interface IPaymentReportClosed {
     label: string
     debit: number
     credit: number
+}
+
+interface IPaymentReportCards {
+    countPayment: {
+        value: number
+        loading: boolean
+    }
+    amountPayment:{
+        value: number
+        loading: boolean
+    }
+    amountPaymentOpen:{
+        value: number
+        loading: boolean
+    }
+    amountPaymentClosed: {
+        value: number
+        loading: boolean
+    }
 }
 
 interface IPaymentPagination {

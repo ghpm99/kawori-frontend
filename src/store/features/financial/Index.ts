@@ -4,6 +4,10 @@ import {
     fetchAllContractService,
     fetchAllInvoiceService,
     fetchAllPaymentService,
+    fetchAmountPaymentClosedReportService,
+    fetchAmountPaymentOpenReportService,
+    fetchAmountPaymentReportService,
+    fetchCountPaymentReportService,
     fetchDetailContractService,
     fetchDetailInvoiceService,
     fetchDetailPaymentService,
@@ -44,6 +48,24 @@ const initialState: IFinancialStore = {
 			closed: [],
 			fixed_credit: 0,
 			fixed_debit: 0
+		},
+		cards: {
+			countPayment:{
+				value: 0,
+				loading: true
+			},
+			amountPayment: {
+				value: 0,
+				loading: true
+			},
+			amountPaymentOpen: {
+				value: 0,
+				loading: true
+			},
+			amountPaymentClosed: {
+				value: 0,
+				loading: true
+			}
 		}
 	},
 	contracts: {
@@ -171,6 +193,38 @@ export const fetchPaymentReport = createAsyncThunk(
 	}
 )
 
+export const fetchCountPaymentReport = createAsyncThunk(
+	'financial/fetchCountPaymentReport',
+	async () => {
+		const response = await fetchCountPaymentReportService()
+		return response
+	}
+)
+
+export const fetchAmountPaymentReport = createAsyncThunk(
+	'financial/fetchAmountPaymentReport',
+	async () => {
+		const response = await fetchAmountPaymentReportService()
+		return response
+	}
+)
+
+export const fetchAmountPaymentOpenReport = createAsyncThunk(
+	'financial/fetchAmountPaymentOpenReport',
+	async () => {
+		const response = await fetchAmountPaymentOpenReportService()
+		return response
+	}
+)
+
+export const fetchAmountPaymentClosedReport = createAsyncThunk(
+	'financial/fetchAmountPaymentClosedReport',
+	async () => {
+		const response = await fetchAmountPaymentClosedReportService()
+		return response
+	}
+)
+
 export const fetchContractDetails = createAsyncThunk(
 	'financial/fetchContractDetails',
 	async (id: number) => {
@@ -272,6 +326,34 @@ export const financialSlice = createSlice({
 			.addCase(fetchPaymentReport.fulfilled, (state, action) => {
 				state.paymentReport.loading = false
 				state.paymentReport.data = action.payload.data
+			})
+			.addCase(fetchCountPaymentReport.pending, (state) => {
+				state.paymentReport.cards.countPayment.loading = true
+			})
+			.addCase(fetchCountPaymentReport.fulfilled, (state, action) => {
+				state.paymentReport.cards.countPayment.loading = false
+				state.paymentReport.cards.countPayment.value = action.payload.data
+			})
+			.addCase(fetchAmountPaymentReport.pending, (state) => {
+				state.paymentReport.cards.amountPayment.loading = true
+			})
+			.addCase(fetchAmountPaymentReport.fulfilled, (state, action) => {
+				state.paymentReport.cards.amountPayment.loading = false
+				state.paymentReport.cards.amountPayment.value = action.payload.data
+			})
+			.addCase(fetchAmountPaymentOpenReport.pending, (state) => {
+				state.paymentReport.cards.amountPaymentOpen.loading = true
+			})
+			.addCase(fetchAmountPaymentOpenReport.fulfilled, (state, action) => {
+				state.paymentReport.cards.amountPaymentOpen.loading = false
+				state.paymentReport.cards.amountPaymentOpen.value = action.payload.data
+			})
+			.addCase(fetchAmountPaymentClosedReport.pending, (state) => {
+				state.paymentReport.cards.amountPaymentClosed.loading = true
+			})
+			.addCase(fetchAmountPaymentClosedReport.fulfilled, (state, action) => {
+				state.paymentReport.cards.amountPaymentClosed.loading = false
+				state.paymentReport.cards.amountPaymentClosed.value = action.payload.data
 			})
 			.addCase(fetchAllContract.pending, (state) => {
 				state.contracts.loading = true

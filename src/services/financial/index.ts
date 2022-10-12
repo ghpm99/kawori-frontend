@@ -28,7 +28,27 @@ export async function payoffPaymentService(id: number) {
 }
 
 export async function fetchPaymentReportService() {
-    const response = await apiDjango.get('/financial/report')
+    const response = await apiDjango.get('/financial/report/')
+    return response.data
+}
+
+export async function fetchCountPaymentReportService() {
+    const response = await apiDjango.get('/financial/report/count_payment')
+    return response.data
+}
+
+export async function fetchAmountPaymentReportService() {
+    const response = await apiDjango.get('/financial/report/amount_payment')
+    return response.data
+}
+
+export async function fetchAmountPaymentOpenReportService() {
+    const response = await apiDjango.get('/financial/report/amount_payment_open')
+    return response.data
+}
+
+export async function fetchAmountPaymentClosedReportService() {
+    const response = await apiDjango.get('/financial/report/amount_payment_closed')
     return response.data
 }
 

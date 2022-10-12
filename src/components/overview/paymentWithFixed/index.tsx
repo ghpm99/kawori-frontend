@@ -24,7 +24,6 @@ interface IPaymentReport {
 }
 
 export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
-    console.log(props)
 
     let allPayments: IPaymentReport[] = []
 
