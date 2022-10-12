@@ -1,6 +1,8 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 
+import styles from './paymentWithoutFixed.module.scss'
+
 interface IPaymentWithoutFixedProps {
     payments: IPaymentReportOpen[]
 }
@@ -48,8 +50,8 @@ export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
     }
 
     return (
-        <>
-            <Line data={ data } options={ options } width={ 400 } height={ 200 } />
-        </>
+        <div className={styles['chart-container']}>
+            <Line data={ data } options={ options } width={ 400 } height={ 200 } style={{background: 'white'}}/>
+        </div>
     )
 }

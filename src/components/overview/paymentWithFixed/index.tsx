@@ -164,6 +164,6 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
     }
 
     return (
-        <Line data={ data } options={ options } width={ 400 } height={ 200 } />
+        <Line data={ data } options={ options } width={ 400 } height={ 200 } style={{background: 'white'}}/>
     )
 }
