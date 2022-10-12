@@ -29,7 +29,6 @@ export default function LoginPage() {
                 password: values.password,
                 redirect: false
             }).then(e => {
-                console.log(e)
                 if (e?.status !== 200) {
                     setError(true)
                 } else {

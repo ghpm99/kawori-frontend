@@ -37,7 +37,6 @@ function TagPage() {
     }
 
     const onFinish = (values: IFormModalNewTag) => {
-        console.log(values)
         const newTag = {
             'name': values.name,
             'color': values.color

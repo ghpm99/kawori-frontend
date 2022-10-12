@@ -64,7 +64,6 @@ function FinancialPage() {
     }
 
     const handleDateRangedFilter = (name: string, dates: string[]) => {
-        console.log(dates)
         const dateGte = dates[0] ? moment(dates[0], 'DD/MM/YYYY').format('YYYY-MM-DD') : null
         const dateLte = dates[1] ? moment(dates[1], 'DD/MM/YYYY').format('YYYY-MM-DD') : null
 

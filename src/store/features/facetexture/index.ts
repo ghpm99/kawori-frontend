@@ -81,7 +81,6 @@ export const facetextureSlice = createSlice({
 			if(!newClass){
 				return
 			}
-			console.log(newClass, action)
 			state.facetexture[action.payload.index].class = newClass
 			state.facetexture[action.payload.index].image = newClass.class_image
 			state.edited = true

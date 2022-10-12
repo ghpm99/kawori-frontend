@@ -23,7 +23,13 @@ import Cards from '../../../../components/overview/cards'
 import PaymentFixed from '../../../../components/overview/paymentFixed'
 import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
 import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
-import { fetchPaymentReport } from '../../../../store/features/financial/Index'
+import {
+    fetchAmountPaymentClosedReport,
+    fetchAmountPaymentOpenReport,
+    fetchAmountPaymentReport,
+    fetchCountPaymentReport,
+    fetchPaymentReport,
+} from '../../../../store/features/financial/Index'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import styles from './Overview.module.scss'
 
@@ -35,12 +41,16 @@ function Overview() {
 
     useEffect(() => {
         dispatch(fetchPaymentReport())
+        dispatch(fetchCountPaymentReport())
+        dispatch(fetchAmountPaymentReport())
+        dispatch(fetchAmountPaymentOpenReport())
+        dispatch(fetchAmountPaymentClosedReport())
     }, [])
 
     function OverviewReport() {
         return (
             <>
-                <Cards />
+                <Cards {...financialStore.cards} />
                 <div className={styles['charts-container']}>
                     <PaymentWithFixed data={ financialStore.data } />
                     <PaymentWithoutFixed payments={ financialStore.data.open } />
