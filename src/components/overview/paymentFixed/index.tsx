@@ -1,14 +1,14 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
 
+import styles from './paymentFixed.module.scss'
+
 interface IPaymentFixedProps {
     fixedCredit: number
     fixedDebit: number
 }
 
 export default function PaymentFixed(props: IPaymentFixedProps) {
-
-    console.log(props)
 
     const labels = ['Ativo']
 
@@ -42,8 +42,8 @@ export default function PaymentFixed(props: IPaymentFixedProps) {
     }
 
     return (
-        <>
-            <Bar data={ data } options={ options } width={ 400 } height={ 200 } />
-        </>
+        <div className={styles['bar-chart']}>
+            <Bar data={ data } options={ options } width={ 400 } height={ 200 } style={{background: 'white'}}/>
+        </div>
     )
 }

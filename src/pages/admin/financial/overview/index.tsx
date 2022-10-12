@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux'
 import LoadingPage from '../../../../components/loadingPage/Index'
 import LoginHeader from '../../../../components/loginHeader/Index'
 import MenuAdmin from '../../../../components/menuAdmin/Index'
+import Cards from '../../../../components/overview/cards'
 import PaymentFixed from '../../../../components/overview/paymentFixed'
 import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
 import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
@@ -39,12 +40,15 @@ function Overview() {
     function OverviewReport() {
         return (
             <>
-                <PaymentWithFixed data={ financialStore.data } />
-                <PaymentWithoutFixed payments={ financialStore.data.open } />
-                <PaymentFixed
-                    fixedCredit={ financialStore.data.fixed_credit }
-                    fixedDebit={ financialStore.data.fixed_debit }
-                />
+                <Cards />
+                <div className={styles['charts-container']}>
+                    <PaymentWithFixed data={ financialStore.data } />
+                    <PaymentWithoutFixed payments={ financialStore.data.open } />
+                    <PaymentFixed
+                        fixedCredit={ financialStore.data.fixed_credit }
+                        fixedDebit={ financialStore.data.fixed_debit }
+                    />
+                </div>
             </>
         )
     }
@@ -63,13 +67,7 @@ function Overview() {
                         <Breadcrumb.Item>Overview</Breadcrumb.Item>
                     </Breadcrumb>
                     <Layout>
-                        { financialStore.loading ?
-                            <>
-                                Carregando
-                            </> :
-                            <OverviewReport />
-                        }
-
+                        <OverviewReport />
                     </Layout>
                 </Content>
             </Layout>
