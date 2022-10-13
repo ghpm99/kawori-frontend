@@ -20,10 +20,12 @@ import LoadingPage from '../../../../components/loadingPage/Index'
 import LoginHeader from '../../../../components/loginHeader/Index'
 import MenuAdmin from '../../../../components/menuAdmin/Index'
 import Cards from '../../../../components/overview/cards'
+import InvoiceByTag from '../../../../components/overview/invoiceByTag'
 import PaymentFixed from '../../../../components/overview/paymentFixed'
 import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
 import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
 import {
+    fetchAmountInvoiceByTagReport,
     fetchAmountPaymentClosedReport,
     fetchAmountPaymentOpenReport,
     fetchAmountPaymentReport,
@@ -45,6 +47,7 @@ function Overview() {
         dispatch(fetchAmountPaymentReport())
         dispatch(fetchAmountPaymentOpenReport())
         dispatch(fetchAmountPaymentClosedReport())
+        dispatch(fetchAmountInvoiceByTagReport())
     }, [])
 
     function OverviewReport() {
@@ -58,6 +61,7 @@ function Overview() {
                         fixedCredit={ financialStore.data.fixed_credit }
                         fixedDebit={ financialStore.data.fixed_debit }
                     />
+                    <InvoiceByTag datasets={financialStore.data.invoiceByTag}/>
                 </div>
             </>
         )
