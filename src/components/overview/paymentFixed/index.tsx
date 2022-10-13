@@ -42,7 +42,7 @@ export default function PaymentFixed(props: IPaymentFixedProps) {
     }
 
     return (
-        <div className={styles['bar-chart']}>
+        <div className={ styles['chart-container'] }>
             <Bar data={ data } options={ options } width={ 400 } height={ 200 } style={{background: 'white'}}/>
         </div>
     )

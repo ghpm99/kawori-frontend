@@ -52,6 +52,11 @@ export async function fetchAmountPaymentClosedReportService() {
     return response.data
 }
 
+export async function fetchAmountInvoiceByTagReportService() {
+    const response = await apiDjango.get('/financial/report/amount_invoice_by_tag')
+    return response.data
+}
+
 export async function fetchAllContractService(filters: IContractFilters) {
     const response = await apiDjango.get('/financial/contract/', {
         params: filters

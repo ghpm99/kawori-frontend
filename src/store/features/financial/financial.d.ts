@@ -15,6 +15,7 @@ interface IFinancialStore {
             closed: IPaymentReportClosed[]
             fixed_debit: number
             fixed_credit: number
+            invoiceByTag: IInvoiceByTag[]
         }
         cards: IPaymentReportCards
     }
@@ -95,6 +96,13 @@ interface IPaymentReportClosed {
     label: string
     debit: number
     credit: number
+}
+
+interface IInvoiceByTag {
+    id: number
+    name: string
+    color: string
+    amount: number
 }
 
 interface IPaymentReportCards {

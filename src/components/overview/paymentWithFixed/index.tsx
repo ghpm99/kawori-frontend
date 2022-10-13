@@ -1,5 +1,7 @@
 import { Line } from 'react-chartjs-2'
 
+import styles from './paymentWithFixed.module.scss'
+
 interface IPaymentWithFixedProps {
     data: {
         open: IPaymentReportOpen[]
@@ -163,6 +165,8 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
     }
 
     return (
-        <Line data={ data } options={ options } width={ 400 } height={ 200 } style={{background: 'white'}}/>
+        <div className={ styles['chart-container'] }>
+            <Line data={ data } options={ options } width={ 400 } height={ 200 } style={ { background: 'white' } } />
+        </div>
     )
 }

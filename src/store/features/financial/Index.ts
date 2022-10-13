@@ -4,6 +4,7 @@ import {
     fetchAllContractService,
     fetchAllInvoiceService,
     fetchAllPaymentService,
+    fetchAmountInvoiceByTagReportService,
     fetchAmountPaymentClosedReportService,
     fetchAmountPaymentOpenReportService,
     fetchAmountPaymentReportService,
@@ -47,7 +48,8 @@ const initialState: IFinancialStore = {
 			open: [],
 			closed: [],
 			fixed_credit: 0,
-			fixed_debit: 0
+			fixed_debit: 0,
+			invoiceByTag: []
 		},
 		cards: {
 			countPayment:{
@@ -225,6 +227,14 @@ export const fetchAmountPaymentClosedReport = createAsyncThunk(
 	}
 )
 
+export const fetchAmountInvoiceByTagReport = createAsyncThunk(
+	'financial/fetchAmountInvoiceByTagReport',
+	async () => {
+		const response = await fetchAmountInvoiceByTagReportService()
+		return response
+	}
+)
+
 export const fetchContractDetails = createAsyncThunk(
 	'financial/fetchContractDetails',
 	async (id: number) => {
@@ -390,6 +400,9 @@ export const financialSlice = createSlice({
 			.addCase(fetchTags.fulfilled, (state, action) => {
 				state.tags.data = action.payload.data
 				state.tags.loading = false
+			})
+			.addCase(fetchAmountInvoiceByTagReport.fulfilled, (state, action) => {
+				state.paymentReport.data.invoiceByTag = action.payload.data
 			})
 	},
 })
