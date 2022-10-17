@@ -55,7 +55,8 @@ function FinancialPage() {
         {
             title: 'Id',
             dataIndex: 'id',
-            key: 'id'
+            key: 'id',
+            render: (value: any) => <Link href={ `/admin/financial/contracts/details/${value}` }>{value}</Link>
         },
         {
             title: 'Nome',

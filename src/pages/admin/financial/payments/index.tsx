@@ -73,6 +73,54 @@ function FinancialPage() {
 
     const headerTableFinancial = [
         {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+            render: (value: any) => <Link href={ `/admin/financial/payments/details/${value}` }>{value}</Link>
+        },
+        {
+            title: 'Nome',
+            dataIndex: 'name',
+            key: 'name',
+            filterDropdown: () => (
+                <FilterDropdown applyFilter={ applyFilter }>
+                    <Input
+                        name='name__icontains'
+                        style={ { width: 220 } }
+                        onChange={ (event) => handleChangeFilter(event) }
+                        value={ financialStore.filters?.name__icontains ?? '' }
+                    />
+                </FilterDropdown>
+            )
+        },
+        {
+            title: 'Valor',
+            dataIndex: 'value',
+            key: 'value',
+            render: (value: any) => formatMoney(value)
+        },
+        {
+            title: 'Dia de pagamento',
+            dataIndex: 'payment_date',
+            key: 'payment_date',
+            render: (value: any) => formatterDate(value),
+            filterDropdown: () => (
+                <FilterDropdown applyFilter={ applyFilter }>
+                    <RangePicker
+                        name={ 'payment_date' }
+                        onChange={ (_, formatString) => {
+                            handleDateRangedFilter('payment_date', formatString)
+                        } }
+                        format={ customFormat }
+                        value={ [
+                            moment(financialStore.filters?.payment_date__gte),
+                            moment(financialStore.filters?.payment_date__lte)
+                        ] }
+                    />
+                </FilterDropdown>
+            )
+        },
+        {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
@@ -133,53 +181,14 @@ function FinancialPage() {
                 </FilterDropdown>
             )
         },
+
+
         {
-            title: 'Nome',
-            dataIndex: 'name',
-            key: 'name',
-            filterDropdown: () => (
-                <FilterDropdown applyFilter={ applyFilter }>
-                    <Input
-                        name='name__icontains'
-                        style={ { width: 220 } }
-                        onChange={ (event) => handleChangeFilter(event) }
-                        value={ financialStore.filters?.name__icontains ?? '' }
-                    />
-                </FilterDropdown>
-            )
-        },
-        {
-            title: 'Valor',
-            dataIndex: 'value',
-            key: 'value',
-            render: (value: any) => formatMoney(value)
-        },
-        {
-            title: 'Parcelas',
+            title: 'Parcela',
             dataIndex: 'installments',
             key: 'installments'
         },
-        {
-            title: 'Dia de pagamento',
-            dataIndex: 'payment_date',
-            key: 'payment_date',
-            render: (value: any) => formatterDate(value),
-            filterDropdown: () => (
-                <FilterDropdown applyFilter={ applyFilter }>
-                    <RangePicker
-                        name={ 'payment_date' }
-                        onChange={ (_, formatString) => {
-                            handleDateRangedFilter('payment_date', formatString)
-                        } }
-                        format={ customFormat }
-                        value={ [
-                            moment(financialStore.filters?.payment_date__gte),
-                            moment(financialStore.filters?.payment_date__lte)
-                        ] }
-                    />
-                </FilterDropdown>
-            )
-        },
+
         {
             title: 'Fixo',
             dataIndex: 'fixed',
