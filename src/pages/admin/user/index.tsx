@@ -15,7 +15,7 @@ const User = () => {
 
     const { data } = useSession()
 
-    const session = data ? data as ISession : null
+    const session = data ? data : null
 
     const getBorderColor = () => {
         if (!session) {
