@@ -49,7 +49,7 @@ function MenuAdmin(props: { selected: string[] }) {
 								Facetexture
 							</Link>
 						</Menu.Item>
-						{ context.data.user.isSuperuser && (
+						{ context.data?.user.isSuperuser && (
 							<>
 								<Menu.SubMenu key='controller' icon={ <DesktopOutlined /> } title='Remoto'>
 									<Menu.Item key="command" icon={ <DesktopOutlined /> }>

@@ -64,7 +64,7 @@ ServerPage.auth = {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession({ req })
 
-    const isSuperuser = (session as unknown as ISession).user.isSuperuser
+    const isSuperuser = session?.user.isSuperuser ?? false
 
     if (!isSuperuser) {
         return {
