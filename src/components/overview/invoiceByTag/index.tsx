@@ -12,11 +12,13 @@ const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
     let dataset: any[] = []
 
     useEffect(() => {
-        dataset = datasets.map(item => ({
-            label: item.name,
-            data: [item.amount],
-            backgroundColor: item.color
-        }))
+        if (datasets) {
+            dataset = datasets.map(item => ({
+                label: item.name,
+                data: [item.amount],
+                backgroundColor: item.color
+            }))
+        }
     }, [datasets])
 
 
