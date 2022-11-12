@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Bar } from 'react-chartjs-2'
 
 import styles from './invoiceByTag.module.scss'
@@ -8,11 +9,16 @@ interface IInvoiceByTagProps {
 
 const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
 
-    const dataset = datasets ? datasets.map(item => ({
-        label: item.name,
-        data: [item.amount],
-        backgroundColor: item.color
-    })) : []
+    let dataset: any[] = []
+
+    useEffect(() => {
+        dataset = datasets.map(item => ({
+            label: item.name,
+            data: [item.amount],
+            backgroundColor: item.color
+        }))
+    }, [datasets])
+
 
     const options = {
         responsive: true,
