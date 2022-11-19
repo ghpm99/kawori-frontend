@@ -148,18 +148,21 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
                 data: allPayments.map(data => data.credit),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                lineTension: 0.3,
             },
             {
                 label: 'Debito',
                 data: allPayments.map(data => data.debit),
                 borderColor: '#820000',
                 backgroundColor: '#8200007f',
+                lineTension: 0.3,
             },
             {
                 label: 'Diferença',
                 data: valueDifWithFixed,
                 borderColor: '#048200',
                 backgroundColor: '#04820073',
+                lineTension: 0.3,
             }
         ],
     }
