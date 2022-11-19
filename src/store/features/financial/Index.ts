@@ -49,25 +49,11 @@ const initialState: IFinancialStore = {
 			closed: [],
 			fixed_credit: 0,
 			fixed_debit: 0,
-			invoiceByTag: []
-		},
-		cards: {
-			countPayment:{
-				value: 0,
-				loading: true
-			},
-			amountPayment: {
-				value: 0,
-				loading: true
-			},
-			amountPaymentOpen: {
-				value: 0,
-				loading: true
-			},
-			amountPaymentClosed: {
-				value: 0,
-				loading: true
-			}
+			invoiceByTag: [],
+			countPayment: 0,
+			amountPayment:0,
+			amountPaymentClosed: 0,
+			amountPaymentOpen: 0
 		}
 	},
 	contracts: {
@@ -190,48 +176,20 @@ export const saveNewPayment = createAsyncThunk(
 export const fetchPaymentReport = createAsyncThunk(
 	'financial/fetchPaymentReport',
 	async () => {
-		const response = await fetchPaymentReportService()
-		return response
-	}
-)
-
-export const fetchCountPaymentReport = createAsyncThunk(
-	'financial/fetchCountPaymentReport',
-	async () => {
-		const response = await fetchCountPaymentReportService()
-		return response
-	}
-)
-
-export const fetchAmountPaymentReport = createAsyncThunk(
-	'financial/fetchAmountPaymentReport',
-	async () => {
-		const response = await fetchAmountPaymentReportService()
-		return response
-	}
-)
-
-export const fetchAmountPaymentOpenReport = createAsyncThunk(
-	'financial/fetchAmountPaymentOpenReport',
-	async () => {
-		const response = await fetchAmountPaymentOpenReportService()
-		return response
-	}
-)
-
-export const fetchAmountPaymentClosedReport = createAsyncThunk(
-	'financial/fetchAmountPaymentClosedReport',
-	async () => {
-		const response = await fetchAmountPaymentClosedReportService()
-		return response
-	}
-)
-
-export const fetchAmountInvoiceByTagReport = createAsyncThunk(
-	'financial/fetchAmountInvoiceByTagReport',
-	async () => {
-		const response = await fetchAmountInvoiceByTagReportService()
-		return response
+		const charts = await fetchPaymentReportService()
+		const count = await fetchCountPaymentReportService()
+		const amount = await fetchAmountPaymentReportService()
+		const amountOpen = await fetchAmountPaymentOpenReportService()
+		const amountClosed = await fetchAmountPaymentClosedReportService()
+		const amountByTag = await fetchAmountInvoiceByTagReportService()
+		return {
+			charts: charts,
+			count: count,
+			amount: amount,
+			amountOpen: amountOpen,
+			amountClosed: amountClosed,
+			amountByTag: amountByTag,
+		}
 	}
 )
 
@@ -334,36 +292,13 @@ export const financialSlice = createSlice({
 				state.paymentReport.loading = true
 			})
 			.addCase(fetchPaymentReport.fulfilled, (state, action) => {
+				state.paymentReport.data = action.payload.charts.data
+				state.paymentReport.data.countPayment = action.payload.count.data
+				state.paymentReport.data.amountPayment = action.payload.amount.data
+				state.paymentReport.data.amountPaymentOpen = action.payload.amountOpen.data
+				state.paymentReport.data.amountPaymentClosed = action.payload.amountClosed.data
+				state.paymentReport.data.invoiceByTag = action.payload.amountByTag.data
 				state.paymentReport.loading = false
-				state.paymentReport.data = action.payload.data
-			})
-			.addCase(fetchCountPaymentReport.pending, (state) => {
-				state.paymentReport.cards.countPayment.loading = true
-			})
-			.addCase(fetchCountPaymentReport.fulfilled, (state, action) => {
-				state.paymentReport.cards.countPayment.loading = false
-				state.paymentReport.cards.countPayment.value = action.payload.data
-			})
-			.addCase(fetchAmountPaymentReport.pending, (state) => {
-				state.paymentReport.cards.amountPayment.loading = true
-			})
-			.addCase(fetchAmountPaymentReport.fulfilled, (state, action) => {
-				state.paymentReport.cards.amountPayment.loading = false
-				state.paymentReport.cards.amountPayment.value = action.payload.data
-			})
-			.addCase(fetchAmountPaymentOpenReport.pending, (state) => {
-				state.paymentReport.cards.amountPaymentOpen.loading = true
-			})
-			.addCase(fetchAmountPaymentOpenReport.fulfilled, (state, action) => {
-				state.paymentReport.cards.amountPaymentOpen.loading = false
-				state.paymentReport.cards.amountPaymentOpen.value = action.payload.data
-			})
-			.addCase(fetchAmountPaymentClosedReport.pending, (state) => {
-				state.paymentReport.cards.amountPaymentClosed.loading = true
-			})
-			.addCase(fetchAmountPaymentClosedReport.fulfilled, (state, action) => {
-				state.paymentReport.cards.amountPaymentClosed.loading = false
-				state.paymentReport.cards.amountPaymentClosed.value = action.payload.data
 			})
 			.addCase(fetchAllContract.pending, (state) => {
 				state.contracts.loading = true
@@ -400,9 +335,6 @@ export const financialSlice = createSlice({
 			.addCase(fetchTags.fulfilled, (state, action) => {
 				state.tags.data = action.payload.data
 				state.tags.loading = false
-			})
-			.addCase(fetchAmountInvoiceByTagReport.fulfilled, (state, action) => {
-				state.paymentReport.data.invoiceByTag = action.payload.data
 			})
 	},
 })

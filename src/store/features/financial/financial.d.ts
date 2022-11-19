@@ -16,8 +16,11 @@ interface IFinancialStore {
             fixed_debit: number
             fixed_credit: number
             invoiceByTag: IInvoiceByTag[]
+            countPayment: number
+            amountPayment:number
+            amountPaymentOpen:number
+            amountPaymentClosed: number
         }
-        cards: IPaymentReportCards
     }
     contracts: {
         data: IContractPagination[]
@@ -103,25 +106,6 @@ interface IInvoiceByTag {
     name: string
     color: string
     amount: number
-}
-
-interface IPaymentReportCards {
-    countPayment: {
-        value: number
-        loading: boolean
-    }
-    amountPayment:{
-        value: number
-        loading: boolean
-    }
-    amountPaymentOpen:{
-        value: number
-        loading: boolean
-    }
-    amountPaymentClosed: {
-        value: number
-        loading: boolean
-    }
 }
 
 interface IPaymentPagination {

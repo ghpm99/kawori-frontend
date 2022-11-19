@@ -29,7 +29,7 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
 
     let allPayments: IPaymentReport[] = []
 
-    props.data.closed.forEach(payment => {
+    props.data.closed?.forEach(payment => {
         allPayments.push({
             ...payment,
             closedDebit: payment.debit,
@@ -43,7 +43,7 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
         })
     })
 
-    props.data.open.forEach(payment => {
+    props.data.open?.forEach(payment => {
 
         const duplicatePayments = allPayments.filter(allPayment => allPayment.label === payment.label)
 
