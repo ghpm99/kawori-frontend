@@ -9,18 +9,14 @@ interface IInvoiceByTagProps {
 
 const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
 
-    let dataset: any[] = []
 
-    useEffect(() => {
-        if (datasets) {
-            dataset = datasets.map(item => ({
-                label: item.name,
-                data: [item.amount],
-                backgroundColor: item.color
-            }))
-        }
-    }, [datasets])
+    const dataset = datasets.map(item => ({
+        label: item.name,
+        data: [item.amount],
+        backgroundColor: item.color
+    }))
 
+    console.log(dataset)
 
     const options = {
         responsive: true,
