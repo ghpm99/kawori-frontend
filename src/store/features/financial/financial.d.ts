@@ -1,6 +1,11 @@
 interface IFinancialStore {
     payments: {
         data: IPaymentPagination[]
+        currentPage: number
+        hasNext: boolean
+        hasPrevious: boolean
+        totalPages:number
+        pageSize: number
         loading: boolean
         filters: IPaymentFilters
     }

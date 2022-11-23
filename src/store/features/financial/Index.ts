@@ -20,6 +20,11 @@ import {
 const initialState: IFinancialStore = {
 	payments: {
 		data: [],
+		currentPage: 1,
+		hasNext: false,
+		hasPrevious: false,
+		totalPages: 1,
+		pageSize: 20,
 		loading: true,
 		filters: {},
 	},
@@ -275,7 +280,10 @@ export const financialSlice = createSlice({
 				state.payments.loading = true
 			})
 			.addCase(fetchAllPayment.fulfilled, (state, action) => {
-				state.payments.data = action.payload.data
+				state.payments =  {
+					...state.payments,
+					...action.payload.data
+				}
 				state.payments.loading = false
 			})
 			.addCase(saveNewPayment.fulfilled, (state, action) => {
