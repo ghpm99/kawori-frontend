@@ -26,10 +26,21 @@ function FinancialPage() {
 
     useEffect(() => {
         dispatch(fetchAllInvoice({
+            page: 1,
+            page_size: 20,
             status: 0
         }))
     }, [])
 
+    const onChangePagination = (page: number, pageSize: number) => {
+        dispatch(
+            fetchAllInvoice({
+                ...financialStore.filters,
+                page: page,
+                page_size: pageSize
+            })
+        );
+    };
 
     const headerTableFinancial = [
         {
@@ -125,7 +136,12 @@ function FinancialPage() {
                         <Table
                             pagination={ {
                                 showSizeChanger: true,
-                                defaultPageSize: 20
+                                defaultPageSize: financialStore.filters.page_size,
+                                current: financialStore.pagination.currentPage,
+                                total:
+                                    financialStore.pagination.totalPages *
+                                    financialStore.filters.page_size,
+                                onChange: onChangePagination,
                             } }
                             columns={ headerTableFinancial }
                             dataSource={ financialStore.data }

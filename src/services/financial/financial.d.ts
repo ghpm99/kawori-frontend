@@ -21,6 +21,8 @@ interface IPaymentFilters {
 }
 
 interface IInvoiceFilters {
+    page: number
+    page_size:number
     status?: number
     name__icontains?: string
     installments?: number
