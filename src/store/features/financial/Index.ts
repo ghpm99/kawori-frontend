@@ -1,44 +1,53 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import {
-    fetchAllContractService,
-    fetchAllInvoiceService,
-    fetchAllPaymentService,
-    fetchAmountInvoiceByTagReportService,
-    fetchAmountPaymentClosedReportService,
-    fetchAmountPaymentOpenReportService,
-    fetchAmountPaymentReportService,
-    fetchCountPaymentReportService,
-    fetchDetailContractService,
-    fetchDetailInvoiceService,
-    fetchDetailPaymentService,
-    fetchPaymentReportService,
-    fetchTagsService,
-    saveNewPaymentService,
-} from '../../../services/financial'
+	fetchAllContractService,
+	fetchAllInvoiceService,
+	fetchAllPaymentService,
+	fetchAmountInvoiceByTagReportService,
+	fetchAmountPaymentClosedReportService,
+	fetchAmountPaymentOpenReportService,
+	fetchAmountPaymentReportService,
+	fetchCountPaymentReportService,
+	fetchDetailContractInvoicesService,
+	fetchDetailContractService,
+	fetchDetailInvoicePaymentsService,
+	fetchDetailInvoiceService,
+	fetchDetailPaymentService,
+	fetchPaymentReportService,
+	fetchTagsService,
+	saveNewPaymentService,
+} from "../../../services/financial"
 
 const initialState: IFinancialStore = {
 	payments: {
 		data: [],
+		currentPage: 1,
+		hasNext: false,
+		hasPrevious: false,
+		totalPages: 1,
 		loading: true,
-		filters: {},
+		filters: {
+			page: 0,
+			page_size: 20,
+		},
 	},
 	paymentDetail: {
 		data: {
 			id: 0,
 			status: 0,
 			type: 0,
-			name: '',
-			date: '',
+			name: "",
+			date: "",
 			installments: 0,
-			payment_date: '',
+			payment_date: "",
 			fixed: false,
 			active: false,
 			value: 0,
 			invoice: 0,
-			invoice_name: '',
+			invoice_name: "",
 			contract: 0,
-			contract_name: '',
+			contract_name: "",
 		},
 		loading: true,
 	},
@@ -51,10 +60,10 @@ const initialState: IFinancialStore = {
 			fixed_debit: 0,
 			invoiceByTag: [],
 			countPayment: 0,
-			amountPayment:0,
+			amountPayment: 0,
 			amountPaymentClosed: 0,
-			amountPaymentOpen: 0
-		}
+			amountPaymentOpen: 0,
+		},
 	},
 	contracts: {
 		data: [],
@@ -63,18 +72,41 @@ const initialState: IFinancialStore = {
 			newPayment: {
 				visible: false,
 				error: false,
-				errorMsg: '',
+				errorMsg: "",
 			},
+		},
+		filters: {
+			page: 1,
+			page_size: 20,
+		},
+		pagination: {
+			currentPage: 1,
+			hasNext: false,
+			hasPrevious: false,
+			totalPages: 1,
 		},
 	},
 	contractDetail: {
 		data: {
 			id: 0,
-			name: '',
+			name: "",
 			value: 0,
 			value_open: 0,
 			value_closed: 0,
-			invoices: []
+		},
+		invoices: {
+			data: [],
+			filters: {
+				page: 1,
+				page_size: 20,
+			},
+			loading: true,
+			pagination: {
+				currentPage: 1,
+				hasNext: false,
+				hasPrevious: false,
+				totalPages: 1,
+			},
 		},
 		contracts: [],
 		loading: true,
@@ -83,14 +115,14 @@ const initialState: IFinancialStore = {
 				id: [],
 				visible: false,
 				error: false,
-				errorMsg: ''
+				errorMsg: "",
 			},
 			newInvoice: {
 				visible: false,
 				error: false,
-				errorMsg: '',
+				errorMsg: "",
 			},
-		}
+		},
 	},
 	invoices: {
 		data: [],
@@ -99,26 +131,49 @@ const initialState: IFinancialStore = {
 			newPayment: {
 				visible: false,
 				error: false,
-				errorMsg: '',
+				errorMsg: "",
 			},
+		},
+		filters: {
+			page: 1,
+			page_size: 20,
+		},
+		pagination: {
+			currentPage: 1,
+			hasNext: false,
+			hasPrevious: false,
+			totalPages: 1,
 		},
 	},
 	invoiceDetail: {
 		data: {
 			id: 0,
 			status: 0,
-			name: '',
+			name: "",
 			installments: 0,
 			value: 0,
 			value_open: 0,
 			value_closed: 0,
-			date: '',
+			date: "",
 			contract: 0,
-			contract_name: '',
-			payments: [],
-			tags: []
+			contract_name: "",
+			tags: [],
 		},
-		loading: true
+		payments: {
+			data: [],
+			pagination: {
+				currentPage: 1,
+				hasNext: false,
+				hasPrevious: false,
+				totalPages: 1,
+			},
+			filters: {
+				page: 1,
+				page_size: 20,
+			},
+			loading: true,
+		},
+		loading: true,
 	},
 	tags: {
 		data: [],
@@ -127,38 +182,47 @@ const initialState: IFinancialStore = {
 			newTag: {
 				visible: false,
 				error: false,
-				errorMsg: '',
-			}
-		}
-	}
+				errorMsg: "",
+			},
+		},
+	},
 }
 
 export const fetchAllPayment = createAsyncThunk(
-	'financial/fetchAllPayment',
+	"financial/fetchAllPayment",
 	async (filters: IPaymentFilters) => {
 		const response = await fetchAllPaymentService(filters)
-		return response
+		return {
+			filters,
+			response,
+		}
 	}
 )
 
 export const fetchAllContract = createAsyncThunk(
-	'financial/fetchAllContract',
+	"financial/fetchAllContract",
 	async (filters: IContractFilters) => {
 		const response = await fetchAllContractService(filters)
-		return response
+		return {
+			filters,
+			response,
+		}
 	}
 )
 
 export const fetchAllInvoice = createAsyncThunk(
-	'financial/fetchAllInvoice',
+	"financial/fetchAllInvoice",
 	async (filters: IInvoiceFilters) => {
 		const response = await fetchAllInvoiceService(filters)
-		return response
+		return {
+			filters,
+			response,
+		}
 	}
 )
 
 export const fetchPaymentDetails = createAsyncThunk(
-	'financial/fetchPaymentDetails',
+	"financial/fetchPaymentDetails",
 	async (id: number) => {
 		const response = await fetchDetailPaymentService(id)
 		return response
@@ -166,7 +230,7 @@ export const fetchPaymentDetails = createAsyncThunk(
 )
 
 export const saveNewPayment = createAsyncThunk(
-	'financial/saveNewPayment',
+	"financial/saveNewPayment",
 	async (args: { payment: INewPaymentRequest }) => {
 		const response = await saveNewPaymentService(args.payment)
 		return response
@@ -174,7 +238,7 @@ export const saveNewPayment = createAsyncThunk(
 )
 
 export const fetchPaymentReport = createAsyncThunk(
-	'financial/fetchPaymentReport',
+	"financial/fetchPaymentReport",
 	async () => {
 		const charts = await fetchPaymentReportService()
 		const count = await fetchCountPaymentReportService()
@@ -194,78 +258,140 @@ export const fetchPaymentReport = createAsyncThunk(
 )
 
 export const fetchContractDetails = createAsyncThunk(
-	'financial/fetchContractDetails',
+	"financial/fetchContractDetails",
 	async (id: number) => {
 		const response = await fetchDetailContractService(id)
 		return response
 	}
 )
 
+export const fetchContractInvoicesDetails = createAsyncThunk(
+	"financial/fetchContractInvoicesDetails",
+	async (args: { id: number; filters: IInvoiceFilters }) => {
+		const response = await fetchDetailContractInvoicesService(
+			args.id,
+			args.filters
+		)
+		return {
+			filters: args.filters,
+			response,
+		}
+	}
+)
+
 export const fetchInvoiceDetails = createAsyncThunk(
-	'financial/fetchInvoiceDetails',
+	"financial/fetchInvoiceDetails",
 	async (id: number) => {
 		const response = await fetchDetailInvoiceService(id)
 		return response
 	}
 )
 
-export const fetchTags = createAsyncThunk(
-	'financial/fetchTags',
-	async () => {
-		const response = await fetchTagsService()
-		return response
+export const fetchInvoicePaymentsDetails = createAsyncThunk(
+	"financial/",
+	async (args: { id: number; filters: IPaymentFilters }) => {
+		const response = await fetchDetailInvoicePaymentsService(
+			args.id,
+			args.filters
+		)
+		return {
+			filters: args.filters,
+			response,
+		}
 	}
 )
 
+export const fetchTags = createAsyncThunk("financial/fetchTags", async () => {
+	const response = await fetchTagsService()
+	return response
+})
+
 export const financialSlice = createSlice({
-	name: 'financial',
+	name: "financial",
 	initialState,
 	reducers: {
-		changeStatusPaymentDetails: (state: IFinancialStore, action: PayloadAction<number>) => {
+		changeStatusPaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<number>
+		) => {
 			state.paymentDetail.data.status = action.payload
 		},
-		changeNamePaymentDetails: (state: IFinancialStore, action: PayloadAction<string>) => {
+		changeNamePaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<string>
+		) => {
 			state.paymentDetail.data.name = action.payload
 		},
-		changeTypePaymentDetails: (state: IFinancialStore, action: PayloadAction<number>) => {
+		changeTypePaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<number>
+		) => {
 			state.paymentDetail.data.type = action.payload
 		},
-		changeFixedPaymentDetails: (state: IFinancialStore, action: PayloadAction<boolean>) => {
+		changeFixedPaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<boolean>
+		) => {
 			state.paymentDetail.data.fixed = action.payload
 		},
-		changeActivePaymentDetails: (state: IFinancialStore, action: PayloadAction<boolean>) => {
+		changeActivePaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<boolean>
+		) => {
 			state.paymentDetail.data.active = action.payload
 		},
-		changePaymentDatePaymentDetails: (state: IFinancialStore, action: PayloadAction<string>) => {
+		changePaymentDatePaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<string>
+		) => {
 			state.paymentDetail.data.payment_date = action.payload
 		},
-		changeValuePaymentDetails: (state: IFinancialStore, action: PayloadAction<number>) => {
+		changeValuePaymentDetails: (
+			state: IFinancialStore,
+			action: PayloadAction<number>
+		) => {
 			state.paymentDetail.data.value = action.payload
 		},
-		changeVisibleContractsModal: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalContractsAction>) => {
+		changeVisibleContractsModal: (
+			state: IFinancialStore,
+			action: PayloadAction<PayloadChangeVisibleModalContractsAction>
+		) => {
 			state.contracts.modal[action.payload.modal].visible =
 				action.payload.visible
 		},
-		changeVisibleInvoiceModal: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalInvoiceAction>) => {
+		changeVisibleInvoiceModal: (
+			state: IFinancialStore,
+			action: PayloadAction<PayloadChangeVisibleModalInvoiceAction>
+		) => {
 			state.invoices.modal[action.payload.modal].visible =
 				action.payload.visible
 		},
-		changeVisibleModalContract: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalContractAction>) => {
-			state.contractDetail.modal[action.payload.modal].visible = action.payload.visible
+		changeVisibleModalContract: (
+			state: IFinancialStore,
+			action: PayloadAction<PayloadChangeVisibleModalContractAction>
+		) => {
+			state.contractDetail.modal[action.payload.modal].visible =
+				action.payload.visible
 		},
-		changeValueMergeModal: (state: IFinancialStore, action: PayloadAction<number[]>) => {
+		changeValueMergeModal: (
+			state: IFinancialStore,
+			action: PayloadAction<number[]>
+		) => {
 			state.contractDetail.modal.mergeContract.id = action.payload
 		},
 		setFilterPayments: (state: IFinancialStore, action) => {
 			state.payments.filters = {
 				...state.payments.filters,
-				[action.payload.name]: action.payload.value ?? '',
+				[action.payload.name]: action.payload.value ?? "",
 			}
 		},
 		cleanFilterPayments: (state: IFinancialStore) => {
-			state.payments.filters = {}
+			state.payments.filters = initialState.payments.filters
 		},
-		changeVisibleModalTag: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalTagsAction>) => {
+		changeVisibleModalTag: (
+			state: IFinancialStore,
+			action: PayloadAction<PayloadChangeVisibleModalTagsAction>
+		) => {
 			state.tags.modal[action.payload.modal].visible = action.payload.visible
 		},
 	},
@@ -275,7 +401,12 @@ export const financialSlice = createSlice({
 				state.payments.loading = true
 			})
 			.addCase(fetchAllPayment.fulfilled, (state, action) => {
-				state.payments.data = action.payload.data
+				state.payments.filters = action.payload.filters
+				state.payments.data = action.payload.response.data.data
+				state.payments.currentPage = action.payload.response.data.current_page
+				state.payments.hasNext = action.payload.response.data.has_next
+				state.payments.hasPrevious = action.payload.response.data.has_previous
+				state.payments.totalPages = action.payload.response.data.total_pages
 				state.payments.loading = false
 			})
 			.addCase(saveNewPayment.fulfilled, (state, action) => {
@@ -295,8 +426,10 @@ export const financialSlice = createSlice({
 				state.paymentReport.data = action.payload.charts.data
 				state.paymentReport.data.countPayment = action.payload.count.data
 				state.paymentReport.data.amountPayment = action.payload.amount.data
-				state.paymentReport.data.amountPaymentOpen = action.payload.amountOpen.data
-				state.paymentReport.data.amountPaymentClosed = action.payload.amountClosed.data
+				state.paymentReport.data.amountPaymentOpen =
+					action.payload.amountOpen.data
+				state.paymentReport.data.amountPaymentClosed =
+					action.payload.amountClosed.data
 				state.paymentReport.data.invoiceByTag = action.payload.amountByTag.data
 				state.paymentReport.loading = false
 			})
@@ -304,15 +437,29 @@ export const financialSlice = createSlice({
 				state.contracts.loading = true
 			})
 			.addCase(fetchAllContract.fulfilled, (state, action) => {
-				state.contracts.data = action.payload.data
-				state.contractDetail.contracts = action.payload.data
+				state.contracts.data = action.payload.response.data.data
+				state.contractDetail.contracts = action.payload.response.data.data
+				state.contracts.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages,
+				}
+				state.contracts.filters = action.payload.filters
 				state.contracts.loading = false
 			})
 			.addCase(fetchAllInvoice.pending, (state) => {
 				state.invoices.loading = true
 			})
 			.addCase(fetchAllInvoice.fulfilled, (state, action) => {
-				state.invoices.data = action.payload.data
+				state.invoices.data = action.payload.response.data.data
+				state.invoices.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages,
+				}
+				state.invoices.filters = action.payload.filters
 				state.invoices.loading = false
 			})
 			.addCase(fetchContractDetails.pending, (state) => {
@@ -335,6 +482,40 @@ export const financialSlice = createSlice({
 			.addCase(fetchTags.fulfilled, (state, action) => {
 				state.tags.data = action.payload.data
 				state.tags.loading = false
+			})
+			.addCase(fetchContractInvoicesDetails.pending, (state) => {
+				state.contractDetail.invoices.loading = true
+			})
+			.addCase(fetchContractInvoicesDetails.fulfilled, (state, action) => {
+				state.contractDetail.invoices.data = action.payload.response.data.data
+				state.contractDetail.invoices.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages,
+				}
+				state.contractDetail.invoices.filters = action.payload.filters
+				state.contractDetail.invoices.loading = false
+			})
+			.addCase(fetchContractInvoicesDetails.rejected, (state) => {
+				state.contractDetail.invoices.loading = false
+			})
+			.addCase(fetchInvoicePaymentsDetails.pending, (state) => {
+				state.invoiceDetail.payments.loading = true
+			})
+			.addCase(fetchInvoicePaymentsDetails.fulfilled, (state, action) => {
+				state.invoiceDetail.payments.data = action.payload.response.data.data
+				state.invoiceDetail.payments.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages,
+				}
+				state.invoiceDetail.payments.filters = action.payload.filters
+				state.invoiceDetail.payments.loading = false
+			})
+			.addCase(fetchInvoicePaymentsDetails.rejected, (state) => {
+				state.invoiceDetail.payments.loading = false
 			})
 	},
 })

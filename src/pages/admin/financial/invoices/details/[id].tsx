@@ -25,6 +25,7 @@ import MenuAdmin from "../../../../../components/menuAdmin/Index";
 import { saveInvoiceTagsService } from "../../../../../services/financial";
 import {
     fetchInvoiceDetails,
+    fetchInvoicePaymentsDetails,
     fetchTags,
 } from "../../../../../store/features/financial/Index";
 import { RootState, useAppDispatch } from "../../../../../store/store";
@@ -54,6 +55,15 @@ export default function InvoiceDetails() {
         if (id) {
             const idInvoice = parseInt(id as string);
             dispatch(fetchInvoiceDetails(idInvoice));
+            dispatch(
+                fetchInvoicePaymentsDetails({
+                    id: idInvoice,
+                    filters:{
+                        page: 1,
+                        page_size: 20
+                    }
+                })
+            );
         }
     }, [id]);
 
@@ -94,6 +104,19 @@ export default function InvoiceDetails() {
                 console.log(reason);
                 message.error("Falhou em atualizar tags");
             }
+        );
+    };
+
+    const onChangePagination = (page: number, pageSize: number) => {
+        dispatch(
+            fetchInvoicePaymentsDetails({
+                id: financialStore.data.id,
+                filters: {
+                    ...financialStore.payments.filters,
+                    page: page,
+                    page_size: pageSize,
+                },
+            })
         );
     };
 
@@ -239,6 +262,22 @@ export default function InvoiceDetails() {
                                 </div>
                             </div>
                             <Table
+                                pagination={{
+                                    showSizeChanger: true,
+                                    defaultPageSize:
+                                        financialStore.payments.filters
+                                            .page_size,
+                                    current:
+                                        financialStore.payments.pagination
+                                            .currentPage,
+                                    total:
+                                        financialStore.payments.pagination
+                                            .totalPages *
+                                        financialStore.payments.filters
+                                            .page_size,
+                                    onChange: onChangePagination,
+                                }}
+                                loading={financialStore.payments.loading}
                                 columns={[
                                     {
                                         title: "Status",
@@ -292,18 +331,13 @@ export default function InvoiceDetails() {
                                             value ? "Sim" : "Não",
                                     },
                                     {
-                                        title: "Ações",
-                                        dataIndex: "id",
-                                        key: "id",
-                                        render: (value) => (
-                                            <Link
-                                                href={`/admin/financial/payments/details/${value}`}>
-                                                Detalhes
-                                            </Link>
-                                        ),
-                                    },
-                                ]}
-                                dataSource={financialStore.data?.payments}
+                                        title: 'Ações',
+                                        dataIndex: 'id',
+                                        key: 'id',
+                                        render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
+                                    }
+                                ] }
+                                dataSource={ financialStore.data?.payments }
                             />
                         </Card>
                     </Layout>
