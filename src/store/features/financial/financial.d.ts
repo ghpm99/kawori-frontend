@@ -48,6 +48,13 @@ interface IFinancialStore {
         data: IInvoicePagination[]
         loading: boolean
         modal: IModalInvoice
+        pagination:{
+            currentPage: number
+            hasNext: boolean
+            hasPrevious: boolean
+            totalPages:number
+        }
+        filters: IInvoiceFilters
     }
     invoiceDetail: {
         data: IInvoiceDetail

@@ -119,6 +119,16 @@ const initialState: IFinancialStore = {
 				errorMsg: "",
 			},
 		},
+		filters:{
+			page: 1,
+			page_size: 20
+		},
+		pagination:{
+			currentPage: 1,
+			hasNext: false,
+			hasPrevious: false,
+			totalPages: 1
+		}
 	},
 	invoiceDetail: {
 		data: {
@@ -176,7 +186,10 @@ export const fetchAllInvoice = createAsyncThunk(
 	"financial/fetchAllInvoice",
 	async (filters: IInvoiceFilters) => {
 		const response = await fetchAllInvoiceService(filters)
-		return response
+		return {
+			filters,
+			response
+		}
 	}
 )
 
@@ -383,7 +396,14 @@ export const financialSlice = createSlice({
 				state.invoices.loading = true
 			})
 			.addCase(fetchAllInvoice.fulfilled, (state, action) => {
-				state.invoices.data = action.payload.data
+				state.invoices.data = action.payload.response.data.data
+				state.invoices.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages
+				}
+				state.invoices.filters = action.payload.filters
 				state.invoices.loading = false
 			})
 			.addCase(fetchContractDetails.pending, (state) => {
