@@ -53,7 +53,10 @@ export default function ContractDetails() {
     }, [id])
 
     useEffect(() => {
-        dispatch(fetchAllContract({}))
+        dispatch(fetchAllContract({
+            page: 1,
+            page_size: 100
+        }))
         dispatch(fetchTags())
     }, [])
 
