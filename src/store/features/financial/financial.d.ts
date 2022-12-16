@@ -5,7 +5,6 @@ interface IFinancialStore {
         hasNext: boolean
         hasPrevious: boolean
         totalPages:number
-        pageSize: number
         loading: boolean
         filters: IPaymentFilters
     }
@@ -31,6 +30,13 @@ interface IFinancialStore {
         data: IContractPagination[]
         loading: boolean
         modal: IModalContracts
+        pagination:{
+            currentPage: number
+            hasNext: boolean
+            hasPrevious: boolean
+            totalPages:number
+        }
+        filters: IContractFilters
     }
     contractDetail: {
         data: IContractDetail
