@@ -81,6 +81,13 @@ export async function fetchDetailContractService(id: number) {
     return response.data
 }
 
+export async function fetchDetailContractInvoicesService(id:number, filters: IInvoiceFilters){
+    const response = await apiDjango.get(`/financial/contract/${id}/invoices/`, {
+        params: filters
+    })
+    return response.data
+}
+
 export async function includeNewInvoiceService(data: INewInvoiceRequest) {
     const response = await apiDjango.post(`/financial/contract/${data.idContract}/invoice/`, data)
     return response.data
@@ -88,6 +95,13 @@ export async function includeNewInvoiceService(data: INewInvoiceRequest) {
 
 export async function fetchDetailInvoiceService(id: number) {
     const response = await apiDjango.get(`/financial/invoice/${id}/`)
+    return response.data
+}
+
+export async function fetchDetailInvoicePaymentsService(id:number, filters: IPaymentFilters){
+    const response = await apiDjango.get(`/financial/invoice/${id}/payments/`, {
+        params: filters
+    })
     return response.data
 }
 

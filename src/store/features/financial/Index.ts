@@ -9,7 +9,9 @@ import {
 	fetchAmountPaymentOpenReportService,
 	fetchAmountPaymentReportService,
 	fetchCountPaymentReportService,
+	fetchDetailContractInvoicesService,
 	fetchDetailContractService,
+	fetchDetailInvoicePaymentsService,
 	fetchDetailInvoiceService,
 	fetchDetailPaymentService,
 	fetchPaymentReportService,
@@ -91,7 +93,20 @@ const initialState: IFinancialStore = {
 			value: 0,
 			value_open: 0,
 			value_closed: 0,
-			invoices: [],
+		},
+		invoices: {
+			data: [],
+			filters: {
+				page: 1,
+				page_size: 20,
+			},
+			loading: true,
+			pagination: {
+				currentPage: 1,
+				hasNext: false,
+				hasPrevious: false,
+				totalPages: 1,
+			},
 		},
 		contracts: [],
 		loading: true,
@@ -119,16 +134,16 @@ const initialState: IFinancialStore = {
 				errorMsg: "",
 			},
 		},
-		filters:{
+		filters: {
 			page: 1,
-			page_size: 20
+			page_size: 20,
 		},
-		pagination:{
+		pagination: {
 			currentPage: 1,
 			hasNext: false,
 			hasPrevious: false,
-			totalPages: 1
-		}
+			totalPages: 1,
+		},
 	},
 	invoiceDetail: {
 		data: {
@@ -142,8 +157,21 @@ const initialState: IFinancialStore = {
 			date: "",
 			contract: 0,
 			contract_name: "",
-			payments: [],
 			tags: [],
+		},
+		payments: {
+			data: [],
+			pagination: {
+				currentPage: 1,
+				hasNext: false,
+				hasPrevious: false,
+				totalPages: 1,
+			},
+			filters: {
+				page: 1,
+				page_size: 20,
+			},
+			loading: true,
 		},
 		loading: true,
 	},
@@ -188,7 +216,7 @@ export const fetchAllInvoice = createAsyncThunk(
 		const response = await fetchAllInvoiceService(filters)
 		return {
 			filters,
-			response
+			response,
 		}
 	}
 )
@@ -237,11 +265,39 @@ export const fetchContractDetails = createAsyncThunk(
 	}
 )
 
+export const fetchContractInvoicesDetails = createAsyncThunk(
+	"financial/fetchContractInvoicesDetails",
+	async (args: { id: number; filters: IInvoiceFilters }) => {
+		const response = await fetchDetailContractInvoicesService(
+			args.id,
+			args.filters
+		)
+		return {
+			filters: args.filters,
+			response,
+		}
+	}
+)
+
 export const fetchInvoiceDetails = createAsyncThunk(
 	"financial/fetchInvoiceDetails",
 	async (id: number) => {
 		const response = await fetchDetailInvoiceService(id)
 		return response
+	}
+)
+
+export const fetchInvoicePaymentsDetails = createAsyncThunk(
+	"financial/",
+	async (args: { id: number; filters: IPaymentFilters }) => {
+		const response = await fetchDetailInvoicePaymentsService(
+			args.id,
+			args.filters
+		)
+		return {
+			filters: args.filters,
+			response,
+		}
 	}
 )
 
@@ -387,7 +443,7 @@ export const financialSlice = createSlice({
 					currentPage: action.payload.response.data.current_page,
 					hasNext: action.payload.response.data.has_next,
 					hasPrevious: action.payload.response.data.has_previous,
-					totalPages: action.payload.response.data.total_pages
+					totalPages: action.payload.response.data.total_pages,
 				}
 				state.contracts.filters = action.payload.filters
 				state.contracts.loading = false
@@ -401,7 +457,7 @@ export const financialSlice = createSlice({
 					currentPage: action.payload.response.data.current_page,
 					hasNext: action.payload.response.data.has_next,
 					hasPrevious: action.payload.response.data.has_previous,
-					totalPages: action.payload.response.data.total_pages
+					totalPages: action.payload.response.data.total_pages,
 				}
 				state.invoices.filters = action.payload.filters
 				state.invoices.loading = false
@@ -426,6 +482,40 @@ export const financialSlice = createSlice({
 			.addCase(fetchTags.fulfilled, (state, action) => {
 				state.tags.data = action.payload.data
 				state.tags.loading = false
+			})
+			.addCase(fetchContractInvoicesDetails.pending, (state) => {
+				state.contractDetail.invoices.loading = true
+			})
+			.addCase(fetchContractInvoicesDetails.fulfilled, (state, action) => {
+				state.contractDetail.invoices.data = action.payload.response.data.data
+				state.contractDetail.invoices.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages,
+				}
+				state.contractDetail.invoices.filters = action.payload.filters
+				state.contractDetail.invoices.loading = false
+			})
+			.addCase(fetchContractInvoicesDetails.rejected, (state) => {
+				state.contractDetail.invoices.loading = false
+			})
+			.addCase(fetchInvoicePaymentsDetails.pending, (state) => {
+				state.invoiceDetail.payments.loading = true
+			})
+			.addCase(fetchInvoicePaymentsDetails.fulfilled, (state, action) => {
+				state.invoiceDetail.payments.data = action.payload.response.data.data
+				state.invoiceDetail.payments.pagination = {
+					currentPage: action.payload.response.data.current_page,
+					hasNext: action.payload.response.data.has_next,
+					hasPrevious: action.payload.response.data.has_previous,
+					totalPages: action.payload.response.data.total_pages,
+				}
+				state.invoiceDetail.payments.filters = action.payload.filters
+				state.invoiceDetail.payments.loading = false
+			})
+			.addCase(fetchInvoicePaymentsDetails.rejected, (state) => {
+				state.invoiceDetail.payments.loading = false
 			})
 	},
 })
