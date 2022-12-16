@@ -26,7 +26,9 @@ const initialState: IFinancialStore = {
 		totalPages: 1,
 		pageSize: 20,
 		loading: true,
-		filters: {},
+		filters: {
+			page:0
+		},
 	},
 	paymentDetail: {
 		data: {
@@ -142,7 +144,10 @@ export const fetchAllPayment = createAsyncThunk(
 	'financial/fetchAllPayment',
 	async (filters: IPaymentFilters) => {
 		const response = await fetchAllPaymentService(filters)
-		return response
+		return {
+			filters,
+			response
+		}
 	}
 )
 
@@ -268,7 +273,9 @@ export const financialSlice = createSlice({
 			}
 		},
 		cleanFilterPayments: (state: IFinancialStore) => {
-			state.payments.filters = {}
+			state.payments.filters = {
+				page: 1
+			}
 		},
 		changeVisibleModalTag: (state: IFinancialStore, action: PayloadAction<PayloadChangeVisibleModalTagsAction>) => {
 			state.tags.modal[action.payload.modal].visible = action.payload.visible
@@ -280,10 +287,12 @@ export const financialSlice = createSlice({
 				state.payments.loading = true
 			})
 			.addCase(fetchAllPayment.fulfilled, (state, action) => {
-				state.payments =  {
-					...state.payments,
-					...action.payload.data
-				}
+				state.payments.filters = action.payload.filters
+				state.payments.data = action.payload.response.data.data
+				state.payments.currentPage = action.payload.response.data.current_page
+				state.payments.hasNext = action.payload.response.data.has_next
+				state.payments.hasPrevious = action.payload.response.data.has_previous
+				state.payments.totalPages = action.payload.response.data.total_pages
 				state.payments.loading = false
 			})
 			.addCase(saveNewPayment.fulfilled, (state, action) => {

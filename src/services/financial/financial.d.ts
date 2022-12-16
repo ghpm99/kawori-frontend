@@ -4,6 +4,7 @@ interface IContractFilters {
 }
 
 interface IPaymentFilters {
+    page: number
     status?: number
     type?: number
     name__icontains?: string
