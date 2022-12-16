@@ -337,7 +337,7 @@ export default function InvoiceDetails() {
                                         render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
                                     }
                                 ] }
-                                dataSource={ financialStore.data?.payments }
+                                dataSource={ financialStore.payments.data }
                             />
                         </Card>
                     </Layout>
