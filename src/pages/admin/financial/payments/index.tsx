@@ -49,6 +49,7 @@ function FinancialPage() {
                 page: 1,
                 active: true,
                 status: 0,
+                page_size: 20,
             })
         );
     }, []);
@@ -60,6 +61,7 @@ function FinancialPage() {
                 page: 1,
                 active: true,
                 status: 0,
+                page_size: 20,
             })
         );
     };
@@ -101,6 +103,7 @@ function FinancialPage() {
             fetchAllPayment({
                 ...financialStore.filters,
                 page: page,
+                page_size: pageSize
             })
         );
     };
@@ -249,7 +252,6 @@ function FinancialPage() {
         },
     ];
 
-
     return (
         <Layout className={styles.container}>
             <MenuAdmin selected={["payments"]} />
@@ -279,11 +281,11 @@ function FinancialPage() {
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: financialStore.pageSize,
+                                defaultPageSize: financialStore.filters.page_size,
                                 current: financialStore.currentPage,
                                 total:
                                     financialStore.totalPages *
-                                    financialStore.pageSize,
+                                    financialStore.filters.page_size,
                                 onChange: onChangePagination,
                             }}
                             columns={headerTableFinancial}

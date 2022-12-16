@@ -1,10 +1,13 @@
 
 interface IContractFilters {
+    page: number
+    page_size:number
     id?: number
 }
 
 interface IPaymentFilters {
     page: number
+    page_size:number
     status?: number
     type?: number
     name__icontains?: string
