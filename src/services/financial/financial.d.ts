@@ -1,9 +1,13 @@
 
 interface IContractFilters {
+    page: number
+    page_size:number
     id?: number
 }
 
 interface IPaymentFilters {
+    page: number
+    page_size:number
     status?: number
     type?: number
     name__icontains?: string
@@ -17,6 +21,8 @@ interface IPaymentFilters {
 }
 
 interface IInvoiceFilters {
+    page: number
+    page_size:number
     status?: number
     name__icontains?: string
     installments?: number
