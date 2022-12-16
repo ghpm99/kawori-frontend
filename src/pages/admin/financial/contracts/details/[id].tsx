@@ -18,6 +18,7 @@ import {
     changeVisibleModalContract,
     fetchAllContract,
     fetchContractDetails,
+    fetchContractInvoicesDetails,
     fetchTags,
 } from '../../../../../store/features/financial/Index'
 import { RootState, useAppDispatch } from '../../../../../store/store'
@@ -49,6 +50,15 @@ export default function ContractDetails() {
         if (id) {
             const idContract = parseInt(id as string)
             dispatch(fetchContractDetails(idContract))
+            dispatch(
+                fetchContractInvoicesDetails({
+                    id: idContract,
+                    filters:{
+                        page: 1,
+                        page_size: 20
+                    }
+                })
+            );
         }
     }, [id])
 
@@ -130,6 +140,19 @@ export default function ContractDetails() {
             dispatch(fetchContractDetails(financialStore.data.id))
         })
     }
+
+    const onChangePagination = (page: number, pageSize: number) => {
+        dispatch(
+            fetchContractInvoicesDetails({
+                id: financialStore.data.id,
+                filters:{
+                    ...financialStore.invoices.filters,
+                    page: page,
+                    page_size: pageSize
+                }
+            })
+        );
+    };
 
     const menu = (
         <Menu
@@ -222,6 +245,16 @@ export default function ContractDetails() {
                                 </div>
                             </div>
                             <Table
+                                pagination={ {
+                                    showSizeChanger: true,
+                                    defaultPageSize: financialStore.invoices.filters.page_size,
+                                    current: financialStore.invoices.pagination.currentPage,
+                                    total:
+                                        financialStore.invoices.pagination.totalPages *
+                                        financialStore.invoices.filters.page_size,
+                                    onChange: onChangePagination,
+                                } }
+                                loading={ financialStore.invoices.loading }
                                 columns={ [
                                     {
                                         title: 'Id',
@@ -286,7 +319,7 @@ export default function ContractDetails() {
                                         render: value => <Link href={ `/admin/financial/invoices/details/${value}` }>Detalhes</Link>
                                     }
                                 ] }
-                                dataSource={ financialStore.data?.invoices }
+                                dataSource={ financialStore.invoices.data }
                             />
                         </Card>
                     </Layout>
