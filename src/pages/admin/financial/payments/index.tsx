@@ -232,6 +232,26 @@ function FinancialPage() {
             ),
         },
         {
+            title: "Contrato",
+            dataIndex: "contract",
+            key: "contract",
+            render: (value: string, record: any) => (
+                <Link href={`/admin/financial/contracts/details/${record.contract_id}`}>
+                    {`${record.contract_id} ${record.contract_name}`}
+                </Link>
+            ),
+            filterDropdown: () => (
+                <FilterDropdown applyFilter={applyFilter}>
+                    <Input
+                        name="contract"
+                        style={{ width: 220 }}
+                        onChange={(event) => handleChangeFilter(event)}
+                        value={financialStore.filters?.contract ?? ""}
+                    />
+                </FilterDropdown>
+            ),
+        },
+        {
             title: "Valor",
             dataIndex: "value",
             key: "value",
