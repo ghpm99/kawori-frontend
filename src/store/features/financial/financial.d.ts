@@ -249,3 +249,8 @@ type PayloadChangeVisibleModalTagsAction = {
 	modal: keyof IModalTags
 	visible: boolean
 }
+
+type PayloadChangeStatusPaymentPaginationAction = {
+	id: number
+	status: number
+}

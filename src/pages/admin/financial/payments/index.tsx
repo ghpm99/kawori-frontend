@@ -1,4 +1,4 @@
-import { ClearOutlined } from "@ant-design/icons";
+import { ClearOutlined, ToTopOutlined } from "@ant-design/icons";
 import {
     Breadcrumb,
     Button,
@@ -8,19 +8,22 @@ import {
     Select,
     Table,
     Typography,
+    message,
 } from "antd";
 import moment from "moment";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
-import { ChangeEvent, MouseEventHandler, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import FilterDropdown from "../../../../components/common/filterDropdown/Index";
 import LoadingPage from "../../../../components/loadingPage/Index";
 import LoginHeader from "../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../components/menuAdmin/Index";
+import { payoffPaymentService } from "../../../../services/financial";
 import {
+    changeStatusPaymentPagination,
     cleanFilterPayments,
     fetchAllPayment,
     setFilterPayments,
@@ -28,16 +31,20 @@ import {
 import { RootState, useAppDispatch } from "../../../../store/store";
 import { formatMoney, formatterDate } from "../../../../util";
 import styles from "./Payments.module.scss";
+import ModalPayoff, { ITableDataSource } from "../../../../components/payments/modalPayoff";
 
 const { Header, Content } = Layout;
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
-const dateFormat = "YYYY-MM-DD";
 const customFormat = ["DD/MM/YYYY", "DD/MM/YYYY"];
+const messageKey = "payment_pagination_message";
 
 function FinancialPage() {
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+    const [modalPayoff, setModalPayoff] = useState(false);
+    const [payoffDataSource, setPayoffDataSource]  = useState<ITableDataSource[]>([])
     const financialStore = useSelector(
         (state: RootState) => state.financial.payments
     );
@@ -103,10 +110,79 @@ function FinancialPage() {
             fetchAllPayment({
                 ...financialStore.filters,
                 page: page,
-                page_size: pageSize
+                page_size: pageSize,
             })
         );
     };
+
+    const payOffPayment = (id: number) => {
+        message.loading({
+            key: messageKey,
+            content: "Processando",
+        });
+        payoffPaymentService(id).then((data) => {
+            message.success({
+                content: data.msg,
+                key: messageKey,
+            });
+            dispatch(
+                changeStatusPaymentPagination({
+                    id: id,
+                    status: 1,
+                })
+            );
+        });
+    };
+
+    const togglePayoffModalVisible = () => {
+        setModalPayoff((prev) => !prev);
+    };
+
+    const openPayoffModal = () => {
+        const dataSource : ITableDataSource[] = selectedRowKeys.map((id) => ({
+            id: parseInt(id.toString()),
+            description: 'Aguardando',
+            status: 0
+        }))
+
+        setPayoffDataSource(dataSource)
+
+        setModalPayoff(true)
+    }
+
+    const processPayOff = () => {
+        payoffDataSource.forEach(async (data, index) => {
+            setPayoffDataSource(prev => [
+                ...prev.filter(item => item.id !== data.id),
+                {
+                    ...prev[index],
+                    description: 'Em progresso'
+                }
+            ])
+            await payoffPaymentService(data.id).then((response) => {
+                setPayoffDataSource(prev => [
+                    ...prev.filter(item => item.id !== data.id),
+                    {
+                        ...prev[index],
+                        description: response.msg,
+                        status: 1
+                    }
+                ])
+            }).catch((reason) => {
+                console.log(reason)
+
+                setPayoffDataSource(prev => [
+                    ...prev.filter(item => item.id !== data.id),
+                    {
+                        ...prev[index],
+                        description: reason.msg,
+                        status: 2
+                    }
+                ])
+            });
+
+        })
+    }
 
     const headerTableFinancial = [
         {
@@ -130,6 +206,27 @@ function FinancialPage() {
                         style={{ width: 220 }}
                         onChange={(event) => handleChangeFilter(event)}
                         value={financialStore.filters?.name__icontains ?? ""}
+                    />
+                </FilterDropdown>
+            ),
+        },
+        {
+            title: "Contrato",
+            dataIndex: "contract",
+            key: "contract",
+            render: (value: string, record: any) => (
+                <Link
+                    href={`/admin/financial/contracts/details/${record.contract_id}`}>
+                    {`${record.contract_id} ${record.contract_name}`}
+                </Link>
+            ),
+            filterDropdown: () => (
+                <FilterDropdown applyFilter={applyFilter}>
+                    <Input
+                        name="contract"
+                        style={{ width: 220 }}
+                        onChange={(event) => handleChangeFilter(event)}
+                        value={financialStore.filters?.contract ?? ""}
                     />
                 </FilterDropdown>
             ),
@@ -244,10 +341,17 @@ function FinancialPage() {
             title: "Ações",
             dataIndex: "id",
             key: "id",
-            render: (value: any) => (
-                <Link href={`/admin/financial/payments/details/${value}`}>
-                    Detalhes
-                </Link>
+            render: (value: any, record: any) => (
+                <div>
+                    <Link href={`/admin/financial/payments/details/${value}`}>
+                        Detalhes
+                    </Link>
+                    {record.status === 0 && (
+                        <div onClick={(event) => payOffPayment(record.id)}>
+                            Baixar
+                        </div>
+                    )}
+                </div>
             ),
         },
     ];
@@ -272,6 +376,12 @@ function FinancialPage() {
                             </Title>
                             <div>
                                 <Button
+                                    icon={<ToTopOutlined />}
+                                    onClick={openPayoffModal}
+                                    disabled={selectedRowKeys.length === 0}>
+                                    Baixar pagamentos
+                                </Button>
+                                <Button
                                     icon={<ClearOutlined />}
                                     onClick={cleanFilter}>
                                     Limpar filtros
@@ -281,7 +391,8 @@ function FinancialPage() {
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
+                                defaultPageSize:
+                                    financialStore.filters.page_size,
                                 current: financialStore.currentPage,
                                 total:
                                     financialStore.totalPages *
@@ -289,11 +400,32 @@ function FinancialPage() {
                                 onChange: onChangePagination,
                             }}
                             columns={headerTableFinancial}
+                            rowSelection={{
+                                type: "checkbox",
+                                selectedRowKeys,
+                                onChange: (selectedRowKeys, selectedRows) => {
+                                    setSelectedRowKeys(selectedRowKeys);
+                                },
+                                selections: [
+                                    Table.SELECTION_ALL,
+                                    Table.SELECTION_INVERT,
+                                    Table.SELECTION_NONE,
+                                ],
+                                getCheckboxProps: (record) => ({
+                                    disabled: record.status === 1,
+                                }),
+                            }}
                             dataSource={financialStore.data}
                             loading={financialStore.loading}
                             summary={(paymentData) => (
                                 <TableSummary paymentData={paymentData} />
                             )}
+                        />
+                        <ModalPayoff
+                            visible={modalPayoff}
+                            onCancel={togglePayoffModalVisible}
+                            onPayoff={processPayOff}
+                            data={payoffDataSource}
                         />
                     </Layout>
                 </Content>

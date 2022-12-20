@@ -316,6 +316,15 @@ export const financialSlice = createSlice({
 		) => {
 			state.paymentDetail.data.status = action.payload
 		},
+		changeStatusPaymentPagination: (
+			state: IFinancialStore,
+			action: PayloadAction<PayloadChangeStatusPaymentPaginationAction>
+		) => {
+			const index = state.payments.data.findIndex(
+				(item) => item.id === action.payload.id
+			)
+			state.payments.data[index].status = action.payload.status
+		},
 		changeNamePaymentDetails: (
 			state: IFinancialStore,
 			action: PayloadAction<string>
@@ -402,7 +411,12 @@ export const financialSlice = createSlice({
 			})
 			.addCase(fetchAllPayment.fulfilled, (state, action) => {
 				state.payments.filters = action.payload.filters
-				state.payments.data = action.payload.response.data.data
+				state.payments.data = action.payload.response.data.data.map(
+					(data: any) => ({
+						...data,
+						key: data.id,
+					})
+				)
 				state.payments.currentPage = action.payload.response.data.current_page
 				state.payments.hasNext = action.payload.response.data.has_next
 				state.payments.hasPrevious = action.payload.response.data.has_previous
@@ -535,6 +549,7 @@ export const {
 	setFilterPayments,
 	cleanFilterPayments,
 	changeVisibleModalTag,
+	changeStatusPaymentPagination,
 } = financialSlice.actions
 
 export default financialSlice.reducer
