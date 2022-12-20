@@ -18,6 +18,7 @@ interface IPaymentFilters {
     payment_date__lte?: string
     fixed?: boolean
     active?: boolean
+    contract?: string
 }
 
 interface IInvoiceFilters {
