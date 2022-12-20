@@ -23,7 +23,10 @@ import LoginHeader from "../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../components/menuAdmin/Index";
 import { payoffPaymentService } from "../../../../services/financial";
 import {
+    changeDataSourcePayoffPayments,
+    changeSingleDataSourcePayoffPayments,
     changeStatusPaymentPagination,
+    changeVisibleModalPayoffPayments,
     cleanFilterPayments,
     fetchAllPayment,
     setFilterPayments,
@@ -31,7 +34,9 @@ import {
 import { RootState, useAppDispatch } from "../../../../store/store";
 import { formatMoney, formatterDate } from "../../../../util";
 import styles from "./Payments.module.scss";
-import ModalPayoff, { ITableDataSource } from "../../../../components/payments/modalPayoff";
+import ModalPayoff, {
+    ITableDataSource,
+} from "../../../../components/payments/modalPayoff";
 
 const { Header, Content } = Layout;
 
@@ -43,8 +48,6 @@ const messageKey = "payment_pagination_message";
 
 function FinancialPage() {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const [modalPayoff, setModalPayoff] = useState(false);
-    const [payoffDataSource, setPayoffDataSource]  = useState<ITableDataSource[]>([])
     const financialStore = useSelector(
         (state: RootState) => state.financial.payments
     );
@@ -135,54 +138,43 @@ function FinancialPage() {
     };
 
     const togglePayoffModalVisible = () => {
-        setModalPayoff((prev) => !prev);
+        dispatch(
+            changeVisibleModalPayoffPayments(
+                !financialStore.modal.payoff.visible
+            )
+        );
     };
 
     const openPayoffModal = () => {
-        const dataSource : ITableDataSource[] = selectedRowKeys.map((id) => ({
+        const dataSource: ITableDataSource[] = selectedRowKeys.map((id) => ({
             id: parseInt(id.toString()),
-            description: 'Aguardando',
-            status: 0
-        }))
+            description: "Aguardando",
+            status: 0,
+        }));
 
-        setPayoffDataSource(dataSource)
+        dispatch(changeDataSourcePayoffPayments(dataSource));
 
-        setModalPayoff(true)
-    }
+        dispatch(changeVisibleModalPayoffPayments(true));
+    };
 
     const processPayOff = () => {
-        payoffDataSource.forEach(async (data, index) => {
-            setPayoffDataSource(prev => [
-                ...prev.filter(item => item.id !== data.id),
-                {
-                    ...prev[index],
-                    description: 'Em progresso'
-                }
-            ])
-            await payoffPaymentService(data.id).then((response) => {
-                setPayoffDataSource(prev => [
-                    ...prev.filter(item => item.id !== data.id),
-                    {
-                        ...prev[index],
-                        description: response.msg,
-                        status: 1
-                    }
-                ])
-            }).catch((reason) => {
-                console.log(reason)
-
-                setPayoffDataSource(prev => [
-                    ...prev.filter(item => item.id !== data.id),
-                    {
-                        ...prev[index],
-                        description: reason.msg,
-                        status: 2
-                    }
-                ])
-            });
-
-        })
-    }
+        financialStore.modal.payoff.data.forEach(async (data, index) => {
+            dispatch(
+                changeSingleDataSourcePayoffPayments({
+                    ...data,
+                    description: "Em progresso",
+                })
+            );
+            const response = await payoffPaymentService(data.id);
+            dispatch(
+                changeSingleDataSourcePayoffPayments({
+                    ...data,
+                    description: response.msg,
+                    status: 1,
+                })
+            );
+        });
+    };
 
     const headerTableFinancial = [
         {
@@ -236,7 +228,8 @@ function FinancialPage() {
             dataIndex: "contract",
             key: "contract",
             render: (value: string, record: any) => (
-                <Link href={`/admin/financial/contracts/details/${record.contract_id}`}>
+                <Link
+                    href={`/admin/financial/contracts/details/${record.contract_id}`}>
                     {`${record.contract_id} ${record.contract_name}`}
                 </Link>
             ),
@@ -413,9 +406,9 @@ function FinancialPage() {
                                 showSizeChanger: true,
                                 defaultPageSize:
                                     financialStore.filters.page_size,
-                                current: financialStore.currentPage,
+                                current: financialStore.pagination.currentPage,
                                 total:
-                                    financialStore.totalPages *
+                                    financialStore.pagination.totalPages *
                                     financialStore.filters.page_size,
                                 onChange: onChangePagination,
                             }}
@@ -442,10 +435,10 @@ function FinancialPage() {
                             )}
                         />
                         <ModalPayoff
-                            visible={modalPayoff}
+                            visible={financialStore.modal.payoff.visible}
                             onCancel={togglePayoffModalVisible}
                             onPayoff={processPayOff}
-                            data={payoffDataSource}
+                            data={financialStore.modal.payoff.data}
                         />
                     </Layout>
                 </Content>

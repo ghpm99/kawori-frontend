@@ -1,12 +1,20 @@
 interface IFinancialStore {
 	payments: {
 		data: IPaymentPagination[]
-		currentPage: number
-		hasNext: boolean
-		hasPrevious: boolean
-		totalPages: number
+		pagination: {
+			currentPage: number
+			hasNext: boolean
+			hasPrevious: boolean
+			totalPages: number
+		}
 		loading: boolean
 		filters: IPaymentFilters
+		modal: {
+			payoff: {
+				visible: boolean
+				data: IPaymentModalPayoffDataSource[]
+			}
+		}
 	}
 	paymentDetail: {
 		data: IPaymentDetail
@@ -40,7 +48,7 @@ interface IFinancialStore {
 	}
 	contractDetail: {
 		data: IContractDetail
-        invoices: IContractInvoicesDetail
+		invoices: IContractInvoicesDetail
 		contracts: IContractPagination[]
 		loading: boolean
 		modal: IModalContract
@@ -59,7 +67,7 @@ interface IFinancialStore {
 	}
 	invoiceDetail: {
 		data: IInvoiceDetail
-        payments: IInvoicePaymentsDetail
+		payments: IInvoicePaymentsDetail
 		loading: boolean
 	}
 	tags: {
@@ -182,7 +190,7 @@ interface IContractInvoicesDetail {
 		hasPrevious: boolean
 		totalPages: number
 	}
-    filters: IInvoiceFilters
+	filters: IInvoiceFilters
 }
 
 interface IInvoicePagination {
@@ -213,7 +221,7 @@ interface IInvoiceDetail {
 }
 
 interface IInvoicePaymentsDetail {
-    data: IPaymentPagination[]
+	data: IPaymentPagination[]
 	loading: boolean
 	pagination: {
 		currentPage: number
@@ -221,13 +229,19 @@ interface IInvoicePaymentsDetail {
 		hasPrevious: boolean
 		totalPages: number
 	}
-    filters: IPaymentFilters
+	filters: IPaymentFilters
 }
 
 interface ITags {
 	id: number
 	name: string
 	color: string
+}
+
+interface IPaymentModalPayoffDataSource {
+	status: number
+	id: number
+	description: string
 }
 
 type PayloadChangeVisibleModalContractsAction = {

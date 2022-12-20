@@ -22,15 +22,23 @@ import {
 const initialState: IFinancialStore = {
 	payments: {
 		data: [],
-		currentPage: 1,
-		hasNext: false,
-		hasPrevious: false,
-		totalPages: 1,
+		pagination:{
+			currentPage: 1,
+			hasNext: false,
+			hasPrevious: false,
+			totalPages: 1,
+		},
 		loading: true,
 		filters: {
 			page: 0,
 			page_size: 20,
 		},
+		modal:{
+			payoff:{
+				data:[],
+				visible: false
+			}
+		}
 	},
 	paymentDetail: {
 		data: {
@@ -403,6 +411,16 @@ export const financialSlice = createSlice({
 		) => {
 			state.tags.modal[action.payload.modal].visible = action.payload.visible
 		},
+		changeVisibleModalPayoffPayments: (state: IFinancialStore, action: PayloadAction<boolean>) => {
+			state.payments.modal.payoff.visible = action.payload
+		},
+		changeDataSourcePayoffPayments: (state: IFinancialStore, action: PayloadAction<IPaymentModalPayoffDataSource[]>) => {
+			state.payments.modal.payoff.data = action.payload
+		},
+		changeSingleDataSourcePayoffPayments: (state: IFinancialStore, action: PayloadAction<IPaymentModalPayoffDataSource>) => {
+			const index = state.payments.modal.payoff.data.findIndex(item => item.id === action.payload.id)
+			state.payments.modal.payoff.data[index] = action.payload
+		}
 	},
 	extraReducers: (builder) => {
 		builder
@@ -417,10 +435,10 @@ export const financialSlice = createSlice({
 						key: data.id,
 					})
 				)
-				state.payments.currentPage = action.payload.response.data.current_page
-				state.payments.hasNext = action.payload.response.data.has_next
-				state.payments.hasPrevious = action.payload.response.data.has_previous
-				state.payments.totalPages = action.payload.response.data.total_pages
+				state.payments.pagination.currentPage = action.payload.response.data.current_page
+				state.payments.pagination.hasNext = action.payload.response.data.has_next
+				state.payments.pagination.hasPrevious = action.payload.response.data.has_previous
+				state.payments.pagination.totalPages = action.payload.response.data.total_pages
 				state.payments.loading = false
 			})
 			.addCase(saveNewPayment.fulfilled, (state, action) => {
@@ -550,6 +568,9 @@ export const {
 	cleanFilterPayments,
 	changeVisibleModalTag,
 	changeStatusPaymentPagination,
+	changeVisibleModalPayoffPayments,
+	changeDataSourcePayoffPayments,
+	changeSingleDataSourcePayoffPayments,
 } = financialSlice.actions
 
 export default financialSlice.reducer
