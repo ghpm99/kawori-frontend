@@ -155,10 +155,15 @@ export default function InvoiceDetails() {
                                     </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>
-                                        Contrato:{" "}
-                                        {`${financialStore.data?.contract} - ${financialStore.data?.contract_name}`}
-                                    </div>
+                                    <Link
+                                        href={`/admin/financial/contracts/details/${financialStore.data?.contract}`}>
+                                        <div
+                                            className={styles.label}
+                                            style={{ cursor: "pointer" }}>
+                                            Contrato:{" "}
+                                            {`${financialStore.data?.contract} - ${financialStore.data?.contract_name}`}
+                                        </div>
+                                    </Link>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Nome:</div>
@@ -326,18 +331,13 @@ export default function InvoiceDetails() {
                                             value ? "Sim" : "Não",
                                     },
                                     {
-                                        title: "Ações",
-                                        dataIndex: "id",
-                                        key: "id",
-                                        render: (value) => (
-                                            <Link
-                                                href={`/admin/financial/payments/details/${value}`}>
-                                                Detalhes
-                                            </Link>
-                                        ),
-                                    },
-                                ]}
-                                dataSource={financialStore.payments.data}
+                                        title: 'Ações',
+                                        dataIndex: 'id',
+                                        key: 'id',
+                                        render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
+                                    }
+                                ] }
+                                dataSource={ financialStore.payments.data }
                             />
                         </Card>
                     </Layout>
