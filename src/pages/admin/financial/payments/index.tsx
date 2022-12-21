@@ -37,6 +37,7 @@ import styles from "./Payments.module.scss";
 import ModalPayoff, {
     ITableDataSource,
 } from "../../../../components/payments/modalPayoff";
+import { AxiosError } from "axios";
 
 const { Header, Content } = Layout;
 
@@ -165,14 +166,27 @@ function FinancialPage() {
                     description: "Em progresso",
                 })
             );
-            const response = await payoffPaymentService(data.id);
-            dispatch(
-                changeSingleDataSourcePayoffPayments({
-                    ...data,
-                    description: response.msg,
-                    status: 1,
+            payoffPaymentService(data.id)
+                .then((response) => {
+                    dispatch(
+                        changeSingleDataSourcePayoffPayments({
+                            ...data,
+                            description: response.msg,
+                            status: 1,
+                        })
+                    );
                 })
-            );
+                .catch((error) => {
+                    dispatch(
+                        changeSingleDataSourcePayoffPayments({
+                            ...data,
+                            description:
+                                error.response.data.msg ??
+                                "Falhou em processar",
+                            status: 1,
+                        })
+                    );
+                });
         });
     };
 
