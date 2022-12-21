@@ -1,27 +1,31 @@
-import { ClearOutlined, ToTopOutlined } from "@ant-design/icons";
+import { ClearOutlined, ToTopOutlined } from "@ant-design/icons"
 import {
     Breadcrumb,
     Button,
     DatePicker,
     Input,
     Layout,
+    Popconfirm,
     Select,
     Table,
     Typography,
     message,
-} from "antd";
-import moment from "moment";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import Link from "next/link";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+} from "antd"
+import moment from "moment"
+import { GetServerSideProps } from "next"
+import { getSession } from "next-auth/react"
+import Link from "next/link"
+import { ChangeEvent, useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
-import FilterDropdown from "../../../../components/common/filterDropdown/Index";
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import { payoffPaymentService } from "../../../../services/financial";
+import FilterDropdown from "components/common/filterDropdown/Index"
+import LoadingPage from "components/loadingPage/Index"
+import LoginHeader from "components/loginHeader/Index"
+import MenuAdmin from "components/menuAdmin/Index"
+import ModalPayoff, {
+    ITableDataSource,
+} from "components/payments/modalPayoff"
+import { payoffPaymentService } from "services/financial"
 import {
     changeDataSourcePayoffPayments,
     changeSingleDataSourcePayoffPayments,
@@ -30,14 +34,10 @@ import {
     cleanFilterPayments,
     fetchAllPayment,
     setFilterPayments,
-} from "../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import { formatMoney, formatterDate } from "../../../../util";
-import styles from "./Payments.module.scss";
-import ModalPayoff, {
-    ITableDataSource,
-} from "../../../../components/payments/modalPayoff";
-import { AxiosError } from "axios";
+} from "store/features/financial/Index"
+import { RootState, useAppDispatch } from "store/store"
+import { formatMoney, formatterDate } from "util/index"
+import styles from "./Payments.module.scss"
 
 const { Header, Content } = Layout;
 
@@ -238,27 +238,6 @@ function FinancialPage() {
             ),
         },
         {
-            title: "Contrato",
-            dataIndex: "contract",
-            key: "contract",
-            render: (value: string, record: any) => (
-                <Link
-                    href={`/admin/financial/contracts/details/${record.contract_id}`}>
-                    {`${record.contract_id} ${record.contract_name}`}
-                </Link>
-            ),
-            filterDropdown: () => (
-                <FilterDropdown applyFilter={applyFilter}>
-                    <Input
-                        name="contract"
-                        style={{ width: 220 }}
-                        onChange={(event) => handleChangeFilter(event)}
-                        value={financialStore.filters?.contract ?? ""}
-                    />
-                </FilterDropdown>
-            ),
-        },
-        {
             title: "Valor",
             dataIndex: "value",
             key: "value",
@@ -374,9 +353,14 @@ function FinancialPage() {
                         Detalhes
                     </Link>
                     {record.status === 0 && (
-                        <div onClick={(event) => payOffPayment(record.id)}>
-                            Baixar
-                        </div>
+                        <Popconfirm
+                            title="Baixar pagamento?"
+                            placement="left"
+                            onConfirm={(event) => payOffPayment(record.id)}
+                            okText="Sim"
+                            cancelText="Não">
+                            <div className={styles['popconfirm-text']}>Baixar</div>
+                        </Popconfirm>
                     )}
                 </div>
             ),
