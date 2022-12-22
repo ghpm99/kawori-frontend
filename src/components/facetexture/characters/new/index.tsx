@@ -11,8 +11,8 @@ const New = () => {
     const facetextureLength = useSelector((state: RootState) => state.facetexture.facetexture.length)
 
     const includeNewCharacteres = () => {
-        if(facetextureLength >= 28){
-            message.info('O maximo de personagens é 28')
+        if(facetextureLength >= 29){
+            message.info('O maximo de personagens é 29')
             return
         }
         dispatch(includeNewCharacterReducer())
