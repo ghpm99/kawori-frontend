@@ -24,7 +24,7 @@ export default function MenuHeader() {
                 </Link>
                 <a
                     target='_blank'
-                    href='https://discord.gg/5rwtq5V'
+                    href='https://discord.gg/fykNkXyn2r'
                     className={ styles['menu-item'] }
                 >
                     Comunidade
