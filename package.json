@@ -24,7 +24,7 @@
     "dexie-react-hooks": "^1.1.1",
     "file-saver": "^2.0.5",
     "next": "^12.2.5",
-    "next-auth": "^4.15.0",
+    "next-auth": "^4.20.1",
     "pusher-js": "^7.4.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
