@@ -1,31 +1,17 @@
-import { ClearOutlined, ToTopOutlined } from "@ant-design/icons"
-import {
-    Breadcrumb,
-    Button,
-    DatePicker,
-    Input,
-    Layout,
-    Popconfirm,
-    Select,
-    Table,
-    Typography,
-    message,
-} from "antd"
-import moment from "moment"
-import { GetServerSideProps } from "next"
-import { getSession } from "next-auth/react"
-import Link from "next/link"
-import { ChangeEvent, useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-
-import FilterDropdown from "components/common/filterDropdown/Index"
-import LoadingPage from "components/loadingPage/Index"
-import LoginHeader from "components/loginHeader/Index"
-import MenuAdmin from "components/menuAdmin/Index"
-import ModalPayoff, {
-    ITableDataSource,
-} from "components/payments/modalPayoff"
-import { payoffPaymentService } from "services/financial"
+import { ClearOutlined, ToTopOutlined } from '@ant-design/icons'
+import { Breadcrumb, Button, DatePicker, Input, Layout, message, Popconfirm, Select, Table, Typography } from 'antd'
+import FilterDropdown from 'components/common/filterDropdown/Index'
+import LoadingPage from 'components/loadingPage/Index'
+import LoginHeader from 'components/loginHeader/Index'
+import MenuAdmin from 'components/menuAdmin/Index'
+import ModalPayoff, { ITableDataSource } from 'components/payments/modalPayoff'
+import moment from 'moment'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { payoffPaymentService } from 'services/financial'
 import {
     changeDataSourcePayoffPayments,
     changeSingleDataSourcePayoffPayments,
@@ -34,10 +20,11 @@ import {
     cleanFilterPayments,
     fetchAllPayment,
     setFilterPayments,
-} from "store/features/financial/Index"
-import { RootState, useAppDispatch } from "store/store"
-import { formatMoney, formatterDate } from "util/index"
-import styles from "./Payments.module.scss"
+} from 'store/features/financial/Index'
+import { RootState, useAppDispatch } from 'store/store'
+
+import { formatMoney, formatterDate } from '../../../../util'
+import styles from './Payments.module.scss'
 
 const { Header, Content } = Layout;
 
@@ -263,6 +250,33 @@ function FinancialPage() {
                             moment(financialStore.filters?.payment_date__gte),
                             moment(financialStore.filters?.payment_date__lte),
                         ]}
+                        ranges={{
+                            Hoje: [moment(), moment()],
+                            Ontem: [
+                                moment().subtract(1, "days"),
+                                moment().subtract(1, "days"),
+                            ],
+                            "Últimos 7 dias": [
+                                moment().subtract(7, "days"),
+                                moment(),
+                            ],
+                            "Últimos 30 dias": [
+                                moment().subtract(30, "days"),
+                                moment(),
+                            ],
+                            "Mês atual": [
+                                moment().startOf("month"),
+                                moment().endOf("month"),
+                            ],
+                            "Proximo mês": [
+                                moment().add(1, "months").startOf("month"),
+                                moment().add(1, "months").endOf("month"),
+                            ],
+                            "Mês passado": [
+                                moment().subtract(1, "month").startOf("month"),
+                                moment().subtract(1, "month").endOf("month"),
+                            ],
+                        }}
                     />
                 </FilterDropdown>
             ),
@@ -326,6 +340,33 @@ function FinancialPage() {
                             moment(financialStore.filters?.date__gte),
                             moment(financialStore.filters?.date__lte),
                         ]}
+                        ranges={{
+                            Hoje: [moment(), moment()],
+                            Ontem: [
+                                moment().subtract(1, "days"),
+                                moment().subtract(1, "days"),
+                            ],
+                            "Últimos 7 dias": [
+                                moment().subtract(7, "days"),
+                                moment(),
+                            ],
+                            "Últimos 30 dias": [
+                                moment().subtract(30, "days"),
+                                moment(),
+                            ],
+                            "Mês atual": [
+                                moment().startOf("month"),
+                                moment().endOf("month"),
+                            ],
+                            "Proximo mês": [
+                                moment().add(1, "months").startOf("month"),
+                                moment().add(1, "months").endOf("month"),
+                            ],
+                            "Mês passado": [
+                                moment().subtract(1, "month").startOf("month"),
+                                moment().subtract(1, "month").endOf("month"),
+                            ],
+                        }}
                     />
                 </FilterDropdown>
             ),
@@ -359,7 +400,9 @@ function FinancialPage() {
                             onConfirm={(event) => payOffPayment(record.id)}
                             okText="Sim"
                             cancelText="Não">
-                            <div className={styles['popconfirm-text']}>Baixar</div>
+                            <div className={styles["popconfirm-text"]}>
+                                Baixar
+                            </div>
                         </Popconfirm>
                     )}
                 </div>
