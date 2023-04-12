@@ -110,11 +110,18 @@ export default function ModalFilter(props: IModalFilterProps) {
                     <RangePicker
                         format={ customFormat }
                         style={ { width: '100%' } }
-                        ranges={ {
-                            Today: [moment(), moment()],
+                        ranges={{
+                            'Hoje': [moment(), moment()],
+                            'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Últimos 7 dias': [moment().subtract(7, 'days'), moment()],
+                            'Últimos 30 dias': [moment().subtract(30, 'days'), moment()],
                             'Mês atual': [moment().startOf('month'), moment().endOf('month')],
                             'Proximo mês': [moment().add(1, 'months').startOf('month'), moment().add(1, 'months').endOf('month')],
-                        } }
+                            'Mês passado': [
+                                moment().subtract(1, 'month').startOf('month'),
+                                moment().subtract(1, 'month').endOf('month'),
+                            ],
+                        }}
                     />
                 </Form.Item>
                 <Form.Item
@@ -130,11 +137,18 @@ export default function ModalFilter(props: IModalFilterProps) {
                     <RangePicker
                         format={ customFormat }
                         style={ { width: '100%' } }
-                        ranges={ {
-                            Today: [moment(), moment()],
+                        ranges={{
+                            'Hoje': [moment(), moment()],
+                            'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Últimos 7 dias': [moment().subtract(7, 'days'), moment()],
+                            'Últimos 30 dias': [moment().subtract(30, 'days'), moment()],
                             'Mês atual': [moment().startOf('month'), moment().endOf('month')],
                             'Proximo mês': [moment().add(1, 'months').startOf('month'), moment().add(1, 'months').endOf('month')],
-                        } }
+                            'Mês passado': [
+                                moment().subtract(1, 'month').startOf('month'),
+                                moment().subtract(1, 'month').endOf('month'),
+                            ],
+                        }}
                     />
                 </Form.Item>
                 <Form.Item
