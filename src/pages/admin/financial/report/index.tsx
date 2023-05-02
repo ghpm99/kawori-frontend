@@ -1,5 +1,5 @@
 import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from 'antd'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -88,7 +88,7 @@ function FinancialPage() {
 						<DatePicker
 							format='MM/DD'
 							picker='month'
-							defaultValue={ moment(new Date(), 'MM/DD') }
+							defaultValue={ dayjs(new Date(), 'MM/DD') }
 						/>
 						<Table columns={ headerTableFinancial } />
 					</Layout>

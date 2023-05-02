@@ -5,7 +5,7 @@ import LoadingPage from 'components/loadingPage/Index'
 import LoginHeader from 'components/loginHeader/Index'
 import MenuAdmin from 'components/menuAdmin/Index'
 import ModalPayoff, { ITableDataSource } from 'components/payments/modalPayoff'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -86,10 +86,10 @@ function FinancialPage() {
 
     const handleDateRangedFilter = (name: string, dates: string[]) => {
         const dateGte = dates[0]
-            ? moment(dates[0], "DD/MM/YYYY").format("YYYY-MM-DD")
+            ? dayjs(dates[0], "DD/MM/YYYY").format("YYYY-MM-DD")
             : null;
         const dateLte = dates[1]
-            ? moment(dates[1], "DD/MM/YYYY").format("YYYY-MM-DD")
+            ? dayjs(dates[1], "DD/MM/YYYY").format("YYYY-MM-DD")
             : null;
 
         dispatch(setFilterPayments({ name: `${name}__gte`, value: dateGte }));
@@ -247,34 +247,34 @@ function FinancialPage() {
                         }}
                         format={customFormat}
                         value={[
-                            moment(financialStore.filters?.payment_date__gte),
-                            moment(financialStore.filters?.payment_date__lte),
+                            dayjs(financialStore.filters?.payment_date__gte),
+                            dayjs(financialStore.filters?.payment_date__lte),
                         ]}
                         ranges={{
-                            Hoje: [moment(), moment()],
+                            Hoje: [dayjs(), dayjs()],
                             Ontem: [
-                                moment().subtract(1, "days"),
-                                moment().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
                             ],
                             "Últimos 7 dias": [
-                                moment().subtract(7, "days"),
-                                moment(),
+                                dayjs().subtract(7, "days"),
+                                dayjs(),
                             ],
                             "Últimos 30 dias": [
-                                moment().subtract(30, "days"),
-                                moment(),
+                                dayjs().subtract(30, "days"),
+                                dayjs(),
                             ],
                             "Mês atual": [
-                                moment().startOf("month"),
-                                moment().endOf("month"),
+                                dayjs().startOf("month"),
+                                dayjs().endOf("month"),
                             ],
                             "Proximo mês": [
-                                moment().add(1, "months").startOf("month"),
-                                moment().add(1, "months").endOf("month"),
+                                dayjs().add(1, "months").startOf("month"),
+                                dayjs().add(1, "months").endOf("month"),
                             ],
                             "Mês passado": [
-                                moment().subtract(1, "month").startOf("month"),
-                                moment().subtract(1, "month").endOf("month"),
+                                dayjs().subtract(1, "month").startOf("month"),
+                                dayjs().subtract(1, "month").endOf("month"),
                             ],
                         }}
                     />
@@ -337,34 +337,34 @@ function FinancialPage() {
                         }}
                         format={customFormat}
                         value={[
-                            moment(financialStore.filters?.date__gte),
-                            moment(financialStore.filters?.date__lte),
+                            dayjs(financialStore.filters?.date__gte),
+                            dayjs(financialStore.filters?.date__lte),
                         ]}
                         ranges={{
-                            Hoje: [moment(), moment()],
+                            Hoje: [dayjs(), dayjs()],
                             Ontem: [
-                                moment().subtract(1, "days"),
-                                moment().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
                             ],
                             "Últimos 7 dias": [
-                                moment().subtract(7, "days"),
-                                moment(),
+                                dayjs().subtract(7, "days"),
+                                dayjs(),
                             ],
                             "Últimos 30 dias": [
-                                moment().subtract(30, "days"),
-                                moment(),
+                                dayjs().subtract(30, "days"),
+                                dayjs(),
                             ],
                             "Mês atual": [
-                                moment().startOf("month"),
-                                moment().endOf("month"),
+                                dayjs().startOf("month"),
+                                dayjs().endOf("month"),
                             ],
                             "Proximo mês": [
-                                moment().add(1, "months").startOf("month"),
-                                moment().add(1, "months").endOf("month"),
+                                dayjs().add(1, "months").startOf("month"),
+                                dayjs().add(1, "months").endOf("month"),
                             ],
                             "Mês passado": [
-                                moment().subtract(1, "month").startOf("month"),
-                                moment().subtract(1, "month").endOf("month"),
+                                dayjs().subtract(1, "month").startOf("month"),
+                                dayjs().subtract(1, "month").endOf("month"),
                             ],
                         }}
                     />

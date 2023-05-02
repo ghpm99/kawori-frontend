@@ -1,23 +1,23 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {
-	fetchAllContractService,
-	fetchAllInvoiceService,
-	fetchAllPaymentService,
-	fetchAmountInvoiceByTagReportService,
-	fetchAmountPaymentClosedReportService,
-	fetchAmountPaymentOpenReportService,
-	fetchAmountPaymentReportService,
-	fetchCountPaymentReportService,
-	fetchDetailContractInvoicesService,
-	fetchDetailContractService,
-	fetchDetailInvoicePaymentsService,
-	fetchDetailInvoiceService,
-	fetchDetailPaymentService,
-	fetchPaymentReportService,
-	fetchTagsService,
-	saveNewPaymentService,
-} from "../../../services/financial"
+    fetchAllContractService,
+    fetchAllInvoiceService,
+    fetchAllPaymentService,
+    fetchAmountInvoiceByTagReportService,
+    fetchAmountPaymentClosedReportService,
+    fetchAmountPaymentOpenReportService,
+    fetchAmountPaymentReportService,
+    fetchCountPaymentReportService,
+    fetchDetailContractInvoicesService,
+    fetchDetailContractService,
+    fetchDetailInvoicePaymentsService,
+    fetchDetailInvoiceService,
+    fetchDetailPaymentService,
+    fetchPaymentReportService,
+    fetchTagsService,
+    saveNewPaymentService,
+} from '../../../services/financial'
 
 const initialState: IFinancialStore = {
 	payments: {
@@ -62,6 +62,7 @@ const initialState: IFinancialStore = {
 	paymentReport: {
 		loading: true,
 		data: {
+			payments: [],
 			open: [],
 			closed: [],
 			fixed_credit: 0,

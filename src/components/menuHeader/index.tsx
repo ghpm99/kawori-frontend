@@ -13,14 +13,14 @@ export default function MenuHeader() {
         <div className={ styles['menu-header'] }>
             <div className={ styles['menu'] }>
                 <Link href='/'>
-                    <a className={ styles['menu-item'] }>
+                    <div className={ styles['menu-item'] }>
                         Início
-                    </a>
+                    </div>
                 </Link>
                 <Link href='/facetexture'>
-                    <a className={ styles['menu-item'] }>
+                    <div className={ styles['menu-item'] }>
                         FaceTexture editor
-                    </a>
+                    </div>
                 </Link>
                 <a
                     target='_blank'
@@ -43,14 +43,14 @@ export default function MenuHeader() {
                     </div>
                     : <div className={ styles['user-options'] }>
                         <Link href='/signin'>
-                            <a className={ styles['user-option'] }>
+                            <div className={ styles['user-option'] }>
                                 Logar
-                            </a>
+                            </div>
                         </Link>
                         <Link href='/register'>
-                            <a className={ styles['user-option'] }>
+                            <div className={ styles['user-option'] }>
                                 Cadastrar
-                            </a>
+                            </div>
                         </Link>
                     </div>
                 }

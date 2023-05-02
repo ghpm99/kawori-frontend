@@ -1,5 +1,5 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select } from 'antd'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { MouseEvent } from 'react'
 
 import styles from './ModalFilter.module.scss'
@@ -111,15 +111,15 @@ export default function ModalFilter(props: IModalFilterProps) {
                         format={ customFormat }
                         style={ { width: '100%' } }
                         ranges={{
-                            'Hoje': [moment(), moment()],
-                            'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                            'Últimos 7 dias': [moment().subtract(7, 'days'), moment()],
-                            'Últimos 30 dias': [moment().subtract(30, 'days'), moment()],
-                            'Mês atual': [moment().startOf('month'), moment().endOf('month')],
-                            'Proximo mês': [moment().add(1, 'months').startOf('month'), moment().add(1, 'months').endOf('month')],
+                            'Hoje': [dayjs(), dayjs()],
+                            'Ontem': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+                            'Últimos 7 dias': [dayjs().subtract(7, 'days'), dayjs()],
+                            'Últimos 30 dias': [dayjs().subtract(30, 'days'), dayjs()],
+                            'Mês atual': [dayjs().startOf('month'), dayjs().endOf('month')],
+                            'Proximo mês': [dayjs().add(1, 'months').startOf('month'), dayjs().add(1, 'months').endOf('month')],
                             'Mês passado': [
-                                moment().subtract(1, 'month').startOf('month'),
-                                moment().subtract(1, 'month').endOf('month'),
+                                dayjs().subtract(1, 'month').startOf('month'),
+                                dayjs().subtract(1, 'month').endOf('month'),
                             ],
                         }}
                     />
@@ -138,15 +138,15 @@ export default function ModalFilter(props: IModalFilterProps) {
                         format={ customFormat }
                         style={ { width: '100%' } }
                         ranges={{
-                            'Hoje': [moment(), moment()],
-                            'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                            'Últimos 7 dias': [moment().subtract(7, 'days'), moment()],
-                            'Últimos 30 dias': [moment().subtract(30, 'days'), moment()],
-                            'Mês atual': [moment().startOf('month'), moment().endOf('month')],
-                            'Proximo mês': [moment().add(1, 'months').startOf('month'), moment().add(1, 'months').endOf('month')],
+                            'Hoje': [dayjs(), dayjs()],
+                            'Ontem': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+                            'Últimos 7 dias': [dayjs().subtract(7, 'days'), dayjs()],
+                            'Últimos 30 dias': [dayjs().subtract(30, 'days'), dayjs()],
+                            'Mês atual': [dayjs().startOf('month'), dayjs().endOf('month')],
+                            'Proximo mês': [dayjs().add(1, 'months').startOf('month'), dayjs().add(1, 'months').endOf('month')],
                             'Mês passado': [
-                                moment().subtract(1, 'month').startOf('month'),
-                                moment().subtract(1, 'month').endOf('month'),
+                                dayjs().subtract(1, 'month').startOf('month'),
+                                dayjs().subtract(1, 'month').endOf('month'),
                             ],
                         }}
                     />

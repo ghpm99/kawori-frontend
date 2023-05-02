@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export const formatMoney = (
     amount: number,
     decimalCount = 2,
@@ -50,3 +52,7 @@ export const formatterDetailedDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString("pt-BR");
 };
+
+export const formatterMonthYearDate = (dateString: string) => {
+    return dayjs(dateString).format('MM/YYYY')
+}
