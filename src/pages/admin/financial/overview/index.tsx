@@ -49,6 +49,8 @@ function Overview() {
         dispatch(fetchPaymentReport());
     }, []);
 
+    console.log(financialStore.data)
+
     function OverviewReport() {
         return (
             <>
@@ -61,10 +63,14 @@ function Overview() {
                     }
                     loading={financialStore.loading}
                 />
-                <div className={styles["charts-container"]}>
-                    <PaymentWithFixed data={financialStore.data} />
+                <div>
+                    <PaymentWithFixed data={financialStore.data.payments} />
+                </div>
+                <div>
                     <InvoiceByTag datasets={financialStore.data.invoiceByTag} />
-                    <PaymentWithoutFixed payments={financialStore.data.open} />
+                </div>
+                <div className={styles["charts-container"]}>
+                    <PaymentWithoutFixed payments={financialStore.data.payments} />
                     <PaymentFixed
                         fixedCredit={financialStore.data.fixed_credit}
                         fixedDebit={financialStore.data.fixed_debit}

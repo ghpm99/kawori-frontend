@@ -23,6 +23,7 @@ interface IFinancialStore {
 	paymentReport: {
 		loading: boolean
 		data: {
+			payments: IPaymentCharts[]
 			open: IPaymentReportOpen[]
 			closed: IPaymentReportClosed[]
 			fixed_debit: number
@@ -113,6 +114,13 @@ interface IModalTags {
 		error: boolean
 		errorMsg: string
 	}
+}
+
+interface IPaymentCharts {
+	label: string
+	debit: number
+	credit: number
+	total: number
 }
 
 interface IPaymentReportOpen {

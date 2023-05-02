@@ -1,10 +1,11 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 
+import { formatterMonthYearDate } from '../../../util'
 import styles from './paymentWithoutFixed.module.scss'
 
 interface IPaymentWithoutFixedProps {
-    payments: IPaymentReportOpen[]
+    payments: IPaymentCharts[]
 }
 
 export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
@@ -19,7 +20,7 @@ export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
         plugins: {
             title: {
                 display: true,
-                text: 'Relatorio pagamentos abertos sem mensalidades',
+                text: 'Total de pagamentos por mes',
             },
         },
         scales: {
@@ -32,19 +33,13 @@ export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
     }
 
     const data = {
-        labels: props.payments?.map(data => data.label),
+        labels: props.payments?.map(data => formatterMonthYearDate(data.label)),
         datasets: [
             {
-                label: 'Credito',
-                data: props.payments?.map(data => data.credit),
+                label: 'Total',
+                data: props.payments?.map(data => data.total),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-            {
-                label: 'Debito',
-                data: props.payments?.map(data => data.debit),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
         ],
     }

@@ -1,5 +1,5 @@
 import '../../styles/globals.scss'
-import 'antd/dist/antd.css'
+import 'antd/dist/reset.css'
 
 import { ConfigProvider } from 'antd'
 import ptBr from 'antd/lib/locale/pt_BR'

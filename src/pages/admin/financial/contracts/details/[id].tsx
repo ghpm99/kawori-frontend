@@ -1,6 +1,6 @@
 import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Tag, Typography } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -84,9 +84,9 @@ export default function ContractDetails() {
             status: 0,
             type: values.type,
             name: values.name,
-            date: moment(values.date).format('YYYY-MM-DD'),
+            date: dayjs(values.date).format('YYYY-MM-DD'),
             installments: values.installments,
-            payment_date: moment(values.payment_date).format('YYYY-MM-DD'),
+            payment_date: dayjs(values.payment_date).format('YYYY-MM-DD'),
             fixed: values.fixed ? true : false,
             active: true,
             value: values.value,
