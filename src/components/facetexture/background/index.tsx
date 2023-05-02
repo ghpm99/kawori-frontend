@@ -31,13 +31,8 @@ const Background = () => {
                     alt={ 'background' }
                 />
                 <ImgCrop
-                    rotate
-                    cropperProps={ {
-                        cropSize: {
-                            width: 875,
-                            height: 640
-                        }
-                    } }
+                    showReset
+                    rotationSlider
                     aspect={ 4 / 3 }
                 >
                     <Dragger
