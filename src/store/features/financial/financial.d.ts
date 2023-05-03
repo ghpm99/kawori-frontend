@@ -121,6 +121,8 @@ interface IPaymentCharts {
 	debit: number
 	credit: number
 	total: number
+	difference: number
+	accumulated: number
 }
 
 interface IPaymentReportOpen {

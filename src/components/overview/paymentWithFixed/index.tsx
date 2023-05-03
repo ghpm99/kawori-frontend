@@ -30,9 +30,6 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
             }
         },
     }
-
-    const valueDifWithFixed = props.data.map((payment, index) => payment.credit - payment.debit)
-
     const data = {
         labels: props.data.map(data => formatterMonthYearDate(data.label)),
         datasets: [
@@ -52,7 +49,7 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
             },
             {
                 label: 'Diferença',
-                data: valueDifWithFixed,
+                data: props.data.map(data => data.difference),
                 borderColor: '#048200',
                 backgroundColor: '#04820073',
                 lineTension: 0.3,
