@@ -28,7 +28,7 @@ export async function payoffPaymentService(id: number) {
 }
 
 export async function fetchPaymentReportService() {
-    const response = await apiDjango.get('/financial/report/')
+    const response = await apiDjango.get('/financial/report')
     return response.data
 }
 
