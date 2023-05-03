@@ -511,7 +511,7 @@ function TableSummary({
     return (
         <>
             <Table.Summary.Row>
-                <Table.Summary.Cell index={0}>
+                <Table.Summary.Cell colSpan={2} index={0}>
                     <Text>Total: {formatMoney(total)}</Text>
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={1}>
