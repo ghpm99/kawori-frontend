@@ -1,5 +1,5 @@
-import '../../styles/globals.scss'
 import 'antd/dist/reset.css'
+import '../../styles/globals.scss'
 
 import { ConfigProvider } from 'antd'
 import ptBr from 'antd/lib/locale/pt_BR'
@@ -13,6 +13,8 @@ import LoadingPage from '../components/loadingPage/Index'
 import PusherProvider from '../components/pusherProvider/Index'
 import { store } from '../store/store'
 import { NextPageCustom } from '../types/commonTypes'
+
+import { Analytics } from '@vercel/analytics'
 
 
 type NextComponentCustom = NextComponentType<NextPageContext, any, {}> & Partial<NextPageCustom>
@@ -52,6 +54,7 @@ export default function MyApp({ Component, pageProps }: ExtendedAppProps) {
                         <Component { ...pageProps } />
                     </Provider>
                 ) }
+                <Analytics />
             </ConfigProvider>
         </SessionProvider>
     )
