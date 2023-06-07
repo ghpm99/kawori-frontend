@@ -14,7 +14,7 @@ import PusherProvider from '../components/pusherProvider/Index'
 import { store } from '../store/store'
 import { NextPageCustom } from '../types/commonTypes'
 
-import { Analytics } from '@vercel/analytics'
+import { Analytics } from '@vercel/analytics/react'
 
 
 type NextComponentCustom = NextComponentType<NextPageContext, any, {}> & Partial<NextPageCustom>
