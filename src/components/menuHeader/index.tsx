@@ -1,8 +1,8 @@
-import Link from 'next/link'
+import Link from "next/link";
 
-import AccountMenuInfo from '../accountMenuInfo'
-import styles from './MenuHeader.module.scss'
-import useMenuHeader from './useMenuHeader'
+import AccountMenuInfo from "../accountMenuInfo";
+import styles from "./MenuHeader.module.scss";
+import useMenuHeader from "./useMenuHeader";
 
 export default function MenuHeader() {
     const context = useMenuHeader();
@@ -10,12 +10,12 @@ export default function MenuHeader() {
     return (
         <div className={styles["menu-header"]}>
             <div className={styles["menu"]}>
-                <div className={styles["menu-item"]}>
-                    <Link href="/">Início</Link>
-                </div>
-                <div className={styles["menu-item"]}>
-                    <Link href="/facetexture">FaceTexture editor</Link>
-                </div>
+                <Link href="/" className={styles["menu-item"]}>
+                    Início
+                </Link>
+                <Link href="/facetexture" className={styles["menu-item"]}>
+                    FaceTexture editor
+                </Link>
                 <div className={styles["menu-item"]}>
                     <a target="_blank" href="https://discord.gg/fykNkXyn2r">
                         Comunidade
