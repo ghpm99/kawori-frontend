@@ -11,10 +11,7 @@ export default function MenuHeader() {
         <div className={styles["menu-header"]}>
             <div className={styles["menu"]}>
                 <Link href="/" className={styles["menu-item"]}>
-                    Início
-                </Link>
-                <Link href="/facetexture" className={styles["menu-item"]}>
-                    FaceTexture editor
+                    Kawori
                 </Link>
                 <div className={styles["menu-item"]}>
                     <a target="_blank" href="https://discord.gg/fykNkXyn2r">
