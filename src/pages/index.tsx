@@ -15,6 +15,7 @@ export default function Home() {
                         O cadastro é gratuito, simples e rapido.
                     </h1>
                     <div className={styles["signup-form"]}>
+                        <div className={styles["form-title"]}>Cadastro</div>
                         <SingupForm />
                     </div>
                     <h1 className={styles["signup-text"]}>
