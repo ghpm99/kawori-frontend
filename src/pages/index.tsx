@@ -9,7 +9,8 @@ export default function Home() {
                 <MenuHeader />
                 <div className={styles["body"]}>
                     <h1 className={styles["title"]}>
-                        Cadastre-se e estilize sua tela de seleção agora mesmo!
+                        Você está a apenas um passo de um novo nivel de
+                        personalização do seu jogo!
                     </h1>
                     <div className={styles["signup-container"]}>
                         <div className={styles["text-container"]}>
@@ -23,8 +24,8 @@ export default function Home() {
                         </div>
                         <div className={styles["text-container"]}>
                             <h1 className={styles["signup-text"]}>
-                                Você está a apenas um passo de um novo nivel de
-                                personalização do seu jogo!
+                                Cadastre-se e estilize sua tela de seleção agora
+                                mesmo!
                             </h1>
                         </div>
                     </div>
