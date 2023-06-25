@@ -45,6 +45,7 @@ const SingupForm = () => {
     return (
         <Form
             form={form}
+            layout="horizontal"
             name="register-form"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
@@ -127,12 +128,11 @@ const SingupForm = () => {
                 ]}>
                 <Input.Password />
             </Form.Item>
-
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    Cadastrar
-                </Button>
-            </Form.Item>
+            <Button style={{
+                float: 'right'
+            }} type="primary" htmlType="submit">
+                Cadastrar
+            </Button>
         </Form>
     );
 };
