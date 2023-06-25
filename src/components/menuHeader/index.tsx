@@ -31,11 +31,6 @@ export default function MenuHeader() {
                         <Link href="/signin">
                             <div className={styles["user-option"]}>Logar</div>
                         </Link>
-                        <Link href="/register">
-                            <div className={styles["user-option"]}>
-                                Cadastrar
-                            </div>
-                        </Link>
                     </div>
                 )}
             </div>
