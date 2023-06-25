@@ -13,11 +13,6 @@ export default function MenuHeader() {
                 <Link href="/" className={styles["menu-item"]}>
                     Kawori
                 </Link>
-                <div className={styles["menu-item"]}>
-                    <a target="_blank" href="https://discord.gg/fykNkXyn2r">
-                        Comunidade
-                    </a>
-                </div>
             </div>
             <div className={styles["user-container"]}>
                 <div></div>
