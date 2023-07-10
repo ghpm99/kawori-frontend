@@ -2,5 +2,6 @@
     "prettier.singleQuote": false,
     "javascript.preferences.quoteStyle": "double",
     "typescript.preferences.quoteStyle": "double",
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "typescriptHero.imports.stringQuoteStyle": "\""
 }
