@@ -42,7 +42,7 @@ export default function InvoiceDetails() {
     const { id } = router.query;
 
     const financialStore = useSelector(
-        (state: RootState) => state.financial.invoiceDetail
+        (state: RootState) => state.financial.invoiceDetail,
     );
     const tagsStore = useSelector((state: RootState) => state.financial.tags);
     const dispatch = useAppDispatch();
@@ -58,11 +58,11 @@ export default function InvoiceDetails() {
             dispatch(
                 fetchInvoicePaymentsDetails({
                     id: idInvoice,
-                    filters:{
+                    filters: {
                         page: 1,
-                        page_size: 20
-                    }
-                })
+                        page_size: 20,
+                    },
+                }),
             );
         }
     }, [id]);
@@ -88,12 +88,12 @@ export default function InvoiceDetails() {
 
     const handleChangeTags = (
         value: number[],
-        option: DefaultOptionType | DefaultOptionType[]
+        option: DefaultOptionType | DefaultOptionType[],
     ) => {
         console.log(`selected ${value}`, option);
         saveInvoiceTagsService(
             financialStore.data.id,
-            option.map((item: any) => item.value)
+            option.map((item: any) => item.value),
         ).then(
             (response) => {
                 if (response.status === 200) {
@@ -103,7 +103,7 @@ export default function InvoiceDetails() {
             (reason) => {
                 console.log(reason);
                 message.error("Falhou em atualizar tags");
-            }
+            },
         );
     };
 
@@ -116,7 +116,7 @@ export default function InvoiceDetails() {
                     page: page,
                     page_size: pageSize,
                 },
-            })
+            }),
         );
     };
 
@@ -193,7 +193,7 @@ export default function InvoiceDetails() {
                                     <div className={styles.label}>
                                         Data:{" "}
                                         {formatterDate(
-                                            financialStore.data?.date
+                                            financialStore.data?.date,
                                         )}
                                     </div>
                                 </div>
@@ -203,7 +203,7 @@ export default function InvoiceDetails() {
                                     <div className={styles.label}>
                                         Valor:{" "}
                                         {formatMoney(
-                                            financialStore.data?.value
+                                            financialStore.data?.value,
                                         )}
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@ export default function InvoiceDetails() {
                                     <div className={styles.label}>
                                         Valor em Aberto:{" "}
                                         {formatMoney(
-                                            financialStore.data?.value_open
+                                            financialStore.data?.value_open,
                                         )}
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@ export default function InvoiceDetails() {
                                     <div className={styles.label}>
                                         Valor Baixado:{" "}
                                         {formatMoney(
-                                            financialStore.data?.value_closed
+                                            financialStore.data?.value_closed,
                                         )}
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@ export default function InvoiceDetails() {
                                         placeholder="Tags"
                                         onChange={handleChangeTags}
                                         defaultValue={financialStore.data?.tags.map(
-                                            (item) => item.id
+                                            (item) => item.id,
                                         )}>
                                         {tagsStore.data?.map((item) => (
                                             <Option
@@ -331,13 +331,18 @@ export default function InvoiceDetails() {
                                             value ? "Sim" : "Não",
                                     },
                                     {
-                                        title: 'Ações',
-                                        dataIndex: 'id',
-                                        key: 'id',
-                                        render: value => <Link href={ `/admin/financial/payments/details/${value}` }>Detalhes</Link>
-                                    }
-                                ] }
-                                dataSource={ financialStore.payments.data }
+                                        title: "Ações",
+                                        dataIndex: "id",
+                                        key: "id",
+                                        render: (value) => (
+                                            <Link
+                                                href={`/admin/financial/payments/details/${value}`}>
+                                                Detalhes
+                                            </Link>
+                                        ),
+                                    },
+                                ]}
+                                dataSource={financialStore.payments.data}
                             />
                         </Card>
                     </Layout>

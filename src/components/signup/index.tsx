@@ -33,7 +33,7 @@ const SingupForm = () => {
             })
             .catch((error) => {
                 message.error(
-                    error.response.data.msg ?? "Falhou em criar usuário"
+                    error.response.data.msg ?? "Falhou em criar usuário",
                 );
             });
     };
@@ -120,17 +120,20 @@ const SingupForm = () => {
                             }
                             return Promise.reject(
                                 new Error(
-                                    "As duas senhas que você digitou não correspondem!"
-                                )
+                                    "As duas senhas que você digitou não correspondem!",
+                                ),
                             );
                         },
                     }),
                 ]}>
                 <Input.Password />
             </Form.Item>
-            <Button style={{
-                float: 'right'
-            }} type="primary" htmlType="submit">
+            <Button
+                style={{
+                    float: "right",
+                }}
+                type="primary"
+                htmlType="submit">
                 Cadastrar
             </Button>
         </Form>

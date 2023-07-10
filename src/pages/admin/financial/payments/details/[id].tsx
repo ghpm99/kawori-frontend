@@ -1,18 +1,32 @@
-import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from 'antd'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { Content, Header } from 'antd/lib/layout/layout'
-import dayjs from 'dayjs'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import {
+    Breadcrumb,
+    Button,
+    Card,
+    Checkbox,
+    DatePicker,
+    InputNumber,
+    Layout,
+    message,
+    Select,
+    Typography,
+} from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { Content, Header } from "antd/lib/layout/layout";
+import dayjs from "dayjs";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import LoadingPage from '../../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../../components/menuAdmin/Index'
-import { payoffPaymentService, savePaymentDetailService } from '../../../../../services/financial'
+import LoadingPage from "../../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../../components/menuAdmin/Index";
+import {
+    payoffPaymentService,
+    savePaymentDetailService,
+} from "../../../../../services/financial";
 import {
     changeActivePaymentDetails,
     changeFixedPaymentDetails,
@@ -22,9 +36,9 @@ import {
     changeTypePaymentDetails,
     changeValuePaymentDetails,
     fetchPaymentDetails,
-} from '../../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../../store/store'
-import styles from './Details.module.scss'
+} from "../../../../../store/features/financial/Index";
+import { RootState, useAppDispatch } from "../../../../../store/store";
+import styles from "./Details.module.scss";
 
 const { Paragraph } = Typography;
 const { Option } = Select;
@@ -36,7 +50,7 @@ export default function PaymentDetails() {
     const { id } = router.query;
 
     const financialStore = useSelector(
-        (state: RootState) => state.financial.paymentDetail
+        (state: RootState) => state.financial.paymentDetail,
     );
     const dispatch = useAppDispatch();
 
@@ -52,7 +66,7 @@ export default function PaymentDetails() {
     const save = () => {
         savePaymentDetailService(
             financialStore.data.id,
-            financialStore.data
+            financialStore.data,
         ).then((response) => {
             message.success({
                 content: response.msg,
@@ -166,7 +180,7 @@ export default function PaymentDetails() {
                                     </div>
                                     <DatePicker
                                         value={dayjs(
-                                            financialStore.data?.payment_date
+                                            financialStore.data?.payment_date,
                                         )}
                                         format="DD/MM/YYYY"
                                         onChange={changePaymentDate}

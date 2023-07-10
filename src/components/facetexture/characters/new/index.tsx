@@ -8,7 +8,7 @@ import Styles from "./New.module.scss";
 const New = () => {
     const dispatch = useAppDispatch();
     const facetextureLength = useSelector(
-        (state: RootState) => state.facetexture.facetexture.length
+        (state: RootState) => state.facetexture.facetexture.length,
     );
 
     const includeNewCharacteres = () => {

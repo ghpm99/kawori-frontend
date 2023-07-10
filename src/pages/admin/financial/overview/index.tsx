@@ -1,5 +1,5 @@
-import { Breadcrumb, Layout } from 'antd'
-import { Content, Header } from 'antd/lib/layout/layout'
+import { Breadcrumb, Layout } from "antd";
+import { Content, Header } from "antd/lib/layout/layout";
 import {
     BarElement,
     CategoryScale,
@@ -10,23 +10,23 @@ import {
     PointElement,
     Title,
     Tooltip,
-} from 'chart.js'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+} from "chart.js";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import LoadingPage from '../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../components/menuAdmin/Index'
-import Cards from '../../../../components/overview/cards'
-import InvoiceByTag from '../../../../components/overview/invoiceByTag'
-import PaymentFixed from '../../../../components/overview/paymentFixed'
-import PaymentWithFixed from '../../../../components/overview/paymentWithFixed'
-import PaymentWithoutFixed from '../../../../components/overview/paymentWithoutFixed'
-import { fetchPaymentReport } from '../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../store/store'
-import styles from './Overview.module.scss'
+import LoadingPage from "../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../components/menuAdmin/Index";
+import Cards from "../../../../components/overview/cards";
+import InvoiceByTag from "../../../../components/overview/invoiceByTag";
+import PaymentFixed from "../../../../components/overview/paymentFixed";
+import PaymentWithFixed from "../../../../components/overview/paymentWithFixed";
+import PaymentWithoutFixed from "../../../../components/overview/paymentWithoutFixed";
+import { fetchPaymentReport } from "../../../../store/features/financial/Index";
+import { RootState, useAppDispatch } from "../../../../store/store";
+import styles from "./Overview.module.scss";
 
 ChartJS.register(
     CategoryScale,
@@ -36,12 +36,12 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
 );
 
 function Overview() {
     const financialStore = useSelector(
-        (state: RootState) => state.financial.paymentReport
+        (state: RootState) => state.financial.paymentReport,
     );
     const dispatch = useAppDispatch();
 
@@ -49,7 +49,7 @@ function Overview() {
         dispatch(fetchPaymentReport());
     }, []);
 
-    console.log(financialStore.data)
+    console.log(financialStore.data);
 
     function OverviewReport() {
         return (
@@ -70,7 +70,9 @@ function Overview() {
                     <InvoiceByTag datasets={financialStore.data.invoiceByTag} />
                 </div>
                 <div className={styles["charts-container"]}>
-                    <PaymentWithoutFixed payments={financialStore.data.payments} />
+                    <PaymentWithoutFixed
+                        payments={financialStore.data.payments}
+                    />
                     <PaymentFixed
                         fixedCredit={financialStore.data.fixed_credit}
                         fixedDebit={financialStore.data.fixed_debit}

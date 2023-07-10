@@ -1,8 +1,7 @@
-
 interface IAccountMenuInfoProps {
-    user:{
-        name,
-        email,
-        avatar,
-    },
+    user: {
+        name;
+        email;
+        avatar;
+    };
 }

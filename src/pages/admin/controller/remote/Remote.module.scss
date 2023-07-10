@@ -1,6 +1,6 @@
 .vertical_slider {
-	display: inline-block;
-	height: 300px;
+    display: inline-block;
+    height: 300px;
 }
 
 .mouse_container {
@@ -8,27 +8,27 @@
 }
 
 .hotkey {
-	margin: 16px 16px;
+    margin: 16px 16px;
 }
 
 .key_hold {
-	margin: 16px 16px;
+    margin: 16px 16px;
 }
 
 .breadcrumb {
-	margin: 16px 16px;
+    margin: 16px 16px;
 }
 
 .container {
-	min-height: 100vh;
+    min-height: 100vh;
 }
 
 .header {
-	padding: 0;
+    padding: 0;
 }
 
 .buttons_mouse {
-	margin: 6px;
+    margin: 6px;
 }
 
 .input {
@@ -36,16 +36,16 @@
 }
 
 .buttons {
-	margin: 16px;
-	display: grid;
+    margin: 16px;
+    display: grid;
 }
 
 .screenshot_container {
-	overflow-x: auto;
+    overflow-x: auto;
 }
 
 @media only screen and (max-width: 600px) {
-    .command_input{
+    .command_input {
         display: grid;
     }
     .input {
@@ -54,5 +54,5 @@
 }
 
 .commands {
-	display: flex;
+    display: flex;
 }

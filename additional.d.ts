@@ -1,1 +1,1 @@
-declare module 'react-pusher';
+declare module "react-pusher";

@@ -28,7 +28,7 @@
     margin: 16px;
     padding: 16px;
     background: #fff;
-    @media screen and (max-width:850px) {
+    @media screen and (max-width: 850px) {
         flex-wrap: wrap;
     }
 }
@@ -36,24 +36,23 @@
 .info {
     flex-grow: 1;
     width: 33%;
-    @media screen and (max-width:850px) {
+    @media screen and (max-width: 850px) {
         width: 100%;
     }
 }
 
-.status{
+.status {
     display: flex;
     align-items: center;
 }
 
-.status-indicator{
+.status-indicator {
     background-color: #00db84;
     border-radius: 9000px;
     width: 0.8rem;
     height: 0.8rem;
     display: inline-block;
     position: relative;
-
 }
 
 .status-text {
