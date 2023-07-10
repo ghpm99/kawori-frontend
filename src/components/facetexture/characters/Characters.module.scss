@@ -1,27 +1,26 @@
-
 .characters {
-	display: flex;
-	margin: 16px;
-	padding: 8px;
-	background: #fff;
+    display: flex;
+    margin: 16px;
+    padding: 8px;
+    background: #fff;
 }
 
 .characters-container {
-	display: flex;
-	width: 945px;
+    display: flex;
+    width: 945px;
 }
 
 .character {
-	width: 125px;
-	height: 160px;
-	margin: 5px;
+    width: 125px;
+    height: 160px;
+    margin: 5px;
 }
 
 .include-characters {
-	width: 125px;
-	height: 160px;
-	background-color: black;
-	font-size: 72px;
-	text-align: center;
-	color: white;
+    width: 125px;
+    height: 160px;
+    background-color: black;
+    font-size: 72px;
+    text-align: center;
+    color: white;
 }

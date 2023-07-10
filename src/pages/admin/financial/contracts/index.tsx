@@ -27,7 +27,7 @@ const { Title } = Typography;
 
 function FinancialPage() {
     const financialStore = useSelector(
-        (state: RootState) => state.financial.contracts
+        (state: RootState) => state.financial.contracts,
     );
     const dispatch = useAppDispatch();
 
@@ -36,7 +36,7 @@ function FinancialPage() {
             fetchAllContract({
                 page: 1,
                 page_size: 20,
-            })
+            }),
         );
     }, []);
 
@@ -61,7 +61,7 @@ function FinancialPage() {
                 fetchAllContract({
                     page: 1,
                     page_size: 20,
-                })
+                }),
             );
         });
     };
@@ -71,8 +71,8 @@ function FinancialPage() {
             fetchAllContract({
                 ...financialStore.filters,
                 page: page,
-                page_size: pageSize
-            })
+                page_size: pageSize,
+            }),
         );
     };
 
@@ -151,7 +151,8 @@ function FinancialPage() {
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
+                                defaultPageSize:
+                                    financialStore.filters.page_size,
                                 current: financialStore.pagination.currentPage,
                                 total:
                                     financialStore.pagination.totalPages *

@@ -1,146 +1,148 @@
-import { Breadcrumb, Layout, message } from 'antd'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { Breadcrumb, Layout, message } from "antd";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import Background from '../../../components/facetexture/background'
-import Characters from '../../../components/facetexture/characters'
-import Loading from '../../../components/facetexture/loading'
-import Preview from '../../../components/facetexture/preview'
-import LoginHeader from '../../../components/loginHeader/Index'
-import MenuAdmin from '../../../components/menuAdmin/Index'
-import { IFacetextureCharacterApi, updateFacetextureService } from '../../../services/facetexture'
+import Background from "../../../components/facetexture/background";
+import Characters from "../../../components/facetexture/characters";
+import Loading from "../../../components/facetexture/loading";
+import Preview from "../../../components/facetexture/preview";
+import LoginHeader from "../../../components/loginHeader/Index";
+import MenuAdmin from "../../../components/menuAdmin/Index";
+import {
+    IFacetextureCharacterApi,
+    updateFacetextureService,
+} from "../../../services/facetexture";
 import {
     fetchFacetexture,
     setFacetextureIsEdited,
     updateBackgroundReducer,
     updateFacetextureUrlReducer,
-} from '../../../store/features/facetexture'
-import { RootState, useAppDispatch } from '../../../store/store'
-import { db } from '../../../util/db'
-import Styles from './Facetexture.module.scss'
+} from "../../../store/features/facetexture";
+import { RootState, useAppDispatch } from "../../../store/store";
+import { db } from "../../../util/db";
+import Styles from "./Facetexture.module.scss";
 
-
-const { Header, Content } = Layout
+const { Header, Content } = Layout;
 
 function FaceTexture() {
+    const messageRef = "facetexture-message-ref";
 
-    const messageRef = 'facetexture-message-ref'
+    const router = useRouter();
 
-    const router = useRouter()
-
-    const dispatch = useAppDispatch()
-    const facetextureStore = useSelector((state: RootState) => state.facetexture)
+    const dispatch = useAppDispatch();
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
 
     useEffect(() => {
-
-        updateBackground()
+        updateBackground();
         dispatch(fetchFacetexture()).then((action) => {
-            const payload = (action.payload) as {
-                characters: IFacetextureCharacterApi[]
+            const payload = action.payload as {
+                characters: IFacetextureCharacterApi[];
                 classes: {
                     class: {
-                        id: number
-                        name: string
-                        abbreviation: string
-                        class_image: string
-                    }[]
-                }
-            }
+                        id: number;
+                        name: string;
+                        abbreviation: string;
+                        class_image: string;
+                    }[];
+                };
+            };
             payload.characters.forEach((value, index) => {
-                updateCharacterImage(index, value.name)
-            })
-        })
-
-    }, [])
+                updateCharacterImage(index, value.name);
+            });
+        });
+    }, []);
 
     useEffect(() => {
         if (facetextureStore.error) {
-            router.replace('/error')
+            router.replace("/error");
         }
-    }, [facetextureStore.error])
+    }, [facetextureStore.error]);
 
     useEffect(() => {
         if (facetextureStore.edited && !facetextureStore.error) {
-            dispatch(setFacetextureIsEdited(false))
+            dispatch(setFacetextureIsEdited(false));
             updateFacetextureService({
-                characters: facetextureStore.facetexture.map(item => ({
+                characters: facetextureStore.facetexture.map((item) => ({
                     ...item,
-                    class: item.class.id
-                }))
-            }).then(response => {
-                message.success({
-                    content: response.msg,
-                    key: messageRef,
-                })
-            }).catch(err => {
-                console.log(err)
+                    class: item.class.id,
+                })),
             })
-
+                .then((response) => {
+                    message.success({
+                        content: response.msg,
+                        key: messageRef,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
-    }, [facetextureStore.edited])
+    }, [facetextureStore.edited]);
 
     const updateBackground = async () => {
-        const background = (await db.background.toArray())[0]
+        const background = (await db.background.toArray())[0];
 
-        let backgroundImage
+        let backgroundImage;
 
         if (background) {
-            backgroundImage = URL.createObjectURL(background.image)
+            backgroundImage = URL.createObjectURL(background.image);
         } else {
-            backgroundImage = '/media/default-background.png'
-            const blob = await fetch(backgroundImage).then(r => r.blob())
+            backgroundImage = "/media/default-background.png";
+            const blob = await fetch(backgroundImage).then((r) => r.blob());
             await db.background.add({
-                image: blob
-            })
+                image: blob,
+            });
         }
-        dispatch(updateBackgroundReducer(backgroundImage))
-
-    }
+        dispatch(updateBackgroundReducer(backgroundImage));
+    };
 
     const updateCharacterImage = async (index: number, name: string) => {
-        const image = await db.image.where('name').equals(name).first()
+        const image = await db.image.where("name").equals(name).first();
         if (image) {
-            const imageUrl = URL.createObjectURL(image.imagem)
-            dispatch(updateFacetextureUrlReducer({
-                index: index,
-                image: imageUrl,
-            }))
+            const imageUrl = URL.createObjectURL(image.imagem);
+            dispatch(
+                updateFacetextureUrlReducer({
+                    index: index,
+                    image: imageUrl,
+                }),
+            );
         }
-    }
-
+    };
 
     useEffect(() => {
         if (facetextureStore.loading) {
             message.loading({
-                content: 'Carregando',
-                key: 'loading-msg'
-            })
+                content: "Carregando",
+                key: "loading-msg",
+            });
         } else {
             message.success({
-                content: 'Carregado!',
-                key: 'loading-msg'
-            })
+                content: "Carregado!",
+                key: "loading-msg",
+            });
         }
-    }, [facetextureStore.loading])
+    }, [facetextureStore.loading]);
 
     if (facetextureStore.loading) {
-        return <Loading />
+        return <Loading />;
     }
 
     return (
-        <Layout className={ Styles['container'] }>
-            <MenuAdmin selected={ ['facetexture'] } />
+        <Layout className={Styles["container"]}>
+            <MenuAdmin selected={["facetexture"]} />
             <Layout>
-                <Header className={ Styles['header'] } >
+                <Header className={Styles["header"]}>
                     <LoginHeader />
                 </Header>
                 <Content>
-                    <Breadcrumb className={ Styles['breadcrumb'] }>
+                    <Breadcrumb className={Styles["breadcrumb"]}>
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Facetexture</Breadcrumb.Item>
                     </Breadcrumb>
-                    <div className={ Styles['container-toolkit'] }>
+                    <div className={Styles["container-toolkit"]}>
                         <Characters />
                         <Background />
                         <Preview />
@@ -148,15 +150,13 @@ function FaceTexture() {
                 </Content>
             </Layout>
         </Layout>
-
-    )
+    );
 }
 
 FaceTexture.auth = {
-    role: 'user',
+    role: "user",
     loading: <Loading />,
     unauthorized: "/signin",
-}
+};
 
-export default FaceTexture
-
+export default FaceTexture;

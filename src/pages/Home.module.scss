@@ -20,7 +20,13 @@
     //background-image: linear-gradient(to top, #84d2ff 10%, #00001b 80%);
     //background-color: #00001b;
     //background: linear-gradient(-45deg, #00001b,#23a6d5,  #23d5ab);
-    background: linear-gradient(0deg, #00001b 30%, #000030, #23a6d5, #23d5ab 80%);
+    background: linear-gradient(
+        0deg,
+        #00001b 30%,
+        #000030,
+        #23a6d5,
+        #23d5ab 80%
+    );
     background-size: 400% 400%;
     animation: gradient 30s ease infinite;
 }

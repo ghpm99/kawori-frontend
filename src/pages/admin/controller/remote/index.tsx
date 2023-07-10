@@ -1,12 +1,12 @@
-import { Breadcrumb, Button, Input, Layout, Slider, Typography } from 'antd'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react'
-import Pusher from 'react-pusher'
+import { Breadcrumb, Button, Input, Layout, Slider, Typography } from "antd";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import Pusher from "react-pusher";
 
-import LoadingPage from '../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../components/menuAdmin/Index'
+import LoadingPage from "../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../components/menuAdmin/Index";
 import {
     hotkeyService,
     keyPressService,
@@ -15,247 +15,263 @@ import {
     mouseMoveService,
     mouseScrollService,
     screenSizeService,
-} from '../../../../services/remote'
-import styles from './Remote.module.scss'
-
-
+} from "../../../../services/remote";
+import styles from "./Remote.module.scss";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 const { TextArea } = Input;
 
-
 function RemotePage() {
-
     const [hook, setHook] = useState({
-        src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png`
-    })
+        src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png`,
+    });
 
-    const [key, setKey] = useState('')
-    const [hotkey, setHotkey] = useState('')
+    const [key, setKey] = useState("");
+    const [hotkey, setHotkey] = useState("");
     const [screenSize, setScreenSize] = useState({
         screen_width: 0,
         screen_height: 0,
         x: 0,
-        y: 0
-    })
+        y: 0,
+    });
 
     useEffect(() => {
-        screenSizeService().then(data => {
-            setScreenSize(data)
-        })
-
-    }, [])
+        screenSizeService().then((data) => {
+            setScreenSize(data);
+        });
+    }, []);
 
     const onNewScreenshot = () => {
         setHook({
-            src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png?${Date.now()}`
-        })
-    }
+            src: `${
+                process.env.NEXT_PUBLIC_API_URL
+            }/media/screenshot/screenshot.png?${Date.now()}`,
+        });
+    };
 
     const onClickScreenshot = (event: any) => {
-
         setScreenSize({
             ...screenSize,
             x: event.nativeEvent.offsetX,
-            y: event.nativeEvent.offsetY
-        })
+            y: event.nativeEvent.offsetY,
+        });
 
         if (event.detail === 1) {
-            mouseMoveButtonService(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 'click')
+            mouseMoveButtonService(
+                event.nativeEvent.offsetX,
+                event.nativeEvent.offsetY,
+                "click",
+            );
         } else if (event.detail === 2) {
-            mouseMoveButtonService(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 'double-click')
+            mouseMoveButtonService(
+                event.nativeEvent.offsetX,
+                event.nativeEvent.offsetY,
+                "double-click",
+            );
         }
-    }
+    };
 
     const onContextScreenshot = (event: any) => {
-
-        event.preventDefault()
+        event.preventDefault();
 
         setScreenSize({
             ...screenSize,
             x: event.nativeEvent.offsetX,
-            y: event.nativeEvent.offsetY
-        })
+            y: event.nativeEvent.offsetY,
+        });
 
-        mouseMoveButtonService(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 'click-right')
-    }
+        mouseMoveButtonService(
+            event.nativeEvent.offsetX,
+            event.nativeEvent.offsetY,
+            "click-right",
+        );
+    };
 
     return (
-        <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['controller', 'remote'] } />
+        <Layout className={styles.container}>
+            <MenuAdmin selected={["controller", "remote"]} />
             <Layout>
-                <Header className={ styles.header } >
+                <Header className={styles.header}>
                     <LoginHeader />
                 </Header>
                 <Content>
-                    <Breadcrumb className={ styles.breadcrumb }>
+                    <Breadcrumb className={styles.breadcrumb}>
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Remoto</Breadcrumb.Item>
                     </Breadcrumb>
-                    <Layout className={ styles.key_hold }>
-                        <Input.Group compact className={ styles.command_input }>
-                            <div className={ styles.input }>
+                    <Layout className={styles.key_hold}>
+                        <Input.Group compact className={styles.command_input}>
+                            <div className={styles.input}>
                                 <Input
-                                    placeholder='Pressione uma tecla'
-                                    name='key'
-                                    onChange={ (event) => { setKey(event.target.value) } }
-                                    value={ key }
+                                    placeholder="Pressione uma tecla"
+                                    name="key"
+                                    onChange={(event) => {
+                                        setKey(event.target.value);
+                                    }}
+                                    value={key}
                                 />
                             </div>
                             <Button
-                                type='primary'
-                                onClick={ () => {
-                                    keyPressService(key)
-                                    setKey('')
-                                } }
-                            >
+                                type="primary"
+                                onClick={() => {
+                                    keyPressService(key);
+                                    setKey("");
+                                }}>
                                 Enviar tecla
                             </Button>
                         </Input.Group>
                     </Layout>
-                    <Layout className={ styles.hotkey }>
-                        <Input.Group compact className={ styles.command_input }>
-                            <div className={ styles.input }>
+                    <Layout className={styles.hotkey}>
+                        <Input.Group compact className={styles.command_input}>
+                            <div className={styles.input}>
                                 <Input
-                                    placeholder='Pressione uma tecla'
-                                    name='key'
-                                    onChange={ (event) => { setHotkey(event.target.value) } }
-                                    value={ hotkey }
+                                    placeholder="Pressione uma tecla"
+                                    name="key"
+                                    onChange={(event) => {
+                                        setHotkey(event.target.value);
+                                    }}
+                                    value={hotkey}
                                 />
                             </div>
                             <Button
-                                type='primary'
-                                onClick={ () => {
-                                    hotkeyService(hotkey)
-                                    setHotkey('')
-                                } }
-                            >
+                                type="primary"
+                                onClick={() => {
+                                    hotkeyService(hotkey);
+                                    setHotkey("");
+                                }}>
                                 Enviar combinação de tecla
                             </Button>
                         </Input.Group>
-                        <div className={ styles.mouse_container }>
-                            <div className={ styles.commands }>
-                                <div className={ styles.buttons }>
+                        <div className={styles.mouse_container}>
+                            <div className={styles.commands}>
+                                <div className={styles.buttons}>
                                     <Button
-                                        type='primary'
-                                        className={ styles.buttons_mouse }
-                                        onClick={ () => mouseButtonService('click') }
-                                    >
+                                        type="primary"
+                                        className={styles.buttons_mouse}
+                                        onClick={() =>
+                                            mouseButtonService("click")
+                                        }>
                                         Clicar
                                     </Button>
                                     <Button
-                                        type='primary'
-                                        className={ styles.buttons_mouse }
-                                        onClick={ () => mouseButtonService('double-click') }
-                                    >
+                                        type="primary"
+                                        className={styles.buttons_mouse}
+                                        onClick={() =>
+                                            mouseButtonService("double-click")
+                                        }>
                                         Click duplo
                                     </Button>
                                     <Button
-                                        type='primary'
-                                        className={ styles.buttons_mouse }
-                                        onClick={ () => mouseButtonService('click-right') }
-                                    >
+                                        type="primary"
+                                        className={styles.buttons_mouse}
+                                        onClick={() =>
+                                            mouseButtonService("click-right")
+                                        }>
                                         Click direito
                                     </Button>
                                     <Button
-                                        type='primary'
-                                        className={ styles.buttons_mouse }
-                                        onClick={ () => mouseScrollService(100) }
-                                    >
+                                        type="primary"
+                                        className={styles.buttons_mouse}
+                                        onClick={() => mouseScrollService(100)}>
                                         Scroll up
                                     </Button>
                                     <Button
-                                        type='primary'
-                                        className={ styles.buttons_mouse }
-                                        onClick={ () => mouseScrollService(-100) }
-                                    >
+                                        type="primary"
+                                        className={styles.buttons_mouse}
+                                        onClick={() =>
+                                            mouseScrollService(-100)
+                                        }>
                                         Scroll down
                                     </Button>
                                     <Button
-                                        type='primary'
-                                        onClick={ () => mouseMoveService(screenSize.x, screenSize.y) }
-                                        className={ styles.buttons_mouse }
-                                    >
+                                        type="primary"
+                                        onClick={() =>
+                                            mouseMoveService(
+                                                screenSize.x,
+                                                screenSize.y,
+                                            )
+                                        }
+                                        className={styles.buttons_mouse}>
                                         Mover
                                     </Button>
                                 </div>
-                                <div className={ styles.screenshot_container }>
+                                <div className={styles.screenshot_container}>
                                     <img
-                                        src={ hook.src }
-                                        onClick={ onClickScreenshot }
-                                        onContextMenu={ onContextScreenshot }
+                                        src={hook.src}
+                                        onClick={onClickScreenshot}
+                                        onContextMenu={onContextScreenshot}
                                     />
                                 </div>
                             </div>
                             <Slider
-                                min={ 0 }
-                                max={ screenSize.screen_width }
-                                value={ screenSize.x }
-                                onChange={ (event) => setScreenSize({
-                                    ...screenSize,
-                                    x: event
-                                }) }
+                                min={0}
+                                max={screenSize.screen_width}
+                                value={screenSize.x}
+                                onChange={(event) =>
+                                    setScreenSize({
+                                        ...screenSize,
+                                        x: event,
+                                    })
+                                }
                             />
-                            <div className={ styles.vertical_slider }>
+                            <div className={styles.vertical_slider}>
                                 <Slider
                                     reverse
                                     vertical
-                                    min={ 0 }
-                                    max={ screenSize.screen_height }
-                                    value={ screenSize.y }
-                                    onChange={ (event) => setScreenSize({
-                                        ...screenSize,
-                                        y: event
-                                    }) }
+                                    min={0}
+                                    max={screenSize.screen_height}
+                                    value={screenSize.y}
+                                    onChange={(event) =>
+                                        setScreenSize({
+                                            ...screenSize,
+                                            y: event,
+                                        })
+                                    }
                                 />
                             </div>
                         </div>
-
                     </Layout>
                 </Content>
             </Layout>
             <Pusher
-                channel='private-remote'
-                event='new-screenshot'
-                onUpdate={ onNewScreenshot }
+                channel="private-remote"
+                event="new-screenshot"
+                onUpdate={onNewScreenshot}
             />
         </Layout>
-
-    )
-
-
+    );
 }
 
 RemotePage.auth = {
-    role: 'admin',
+    role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-}
+};
 
 RemotePage.pusher = {
-    name: 'Remote'
-}
+    name: "Remote",
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req })
+    const session = await getSession({ req });
 
-    const isSuperuser = session?.user.isSuperuser ?? false
+    const isSuperuser = session?.user.isSuperuser ?? false;
 
     if (!isSuperuser) {
         return {
             redirect: {
-                destination: '/',
+                destination: "/",
                 permanent: false,
             },
-        }
+        };
     }
 
     const props = {
         pusher_key: process.env.PUSHER_KEY,
-        pusher_cluster: process.env.PUSHER_CLUSTER
-    }
-    return { props }
-}
+        pusher_cluster: process.env.PUSHER_CLUSTER,
+    };
+    return { props };
+};
 
-export default RemotePage
+export default RemotePage;

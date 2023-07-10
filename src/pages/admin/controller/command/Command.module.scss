@@ -15,8 +15,6 @@
 }
 
 .command_input {
-
-
 }
 
 .input {
@@ -24,7 +22,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .command_input{
+    .command_input {
         display: grid;
     }
     .input {
