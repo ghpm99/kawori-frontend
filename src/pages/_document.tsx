@@ -1,13 +1,6 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
-import Document, {
-    DocumentContext,
-    Head,
-    Html,
-    Main,
-    NextScript,
-} from "next/document";
-import Script from "next/script";
-import React from "react";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document"
+import React from "react"
 
 React.useLayoutEffect = React.useEffect;
 
@@ -34,7 +27,7 @@ class MyDocument extends Document {
                 <body>
                     <noscript
                         dangerouslySetInnerHTML={{
-                            __html: '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLCST52" height="0" width="0" style="display:none;visibility:hidden"></iframe>',
+                            __html: "<iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-KLCST52\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe>",
                         }}
                     />
                     <Main />

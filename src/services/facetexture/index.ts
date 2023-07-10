@@ -1,4 +1,4 @@
-import { apiDjango } from "..";
+import { apiDjango } from ".."
 
 interface IFacetextureApi {
     characters: IFacetextureCharacterApi[];
@@ -13,7 +13,7 @@ export interface IFacetextureCharacterApi {
         class_image: string;
     };
     show: boolean;
-    image: {};
+    image: any;
 }
 
 export async function fetchFacetextureService() {
