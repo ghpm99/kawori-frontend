@@ -1,18 +1,9 @@
-import {
-    DragDropContext,
-    Draggable,
-    Droppable,
-    DropResult,
-    ResponderProvided,
-} from "react-beautiful-dnd";
-import { useSelector } from "react-redux";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd"
+import { useSelector } from "react-redux"
 
-import {
-    reorderCharacterReducer,
-    setSelectedFacetextureReducer,
-} from "../../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import Styles from "./DnDCharacters.module.scss";
+import { reorderCharacterReducer, setSelectedFacetextureReducer } from "../../../../store/features/facetexture"
+import { RootState, useAppDispatch } from "../../../../store/store"
+import Styles from "./DnDCharacters.module.scss"
 
 const DragAndDropCharacters = () => {
     const facetextureStore = useSelector(
@@ -22,7 +13,6 @@ const DragAndDropCharacters = () => {
 
     const onDragEnd = async (
         result: DropResult,
-        provided: ResponderProvided,
     ) => {
         if (!result.destination) {
             return;
@@ -51,9 +41,9 @@ const DragAndDropCharacters = () => {
     };
 
     function listToMatrix(list: IFacetexture[], elementsPerSubArray: number) {
-        var matrix = [],
-            i,
-            k;
+        const matrix = [];
+        let i = 0,
+            k = 0;
 
         for (i = 0, k = -1; i < list.length; i++) {
             if (i % elementsPerSubArray === 0) {
@@ -75,7 +65,7 @@ const DragAndDropCharacters = () => {
                     key={indexRow}
                     droppableId={`${indexRow}`}
                     direction="horizontal">
-                    {(provided, snapshot) => (
+                    {(provided) => (
                         <div
                             ref={provided.innerRef}
                             className={Styles["characters-container"]}
@@ -85,14 +75,14 @@ const DragAndDropCharacters = () => {
                                     key={`${indexRow}-${index}`}
                                     draggableId={`${indexRow}-${index}`}
                                     index={index}>
-                                    {(provided, snapshot) => (
+                                    {(provided) => (
                                         <div
                                             ref={provided.innerRef}
                                             {...provided.dragHandleProps}
                                             {...provided.draggableProps}
                                             key={`${indexRow}-${index}`}
                                             className={Styles["character"]}
-                                            onClick={(event) =>
+                                            onClick={() =>
                                                 setSelectedCharacter(
                                                     indexRow * 7 + index,
                                                 )
