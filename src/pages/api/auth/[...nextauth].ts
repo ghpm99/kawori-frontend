@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
 
-import { fetchUserDetails, signinService } from "../../../services/auth";
+import { fetchUserDetails, signinService } from "../../../services/auth"
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -57,7 +57,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     };
 
     const callbacks = {
-        async session({ session, user, token }: any) {
+        async session({ session, token }: any) {
             session.accessToken = token.userSession;
             session.user.username = token.username;
             session.user.firstName = token.firstName;
@@ -69,7 +69,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             session.user.dateJoined = token.dateJoined;
             return session;
         },
-        async jwt({ token, user, account, profile, isNewUser }: any) {
+        async jwt({ token, user }: any) {
             if (user !== undefined) {
                 token.userSession = user.token;
                 token.username = user.username;

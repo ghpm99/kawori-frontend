@@ -55,7 +55,7 @@ export const facetextureSlice = createSlice({
             state: IFacetextureState,
             action: PayloadAction<IReorderCharacterAction>,
         ) => {
-            let newFacetextureList = state.facetexture.filter(
+            const newFacetextureList = state.facetexture.filter(
                 (item, index) => index !== action.payload.indexSource,
             );
             newFacetextureList.splice(
@@ -95,7 +95,7 @@ export const facetextureSlice = createSlice({
             state: IFacetextureState,
             action: PayloadAction<number>,
         ) => {
-            let newFacetextureList = state.facetexture.filter(
+            const newFacetextureList = state.facetexture.filter(
                 (_, index) => index !== action.payload,
             );
             state.facetexture = newFacetextureList;
@@ -133,7 +133,7 @@ export const facetextureSlice = createSlice({
                 state.facetexture = action.payload.characters;
                 state.loading = false;
             })
-            .addCase(fetchFacetexture.rejected, (state, action) => {
+            .addCase(fetchFacetexture.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
             });
