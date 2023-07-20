@@ -16,6 +16,7 @@ interface IClass {
 }
 
 interface IFacetexture {
+	id:number
 	name: string
 	class: {
 		id: number

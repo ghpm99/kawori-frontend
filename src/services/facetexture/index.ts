@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit"
 import { apiDjango } from '..'
 
 interface IFacetextureApi {
@@ -5,6 +6,7 @@ interface IFacetextureApi {
 }
 
 export interface IFacetextureCharacterApi {
+	id: number
 	name: string
 	class: {
 		id: number
@@ -60,3 +62,15 @@ export async function downloadFacetextureService( args: any) {
 	)
 	return response.data
 }
+
+export const reorderCharacter = createAsyncThunk(
+	'facetexture/reorderCharacter',
+	async ({facetextureId, indexDestination}: {facetextureId: number, indexDestination: number}) => {
+		const response = await apiDjango.post('facetexture/reorder', {
+			facetexture_id: facetextureId,
+			index_destination: indexDestination
+		})
+		const data = await response.data
+		return data
+	}
+)
