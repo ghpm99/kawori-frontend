@@ -62,6 +62,7 @@ export const facetextureSlice = createSlice({
 		includeNewCharacterReducer: (state: IFacetextureState) => {
 
 			state.facetexture.push({
+                id: 0,
 				image: '/media/classimage/default.png',
 				name: `default${state.facetexture.length + 1}.png`,
 				show: true,

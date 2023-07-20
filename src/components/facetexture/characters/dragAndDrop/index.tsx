@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { reorderCharacterReducer, setSelectedFacetextureReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import Styles from './DnDCharacters.module.scss'
+import { reorderCharacter } from 'services/facetexture'
 
 const DragAndDropCharacters = () => {
 
@@ -22,6 +23,12 @@ const DragAndDropCharacters = () => {
         if (!indexDestination) {
             return
         }
+
+        const facetextureSource = facetextureStore.facetexture[indexSource]
+        dispatch(reorderCharacter({
+            facetextureId: facetextureSource.id,
+            indexDestination
+        }))
 
         dispatch(reorderCharacterReducer({
             indexSource,
