@@ -57,7 +57,6 @@ export const facetextureSlice = createSlice({
 				state.facetexture[action.payload.indexSource]
 			)
 			state.facetexture = newFacetextureList
-			state.edited = true
 		},
 		includeNewCharacterReducer: (state: IFacetextureState) => {
 

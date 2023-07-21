@@ -25,6 +25,7 @@ const DragAndDropCharacters = () => {
         }
 
         const facetextureSource = facetextureStore.facetexture[indexSource]
+
         dispatch(reorderCharacter({
             facetextureId: facetextureSource.id,
             indexDestination
