@@ -81,3 +81,33 @@ export const reorderCharacter = createAsyncThunk(
         return data;
     }
 );
+
+export const changeClassCharacter = createAsyncThunk(
+    "facetexture/changeClassCharacter",
+    async ({
+        facetextureID,
+        classId,
+    }: {
+        facetextureID: number;
+        classId: number;
+    }) => {
+        const response = await apiDjango.post("facetexture/change-class", {
+            character_id: facetextureID,
+            new_class: classId,
+        });
+        const data = await response.data;
+        return {
+            data,
+            facetextureID
+        };
+    }
+);
+
+export const newCharacter = createAsyncThunk(
+    "facetexture/NewCharacter",
+    async () => {
+        const response = await apiDjango.post("facetexture/new")
+        const data = await response.data
+        return data
+    }
+)

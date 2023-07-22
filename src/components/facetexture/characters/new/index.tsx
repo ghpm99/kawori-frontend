@@ -1,9 +1,9 @@
-import { message } from "antd";
-import { useSelector } from "react-redux";
+import { message } from "antd"
+import { useSelector } from "react-redux"
 
-import { includeNewCharacterReducer } from "../../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import Styles from "./New.module.scss";
+import { newCharacter } from 'services/facetexture'
+import { RootState, useAppDispatch } from "../../../../store/store"
+import Styles from "./New.module.scss"
 
 const New = () => {
     const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ const New = () => {
             message.info("O maximo de personagens é 30");
             return;
         }
-        dispatch(includeNewCharacterReducer());
+        dispatch(newCharacter());
     };
 
     return (

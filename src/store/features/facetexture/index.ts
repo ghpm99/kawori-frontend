@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { fetchFaceTextureClassService, fetchFacetextureService } from '../../../services/facetexture'
+import { changeClassCharacter, fetchFaceTextureClassService, fetchFacetextureService, newCharacter } from '../../../services/facetexture'
 
 const initialState: IFacetextureState = {
 	loading: true,
@@ -127,6 +127,14 @@ export const facetextureSlice = createSlice({
 			.addCase(fetchFacetexture.rejected, (state, action) => {
 				state.loading = false
 				state.error = true
+			})
+			.addCase(changeClassCharacter.fulfilled, (state, action) => {
+				const facetextureIndex = state.facetexture.findIndex(item => item.id === action.payload.facetextureID)
+				state.facetexture[facetextureIndex].class = action.payload.data.class
+				state.facetexture[facetextureIndex].image = action.payload.data.class.class_image
+			})
+			.addCase(newCharacter.fulfilled, (state, action) => {
+				state.facetexture.push(action.payload.character)
 			})
 	},
 })
