@@ -16,6 +16,7 @@ import {
 import { RootState, useAppDispatch } from '../../../../store/store'
 import { db } from '../../../../util/db'
 import Styles from './Info.module.scss'
+import { changeClassCharacter } from 'services/facetexture'
 
 const { Title } = Typography
 
@@ -28,9 +29,12 @@ const Info = () => {
         if (index == undefined) {
             return
         }
-        dispatch(updateCharacterClassReducer({
-            index: index,
-            class: value
+
+        const facetexture = facetextureStore.facetexture[index]
+
+        dispatch(changeClassCharacter({
+            facetextureID: facetexture.id,
+            classId: value
         }))
     }
 
