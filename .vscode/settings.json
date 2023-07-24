@@ -1,5 +1,8 @@
 {
     "prettier.singleQuote": false,
     "javascript.preferences.quoteStyle": "double",
-    "typescript.preferences.quoteStyle": "double"
+    "typescript.preferences.quoteStyle": "double",
+    "javascript.format.semicolons": "insert",
+    "typescript.format.semicolons": "insert",
+    "typescriptHero.imports.stringQuoteStyle": "\""
 }
