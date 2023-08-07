@@ -23,9 +23,7 @@ export async function fetchFacetextureService() {
     return response.data as IFacetextureApi;
 }
 
-export async function updateFacetextureService(
-    characters: updateFacetexturePayload
-) {
+export async function updateFacetextureService(characters: updateFacetexturePayload) {
     const response = await apiDjango.post("/facetexture/save", characters);
     return response.data;
 }
@@ -66,15 +64,8 @@ export async function downloadFacetextureService(args: any) {
 
 export const reorderCharacter = createAsyncThunk(
     "facetexture/reorderCharacter",
-    async ({
-        facetextureId,
-        indexDestination,
-    }: {
-        facetextureId: number;
-        indexDestination: number;
-    }) => {
-        const response = await apiDjango.post("facetexture/reorder", {
-            facetexture_id: facetextureId,
+    async ({ id, indexDestination }: { id: number; indexDestination: number }) => {
+        const response = await apiDjango.post(`facetexture/${id}/reorder`, {
             index_destination: indexDestination,
         });
         const data = await response.data;
@@ -84,30 +75,20 @@ export const reorderCharacter = createAsyncThunk(
 
 export const changeClassCharacter = createAsyncThunk(
     "facetexture/changeClassCharacter",
-    async ({
-        facetextureID,
-        classId,
-    }: {
-        facetextureID: number;
-        classId: number;
-    }) => {
-        const response = await apiDjango.post("facetexture/change-class", {
-            character_id: facetextureID,
+    async ({ id, classId }: { id: number; classId: number }) => {
+        const response = await apiDjango.post(`facetexture/${id}/change-class`, {
             new_class: classId,
         });
         const data = await response.data;
         return {
             data,
-            facetextureID
+            id,
         };
     }
 );
 
-export const newCharacter = createAsyncThunk(
-    "facetexture/NewCharacter",
-    async () => {
-        const response = await apiDjango.post("facetexture/new")
-        const data = await response.data
-        return data
-    }
-)
+export const newCharacter = createAsyncThunk("facetexture/NewCharacter", async () => {
+    const response = await apiDjango.post("facetexture/new");
+    const data = await response.data;
+    return data;
+});

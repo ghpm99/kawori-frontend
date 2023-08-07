@@ -52,33 +52,6 @@ function FaceTexture() {
         });
     }, []);
 
-    useEffect(() => {
-        if (facetextureStore.error) {
-            router.replace("/error");
-        }
-    }, [facetextureStore.error]);
-
-    useEffect(() => {
-        if (facetextureStore.edited && !facetextureStore.error) {
-            dispatch(setFacetextureIsEdited(false));
-            updateFacetextureService({
-                characters: facetextureStore.facetexture.map((item) => ({
-                    ...item,
-                    class: item.class.id,
-                })),
-            })
-                .then((response) => {
-                    message.success({
-                        content: response.msg,
-                        key: messageRef,
-                    });
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    }, [facetextureStore.edited]);
-
     const updateBackground = async () => {
         const background = (await db.background.toArray())[0];
 
