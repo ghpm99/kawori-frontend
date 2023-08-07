@@ -33,7 +33,7 @@ const Info = () => {
         const facetexture = facetextureStore.facetexture[index]
 
         dispatch(changeClassCharacter({
-            facetextureID: facetexture.id,
+            id: facetexture.id,
             classId: value
         }))
     }

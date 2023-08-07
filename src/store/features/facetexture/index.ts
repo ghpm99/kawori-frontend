@@ -129,7 +129,7 @@ export const facetextureSlice = createSlice({
 				state.error = true
 			})
 			.addCase(changeClassCharacter.fulfilled, (state, action) => {
-				const facetextureIndex = state.facetexture.findIndex(item => item.id === action.payload.facetextureID)
+				const facetextureIndex = state.facetexture.findIndex(item => item.id === action.payload.id)
 				state.facetexture[facetextureIndex].class = action.payload.data.class
 				state.facetexture[facetextureIndex].image = action.payload.data.class.class_image
 			})
