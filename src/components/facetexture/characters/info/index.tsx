@@ -1,22 +1,18 @@
-import { PlusOutlined } from '@ant-design/icons'
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload } from 'antd'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { RcFile } from 'antd/lib/upload'
-import { useSelector } from 'react-redux'
+import { PlusOutlined } from '@ant-design/icons';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { RcFile } from 'antd/lib/upload';
+import { useSelector } from 'react-redux';
 
+import { changeCharacterNameThunk, changeClassCharacterThunk, changeShowClassThunk, deleteCharacterThunk } from 'services/facetexture';
 import {
-    deleteCharacterReducer,
-    updateCharacterClassReducer,
-    updateCharacterImageNameReducer,
-    updateCharacterShowClassReducer,
-    updateFacetextureUrlReducer,
-} from '../../../../store/features/facetexture'
-import { RootState, useAppDispatch } from '../../../../store/store'
-import { db } from '../../../../util/db'
-import Styles from './Info.module.scss'
-import { changeClassCharacter } from 'services/facetexture'
+    updateFacetextureUrlReducer
+} from '../../../../store/features/facetexture';
+import { RootState, useAppDispatch } from '../../../../store/store';
+import { db } from '../../../../util/db';
+import Styles from './Info.module.scss';
 
 const { Title } = Typography
 
@@ -24,30 +20,28 @@ const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-    const updateCharacterClass = (index: number | undefined, value: number) => {
+    const updateCharacterClass = (id: number | undefined, value: number) => {
 
-        if (index == undefined) {
+        if (id == undefined) {
             return
         }
 
-        const facetexture = facetextureStore.facetexture[index]
-
-        dispatch(changeClassCharacter({
-            id: facetexture.id,
+        dispatch(changeClassCharacterThunk({
+            id: id,
             classId: value
         }))
     }
 
-    const updateImageSelectedCharacter = (index: number | undefined, file: RcFile) => {
-        if (index === undefined) {
+    const updateImageSelectedCharacter = (id: number | undefined, file: RcFile) => {
+        if (id === undefined) {
             return
         }
         dispatch(updateFacetextureUrlReducer({
-            index: index,
+            id: id,
             image: URL.createObjectURL(file)
         }))
-        dispatch(updateCharacterImageNameReducer({
-            index: index,
+        dispatch(changeCharacterNameThunk({
+            id: id,
             name: file.name
         }))
         updateImageLocal(file.name, file)
@@ -66,24 +60,24 @@ const Info = () => {
         }
     }
 
-    const deleteCharacter = (index: number | undefined) => {
-        if (!index) {
+    const deleteCharacter = (id: number | undefined) => {
+        if (!id) {
             return
         }
-        dispatch(deleteCharacterReducer(index))
+        dispatch(deleteCharacterThunk(id))
     }
 
-    const updateCharacterShowClass = (index: number | undefined, event: CheckboxChangeEvent) => {
-        if (!index) {
+    const updateCharacterShowClass = (id: number | undefined, event: CheckboxChangeEvent) => {
+        if (!id) {
             return
         }
-        dispatch(updateCharacterShowClassReducer({
-            index: index,
-            show: event.target.checked
+        dispatch(changeShowClassThunk({
+            id: id,
+            visible: event.target.checked
         }))
     }
 
-    const selectedFacetexture = facetextureStore.selected !== undefined ? facetextureStore.facetexture[facetextureStore.selected] : undefined
+    const selectedFacetexture = facetextureStore.selected !== undefined ? facetextureStore.facetexture.find((face) => face.id === facetextureStore.selected) : undefined
 
     return (
         <div className={ Styles['character-info'] }>
@@ -127,13 +121,13 @@ const Info = () => {
                             style={ {
                                 width: '125px'
                             } }
-                            onChange={ (value: number) => updateCharacterClass(facetextureStore.selected, value) }
+                            onChange={ (value: number) => updateCharacterClass(selectedFacetexture.id, value) }
                         />
                     </div>
                     <div className={ Styles['controllers-info'] }>
                         <Checkbox
                             checked={ selectedFacetexture?.show }
-                            onChange={ (e) => updateCharacterShowClass(facetextureStore.selected, e) }
+                            onChange={ (e) => updateCharacterShowClass(selectedFacetexture.id, e) }
                         >
                             Mostrar icone da classe
                         </Checkbox>
@@ -151,7 +145,7 @@ const Info = () => {
 
                         <Upload
                             listType='picture-card'
-                            beforeUpload={ (file) => updateImageSelectedCharacter(facetextureStore.selected, file) }
+                            beforeUpload={ (file) => updateImageSelectedCharacter(selectedFacetexture.id, file) }
                             fileList={ [] }
                         >
                             <div>
@@ -163,7 +157,7 @@ const Info = () => {
                     <div className={ Styles['controllers-info'] }>
                         <Button
                             type='primary'
-                            onClick={ () => deleteCharacter(facetextureStore.selected) }
+                            onClick={ () => deleteCharacter(selectedFacetexture.id) }
                         >
                             Deletar personagem
                         </Button>

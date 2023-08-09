@@ -26,6 +26,7 @@ interface IFacetexture {
 	}
 	show: boolean
 	image: string
+	order: number
 }
 
 interface IReorderCharacterAction {
@@ -34,7 +35,7 @@ interface IReorderCharacterAction {
 }
 
 interface IUpdateFacetextureUrlAction {
-	index: number
+	id: number
 	image: string
 }
 
