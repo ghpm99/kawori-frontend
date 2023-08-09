@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { reorderCharacterReducer, setSelectedFacetextureReducer } from '../../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../../store/store'
 import Styles from './DnDCharacters.module.scss'
-import { reorderCharacter } from 'services/facetexture'
+import { reorderCharacterThunk } from 'services/facetexture'
 
 const DragAndDropCharacters = () => {
 
@@ -12,7 +12,7 @@ const DragAndDropCharacters = () => {
     const dispatch = useAppDispatch()
 
     const onDragEnd = async (result: DropResult, provided: ResponderProvided) => {
-
+        console.log(result)
         if (!result.destination) {
             return
         }
@@ -26,15 +26,11 @@ const DragAndDropCharacters = () => {
 
         const facetextureSource = facetextureStore.facetexture[indexSource]
 
-        dispatch(reorderCharacter({
+        dispatch(reorderCharacterThunk({
             id: facetextureSource.id,
             indexDestination
         }))
 
-        dispatch(reorderCharacterReducer({
-            indexSource,
-            indexDestination
-        }))
     }
 
     const setSelectedCharacter = (id: number) => {
@@ -73,9 +69,9 @@ const DragAndDropCharacters = () => {
                         >
                             { row.map((character, index) => (
                                 <Draggable
-                                    key={ `${indexRow}-${index}` }
-                                    draggableId={ `${indexRow}-${index}` }
-                                    index={ index }
+                                    key={character.id }
+                                    draggableId={ `${character.id}` }
+                                    index={ character.order }
 
                                 >
                                     { (provided, snapshot) => (
@@ -85,7 +81,7 @@ const DragAndDropCharacters = () => {
                                             { ...provided.draggableProps }
                                             key={ `${indexRow}-${index}` }
                                             className={ Styles['character'] }
-                                            onClick={ (event) => setSelectedCharacter((indexRow * 7) + index) }
+                                            onClick={ (event) => setSelectedCharacter(character.id) }
                                         >
                                             {
                                                 character.image &&
