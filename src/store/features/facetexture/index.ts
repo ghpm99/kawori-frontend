@@ -2,9 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
     changeClassCharacterThunk,
+    deleteCharacterThunk,
     fetchFaceTextureClassService,
     fetchFacetextureService,
     newCharacterThunk,
+    reorderCharacterThunk,
 } from "../../../services/facetexture";
 
 const initialState: IFacetextureState = {
@@ -95,7 +97,14 @@ export const facetextureSlice = createSlice({
             })
             .addCase(newCharacterThunk.fulfilled, (state, action) => {
                 state.facetexture.push(action.payload.character);
-            });
+            })
+            .addCase(deleteCharacterThunk.fulfilled, (state, action) => {
+                state.facetexture =  state.facetexture.filter(facetexture => facetexture.id !== action.payload.id)
+            })
+            .addCase(reorderCharacterThunk.fulfilled, (state, action) => {
+                const data = action.payload.data
+
+            })
     },
 });
 

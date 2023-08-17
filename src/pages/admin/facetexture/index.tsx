@@ -9,7 +9,7 @@ import Loading from "../../../components/facetexture/loading";
 import Preview from "../../../components/facetexture/preview";
 import LoginHeader from "../../../components/loginHeader/Index";
 import MenuAdmin from "../../../components/menuAdmin/Index";
-import { IFacetextureCharacterApi, updateFacetextureService } from "../../../services/facetexture";
+import { IFacetextureCharacterApi } from "../../../services/facetexture";
 import {
     fetchFacetexture,
     setFacetextureIsEdited,
@@ -75,7 +75,7 @@ function FaceTexture() {
             const imageUrl = URL.createObjectURL(image.imagem);
             dispatch(
                 updateFacetextureUrlReducer({
-                    index: index,
+                    id: index,
                     image: imageUrl,
                 }),
             );

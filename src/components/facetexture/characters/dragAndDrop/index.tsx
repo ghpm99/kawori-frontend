@@ -1,10 +1,10 @@
-import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from 'react-beautiful-dnd'
-import { useSelector } from 'react-redux'
+import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from 'react-beautiful-dnd';
+import { useSelector } from 'react-redux';
 
-import { reorderCharacterReducer, setSelectedFacetextureReducer } from '../../../../store/features/facetexture'
-import { RootState, useAppDispatch } from '../../../../store/store'
-import Styles from './DnDCharacters.module.scss'
-import { reorderCharacterThunk } from 'services/facetexture'
+import { reorderCharacterThunk } from 'services/facetexture';
+import { setSelectedFacetextureReducer } from '../../../../store/features/facetexture';
+import { RootState, useAppDispatch } from '../../../../store/store';
+import Styles from './DnDCharacters.module.scss';
 
 const DragAndDropCharacters = () => {
 
@@ -17,14 +17,12 @@ const DragAndDropCharacters = () => {
             return
         }
 
-        const indexSource = result.source.index + (parseInt(result.source.droppableId) * 7)
-        const indexDestination = result.destination.index + (parseInt(result.destination.droppableId) * 7)
+        const indexDestination = result.destination.index
+        const facetextureSource = facetextureStore.facetexture.find(facetexture => facetexture.id === parseInt(result.draggableId))
 
-        if (!indexDestination) {
+        if (!indexDestination || !facetextureSource) {
             return
         }
-
-        const facetextureSource = facetextureStore.facetexture[indexSource]
 
         dispatch(reorderCharacterThunk({
             id: facetextureSource.id,
