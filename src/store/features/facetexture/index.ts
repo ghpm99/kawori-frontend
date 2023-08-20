@@ -102,8 +102,17 @@ export const facetextureSlice = createSlice({
                 state.facetexture =  state.facetexture.filter(facetexture => facetexture.id !== action.payload.id)
             })
             .addCase(reorderCharacterThunk.fulfilled, (state, action) => {
-                const data = action.payload.data
-
+                const dataPayload = action.payload.data
+                for(const index in dataPayload){
+                    console.log(index)
+                    const data = dataPayload[index]
+                    console.log(data)
+                    const indexTarget = state.facetexture.findIndex(facetexture => facetexture.id === data.id)
+                    if(indexTarget >= 0){
+                        state.facetexture[indexTarget].order = data.order
+                        state.facetexture.sort((a,b) => a.order - b.order)
+                    }
+                }
             })
     },
 });
