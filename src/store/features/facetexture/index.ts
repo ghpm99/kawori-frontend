@@ -139,6 +139,7 @@ export const {
     updateCharacterShowClassReducer,
     setFacetextureIsEdited,
     updateCharacterImageNameReducer,
+    changeModalVisible,
 } = facetextureSlice.actions;
 
 export default facetextureSlice.reducer;
