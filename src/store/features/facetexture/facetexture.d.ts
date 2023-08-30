@@ -6,6 +6,9 @@ interface IFacetextureState {
 	backgroundUrl: string
     edited: boolean
 	error: boolean
+	modal:{
+		newFacetexture:INewFacetextureModal
+	}
 }
 
 interface IClass {
@@ -27,6 +30,10 @@ interface IFacetexture {
 	show: boolean
 	image: string
 	order: number
+}
+
+interface INewFacetextureModal {
+	visible: boolean
 }
 
 interface IReorderCharacterAction {

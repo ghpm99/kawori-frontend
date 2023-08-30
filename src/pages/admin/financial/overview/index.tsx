@@ -49,8 +49,6 @@ function Overview() {
         dispatch(fetchPaymentReport());
     }, []);
 
-    console.log(financialStore.data)
-
     function OverviewReport() {
         return (
             <>

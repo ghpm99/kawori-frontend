@@ -54,7 +54,6 @@ function FinancialPage() {
         };
 
         saveNewContractService(newContract).then((e) => {
-            console.log(e);
             message.success(e.msg);
             closeModal("newPayment");
             dispatch(
