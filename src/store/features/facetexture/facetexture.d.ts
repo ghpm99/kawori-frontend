@@ -6,9 +6,7 @@ interface IFacetextureState {
 	backgroundUrl: string
     edited: boolean
 	error: boolean
-	modal:{
-		newFacetexture:INewFacetextureModal
-	}
+	modal:IFacetextureModalState
 }
 
 interface IClass {
@@ -30,6 +28,10 @@ interface IFacetexture {
 	show: boolean
 	image: string
 	order: number
+}
+
+interface IFacetextureModalState {
+	newFacetexture:INewFacetextureModal
 }
 
 interface INewFacetextureModal {
@@ -59,4 +61,9 @@ interface IUpdateCharacterShowClassAction {
 interface IUpdateCharacterImageNameAction {
 	index: number
 	name: string
+}
+
+type changeModalVisible = {
+	modal: keyof IFacetextureModalState
+	visible: boolean
 }
