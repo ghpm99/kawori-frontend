@@ -79,6 +79,9 @@ export const facetextureSlice = createSlice({
             state.facetexture[action.payload.index].name = action.payload.name;
             state.edited = true;
         },
+        changeModalVisible: (state:IFacetextureState, action: PayloadAction<changeModalVisible>) => {
+            state.modal[action.payload.modal].visible = action.payload.visible
+        }
     },
     extraReducers: (builder) => {
         builder
