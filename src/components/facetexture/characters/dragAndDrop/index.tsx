@@ -12,7 +12,7 @@ const DragAndDropCharacters = () => {
     const dispatch = useAppDispatch()
 
     const onDragEnd = async (result: DropResult, provided: ResponderProvided) => {
-        console.log(result)
+
         if (!result.destination) {
             return
         }
@@ -27,7 +27,9 @@ const DragAndDropCharacters = () => {
         dispatch(reorderCharacterThunk({
             id: facetextureSource.id,
             indexDestination
-        }))
+        })).catch(e => {
+            console.log(e)
+        })
 
     }
 
@@ -52,7 +54,7 @@ const DragAndDropCharacters = () => {
     const facetextureMatrix = listToMatrix(facetextureStore.facetexture, 7)
 
     return (
-        <DragDropContext onDragEnd={ onDragEnd }>
+        <DragDropContext onDragEnd={ onDragEnd } >
             { facetextureMatrix.map((row, indexRow) => (
                 <Droppable
                     key={ indexRow }

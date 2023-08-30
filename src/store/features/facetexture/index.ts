@@ -17,6 +17,11 @@ const initialState: IFacetextureState = {
     selected: undefined,
     edited: false,
     error: false,
+    modal:{
+        newFacetexture:{
+            visible: false
+        }
+    }
 };
 
 export const fetchFacetexture = createAsyncThunk("facetexture/fetchFacetexture", async () => {
@@ -101,12 +106,16 @@ export const facetextureSlice = createSlice({
             .addCase(deleteCharacterThunk.fulfilled, (state, action) => {
                 state.facetexture =  state.facetexture.filter(facetexture => facetexture.id !== action.payload.id)
             })
+            .addCase(reorderCharacterThunk.pending, (state, action) => {
+                const indexSource = state.facetexture.findIndex((item) => item.id === action.meta.arg.id);
+                let newFacetextureList = state.facetexture.filter((item) => item.id !== action.meta.arg.id);
+                newFacetextureList.splice(action.meta.arg.indexDestination, 0, state.facetexture[indexSource]);
+                state.facetexture = newFacetextureList;
+            })
             .addCase(reorderCharacterThunk.fulfilled, (state, action) => {
                 const dataPayload = action.payload.data
                 for(const index in dataPayload){
-                    console.log(index)
                     const data = dataPayload[index]
-                    console.log(data)
                     const indexTarget = state.facetexture.findIndex(facetexture => facetexture.id === data.id)
                     if(indexTarget >= 0){
                         state.facetexture[indexTarget].order = data.order
