@@ -1,15 +1,22 @@
+import { PlusOutlined } from "@ant-design/icons";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Checkbox, Modal, Select, Tooltip, Typography, Upload } from "antd";
+import { Button, Checkbox, Modal, Select, Tooltip, Typography } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { RcFile } from "antd/lib/upload";
+import Dragger from "antd/lib/upload/Dragger";
+import { useSelector } from "react-redux";
+import {
+    changeModalVisible,
+    updateFacetextureClassModalReducer,
+    updateFacetextureImageNameModalReducer,
+    updateFacetextureVisibleClassModalReducer,
+} from "store/features/facetexture";
+import { RootState, useAppDispatch } from "store/store";
 import Styles from "./Characters.module.scss";
 import DragAndDropCharacters from "./dragAndDrop";
 import Info from "./info";
 import New from "./new";
-import { PlusOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "store/store";
-import { changeModalVisible } from "store/features/facetexture";
-import Dragger from 'antd/es/upload/Dragger';
 
 const { Title } = Typography;
 const Characters = () => {
@@ -19,6 +26,35 @@ const Characters = () => {
     const toggleModalVisible = () => {
         dispatch(changeModalVisible({ modal: "newFacetexture", visible: !facetextureStore.modal.newFacetexture.visible }));
     };
+
+    const updateCharacterClass = (value: number) => {
+        dispatch(
+            updateFacetextureClassModalReducer({
+                classId: value,
+            })
+        );
+    };
+
+    const updateCharacterShowClass = (event: CheckboxChangeEvent) => {
+        dispatch(
+            updateFacetextureVisibleClassModalReducer({
+                visible: event.target.checked,
+            })
+        );
+    };
+
+    const updateImageSelectedCharacter = (file: RcFile) => {
+        dispatch(
+            updateFacetextureImageNameModalReducer({
+                name: file.name,
+            })
+        );
+    };
+
+    const includeNewFacetexture = () => {
+
+    }
+
     return (
         <div className={Styles["characters"]}>
             <div>
@@ -37,7 +73,13 @@ const Characters = () => {
                 <New />
             </div>
             <Info />
-            <Modal title="Criar novo personagem" open={facetextureStore.modal.newFacetexture.visible} onCancel={() => toggleModalVisible()}>
+            <Modal
+                title="Criar novo personagem"
+                open={facetextureStore.modal.newFacetexture.visible}
+                onCancel={() => toggleModalVisible()}
+                onOk={includeNewFacetexture}
+                confirmLoading={facetextureStore.modal.newFacetexture.saving}
+                >
                 <div className={Styles["controllers-info"]}>
                     <Title level={5}>
                         Classe do personagem
@@ -47,19 +89,22 @@ const Characters = () => {
                         :
                     </Title>
                     <Select
-                        options={ facetextureStore.class.map(
-                            item => ({
-                                value: item.id,
-                                label: item.name
-                            })
-                        ) }
+                        options={facetextureStore.class.map((item) => ({
+                            value: item.id,
+                            label: item.name,
+                        }))}
+                        onChange={(value: number) => updateCharacterClass(value)}
                         style={{
-                            width: "125px",
+                            width: "100%",
                         }}
                     />
                 </div>
                 <div className={Styles["controllers-info"]}>
-                    <Checkbox>Mostrar icone da classe</Checkbox>
+                    <Checkbox
+                        checked={facetextureStore.modal.newFacetexture.data.visible}
+                        onChange={(e) => updateCharacterShowClass(e)}>
+                        Mostrar icone da classe
+                    </Checkbox>
                 </div>
                 <div className={Styles["controllers-info"]}>
                     <Title level={5}>
@@ -72,13 +117,15 @@ const Characters = () => {
                         </Tooltip>
                         :
                     </Title>
-
-                    <Dragger  listType="picture-card" fileList={[]}>
+                    <Dragger listType="picture-card" beforeUpload={(file) => updateImageSelectedCharacter(file)} fileList={[]}>
                         <div>
                             <PlusOutlined />
                             <div style={{ marginTop: 8 }}>Upload</div>
                         </div>
-                    </Dragger >
+                    </Dragger>
+                    <div>
+                        Nome do arquivo: {facetextureStore.modal.newFacetexture.data.name}
+                    </div>
                 </div>
             </Modal>
         </div>
