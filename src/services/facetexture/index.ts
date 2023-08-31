@@ -16,7 +16,7 @@ export interface IFacetextureCharacterApi {
     };
     show: boolean;
     image: {};
-    order: number
+    order: number;
 }
 
 export async function fetchFacetextureService() {
@@ -38,7 +38,7 @@ export async function previewFacetextureService(args: any) {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
-        }
+        },
     );
 
     return response.data;
@@ -53,13 +53,13 @@ export async function downloadFacetextureService(args: any) {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
-        }
+        },
     );
     return response.data;
 }
 
-export const newCharacterThunk = createAsyncThunk("facetexture/NewCharacter", async () => {
-    const response = await apiDjango.post("facetexture/new");
+export const newCharacterThunk = createAsyncThunk("facetexture/NewCharacter", async (facetexture: INewFacetextureData) => {
+    const response = await apiDjango.post("facetexture/new", facetexture);
     const data = await response.data;
     return data;
 });
@@ -72,7 +72,7 @@ export const reorderCharacterThunk = createAsyncThunk(
         });
         const data = await response.data;
         return data;
-    }
+    },
 );
 
 export const changeClassCharacterThunk = createAsyncThunk(
@@ -86,7 +86,7 @@ export const changeClassCharacterThunk = createAsyncThunk(
             data,
             id,
         };
-    }
+    },
 );
 
 export const changeCharacterNameThunk = createAsyncThunk(
@@ -100,7 +100,7 @@ export const changeCharacterNameThunk = createAsyncThunk(
             data,
             id,
         };
-    }
+    },
 );
 
 export const changeShowClassThunk = createAsyncThunk(
@@ -114,19 +114,14 @@ export const changeShowClassThunk = createAsyncThunk(
             data,
             id,
         };
-    }
+    },
 );
 
-export const deleteCharacterThunk = createAsyncThunk(
-    "facetexture/deleteCharacter",
-    async (id: number) => {
-        const response = await apiDjango.post(`facetexture/${id}/delete`);
-        const data = await response.data;
-        return {
-            data,
-            id,
-        };
-    }
-);
-
-
+export const deleteCharacterThunk = createAsyncThunk("facetexture/deleteCharacter", async (id: number) => {
+    const response = await apiDjango.post(`facetexture/${id}/delete`);
+    const data = await response.data;
+    return {
+        data,
+        id,
+    };
+});
