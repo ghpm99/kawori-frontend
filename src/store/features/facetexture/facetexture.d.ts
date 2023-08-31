@@ -36,6 +36,14 @@ interface IFacetextureModalState {
 
 interface INewFacetextureModal {
 	visible: boolean
+	saving: boolean
+	data: INewFacetextureData
+}
+
+interface INewFacetextureData {
+	name: string
+	classId: number
+	visible: boolean
 }
 
 interface IReorderCharacterAction {
@@ -49,17 +57,14 @@ interface IUpdateFacetextureUrlAction {
 }
 
 interface IUpdateCharacterClassAction {
-	index: number
-	class: number
+	classId: number
 }
 
-interface IUpdateCharacterShowClassAction {
-	index: number
-    show: boolean
+interface IUpdateCharacterVisibleClassAction {
+    visible: boolean
 }
 
 interface IUpdateCharacterImageNameAction {
-	index: number
 	name: string
 }
 

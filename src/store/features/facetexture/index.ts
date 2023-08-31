@@ -19,7 +19,13 @@ const initialState: IFacetextureState = {
     error: false,
     modal:{
         newFacetexture:{
-            visible: false
+            visible: false,
+            saving: false,
+            data:{
+                name: '',
+                visible: true,
+                classId: 0,
+            }
         }
     }
 };
@@ -53,34 +59,28 @@ export const facetextureSlice = createSlice({
             newFacetextureList.splice(action.payload.indexDestination, 0, state.facetexture[action.payload.indexSource]);
             state.facetexture = newFacetextureList;
         },
-        updateCharacterClassReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterClassAction>) => {
-            const newClass = state.class.find((item) => item.id === action.payload.class);
-
-            if (!newClass) {
-                return;
-            }
-            state.facetexture[action.payload.index].class = newClass;
-            state.facetexture[action.payload.index].image = newClass.class_image;
-            state.edited = true;
+        updateFacetextureClassModalReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterClassAction>) => {
+            state.modal.newFacetexture.data.classId = action.payload.classId;
         },
         deleteCharacterReducer: (state: IFacetextureState, action: PayloadAction<number>) => {
             let newFacetextureList = state.facetexture.filter((_, index) => index !== action.payload);
             state.facetexture = newFacetextureList;
             state.edited = true;
         },
-        updateCharacterShowClassReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterShowClassAction>) => {
-            state.facetexture[action.payload.index].show = action.payload.show;
-            state.edited = true;
+        updateFacetextureVisibleClassModalReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterVisibleClassAction>) => {
+            state.modal.newFacetexture.data.visible = action.payload.visible;
         },
         setFacetextureIsEdited: (state: IFacetextureState, action: PayloadAction<boolean>) => {
             state.edited = action.payload;
         },
-        updateCharacterImageNameReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterImageNameAction>) => {
-            state.facetexture[action.payload.index].name = action.payload.name;
-            state.edited = true;
+        updateFacetextureImageNameModalReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterImageNameAction>) => {
+            state.modal.newFacetexture.data.name = action.payload.name;
         },
         changeModalVisible: (state:IFacetextureState, action: PayloadAction<changeModalVisible>) => {
             state.modal[action.payload.modal].visible = action.payload.visible
+        },
+        changeFacetextureSavingModalReducer :(state: IFacetextureState, action: PayloadAction<boolean>) => {
+            state.modal.newFacetexture.saving = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -134,12 +134,13 @@ export const {
     updateBackgroundReducer,
     setSelectedFacetextureReducer,
     reorderCharacterReducer,
-    updateCharacterClassReducer,
+    updateFacetextureClassModalReducer,
     deleteCharacterReducer,
-    updateCharacterShowClassReducer,
+    updateFacetextureVisibleClassModalReducer,
     setFacetextureIsEdited,
-    updateCharacterImageNameReducer,
+    updateFacetextureImageNameModalReducer,
     changeModalVisible,
+    changeFacetextureSavingModalReducer,
 } = facetextureSlice.actions;
 
 export default facetextureSlice.reducer;
