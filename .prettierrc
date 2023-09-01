@@ -1,9 +1,5 @@
 {
-    "semi": true,
-    "singleQuote": false,
-    "useTabs": false,
-    "tabWidth": 4,
-    "bracketSpacing": true,
-    "bracketSameLine": true,
-    "jsxSingleQuote": false
-}
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true
+  }

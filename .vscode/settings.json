@@ -1,7 +1,16 @@
 {
-    "prettier.singleQuote": false,
-    "javascript.preferences.quoteStyle": "double",
-    "typescript.preferences.quoteStyle": "double",
-    "files.eol": "\n",
-    "typescriptHero.imports.stringQuoteStyle": "\""
+    "makefile.extensionOutputFolder": "./.vscode",
+    "javascript.format.semicolons": "remove",
+    "typescript.format.semicolons": "remove",
+    "typescriptHero.imports.insertSemicolons": false,
+    "prettier.semi": false,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.quoteStyle": "single",
+    "autoDocstring.quoteStyle": "'''",
+    "emmet.showSuggestionsAsSnippets": true,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "svg.preview.background": "dark-transparent"
 }
