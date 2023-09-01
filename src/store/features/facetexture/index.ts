@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
     changeClassCharacterThunk,
+    changeShowClassThunk,
     deleteCharacterThunk,
     fetchFaceTextureClassService,
     fetchFacetextureService,
@@ -139,6 +140,13 @@ export const facetextureSlice = createSlice({
             })
             .addCase(newCharacterThunk.rejected, (state) => {
                 state.modal.newFacetexture.saving = false;
+            })
+            .addCase(changeShowClassThunk.fulfilled, (state, action) => {
+                const facetextureTarget = state.facetexture.find(facetexture => facetexture.id === action.payload.id)
+                if(!facetextureTarget){
+                    return
+                }
+                facetextureTarget.show = action.payload.visible
             });
     },
 });

@@ -113,6 +113,7 @@ export const changeShowClassThunk = createAsyncThunk(
         return {
             data,
             id,
+            visible,
         };
     },
 );
