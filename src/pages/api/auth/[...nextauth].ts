@@ -54,11 +54,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const callbacks = {
-<<<<<<< HEAD
-        async session({ session, token }: any) {
-=======
         async session({ session, user, token }: any) {
->>>>>>> dev
             session.accessToken = token.userSession
             session.user.username = token.username
             session.user.firstName = token.firstName
@@ -70,11 +66,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             session.user.dateJoined = token.dateJoined
             return session
         },
-<<<<<<< HEAD
-        async jwt({ token, user }: any) {
-=======
         async jwt({ token, user, account, profile, isNewUser }: any) {
->>>>>>> dev
             if (user !== undefined) {
                 token.userSession = user.token
                 token.username = user.username

@@ -38,11 +38,6 @@ function Overview() {
         dispatch(fetchPaymentReport())
     }, [])
 
-<<<<<<< HEAD
-    console.log(financialStore.data)
-
-=======
->>>>>>> dev
     function OverviewReport() {
         return (
             <>

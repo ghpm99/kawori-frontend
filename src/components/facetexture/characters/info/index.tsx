@@ -1,27 +1,12 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-<<<<<<< HEAD
-import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload } from 'antd'
-=======
 import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload, message } from 'antd'
->>>>>>> dev
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import { RcFile } from 'antd/lib/upload'
 import { useSelector } from 'react-redux'
 
 import {
-<<<<<<< HEAD
-    deleteCharacterReducer,
-    updateCharacterClassReducer,
-    updateCharacterImageNameReducer,
-    updateCharacterShowClassReducer,
-    updateFacetextureUrlReducer,
-} from '../../../../store/features/facetexture'
-import { RootState, useAppDispatch } from '../../../../store/store'
-import { db } from '../../../../util/db'
-import Styles from './Info.module.scss'
-=======
     changeCharacterNameThunk,
     changeClassCharacterThunk,
     changeShowClassThunk,
@@ -32,7 +17,6 @@ import { RootState, useAppDispatch } from '../../../../store/store'
 import { db } from '../../../../util/db'
 import Styles from './Info.module.scss'
 import { FACETEXTURE_MESSAGE_REF } from 'pages/admin/facetexture'
->>>>>>> dev
 
 const { Title } = Typography
 
@@ -40,27 +24,6 @@ const Info = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
     const dispatch = useAppDispatch()
 
-<<<<<<< HEAD
-    const updateCharacterClass = (index: number | undefined, value: number) => {
-        if (index == undefined) {
-            return
-        }
-        dispatch(
-            updateCharacterClassReducer({
-                index: index,
-                class: value,
-            }),
-        )
-    }
-
-    const updateImageSelectedCharacter = (index: number | undefined, file: RcFile) => {
-        if (index === undefined) {
-            return
-        }
-        dispatch(
-            updateFacetextureUrlReducer({
-                index: index,
-=======
     const updateCharacterClass = (id: number | undefined, value: number) => {
         if (id == undefined) {
             return
@@ -104,18 +67,10 @@ const Info = () => {
         dispatch(
             updateFacetextureUrlReducer({
                 id: id,
->>>>>>> dev
                 image: URL.createObjectURL(file),
             }),
         )
         dispatch(
-<<<<<<< HEAD
-            updateCharacterImageNameReducer({
-                index: index,
-                name: file.name,
-            }),
-        )
-=======
             changeCharacterNameThunk({
                 id: id,
                 name: file.name,
@@ -135,7 +90,6 @@ const Info = () => {
                     key: FACETEXTURE_MESSAGE_REF,
                 })
             })
->>>>>>> dev
         updateImageLocal(file.name, file)
     }
 
@@ -152,29 +106,6 @@ const Info = () => {
         }
     }
 
-<<<<<<< HEAD
-    const deleteCharacter = (index: number | undefined) => {
-        if (!index) {
-            return
-        }
-        dispatch(deleteCharacterReducer(index))
-    }
-
-    const updateCharacterShowClass = (index: number | undefined, event: CheckboxChangeEvent) => {
-        if (!index) {
-            return
-        }
-        dispatch(
-            updateCharacterShowClassReducer({
-                index: index,
-                show: event.target.checked,
-            }),
-        )
-    }
-
-    const selectedFacetexture =
-        facetextureStore.selected !== undefined ? facetextureStore.facetexture[facetextureStore.selected] : undefined
-=======
     const deleteCharacter = (id: number | undefined) => {
         if (!id) {
             return
@@ -234,7 +165,6 @@ const Info = () => {
         facetextureStore.selected !== undefined
             ? facetextureStore.facetexture.find((face) => face.id === facetextureStore.selected)
             : undefined
->>>>>>> dev
 
     return (
         <div className={Styles['character-info']}>
@@ -278,21 +208,13 @@ const Info = () => {
                             style={{
                                 width: '125px',
                             }}
-<<<<<<< HEAD
-                            onChange={(value: number) => updateCharacterClass(facetextureStore.selected, value)}
-=======
                             onChange={(value: number) => updateCharacterClass(selectedFacetexture.id, value)}
->>>>>>> dev
                         />
                     </div>
                     <div className={Styles['controllers-info']}>
                         <Checkbox
                             checked={selectedFacetexture?.show}
-<<<<<<< HEAD
-                            onChange={(e) => updateCharacterShowClass(facetextureStore.selected, e)}
-=======
                             onChange={(e) => updateCharacterShowClass(selectedFacetexture.id, e)}
->>>>>>> dev
                         >
                             Mostrar icone da classe
                         </Checkbox>
@@ -312,11 +234,7 @@ const Info = () => {
 
                         <Upload
                             listType='picture-card'
-<<<<<<< HEAD
-                            beforeUpload={(file) => updateImageSelectedCharacter(facetextureStore.selected, file)}
-=======
                             beforeUpload={(file) => updateImageSelectedCharacter(selectedFacetexture.id, file)}
->>>>>>> dev
                             fileList={[]}
                         >
                             <div>
@@ -326,11 +244,7 @@ const Info = () => {
                         </Upload>
                     </div>
                     <div className={Styles['controllers-info']}>
-<<<<<<< HEAD
-                        <Button type='primary' onClick={() => deleteCharacter(facetextureStore.selected)}>
-=======
                         <Button type='primary' onClick={() => deleteCharacter(selectedFacetexture.id)}>
->>>>>>> dev
                             Deletar personagem
                         </Button>
                     </div>

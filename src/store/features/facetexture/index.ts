@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-<<<<<<< HEAD
-import { fetchFaceTextureClassService, fetchFacetextureService } from '../../../services/facetexture'
-=======
 import {
     changeClassCharacterThunk,
     changeShowClassThunk,
@@ -12,7 +9,6 @@ import {
     newCharacterThunk,
     reorderCharacterThunk,
 } from '../../../services/facetexture'
->>>>>>> dev
 
 const initialState: IFacetextureState = {
     loading: true,
@@ -22,8 +18,6 @@ const initialState: IFacetextureState = {
     selected: undefined,
     edited: false,
     error: false,
-<<<<<<< HEAD
-=======
     modal: {
         newFacetexture: {
             visible: false,
@@ -35,7 +29,6 @@ const initialState: IFacetextureState = {
             },
         },
     },
->>>>>>> dev
 }
 
 export const fetchFacetexture = createAsyncThunk('facetexture/fetchFacetexture', async () => {
@@ -53,12 +46,8 @@ export const facetextureSlice = createSlice({
     initialState,
     reducers: {
         updateFacetextureUrlReducer: (state: IFacetextureState, action: PayloadAction<IUpdateFacetextureUrlAction>) => {
-<<<<<<< HEAD
-            state.facetexture[action.payload.index].image = action.payload.image
-=======
             const index = state.facetexture.findIndex((face) => face.id === action.payload.id)
             state.facetexture[index].image = action.payload.image
->>>>>>> dev
         },
         updateBackgroundReducer: (state: IFacetextureState, action: PayloadAction<string>) => {
             state.backgroundUrl = action.payload
@@ -70,67 +59,27 @@ export const facetextureSlice = createSlice({
             const newFacetextureList = state.facetexture.filter((item, index) => index !== action.payload.indexSource)
             newFacetextureList.splice(action.payload.indexDestination, 0, state.facetexture[action.payload.indexSource])
             state.facetexture = newFacetextureList
-<<<<<<< HEAD
-            state.edited = true
-        },
-        includeNewCharacterReducer: (state: IFacetextureState) => {
-            state.facetexture.push({
-                image: '/media/classimage/default.png',
-                name: `default${state.facetexture.length + 1}.png`,
-                show: true,
-                class: state.class[0],
-            })
-            state.edited = true
-        },
-        updateCharacterClassReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterClassAction>) => {
-            const newClass = state.class.find((item) => item.id === action.payload.class)
-
-            if (!newClass) {
-                return
-            }
-            state.facetexture[action.payload.index].class = newClass
-            state.facetexture[action.payload.index].image = newClass.class_image
-            state.edited = true
-=======
         },
         updateFacetextureClassModalReducer: (
             state: IFacetextureState,
             action: PayloadAction<IUpdateCharacterClassAction>,
         ) => {
             state.modal.newFacetexture.data.classId = action.payload.classId
->>>>>>> dev
         },
         deleteCharacterReducer: (state: IFacetextureState, action: PayloadAction<number>) => {
             const newFacetextureList = state.facetexture.filter((_, index) => index !== action.payload)
             state.facetexture = newFacetextureList
             state.edited = true
         },
-<<<<<<< HEAD
-        updateCharacterShowClassReducer: (
-            state: IFacetextureState,
-            action: PayloadAction<IUpdateCharacterShowClassAction>,
-        ) => {
-            state.facetexture[action.payload.index].show = action.payload.show
-            state.edited = true
-=======
         updateFacetextureVisibleClassModalReducer: (
             state: IFacetextureState,
             action: PayloadAction<IUpdateCharacterVisibleClassAction>,
         ) => {
             state.modal.newFacetexture.data.visible = action.payload.visible
->>>>>>> dev
         },
         setFacetextureIsEdited: (state: IFacetextureState, action: PayloadAction<boolean>) => {
             state.edited = action.payload
         },
-<<<<<<< HEAD
-        updateCharacterImageNameReducer: (
-            state: IFacetextureState,
-            action: PayloadAction<IUpdateCharacterImageNameAction>,
-        ) => {
-            state.facetexture[action.payload.index].name = action.payload.name
-            state.edited = true
-=======
         updateFacetextureImageNameModalReducer: (
             state: IFacetextureState,
             action: PayloadAction<IUpdateCharacterImageNameAction>,
@@ -142,7 +91,6 @@ export const facetextureSlice = createSlice({
         },
         changeFacetextureSavingModalReducer: (state: IFacetextureState, action: PayloadAction<boolean>) => {
             state.modal.newFacetexture.saving = action.payload
->>>>>>> dev
         },
     },
     extraReducers: (builder) => {
@@ -156,12 +104,6 @@ export const facetextureSlice = createSlice({
                 state.facetexture = action.payload.characters
                 state.loading = false
             })
-<<<<<<< HEAD
-            .addCase(fetchFacetexture.rejected, (state) => {
-                state.loading = false
-                state.error = true
-            })
-=======
             .addCase(fetchFacetexture.rejected, (state, action) => {
                 state.loading = false
                 state.error = true
@@ -210,7 +152,6 @@ export const facetextureSlice = createSlice({
                 }
                 facetextureTarget.show = action.payload.visible
             })
->>>>>>> dev
     },
 })
 
@@ -219,14 +160,6 @@ export const {
     updateBackgroundReducer,
     setSelectedFacetextureReducer,
     reorderCharacterReducer,
-<<<<<<< HEAD
-    includeNewCharacterReducer,
-    updateCharacterClassReducer,
-    deleteCharacterReducer,
-    updateCharacterShowClassReducer,
-    setFacetextureIsEdited,
-    updateCharacterImageNameReducer,
-=======
     updateFacetextureClassModalReducer,
     deleteCharacterReducer,
     updateFacetextureVisibleClassModalReducer,
@@ -234,7 +167,6 @@ export const {
     updateFacetextureImageNameModalReducer,
     changeModalVisible,
     changeFacetextureSavingModalReducer,
->>>>>>> dev
 } = facetextureSlice.actions
 
 export default facetextureSlice.reducer
