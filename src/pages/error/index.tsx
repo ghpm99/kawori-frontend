@@ -1,63 +1,54 @@
-import { Card, Layout, Typography } from "antd";
-import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-import { Engine, ISourceOptions } from "tsparticles-engine";
+import { Card, Layout, Typography } from 'antd'
+import { useCallback } from 'react'
+import Particles from 'react-tsparticles'
+import { loadFull } from 'tsparticles'
+import { Engine, ISourceOptions } from 'tsparticles-engine'
 
-import particlesOptions from "../../../public/particles.json";
-import MenuHeader from "../../components/menuHeader";
+import particlesOptions from '../../../public/particles.json'
+import MenuHeader from '../../components/menuHeader'
 
-const { Content } = Layout;
-const { Title, Paragraph } = Typography;
+const { Content } = Layout
+const { Title, Paragraph } = Typography
 
 export default function ErrorPage() {
     const particlesInit = useCallback(async (engine: Engine) => {
-        await loadFull(engine);
-    }, []);
+        await loadFull(engine)
+    }, [])
 
     return (
         <Layout
             style={{
-                minHeight: "100vh",
-                backgroundColor: "rgb(0, 0, 27, 0.8)",
-            }}>
+                minHeight: '100vh',
+                backgroundColor: 'rgb(0, 0, 27, 0.8)',
+            }}
+        >
             <MenuHeader />
             <Content>
                 <Layout
                     style={{
-                        width: "100vw",
-                        height: "90vh",
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "rgb(0, 0, 27, 0)",
-                    }}>
-                    <div style={{ maxWidth: "50%" }}>
-                        <Card title="Error">
-                            <Title level={4}>
-                                Ocorreu um erro ao processar sua requisição.
-                            </Title>
+                        width: '100vw',
+                        height: '90vh',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'rgb(0, 0, 27, 0)',
+                    }}
+                >
+                    <div style={{ maxWidth: '50%' }}>
+                        <Card title='Error'>
+                            <Title level={4}>Ocorreu um erro ao processar sua requisição.</Title>
                             <Paragraph>Tente novamente mais tarde...</Paragraph>
+                            <Paragraph>Isso é uma tela de erro e é tudo o que eu sei sobre.</Paragraph>
                             <Paragraph>
-                                Isso é uma tela de erro e é tudo o que eu sei
-                                sobre.
-                            </Paragraph>
-                            <Paragraph>
-                                Caso o problema persista sinta-se a vontade para
-                                comunicar o problema através do e-mail:
-                                <a href="mailto:kawori_suporte@hotmail.com">
-                                    kawori_suporte@hotmail.com
-                                </a>
+                                Caso o problema persista sinta-se a vontade para comunicar o problema através do e-mail:
+                                <a href='mailto:kawori_suporte@hotmail.com'>kawori_suporte@hotmail.com</a>
                             </Paragraph>
                         </Card>
                     </div>
                 </Layout>
             </Content>
-            <Particles
-                options={particlesOptions as ISourceOptions}
-                init={particlesInit}
-            />
+            <Particles options={particlesOptions as ISourceOptions} init={particlesInit} />
         </Layout>
-    );
+    )
 }

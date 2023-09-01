@@ -1,35 +1,28 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Layout, message, Table, Typography } from "antd";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import Link from "next/link";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { PlusOutlined } from '@ant-design/icons'
+import { Breadcrumb, Button, Layout, message, Table, Typography } from 'antd'
+import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import ModalNew, {
-    INewContractForm,
-} from "../../../../components/contracts/modalNew";
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import { saveNewContractService } from "../../../../services/financial";
-import {
-    changeVisibleContractsModal,
-    fetchAllContract,
-} from "../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import { formatMoney } from "../../../../util";
-import styles from "./Contracts.module.scss";
+import ModalNew, { INewContractForm } from '../../../../components/contracts/modalNew'
+import LoadingPage from '../../../../components/loadingPage/Index'
+import LoginHeader from '../../../../components/loginHeader/Index'
+import MenuAdmin from '../../../../components/menuAdmin/Index'
+import { saveNewContractService } from '../../../../services/financial'
+import { changeVisibleContractsModal, fetchAllContract } from '../../../../store/features/financial/Index'
+import { RootState, useAppDispatch } from '../../../../store/store'
+import { formatMoney } from '../../../../util'
+import styles from './Contracts.module.scss'
 
-const { Header, Content } = Layout;
+const { Header, Content } = Layout
 
-const { Title } = Typography;
+const { Title } = Typography
 
 function FinancialPage() {
-    const financialStore = useSelector(
-        (state: RootState) => state.financial.contracts,
-    );
-    const dispatch = useAppDispatch();
+    const financialStore = useSelector((state: RootState) => state.financial.contracts)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(
@@ -37,33 +30,33 @@ function FinancialPage() {
                 page: 1,
                 page_size: 20,
             }),
-        );
-    }, []);
+        )
+    }, [])
 
     const openModal = (modal: keyof IModalContracts) => {
-        dispatch(changeVisibleContractsModal({ modal: modal, visible: true }));
-    };
+        dispatch(changeVisibleContractsModal({ modal: modal, visible: true }))
+    }
 
     const closeModal = (modal: keyof IModalContracts) => {
-        dispatch(changeVisibleContractsModal({ modal: modal, visible: false }));
-    };
+        dispatch(changeVisibleContractsModal({ modal: modal, visible: false }))
+    }
 
     const onFinish = (values: INewContractForm) => {
         const newContract = {
             name: values.name,
-        };
+        }
 
         saveNewContractService(newContract).then((e) => {
-            message.success(e.msg);
-            closeModal("newPayment");
+            message.success(e.msg)
+            closeModal('newPayment')
             dispatch(
                 fetchAllContract({
                     page: 1,
                     page_size: 20,
                 }),
-            );
-        });
-    };
+            )
+        })
+    }
 
     const onChangePagination = (page: number, pageSize: number) => {
         dispatch(
@@ -72,58 +65,50 @@ function FinancialPage() {
                 page: page,
                 page_size: pageSize,
             }),
-        );
-    };
+        )
+    }
 
     const headerTableFinancial = [
         {
-            title: "Id",
-            dataIndex: "id",
-            key: "id",
-            render: (value: any) => (
-                <Link href={`/admin/financial/contracts/details/${value}`}>
-                    {value}
-                </Link>
-            ),
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            render: (value: any) => <Link href={`/admin/financial/contracts/details/${value}`}>{value}</Link>,
         },
         {
-            title: "Nome",
-            dataIndex: "name",
-            key: "name",
+            title: 'Nome',
+            dataIndex: 'name',
+            key: 'name',
         },
         {
-            title: "Total",
-            dataIndex: "value",
-            key: "value",
+            title: 'Total',
+            dataIndex: 'value',
+            key: 'value',
             render: (value: any) => formatMoney(value),
         },
         {
-            title: "Baixado",
-            dataIndex: "value_closed",
-            key: "value_closed",
+            title: 'Baixado',
+            dataIndex: 'value_closed',
+            key: 'value_closed',
             render: (value: any) => formatMoney(value),
         },
         {
-            title: "Em aberto",
-            dataIndex: "value_open",
-            key: "value_open",
+            title: 'Em aberto',
+            dataIndex: 'value_open',
+            key: 'value_open',
             render: (value: any) => formatMoney(value),
         },
         {
-            title: "Ações",
-            dataIndex: "id",
-            key: "id",
-            render: (value: any) => (
-                <Link href={`/admin/financial/contracts/details/${value}`}>
-                    Detalhes
-                </Link>
-            ),
+            title: 'Ações',
+            dataIndex: 'id',
+            key: 'id',
+            render: (value: any) => <Link href={`/admin/financial/contracts/details/${value}`}>Detalhes</Link>,
         },
-    ];
+    ]
 
     return (
         <Layout className={styles.container}>
-            <MenuAdmin selected={["contracts"]} />
+            <MenuAdmin selected={['contracts']} />
             <Layout>
                 <Header className={styles.header}>
                     <LoginHeader />
@@ -140,9 +125,7 @@ function FinancialPage() {
                                 Valores em aberto
                             </Title>
                             <div>
-                                <Button
-                                    icon={<PlusOutlined />}
-                                    onClick={() => openModal("newPayment")}>
+                                <Button icon={<PlusOutlined />} onClick={() => openModal('newPayment')}>
                                     Novo
                                 </Button>
                             </div>
@@ -150,48 +133,39 @@ function FinancialPage() {
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize:
-                                    financialStore.filters.page_size,
+                                defaultPageSize: financialStore.filters.page_size,
                                 current: financialStore.pagination.currentPage,
-                                total:
-                                    financialStore.pagination.totalPages *
-                                    financialStore.filters.page_size,
+                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
                                 onChange: onChangePagination,
                             }}
                             columns={headerTableFinancial}
                             dataSource={financialStore.data}
                             loading={financialStore.loading}
-                            summary={(contractData) => (
-                                <TableSummary contractData={contractData} />
-                            )}
+                            summary={(contractData) => <TableSummary contractData={contractData} />}
                         />
                         <ModalNew
                             visible={financialStore.modal.newPayment.visible}
-                            onCancel={() => closeModal("newPayment")}
+                            onCancel={() => closeModal('newPayment')}
                             onFinish={onFinish}
                         />
                     </Layout>
                 </Content>
             </Layout>
         </Layout>
-    );
+    )
 }
 
-function TableSummary({
-    contractData,
-}: {
-    contractData: readonly IContractPagination[];
-}) {
-    const { Text } = Typography;
+function TableSummary({ contractData }: { contractData: readonly IContractPagination[] }) {
+    const { Text } = Typography
 
-    let total = 0;
-    let totalOpen = 0;
-    let totalClosed = 0;
+    let total = 0
+    let totalOpen = 0
+    let totalClosed = 0
     contractData.forEach((contract) => {
-        total = total + contract.value;
-        totalOpen = totalOpen + contract.value_open;
-        totalClosed = totalClosed + contract.value_closed;
-    });
+        total = total + contract.value
+        totalOpen = totalOpen + contract.value_open
+        totalClosed = totalClosed + contract.value_closed
+    })
 
     return (
         <>
@@ -207,31 +181,31 @@ function TableSummary({
                 </Table.Summary.Cell>
             </Table.Summary.Row>
         </>
-    );
+    )
 }
 
 FinancialPage.auth = {
-    role: "admin",
+    role: 'admin',
     loading: <LoadingPage />,
-    unauthorized: "/signin",
-};
+    unauthorized: '/signin',
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
+    const session = await getSession({ req })
 
-    const isSuperuser = session?.user.isSuperuser ?? false;
+    const isSuperuser = session?.user.isSuperuser ?? false
 
     if (!isSuperuser) {
         return {
             redirect: {
-                destination: "/",
+                destination: '/',
                 permanent: false,
             },
-        };
+        }
     }
     return {
         props: {},
-    };
-};
+    }
+}
 
-export default FinancialPage;
+export default FinancialPage
