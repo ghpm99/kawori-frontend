@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "cypress": "cypress open",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "compile": "tsc"
   },
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
@@ -44,6 +45,8 @@
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.13",
     "@types/react-beautiful-dnd": "^13.1.4",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "cypress": "^12.17.3",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
