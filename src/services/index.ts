@@ -34,7 +34,10 @@ apiDjango.interceptors.response.use(
         const originalRequest = config;
 
         if (
-            (!error.response || response.status === 408 || response.status === 504 || response.status === 500) &&
+            (!error.response ||
+                response.status === 408 ||
+                response.status === 504 ||
+                response.status === 500) &&
             tried <= retryMaxCount
         ) {
             tried++;

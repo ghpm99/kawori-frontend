@@ -35,18 +35,29 @@ export default function ErrorPage() {
                     }}>
                     <div style={{ maxWidth: "50%" }}>
                         <Card title="Error">
-                            <Title level={4}>Ocorreu um erro ao processar sua requisição.</Title>
+                            <Title level={4}>
+                                Ocorreu um erro ao processar sua requisição.
+                            </Title>
                             <Paragraph>Tente novamente mais tarde...</Paragraph>
-                            <Paragraph>Isso é uma tela de erro e é tudo o que eu sei sobre.</Paragraph>
                             <Paragraph>
-                                Caso o problema persista sinta-se a vontade para comunicar o problema através do e-mail:
-                                <a href="mailto:kawori_suporte@hotmail.com">kawori_suporte@hotmail.com</a>
+                                Isso é uma tela de erro e é tudo o que eu sei
+                                sobre.
+                            </Paragraph>
+                            <Paragraph>
+                                Caso o problema persista sinta-se a vontade para
+                                comunicar o problema através do e-mail:
+                                <a href="mailto:kawori_suporte@hotmail.com">
+                                    kawori_suporte@hotmail.com
+                                </a>
                             </Paragraph>
                         </Card>
                     </div>
                 </Layout>
             </Content>
-            <Particles options={particlesOptions as ISourceOptions} init={particlesInit} />
+            <Particles
+                options={particlesOptions as ISourceOptions}
+                init={particlesInit}
+            />
         </Layout>
     );
 }

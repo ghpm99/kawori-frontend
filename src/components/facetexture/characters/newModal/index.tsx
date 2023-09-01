@@ -24,10 +24,14 @@ interface INewModalProps {
 
 const NewModal = ({ toggleVisible }: INewModalProps) => {
     const dispatch = useAppDispatch();
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
     const disableOkButton = () => {
-        const classInvalid = facetextureStore.modal.newFacetexture.data.classId === 0;
-        const fileNameInvalid = facetextureStore.modal.newFacetexture.data.name.length <= 5;
+        const classInvalid =
+            facetextureStore.modal.newFacetexture.data.classId === 0;
+        const fileNameInvalid =
+            facetextureStore.modal.newFacetexture.data.name.length <= 5;
         return classInvalid || fileNameInvalid;
     };
 
@@ -82,7 +86,9 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
     };
 
     const classSelectOption =
-        facetextureStore.modal.newFacetexture.data.classId == 0 ? undefined : facetextureStore.modal.newFacetexture.data.classId;
+        facetextureStore.modal.newFacetexture.data.classId == 0
+            ? undefined
+            : facetextureStore.modal.newFacetexture.data.classId;
 
     return (
         <Modal
@@ -130,13 +136,19 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
                     </Tooltip>
                     :
                 </Title>
-                <Dragger listType="picture-card" beforeUpload={(file) => updateImageSelectedCharacter(file)} fileList={[]}>
+                <Dragger
+                    listType="picture-card"
+                    beforeUpload={(file) => updateImageSelectedCharacter(file)}
+                    fileList={[]}>
                     <div>
                         <PlusOutlined />
                         <div style={{ marginTop: 8 }}>Upload</div>
                     </div>
                 </Dragger>
-                <div>Nome do arquivo: {facetextureStore.modal.newFacetexture.data.name}</div>
+                <div>
+                    Nome do arquivo:{" "}
+                    {facetextureStore.modal.newFacetexture.data.name}
+                </div>
             </div>
         </Modal>
     );

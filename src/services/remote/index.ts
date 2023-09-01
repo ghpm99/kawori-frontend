@@ -1,7 +1,9 @@
 import { apiDjango } from "..";
 
 export async function sendCommandService(command: string) {
-    const response = await apiDjango.post("remote/send-command", { cmd: command });
+    const response = await apiDjango.post("remote/send-command", {
+        cmd: command,
+    });
     return response.data;
 }
 
@@ -26,16 +28,24 @@ export async function keyPressService(keys: string) {
 }
 
 export async function mouseButtonService(button: string) {
-    const response = await apiDjango.post("remote/mouse-button", { button: button });
+    const response = await apiDjango.post("remote/mouse-button", {
+        button: button,
+    });
     return response.data;
 }
 
 export async function mouseScrollService(value: number) {
-    const response = await apiDjango.post("remote/mouse-scroll", { value: value });
+    const response = await apiDjango.post("remote/mouse-scroll", {
+        value: value,
+    });
     return response.data;
 }
 
-export async function mouseMoveButtonService(x: number, y: number, button: string) {
+export async function mouseMoveButtonService(
+    x: number,
+    y: number,
+    button: string,
+) {
     const response = await apiDjango.post("remote/mouse-move-and-button", {
         x: x,
         y: y,

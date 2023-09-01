@@ -1,4 +1,10 @@
-import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd";
+import {
+    DragDropContext,
+    Draggable,
+    Droppable,
+    DropResult,
+    ResponderProvided,
+} from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 
 import { reorderCharacterThunk } from "services/facetexture";
@@ -9,10 +15,15 @@ import { message } from "antd";
 import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 
 const DragAndDropCharacters = () => {
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
     const dispatch = useAppDispatch();
 
-    const onDragEnd = async (result: DropResult, provided: ResponderProvided) => {
+    const onDragEnd = async (
+        result: DropResult,
+        provided: ResponderProvided,
+    ) => {
         if (!result.destination) {
             return;
         }
@@ -78,11 +89,20 @@ const DragAndDropCharacters = () => {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             {facetextureMatrix.map((row, indexRow) => (
-                <Droppable key={indexRow} droppableId={`${indexRow}`} direction="horizontal">
+                <Droppable
+                    key={indexRow}
+                    droppableId={`${indexRow}`}
+                    direction="horizontal">
                     {(provided, snapshot) => (
-                        <div ref={provided.innerRef} className={Styles["characters-container"]} {...provided.droppableProps}>
+                        <div
+                            ref={provided.innerRef}
+                            className={Styles["characters-container"]}
+                            {...provided.droppableProps}>
                             {row.map((character, index) => (
-                                <Draggable key={character.id} draggableId={`${character.id}`} index={character.order}>
+                                <Draggable
+                                    key={character.id}
+                                    draggableId={`${character.id}`}
+                                    index={character.order}>
                                     {(provided, snapshot) => (
                                         <div
                                             ref={provided.innerRef}
@@ -90,9 +110,18 @@ const DragAndDropCharacters = () => {
                                             {...provided.draggableProps}
                                             key={`${indexRow}-${index}`}
                                             className={Styles["character"]}
-                                            onClick={(event) => setSelectedCharacter(character.id)}>
+                                            onClick={(event) =>
+                                                setSelectedCharacter(
+                                                    character.id,
+                                                )
+                                            }>
                                             {character.image && (
-                                                <img src={character.image} alt={character.name} width={125} height={160} />
+                                                <img
+                                                    src={character.image}
+                                                    alt={character.name}
+                                                    width={125}
+                                                    height={160}
+                                                />
                                             )}
                                         </div>
                                     )}

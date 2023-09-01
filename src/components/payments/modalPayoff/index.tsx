@@ -1,4 +1,9 @@
-import { CheckCircleOutlined, CloseCircleOutlined, ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
+import {
+    CheckCircleOutlined,
+    CloseCircleOutlined,
+    ExclamationCircleOutlined,
+    LoadingOutlined,
+} from "@ant-design/icons";
 import { Button, Modal, Table } from "antd";
 
 export interface ITableDataSource {

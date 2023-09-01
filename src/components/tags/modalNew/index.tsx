@@ -45,7 +45,12 @@ export default function ModalNewTag(props: IModalNewTagProps) {
                 name="contract"
                 onFinish={props.onFinish}
                 preserve={false}>
-                <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Entre com o nome da tag" }]}>
+                <Form.Item
+                    label="Nome"
+                    name="name"
+                    rules={[
+                        { required: true, message: "Entre com o nome da tag" },
+                    ]}>
                     <Input placeholder="Digite o nome" />
                 </Form.Item>
                 <Form.Item label="Cor" name="color">

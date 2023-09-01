@@ -57,15 +57,24 @@ export async function downloadFacetextureService(args: any) {
     return response.data;
 }
 
-export const newCharacterThunk = createAsyncThunk("facetexture/NewCharacter", async (facetexture: INewFacetextureData) => {
-    const response = await apiDjango.post("facetexture/new", facetexture);
-    const data = await response.data;
-    return data;
-});
+export const newCharacterThunk = createAsyncThunk(
+    "facetexture/NewCharacter",
+    async (facetexture: INewFacetextureData) => {
+        const response = await apiDjango.post("facetexture/new", facetexture);
+        const data = await response.data;
+        return data;
+    },
+);
 
 export const reorderCharacterThunk = createAsyncThunk(
     "facetexture/reorderCharacter",
-    async ({ id, indexDestination }: { id: number; indexDestination: number }) => {
+    async ({
+        id,
+        indexDestination,
+    }: {
+        id: number;
+        indexDestination: number;
+    }) => {
         const response = await apiDjango.post(`facetexture/${id}/reorder`, {
             index_destination: indexDestination,
         });
@@ -77,9 +86,12 @@ export const reorderCharacterThunk = createAsyncThunk(
 export const changeClassCharacterThunk = createAsyncThunk(
     "facetexture/changeClassCharacter",
     async ({ id, classId }: { id: number; classId: number }) => {
-        const response = await apiDjango.post(`facetexture/${id}/change-class`, {
-            new_class: classId,
-        });
+        const response = await apiDjango.post(
+            `facetexture/${id}/change-class`,
+            {
+                new_class: classId,
+            },
+        );
         const data = await response.data;
         return {
             data,
@@ -105,9 +117,12 @@ export const changeCharacterNameThunk = createAsyncThunk(
 export const changeShowClassThunk = createAsyncThunk(
     "facetexture/changeShowClass",
     async ({ id, visible }: { id: number; visible: boolean }) => {
-        const response = await apiDjango.post(`facetexture/${id}/change-visible`, {
-            show: visible,
-        });
+        const response = await apiDjango.post(
+            `facetexture/${id}/change-visible`,
+            {
+                show: visible,
+            },
+        );
         const data = await response.data;
         return {
             data,
@@ -117,11 +132,14 @@ export const changeShowClassThunk = createAsyncThunk(
     },
 );
 
-export const deleteCharacterThunk = createAsyncThunk("facetexture/deleteCharacter", async (id: number) => {
-    const response = await apiDjango.post(`facetexture/${id}/delete`);
-    const data = await response.data;
-    return {
-        data,
-        id,
-    };
-});
+export const deleteCharacterThunk = createAsyncThunk(
+    "facetexture/deleteCharacter",
+    async (id: number) => {
+        const response = await apiDjango.post(`facetexture/${id}/delete`);
+        const data = await response.data;
+        return {
+            data,
+            id,
+        };
+    },
+);

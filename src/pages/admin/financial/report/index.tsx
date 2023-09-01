@@ -1,4 +1,11 @@
-import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from "antd";
+import {
+    Breadcrumb,
+    DatePicker,
+    Layout,
+    Select,
+    Table,
+    Typography,
+} from "antd";
 import dayjs from "dayjs";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
@@ -82,7 +89,11 @@ function FinancialPage() {
                     </Breadcrumb>
                     <Layout>
                         <Title level={4}>Relatorio por mes:</Title>
-                        <DatePicker format="MM/DD" picker="month" defaultValue={dayjs(new Date(), "MM/DD")} />
+                        <DatePicker
+                            format="MM/DD"
+                            picker="month"
+                            defaultValue={dayjs(new Date(), "MM/DD")}
+                        />
                         <Table columns={headerTableFinancial} />
                     </Layout>
                 </Content>

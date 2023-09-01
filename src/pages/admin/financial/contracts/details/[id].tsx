@@ -1,4 +1,17 @@
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Modal, Select, Table, Tag, Typography } from "antd";
+import {
+    Breadcrumb,
+    Card,
+    Dropdown,
+    Layout,
+    Menu,
+    MenuProps,
+    message,
+    Modal,
+    Select,
+    Table,
+    Tag,
+    Typography,
+} from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import dayjs from "dayjs";
 import { GetServerSideProps } from "next";
@@ -8,11 +21,16 @@ import { useRouter } from "next/router";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import ModalNewInvoice, { IFormNewInvoice } from "../../../../../components/contracts/modalNewInvoice";
+import ModalNewInvoice, {
+    IFormNewInvoice,
+} from "../../../../../components/contracts/modalNewInvoice";
 import LoadingPage from "../../../../../components/loadingPage/Index";
 import LoginHeader from "../../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../../components/menuAdmin/Index";
-import { includeNewInvoiceService, mergeContractService } from "../../../../../services/financial";
+import {
+    includeNewInvoiceService,
+    mergeContractService,
+} from "../../../../../services/financial";
 import {
     changeValueMergeModal,
     changeVisibleModalContract,
@@ -34,7 +52,9 @@ export default function ContractDetails() {
     const router = useRouter();
     const { id } = router.query;
 
-    const financialStore = useSelector((state: RootState) => state.financial.contractDetail);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.contractDetail,
+    );
     const tagStore = useSelector((state: RootState) => state.financial.tags);
     const dispatch = useAppDispatch();
 
@@ -197,16 +217,25 @@ export default function ContractDetails() {
                         <Card loading={financialStore.loading}>
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>ID: {financialStore.data?.id}</div>
+                                    <div className={styles.label}>
+                                        ID: {financialStore.data?.id}
+                                    </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Nome:</div>
-                                    <Paragraph style={{ margin: "0" }} editable={{ onChange: changeName }}>
+                                    <Paragraph
+                                        style={{ margin: "0" }}
+                                        editable={{ onChange: changeName }}>
                                         {financialStore.data?.name}
                                     </Paragraph>
                                 </div>
-                                <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                                    <Dropdown.Button overlay={menu} type="primary" onClick={save} className={styles.button_save}>
+                                <div
+                                    className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
+                                    <Dropdown.Button
+                                        overlay={menu}
+                                        type="primary"
+                                        onClick={save}
+                                        className={styles.button_save}>
                                         Salvar
                                     </Dropdown.Button>
                                 </div>
@@ -214,17 +243,33 @@ export default function ContractDetails() {
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
-                                        <>Valor Total: {formatMoney(financialStore.data?.value)}</>
+                                        <>
+                                            Valor Total:{" "}
+                                            {formatMoney(
+                                                financialStore.data?.value,
+                                            )}
+                                        </>
                                     </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
-                                        <>Valor Baixado: {formatMoney(financialStore.data?.value_closed)}</>
+                                        <>
+                                            Valor Baixado:{" "}
+                                            {formatMoney(
+                                                financialStore.data
+                                                    ?.value_closed,
+                                            )}
+                                        </>
                                     </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
-                                        <>Valor em Aberto: {formatMoney(financialStore.data?.value_open)}</>
+                                        <>
+                                            Valor em Aberto:{" "}
+                                            {formatMoney(
+                                                financialStore.data?.value_open,
+                                            )}
+                                        </>
                                     </div>
                                 </div>
                             </div>
@@ -236,10 +281,17 @@ export default function ContractDetails() {
                             <Table
                                 pagination={{
                                     showSizeChanger: true,
-                                    defaultPageSize: financialStore.invoices.filters.page_size,
-                                    current: financialStore.invoices.pagination.currentPage,
+                                    defaultPageSize:
+                                        financialStore.invoices.filters
+                                            .page_size,
+                                    current:
+                                        financialStore.invoices.pagination
+                                            .currentPage,
                                     total:
-                                        financialStore.invoices.pagination.totalPages * financialStore.invoices.filters.page_size,
+                                        financialStore.invoices.pagination
+                                            .totalPages *
+                                        financialStore.invoices.filters
+                                            .page_size,
                                     onChange: onChangePagination,
                                 }}
                                 loading={financialStore.invoices.loading}
@@ -290,7 +342,9 @@ export default function ContractDetails() {
                                         render: (_, { tags }) => (
                                             <>
                                                 {tags.map((tag) => (
-                                                    <Tag color={tag.color} key={`contract-tags-${tag.id}`}>
+                                                    <Tag
+                                                        color={tag.color}
+                                                        key={`contract-tags-${tag.id}`}>
                                                         {tag.name}
                                                     </Tag>
                                                 ))}
@@ -302,7 +356,10 @@ export default function ContractDetails() {
                                         dataIndex: "id",
                                         key: "id",
                                         render: (value) => (
-                                            <Link href={`/admin/financial/invoices/details/${value}`}>Detalhes</Link>
+                                            <Link
+                                                href={`/admin/financial/invoices/details/${value}`}>
+                                                Detalhes
+                                            </Link>
                                         ),
                                     },
                                 ]}
@@ -325,7 +382,9 @@ export default function ContractDetails() {
                     onChange={handleMergeSelectEvent}
                     onSearch={onSearch}
                     filterOption={(input, option) =>
-                        (option!.label as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                        (option!.label as unknown as string)
+                            ?.toLowerCase()
+                            .includes(input.toLowerCase())
                     }
                     options={mergeContractOption}
                     style={{

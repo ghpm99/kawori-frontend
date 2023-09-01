@@ -28,10 +28,21 @@ import { fetchPaymentReport } from "../../../../store/features/financial/Index";
 import { RootState, useAppDispatch } from "../../../../store/store";
 import styles from "./Overview.module.scss";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+);
 
 function Overview() {
-    const financialStore = useSelector((state: RootState) => state.financial.paymentReport);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.paymentReport,
+    );
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -45,7 +56,9 @@ function Overview() {
                     countPayment={financialStore.data.countPayment}
                     amountPayment={financialStore.data.amountPayment}
                     amountPaymentOpen={financialStore.data.amountPaymentOpen}
-                    amountPaymentClosed={financialStore.data.amountPaymentClosed}
+                    amountPaymentClosed={
+                        financialStore.data.amountPaymentClosed
+                    }
                     loading={financialStore.loading}
                 />
                 <div>
@@ -55,8 +68,13 @@ function Overview() {
                     <InvoiceByTag datasets={financialStore.data.invoiceByTag} />
                 </div>
                 <div className={styles["charts-container"]}>
-                    <PaymentWithoutFixed payments={financialStore.data.payments} />
-                    <PaymentFixed fixedCredit={financialStore.data.fixed_credit} fixedDebit={financialStore.data.fixed_debit} />
+                    <PaymentWithoutFixed
+                        payments={financialStore.data.payments}
+                    />
+                    <PaymentFixed
+                        fixedCredit={financialStore.data.fixed_credit}
+                        fixedDebit={financialStore.data.fixed_debit}
+                    />
                 </div>
             </>
         );

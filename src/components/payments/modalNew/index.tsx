@@ -1,4 +1,12 @@
-import { DatePicker, Form, Input, InputNumber, Modal, Select, Switch } from "antd";
+import {
+    DatePicker,
+    Form,
+    Input,
+    InputNumber,
+    Modal,
+    Select,
+    Switch,
+} from "antd";
 
 import styles from "./ModalNew.module.scss";
 
@@ -59,34 +67,77 @@ export default function ModalNew(props: IModalNewProps) {
                     style={{ width: "auto" }}
                     label="Tipo"
                     name="type"
-                    rules={[{ required: true, message: "Selecione o tipo de entrada" }]}>
+                    rules={[
+                        {
+                            required: true,
+                            message: "Selecione o tipo de entrada",
+                        },
+                    ]}>
                     <Select placeholder="Selecione o tipo de entrada">
                         <Option value={0}>Credito</Option>
                         <Option value={1}>Debito</Option>
                     </Select>
                 </Form.Item>
-                <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Entre com o nome da entrada" }]}>
+                <Form.Item
+                    label="Nome"
+                    name="name"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Entre com o nome da entrada",
+                        },
+                    ]}>
                     <Input placeholder="Digite o nome" />
                 </Form.Item>
-                <Form.Item label="Data" name="date" rules={[{ required: true, message: "Selecione a data da entrada" }]}>
-                    <DatePicker format={customFormat} style={{ width: "100%" }} />
+                <Form.Item
+                    label="Data"
+                    name="date"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Selecione a data da entrada",
+                        },
+                    ]}>
+                    <DatePicker
+                        format={customFormat}
+                        style={{ width: "100%" }}
+                    />
                 </Form.Item>
                 <Form.Item
                     label="Parcelas"
                     name="installments"
-                    rules={[{ required: true, message: "Digite o numero de parcelas" }]}>
+                    rules={[
+                        {
+                            required: true,
+                            message: "Digite o numero de parcelas",
+                        },
+                    ]}>
                     <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
                 <Form.Item
                     label="Dia de pagamento"
                     name="payment_date"
-                    rules={[{ required: true, message: "Selecione a data do pagamento" }]}>
-                    <DatePicker format={customFormat} style={{ width: "100%" }} />
+                    rules={[
+                        {
+                            required: true,
+                            message: "Selecione a data do pagamento",
+                        },
+                    ]}>
+                    <DatePicker
+                        format={customFormat}
+                        style={{ width: "100%" }}
+                    />
                 </Form.Item>
-                <Form.Item label="Valor" name="value" rules={[{ required: true, message: "Digite o valor" }]}>
+                <Form.Item
+                    label="Valor"
+                    name="value"
+                    rules={[{ required: true, message: "Digite o valor" }]}>
                     <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
-                <Form.Item label="Entrada mensal" name="fixed" valuePropName="checked">
+                <Form.Item
+                    label="Entrada mensal"
+                    name="fixed"
+                    valuePropName="checked">
                     <Switch />
                 </Form.Item>
             </Form>

@@ -60,7 +60,10 @@ export default function ModalFilter(props: IModalFilterProps) {
                 name="filter"
                 onFinish={props.setFilters}
                 preserve={false}>
-                <Form.Item style={{ width: "auto" }} label="Status" name="status">
+                <Form.Item
+                    style={{ width: "auto" }}
+                    label="Status"
+                    name="status">
                     <Select placeholder="Selecione o status">
                         <Option value="">Todos</Option>
                         <Option value={0}>Em aberto</Option>
@@ -83,11 +86,26 @@ export default function ModalFilter(props: IModalFilterProps) {
                         style={{ width: "100%" }}
                         ranges={{
                             Hoje: [dayjs(), dayjs()],
-                            Ontem: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")],
-                            "Últimos 7 dias": [dayjs().subtract(7, "days"), dayjs()],
-                            "Últimos 30 dias": [dayjs().subtract(30, "days"), dayjs()],
-                            "Mês atual": [dayjs().startOf("month"), dayjs().endOf("month")],
-                            "Proximo mês": [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")],
+                            Ontem: [
+                                dayjs().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
+                            ],
+                            "Últimos 7 dias": [
+                                dayjs().subtract(7, "days"),
+                                dayjs(),
+                            ],
+                            "Últimos 30 dias": [
+                                dayjs().subtract(30, "days"),
+                                dayjs(),
+                            ],
+                            "Mês atual": [
+                                dayjs().startOf("month"),
+                                dayjs().endOf("month"),
+                            ],
+                            "Proximo mês": [
+                                dayjs().add(1, "months").startOf("month"),
+                                dayjs().add(1, "months").endOf("month"),
+                            ],
                             "Mês passado": [
                                 dayjs().subtract(1, "month").startOf("month"),
                                 dayjs().subtract(1, "month").endOf("month"),
@@ -104,11 +122,26 @@ export default function ModalFilter(props: IModalFilterProps) {
                         style={{ width: "100%" }}
                         ranges={{
                             Hoje: [dayjs(), dayjs()],
-                            Ontem: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")],
-                            "Últimos 7 dias": [dayjs().subtract(7, "days"), dayjs()],
-                            "Últimos 30 dias": [dayjs().subtract(30, "days"), dayjs()],
-                            "Mês atual": [dayjs().startOf("month"), dayjs().endOf("month")],
-                            "Proximo mês": [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")],
+                            Ontem: [
+                                dayjs().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
+                            ],
+                            "Últimos 7 dias": [
+                                dayjs().subtract(7, "days"),
+                                dayjs(),
+                            ],
+                            "Últimos 30 dias": [
+                                dayjs().subtract(30, "days"),
+                                dayjs(),
+                            ],
+                            "Mês atual": [
+                                dayjs().startOf("month"),
+                                dayjs().endOf("month"),
+                            ],
+                            "Proximo mês": [
+                                dayjs().add(1, "months").startOf("month"),
+                                dayjs().add(1, "months").endOf("month"),
+                            ],
                             "Mês passado": [
                                 dayjs().subtract(1, "month").startOf("month"),
                                 dayjs().subtract(1, "month").endOf("month"),
@@ -119,7 +152,10 @@ export default function ModalFilter(props: IModalFilterProps) {
                 <Form.Item label="Valor" name="value">
                     <InputNumber style={{ width: "100%" }} />
                 </Form.Item>
-                <Form.Item label="Entrada mensal" name="fixed" valuePropName="checked">
+                <Form.Item
+                    label="Entrada mensal"
+                    name="fixed"
+                    valuePropName="checked">
                     <Select placeholder="Selecione se é mensalidade">
                         <Option value={""}>Todos</Option>
                         <Option value={true}>Sim</Option>

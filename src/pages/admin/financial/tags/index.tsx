@@ -1,5 +1,13 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from "antd";
+import {
+    Breadcrumb,
+    Button,
+    Layout,
+    message,
+    Table,
+    Tag,
+    Typography,
+} from "antd";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
@@ -8,9 +16,14 @@ import { useSelector } from "react-redux";
 import LoadingPage from "../../../../components/loadingPage/Index";
 import LoginHeader from "../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../components/menuAdmin/Index";
-import ModalNewTag, { IFormModalNewTag } from "../../../../components/tags/modalNew";
+import ModalNewTag, {
+    IFormModalNewTag,
+} from "../../../../components/tags/modalNew";
 import { includeNewTagService } from "../../../../services/financial";
-import { changeVisibleModalTag, fetchTags } from "../../../../store/features/financial/Index";
+import {
+    changeVisibleModalTag,
+    fetchTags,
+} from "../../../../store/features/financial/Index";
 import { RootState, useAppDispatch } from "../../../../store/store";
 import styles from "./tags.module.scss";
 
@@ -19,7 +32,9 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function TagPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.tags);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.tags,
+    );
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -57,7 +72,9 @@ function TagPage() {
             title: "Nome",
             dataIndex: "name",
             key: "name",
-            render: (_: any, tag: ITags) => <Tag color={tag.color}>{tag.name}</Tag>,
+            render: (_: any, tag: ITags) => (
+                <Tag color={tag.color}>{tag.name}</Tag>
+            ),
         },
     ];
 
@@ -80,7 +97,9 @@ function TagPage() {
                                 Valores em aberto
                             </Title>
                             <div>
-                                <Button icon={<PlusOutlined />} onClick={() => openModal("newTag")}>
+                                <Button
+                                    icon={<PlusOutlined />}
+                                    onClick={() => openModal("newTag")}>
                                     Novo
                                 </Button>
                             </div>

@@ -34,7 +34,12 @@ const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
 
     return (
         <div className={styles["chart-container"]}>
-            <Bar data={data} options={options} width={400} style={{ background: "white", height: "100%" }} />
+            <Bar
+                data={data}
+                options={options}
+                width={400}
+                style={{ background: "white", height: "100%" }}
+            />
         </div>
     );
 };
