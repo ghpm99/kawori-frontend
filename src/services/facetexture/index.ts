@@ -1,4 +1,4 @@
-import { apiDjango } from ".."
+import { apiDjango } from "..";
 
 interface IFacetextureApi {
     characters: IFacetextureCharacterApi[];

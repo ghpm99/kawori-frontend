@@ -1,21 +1,25 @@
-import "../../styles/globals.scss"
-import "antd/dist/reset.css"
+import "../../styles/globals.scss";
+import "antd/dist/reset.css";
 
-import { Analytics } from "@vercel/analytics/react"
-import { ConfigProvider } from "antd"
-import ptBr from "antd/lib/locale/pt_BR"
-import { NextComponentType, NextPageContext } from "next"
-import { SessionProvider, useSession } from "next-auth/react"
-import { AppProps } from "next/app"
-import Head from "next/head"
-import { Provider } from "react-redux"
+import { Analytics } from "@vercel/analytics/react";
+import { ConfigProvider } from "antd";
+import ptBr from "antd/lib/locale/pt_BR";
+import { NextComponentType, NextPageContext } from "next";
+import { SessionProvider, useSession } from "next-auth/react";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import { Provider } from "react-redux";
 
-import LoadingPage from "../components/loadingPage/Index"
-import PusherProvider from "../components/pusherProvider/Index"
-import { store } from "../store/store"
-import { NextPageCustom } from "../types/commonTypes"
+import LoadingPage from "../components/loadingPage/Index";
+import PusherProvider from "../components/pusherProvider/Index";
+import { store } from "../store/store";
+import { NextPageCustom } from "../types/commonTypes";
 
-type NextComponentCustom = NextComponentType<NextPageContext, any, Record<string, never>> &
+type NextComponentCustom = NextComponentType<
+    NextPageContext,
+    any,
+    Record<string, never>
+> &
     Partial<NextPageCustom>;
 
 type ExtendedAppProps<P = Record<string, never>> = AppProps<P> &
