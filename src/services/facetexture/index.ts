@@ -40,7 +40,6 @@ export async function previewFacetextureService(args: any) {
             },
         },
     );
-
     return response.data;
 }
 

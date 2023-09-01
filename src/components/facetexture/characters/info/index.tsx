@@ -1,7 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload } from "antd";
+import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload, message } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { RcFile } from "antd/lib/upload";
 import { useSelector } from "react-redux";
@@ -16,6 +16,7 @@ import { updateFacetextureUrlReducer } from "../../../../store/features/facetext
 import { RootState, useAppDispatch } from "../../../../store/store";
 import { db } from "../../../../util/db";
 import Styles from "./Info.module.scss";
+import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 
 const { Title } = Typography;
 
@@ -28,18 +29,41 @@ const Info = () => {
             return;
         }
 
+        message.loading({
+            content: "Atualizando classe",
+            key: FACETEXTURE_MESSAGE_REF,
+        });
+
         dispatch(
             changeClassCharacterThunk({
                 id: id,
                 classId: value,
             }),
-        );
+        )
+            .then((value) => {
+                if (value.type.includes("fulfilled")) {
+                    message.success({
+                        content: `Classe alterada para ${(value.payload as any).data.class.name}`,
+                        key: FACETEXTURE_MESSAGE_REF,
+                    });
+                }
+            })
+            .catch((reason) => {
+                message.error({
+                    content: "Falhou em atualizar classe!",
+                    key: FACETEXTURE_MESSAGE_REF,
+                });
+            });
     };
 
     const updateImageSelectedCharacter = (id: number | undefined, file: RcFile) => {
         if (id === undefined) {
             return;
         }
+        message.loading({
+            content: "Atualizando imagem",
+            key: FACETEXTURE_MESSAGE_REF,
+        });
         dispatch(
             updateFacetextureUrlReducer({
                 id: id,
@@ -51,7 +75,21 @@ const Info = () => {
                 id: id,
                 name: file.name,
             }),
-        );
+        )
+            .then((value) => {
+                if (value.type.includes("fulfilled")) {
+                    message.success({
+                        content: (value.payload as any).data.data,
+                        key: FACETEXTURE_MESSAGE_REF,
+                    });
+                }
+            })
+            .catch((reason) => {
+                message.error({
+                    content: "Falhou em atualizar imagem!",
+                    key: FACETEXTURE_MESSAGE_REF,
+                });
+            });
         updateImageLocal(file.name, file);
     };
 
@@ -72,19 +110,55 @@ const Info = () => {
         if (!id) {
             return;
         }
-        dispatch(deleteCharacterThunk(id));
+        message.loading({
+            content: "Excluindo personagem",
+            key: FACETEXTURE_MESSAGE_REF,
+        });
+        dispatch(deleteCharacterThunk(id))
+            .then((value) => {
+                if (value.type.includes("fulfilled")) {
+                    message.success({
+                        content: (value.payload as any).data.data,
+                        key: FACETEXTURE_MESSAGE_REF,
+                    });
+                }
+            })
+            .catch((reason) => {
+                message.error({
+                    content: "Falhou em excluir!",
+                    key: FACETEXTURE_MESSAGE_REF,
+                });
+            });
     };
 
     const updateCharacterShowClass = (id: number | undefined, event: CheckboxChangeEvent) => {
         if (!id) {
             return;
         }
+        message.loading({
+            content: "Atualizando visibilidade de icone",
+            key: FACETEXTURE_MESSAGE_REF,
+        });
         dispatch(
             changeShowClassThunk({
                 id: id,
                 visible: event.target.checked,
             }),
-        );
+        )
+            .then((value) => {
+                if (value.type.includes("fulfilled")) {
+                    message.success({
+                        content: (value.payload as any).data.data,
+                        key: FACETEXTURE_MESSAGE_REF,
+                    });
+                }
+            })
+            .catch((reason) => {
+                message.error({
+                    content: "Falhou em atualizar!",
+                    key: FACETEXTURE_MESSAGE_REF,
+                });
+            });
     };
 
     const selectedFacetexture =

@@ -1,7 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Checkbox, Modal, Select, Tooltip, Typography } from "antd";
+import { Checkbox, Modal, Select, Tooltip, Typography, message } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { RcFile } from "antd/lib/upload";
 import Dragger from "antd/lib/upload/Dragger";
@@ -14,6 +14,7 @@ import {
 } from "store/features/facetexture";
 import { RootState, useAppDispatch } from "store/store";
 import styles from "./newModal.module.scss";
+import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 
 const { Title } = Typography;
 
@@ -55,11 +56,29 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
     };
 
     const includeNewFacetexture = () => {
+        message.loading({
+            content: "Salvando",
+            key: FACETEXTURE_MESSAGE_REF,
+        });
         dispatch(
             newCharacterThunk({
                 ...facetextureStore.modal.newFacetexture.data,
             }),
-        );
+        )
+            .then((value) => {
+                if (value.type.includes("fulfilled")) {
+                    message.success({
+                        content: "Personagem incluso com sucesso!",
+                        key: FACETEXTURE_MESSAGE_REF,
+                    });
+                }
+            })
+            .catch(() => {
+                message.error({
+                    content: "Falhou em incluir novo personagem!",
+                    key: FACETEXTURE_MESSAGE_REF,
+                });
+            });
     };
 
     return (

@@ -12,19 +12,17 @@ import MenuAdmin from "../../../components/menuAdmin/Index";
 import { IFacetextureCharacterApi } from "../../../services/facetexture";
 import {
     fetchFacetexture,
-    setFacetextureIsEdited,
     updateBackgroundReducer,
-    updateFacetextureUrlReducer,
+    updateFacetextureUrlReducer
 } from "../../../store/features/facetexture";
 import { RootState, useAppDispatch } from "../../../store/store";
 import { db } from "../../../util/db";
 import Styles from "./Facetexture.module.scss";
 
 const { Header, Content } = Layout;
+export const FACETEXTURE_MESSAGE_REF = "facetexture-message-ref";
 
 function FaceTexture() {
-    const messageRef = "facetexture-message-ref";
-
     const router = useRouter();
 
     const dispatch = useAppDispatch();
@@ -45,7 +43,7 @@ function FaceTexture() {
                 };
             };
             payload.characters.forEach((value, index) => {
-                updateCharacterImage(index, value.name);
+                updateCharacterImage(value.id, value.name);
             });
         });
     }, []);
@@ -71,6 +69,7 @@ function FaceTexture() {
         const image = await db.image.where("name").equals(name).first();
         if (image) {
             const imageUrl = URL.createObjectURL(image.imagem);
+            console.log(index, name, imageUrl)
             dispatch(
                 updateFacetextureUrlReducer({
                     id: index,
@@ -84,12 +83,12 @@ function FaceTexture() {
         if (facetextureStore.loading) {
             message.loading({
                 content: "Carregando",
-                key: "loading-msg",
+                key: FACETEXTURE_MESSAGE_REF,
             });
         } else {
             message.success({
                 content: "Carregado!",
-                key: "loading-msg",
+                key: FACETEXTURE_MESSAGE_REF,
             });
         }
     }, [facetextureStore.loading]);
