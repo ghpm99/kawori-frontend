@@ -137,7 +137,7 @@ export const facetextureSlice = createSlice({
                 state.modal.newFacetexture.saving = false;
                 state.modal.newFacetexture.visible = false;
                 state.facetexture.push(action.payload.character);
-                state.modal.newFacetexture.data = initialState.modal.newFacetexture.data
+                state.modal.newFacetexture.data = initialState.modal.newFacetexture.data;
             })
             .addCase(newCharacterThunk.rejected, (state) => {
                 state.modal.newFacetexture.saving = false;

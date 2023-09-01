@@ -81,7 +81,8 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
             });
     };
 
-    const classSelectOption = facetextureStore.modal.newFacetexture.data.classId == 0 ? undefined: facetextureStore.modal.newFacetexture.data.classId;
+    const classSelectOption =
+        facetextureStore.modal.newFacetexture.data.classId == 0 ? undefined : facetextureStore.modal.newFacetexture.data.classId;
 
     return (
         <Modal
