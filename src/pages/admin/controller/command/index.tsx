@@ -61,13 +61,21 @@ function CommandPage() {
                             </div>
                             <div>
                                 <Title level={4}>Retorno do comando:</Title>
-                                <TextArea contentEditable={false} rows={4} value={commandReturn} />
+                                <TextArea
+                                    contentEditable={false}
+                                    rows={4}
+                                    value={commandReturn}
+                                />
                             </div>
                         </Input.Group>
                     </Layout>
                 </Content>
             </Layout>
-            <Pusher channel="private-display" event="command-return" onUpdate={(data: any) => setCommandReturn(data.output)} />
+            <Pusher
+                channel="private-display"
+                event="command-return"
+                onUpdate={(data: any) => setCommandReturn(data.output)}
+            />
         </Layout>
     );
 }

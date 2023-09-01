@@ -1,4 +1,15 @@
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Select, Table, Typography } from "antd";
+import {
+    Breadcrumb,
+    Card,
+    Dropdown,
+    Layout,
+    Menu,
+    MenuProps,
+    message,
+    Select,
+    Table,
+    Typography,
+} from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import { DefaultOptionType } from "antd/lib/select";
 import { GetServerSideProps } from "next";
@@ -12,7 +23,11 @@ import LoadingPage from "../../../../../components/loadingPage/Index";
 import LoginHeader from "../../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../../components/menuAdmin/Index";
 import { saveInvoiceTagsService } from "../../../../../services/financial";
-import { fetchInvoiceDetails, fetchInvoicePaymentsDetails, fetchTags } from "../../../../../store/features/financial/Index";
+import {
+    fetchInvoiceDetails,
+    fetchInvoicePaymentsDetails,
+    fetchTags,
+} from "../../../../../store/features/financial/Index";
 import { RootState, useAppDispatch } from "../../../../../store/store";
 import { formatMoney, formatterDate } from "../../../../../util";
 import styles from "./Details.module.scss";
@@ -26,7 +41,9 @@ export default function InvoiceDetails() {
     const router = useRouter();
     const { id } = router.query;
 
-    const financialStore = useSelector((state: RootState) => state.financial.invoiceDetail);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.invoiceDetail,
+    );
     const tagsStore = useSelector((state: RootState) => state.financial.tags);
     const dispatch = useAppDispatch();
 
@@ -69,7 +86,10 @@ export default function InvoiceDetails() {
         }
     };
 
-    const handleChangeTags = (value: number[], option: DefaultOptionType | DefaultOptionType[]) => {
+    const handleChangeTags = (
+        value: number[],
+        option: DefaultOptionType | DefaultOptionType[],
+    ) => {
         console.log(`selected ${value}`, option);
         saveInvoiceTagsService(
             financialStore.data.id,
@@ -130,18 +150,26 @@ export default function InvoiceDetails() {
                         <Card loading={financialStore.loading}>
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>ID: {financialStore.data?.id}</div>
+                                    <div className={styles.label}>
+                                        ID: {financialStore.data?.id}
+                                    </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <Link href={`/admin/financial/contracts/details/${financialStore.data?.contract}`}>
-                                        <div className={styles.label} style={{ cursor: "pointer" }}>
-                                            Contrato: {`${financialStore.data?.contract} - ${financialStore.data?.contract_name}`}
+                                    <Link
+                                        href={`/admin/financial/contracts/details/${financialStore.data?.contract}`}>
+                                        <div
+                                            className={styles.label}
+                                            style={{ cursor: "pointer" }}>
+                                            Contrato:{" "}
+                                            {`${financialStore.data?.contract} - ${financialStore.data?.contract_name}`}
                                         </div>
                                     </Link>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Nome:</div>
-                                    <Paragraph style={{ margin: "0" }} editable={{ onChange: changeName }}>
+                                    <Paragraph
+                                        style={{ margin: "0" }}
+                                        editable={{ onChange: changeName }}>
                                         {financialStore.data?.name}
                                     </Paragraph>
                                 </div>
@@ -149,28 +177,50 @@ export default function InvoiceDetails() {
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
-                                        <strong>Status:</strong> {financialStore.data?.status === 0 ? "Em aberto" : "Baixado"}
+                                        <strong>Status:</strong>{" "}
+                                        {financialStore.data?.status === 0
+                                            ? "Em aberto"
+                                            : "Baixado"}
                                     </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>Parcelas: {financialStore.data?.installments}</div>
+                                    <div className={styles.label}>
+                                        Parcelas:{" "}
+                                        {financialStore.data?.installments}
+                                    </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>Data: {formatterDate(financialStore.data?.date)}</div>
+                                    <div className={styles.label}>
+                                        Data:{" "}
+                                        {formatterDate(
+                                            financialStore.data?.date,
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>Valor: {formatMoney(financialStore.data?.value)}</div>
-                                </div>
-                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
-                                        Valor em Aberto: {formatMoney(financialStore.data?.value_open)}
+                                        Valor:{" "}
+                                        {formatMoney(
+                                            financialStore.data?.value,
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
-                                        Valor Baixado: {formatMoney(financialStore.data?.value_closed)}
+                                        Valor em Aberto:{" "}
+                                        {formatMoney(
+                                            financialStore.data?.value_open,
+                                        )}
+                                    </div>
+                                </div>
+                                <div className={styles["label-detail"]}>
+                                    <div className={styles.label}>
+                                        Valor Baixado:{" "}
+                                        {formatMoney(
+                                            financialStore.data?.value_closed,
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -181,9 +231,13 @@ export default function InvoiceDetails() {
                                         style={{ width: "100%" }}
                                         placeholder="Tags"
                                         onChange={handleChangeTags}
-                                        defaultValue={financialStore.data?.tags.map((item) => item.id)}>
+                                        defaultValue={financialStore.data?.tags.map(
+                                            (item) => item.id,
+                                        )}>
                                         {tagsStore.data?.map((item) => (
-                                            <Option key={item.id} value={item.id}>
+                                            <Option
+                                                key={item.id}
+                                                value={item.id}>
                                                 {item.name}
                                             </Option>
                                         ))}
@@ -192,10 +246,17 @@ export default function InvoiceDetails() {
                             </div>
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>Pagamentos:</div>
+                                    <div className={styles.label}>
+                                        Pagamentos:
+                                    </div>
                                 </div>
-                                <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                                    <Dropdown.Button overlay={menu} type="primary" onClick={save} className={styles.button_save}>
+                                <div
+                                    className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
+                                    <Dropdown.Button
+                                        overlay={menu}
+                                        type="primary"
+                                        onClick={save}
+                                        className={styles.button_save}>
                                         Salvar
                                     </Dropdown.Button>
                                 </div>
@@ -203,10 +264,17 @@ export default function InvoiceDetails() {
                             <Table
                                 pagination={{
                                     showSizeChanger: true,
-                                    defaultPageSize: financialStore.payments.filters.page_size,
-                                    current: financialStore.payments.pagination.currentPage,
+                                    defaultPageSize:
+                                        financialStore.payments.filters
+                                            .page_size,
+                                    current:
+                                        financialStore.payments.pagination
+                                            .currentPage,
                                     total:
-                                        financialStore.payments.pagination.totalPages * financialStore.payments.filters.page_size,
+                                        financialStore.payments.pagination
+                                            .totalPages *
+                                        financialStore.payments.filters
+                                            .page_size,
                                     onChange: onChangePagination,
                                 }}
                                 loading={financialStore.payments.loading}
@@ -215,13 +283,17 @@ export default function InvoiceDetails() {
                                         title: "Status",
                                         dataIndex: "status",
                                         key: "status",
-                                        render: (value) => (value === 0 ? "Em aberto" : "Baixado"),
+                                        render: (value) =>
+                                            value === 0
+                                                ? "Em aberto"
+                                                : "Baixado",
                                     },
                                     {
                                         title: "Tipo",
                                         dataIndex: "type",
                                         key: "type",
-                                        render: (text) => (text === 0 ? "Credito" : "Debito"),
+                                        render: (text) =>
+                                            text === 0 ? "Credito" : "Debito",
                                     },
                                     {
                                         title: "Data",
@@ -255,14 +327,18 @@ export default function InvoiceDetails() {
                                         title: "Fixo",
                                         dataIndex: "fixed",
                                         key: "fixed",
-                                        render: (value) => (value ? "Sim" : "Não"),
+                                        render: (value) =>
+                                            value ? "Sim" : "Não",
                                     },
                                     {
                                         title: "Ações",
                                         dataIndex: "id",
                                         key: "id",
                                         render: (value) => (
-                                            <Link href={`/admin/financial/payments/details/${value}`}>Detalhes</Link>
+                                            <Link
+                                                href={`/admin/financial/payments/details/${value}`}>
+                                                Detalhes
+                                            </Link>
                                         ),
                                     },
                                 ]}

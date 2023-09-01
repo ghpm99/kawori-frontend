@@ -23,4 +23,5 @@ export const useAppDispatch = (): AppDispatch => useDispatch<AppDispatch>();
 
 export type ThunkAppDispatch = ThunkDispatch<RootState, void, Action>;
 
-export const useAppThunkDispatch = (): ThunkAppDispatch => useDispatch<ThunkAppDispatch>();
+export const useAppThunkDispatch = (): ThunkAppDispatch =>
+    useDispatch<ThunkAppDispatch>();

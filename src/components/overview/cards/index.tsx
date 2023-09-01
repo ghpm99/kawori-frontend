@@ -14,16 +14,28 @@ interface ICardsProps {
 const Cards = (props: ICardsProps) => {
     return (
         <div className={styles["cards-container"]}>
-            <Card title="Total de pagamentos" style={{ flexGrow: "1" }} loading={props.loading}>
+            <Card
+                title="Total de pagamentos"
+                style={{ flexGrow: "1" }}
+                loading={props.loading}>
                 {props.countPayment}
             </Card>
-            <Card title="Valor total de pagamentos" style={{ flexGrow: "1" }} loading={props.loading}>
+            <Card
+                title="Valor total de pagamentos"
+                style={{ flexGrow: "1" }}
+                loading={props.loading}>
                 {formatMoney(props.amountPayment)}
             </Card>
-            <Card title="Valor total de pagamentos em aberto" style={{ flexGrow: "1" }} loading={props.loading}>
+            <Card
+                title="Valor total de pagamentos em aberto"
+                style={{ flexGrow: "1" }}
+                loading={props.loading}>
                 {formatMoney(props.amountPaymentOpen)}
             </Card>
-            <Card title="Valor total de pagamentos fechados" style={{ flexGrow: "1" }} loading={props.loading}>
+            <Card
+                title="Valor total de pagamentos fechados"
+                style={{ flexGrow: "1" }}
+                loading={props.loading}>
                 {formatMoney(props.amountPaymentClosed)}
             </Card>
         </div>

@@ -44,7 +44,9 @@ function RemotePage() {
 
     const onNewScreenshot = () => {
         setHook({
-            src: `${process.env.NEXT_PUBLIC_API_URL}/media/screenshot/screenshot.png?${Date.now()}`,
+            src: `${
+                process.env.NEXT_PUBLIC_API_URL
+            }/media/screenshot/screenshot.png?${Date.now()}`,
         });
     };
 
@@ -56,9 +58,17 @@ function RemotePage() {
         });
 
         if (event.detail === 1) {
-            mouseMoveButtonService(event.nativeEvent.offsetX, event.nativeEvent.offsetY, "click");
+            mouseMoveButtonService(
+                event.nativeEvent.offsetX,
+                event.nativeEvent.offsetY,
+                "click",
+            );
         } else if (event.detail === 2) {
-            mouseMoveButtonService(event.nativeEvent.offsetX, event.nativeEvent.offsetY, "double-click");
+            mouseMoveButtonService(
+                event.nativeEvent.offsetX,
+                event.nativeEvent.offsetY,
+                "double-click",
+            );
         }
     };
 
@@ -71,7 +81,11 @@ function RemotePage() {
             y: event.nativeEvent.offsetY,
         });
 
-        mouseMoveButtonService(event.nativeEvent.offsetX, event.nativeEvent.offsetY, "click-right");
+        mouseMoveButtonService(
+            event.nativeEvent.offsetX,
+            event.nativeEvent.offsetY,
+            "click-right",
+        );
     };
 
     return (
@@ -135,19 +149,25 @@ function RemotePage() {
                                     <Button
                                         type="primary"
                                         className={styles.buttons_mouse}
-                                        onClick={() => mouseButtonService("click")}>
+                                        onClick={() =>
+                                            mouseButtonService("click")
+                                        }>
                                         Clicar
                                     </Button>
                                     <Button
                                         type="primary"
                                         className={styles.buttons_mouse}
-                                        onClick={() => mouseButtonService("double-click")}>
+                                        onClick={() =>
+                                            mouseButtonService("double-click")
+                                        }>
                                         Click duplo
                                     </Button>
                                     <Button
                                         type="primary"
                                         className={styles.buttons_mouse}
-                                        onClick={() => mouseButtonService("click-right")}>
+                                        onClick={() =>
+                                            mouseButtonService("click-right")
+                                        }>
                                         Click direito
                                     </Button>
                                     <Button
@@ -159,18 +179,29 @@ function RemotePage() {
                                     <Button
                                         type="primary"
                                         className={styles.buttons_mouse}
-                                        onClick={() => mouseScrollService(-100)}>
+                                        onClick={() =>
+                                            mouseScrollService(-100)
+                                        }>
                                         Scroll down
                                     </Button>
                                     <Button
                                         type="primary"
-                                        onClick={() => mouseMoveService(screenSize.x, screenSize.y)}
+                                        onClick={() =>
+                                            mouseMoveService(
+                                                screenSize.x,
+                                                screenSize.y,
+                                            )
+                                        }
                                         className={styles.buttons_mouse}>
                                         Mover
                                     </Button>
                                 </div>
                                 <div className={styles.screenshot_container}>
-                                    <img src={hook.src} onClick={onClickScreenshot} onContextMenu={onContextScreenshot} />
+                                    <img
+                                        src={hook.src}
+                                        onClick={onClickScreenshot}
+                                        onContextMenu={onContextScreenshot}
+                                    />
                                 </div>
                             </div>
                             <Slider
@@ -203,7 +234,11 @@ function RemotePage() {
                     </Layout>
                 </Content>
             </Layout>
-            <Pusher channel="private-remote" event="new-screenshot" onUpdate={onNewScreenshot} />
+            <Pusher
+                channel="private-remote"
+                event="new-screenshot"
+                onUpdate={onNewScreenshot}
+            />
         </Layout>
     );
 }

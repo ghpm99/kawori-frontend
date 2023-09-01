@@ -19,7 +19,9 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function FinancialPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.invoices);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.invoices,
+    );
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -47,7 +49,11 @@ function FinancialPage() {
             title: "Id",
             dataIndex: "id",
             key: "id",
-            render: (value: any) => <Link href={`/admin/financial/invoices/details/${value}`}>{value}</Link>,
+            render: (value: any) => (
+                <Link href={`/admin/financial/invoices/details/${value}`}>
+                    {value}
+                </Link>
+            ),
         },
         {
             title: "Nome",
@@ -101,7 +107,11 @@ function FinancialPage() {
             title: "Ações",
             dataIndex: "id",
             key: "id",
-            render: (value: any) => <Link href={`/admin/financial/invoices/details/${value}`}>Detalhes</Link>,
+            render: (value: any) => (
+                <Link href={`/admin/financial/invoices/details/${value}`}>
+                    Detalhes
+                </Link>
+            ),
         },
     ];
 
@@ -124,21 +134,28 @@ function FinancialPage() {
                                 Valores em aberto
                             </Title>
                             <div>
-                                <Button icon={<SearchOutlined />}>Filtrar</Button>
+                                <Button icon={<SearchOutlined />}>
+                                    Filtrar
+                                </Button>
                             </div>
                         </div>
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
+                                defaultPageSize:
+                                    financialStore.filters.page_size,
                                 current: financialStore.pagination.currentPage,
-                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
+                                total:
+                                    financialStore.pagination.totalPages *
+                                    financialStore.filters.page_size,
                                 onChange: onChangePagination,
                             }}
                             columns={headerTableFinancial}
                             dataSource={financialStore.data}
                             loading={financialStore.loading}
-                            summary={(invoiceData) => <TableSummary invoiceData={invoiceData} />}
+                            summary={(invoiceData) => (
+                                <TableSummary invoiceData={invoiceData} />
+                            )}
                         />
                     </Layout>
                 </Content>
@@ -147,7 +164,11 @@ function FinancialPage() {
     );
 }
 
-function TableSummary({ invoiceData }: { invoiceData: readonly IInvoicePagination[] }) {
+function TableSummary({
+    invoiceData,
+}: {
+    invoiceData: readonly IInvoicePagination[];
+}) {
     const { Text } = Typography;
 
     let total = 0;

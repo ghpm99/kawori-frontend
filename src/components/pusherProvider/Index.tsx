@@ -10,7 +10,8 @@ export default function PusherProvider({ children }: IPusherProviderProps) {
     const { data } = useSession();
     const pusher = new Pusher(children.props.pusher_key, {
         cluster: children.props.pusher_cluster,
-        authEndpoint: process.env.NEXT_PUBLIC_API_URL + "/admin-api/pusher/auth",
+        authEndpoint:
+            process.env.NEXT_PUBLIC_API_URL + "/admin-api/pusher/auth",
         auth: { headers: { Authorization: `Basic ${data?.accessToken}` } },
     });
 

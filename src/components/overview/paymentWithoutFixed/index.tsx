@@ -32,7 +32,9 @@ export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
     };
 
     const data = {
-        labels: props.payments?.map((data) => formatterMonthYearDate(data.label)),
+        labels: props.payments?.map((data) =>
+            formatterMonthYearDate(data.label),
+        ),
         datasets: [
             {
                 label: "Total",
@@ -45,7 +47,13 @@ export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
 
     return (
         <div className={styles["chart-container"]}>
-            <Line data={data} options={options} width={400} height={200} style={{ background: "white" }} />
+            <Line
+                data={data}
+                options={options}
+                width={400}
+                height={200}
+                style={{ background: "white" }}
+            />
         </div>
     );
 }

@@ -16,7 +16,8 @@ import { NextPageCustom } from "../types/commonTypes";
 
 import { Analytics } from "@vercel/analytics/react";
 
-type NextComponentCustom = NextComponentType<NextPageContext, any, {}> & Partial<NextPageCustom>;
+type NextComponentCustom = NextComponentType<NextPageContext, any, {}> &
+    Partial<NextPageCustom>;
 
 type ExtendedAppProps<P = {}> = AppProps<P> &
     Partial<{

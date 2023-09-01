@@ -26,7 +26,10 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                 // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
                 // You can also use the `req` object to obtain additional parameters
                 // (i.e., the request IP address)
-                const tokenRes = await signinService(credentials?.username ?? "", credentials?.password ?? "");
+                const tokenRes = await signinService(
+                    credentials?.username ?? "",
+                    credentials?.password ?? "",
+                );
 
                 if (tokenRes.status !== 200) {
                     return null;

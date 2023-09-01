@@ -66,7 +66,9 @@ const User = () => {
                             <div className={styles["info-container"]}>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Nome</Title>
-                                    <Paragraph>{session?.user?.name ?? ""}</Paragraph>
+                                    <Paragraph>
+                                        {session?.user?.name ?? ""}
+                                    </Paragraph>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Username</Title>
@@ -75,8 +77,13 @@ const User = () => {
                                 <div className={styles["info"]}>
                                     <Title level={3}>Status</Title>
                                     <div className={styles["status"]}>
-                                        <div className={styles["status-indicator"]}></div>
-                                        <div className={styles["status-text"]}>Ativo</div>
+                                        <div
+                                            className={
+                                                styles["status-indicator"]
+                                            }></div>
+                                        <div className={styles["status-text"]}>
+                                            Ativo
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -101,17 +108,29 @@ const User = () => {
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>E-mail</Title>
-                                    <Paragraph>{session?.user?.email ?? ""}</Paragraph>
+                                    <Paragraph>
+                                        {session?.user?.email ?? ""}
+                                    </Paragraph>
                                 </div>
                             </div>
                             <div className={styles["info-container"]}>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Ultimo login</Title>
-                                    <div>{session?.user?.lastLogin ? formatDate(session.user.lastLogin) : ""}</div>
+                                    <div>
+                                        {session?.user?.lastLogin
+                                            ? formatDate(session.user.lastLogin)
+                                            : ""}
+                                    </div>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Data cadastrada</Title>
-                                    <div>{session?.user?.dateJoined ? formatDate(session.user.dateJoined) : ""}</div>
+                                    <div>
+                                        {session?.user?.dateJoined
+                                            ? formatDate(
+                                                  session.user.dateJoined,
+                                              )
+                                            : ""}
+                                    </div>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Senha</Title>

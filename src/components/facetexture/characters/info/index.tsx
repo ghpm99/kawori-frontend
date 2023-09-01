@@ -1,7 +1,16 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Checkbox, Image, Select, Tooltip, Typography, Upload, message } from "antd";
+import {
+    Button,
+    Checkbox,
+    Image,
+    Select,
+    Tooltip,
+    Typography,
+    Upload,
+    message,
+} from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { RcFile } from "antd/lib/upload";
 import { useSelector } from "react-redux";
@@ -21,7 +30,9 @@ import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 const { Title } = Typography;
 
 const Info = () => {
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
     const dispatch = useAppDispatch();
 
     const updateCharacterClass = (id: number | undefined, value: number) => {
@@ -43,7 +54,9 @@ const Info = () => {
             .then((value) => {
                 if (value.type.includes("fulfilled")) {
                     message.success({
-                        content: `Classe alterada para ${(value.payload as any).data.class.name}`,
+                        content: `Classe alterada para ${
+                            (value.payload as any).data.class.name
+                        }`,
                         key: FACETEXTURE_MESSAGE_REF,
                     });
                 }
@@ -56,7 +69,10 @@ const Info = () => {
             });
     };
 
-    const updateImageSelectedCharacter = (id: number | undefined, file: RcFile) => {
+    const updateImageSelectedCharacter = (
+        id: number | undefined,
+        file: RcFile,
+    ) => {
         if (id === undefined) {
             return;
         }
@@ -94,7 +110,9 @@ const Info = () => {
     };
 
     const updateImageLocal = async (name: string, file: Blob) => {
-        const localImage = await db.image.filter((image) => image.name === name).first();
+        const localImage = await db.image
+            .filter((image) => image.name === name)
+            .first();
 
         if (localImage && localImage.id) {
             db.image.update(localImage.id, { image: file });
@@ -131,7 +149,10 @@ const Info = () => {
             });
     };
 
-    const updateCharacterShowClass = (id: number | undefined, event: CheckboxChangeEvent) => {
+    const updateCharacterShowClass = (
+        id: number | undefined,
+        event: CheckboxChangeEvent,
+    ) => {
         if (!id) {
             return;
         }
@@ -163,7 +184,9 @@ const Info = () => {
 
     const selectedFacetexture =
         facetextureStore.selected !== undefined
-            ? facetextureStore.facetexture.find((face) => face.id === facetextureStore.selected)
+            ? facetextureStore.facetexture.find(
+                  (face) => face.id === facetextureStore.selected,
+              )
             : undefined;
 
     return (
@@ -183,7 +206,12 @@ const Info = () => {
                             </Tooltip>
                             :
                         </Title>
-                        <Image src={selectedFacetexture.image} alt={selectedFacetexture.name} width={125} height={160} />
+                        <Image
+                            src={selectedFacetexture.image}
+                            alt={selectedFacetexture.name}
+                            width={125}
+                            height={160}
+                        />
                     </div>
                     <div className={Styles["controllers-info"]}>
                         <Title level={5}>
@@ -202,13 +230,23 @@ const Info = () => {
                             style={{
                                 width: "125px",
                             }}
-                            onChange={(value: number) => updateCharacterClass(selectedFacetexture.id, value)}
+                            onChange={(value: number) =>
+                                updateCharacterClass(
+                                    selectedFacetexture.id,
+                                    value,
+                                )
+                            }
                         />
                     </div>
                     <div className={Styles["controllers-info"]}>
                         <Checkbox
                             checked={selectedFacetexture?.show}
-                            onChange={(e) => updateCharacterShowClass(selectedFacetexture.id, e)}>
+                            onChange={(e) =>
+                                updateCharacterShowClass(
+                                    selectedFacetexture.id,
+                                    e,
+                                )
+                            }>
                             Mostrar icone da classe
                         </Checkbox>
                     </div>
@@ -226,7 +264,12 @@ const Info = () => {
 
                         <Upload
                             listType="picture-card"
-                            beforeUpload={(file) => updateImageSelectedCharacter(selectedFacetexture.id, file)}
+                            beforeUpload={(file) =>
+                                updateImageSelectedCharacter(
+                                    selectedFacetexture.id,
+                                    file,
+                                )
+                            }
                             fileList={[]}>
                             <div>
                                 <PlusOutlined />
@@ -235,7 +278,11 @@ const Info = () => {
                         </Upload>
                     </div>
                     <div className={Styles["controllers-info"]}>
-                        <Button type="primary" onClick={() => deleteCharacter(selectedFacetexture.id)}>
+                        <Button
+                            type="primary"
+                            onClick={() =>
+                                deleteCharacter(selectedFacetexture.id)
+                            }>
                             Deletar personagem
                         </Button>
                     </div>

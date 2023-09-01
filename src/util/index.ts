@@ -1,6 +1,12 @@
 import dayjs from "dayjs";
 
-export const formatMoney = (amount: number, decimalCount = 2, decimal = ".", thousands = ",", currencySymbol = "R$") => {
+export const formatMoney = (
+    amount: number,
+    decimalCount = 2,
+    decimal = ".",
+    thousands = ",",
+    currencySymbol = "R$",
+) => {
     if (typeof Intl === "object") {
         return new Intl.NumberFormat("pt-br", {
             style: "currency",
@@ -10,7 +16,9 @@ export const formatMoney = (amount: number, decimalCount = 2, decimal = ".", tho
     // Fallback if Intl is not present.
     try {
         const negativeSign = amount < 0 ? "-" : "";
-        const amountNumber = Math.abs(Number(amount) || 0).toFixed(decimalCount);
+        const amountNumber = Math.abs(Number(amount) || 0).toFixed(
+            decimalCount,
+        );
         const i = parseInt(amountNumber, 10).toString();
         const j = i.length > 3 ? i.length % 3 : 0;
         return (

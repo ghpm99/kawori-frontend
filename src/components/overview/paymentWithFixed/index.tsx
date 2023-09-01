@@ -58,7 +58,13 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
 
     return (
         <div className={styles["chart-container"]}>
-            <Line data={data} options={options} width={400} height={200} style={{ background: "white" }} />
+            <Line
+                data={data}
+                options={options}
+                width={400}
+                height={200}
+                style={{ background: "white" }}
+            />
         </div>
     );
 }

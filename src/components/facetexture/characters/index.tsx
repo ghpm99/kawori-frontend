@@ -12,10 +12,17 @@ import NewModal from "./newModal";
 const { Title } = Typography;
 const Characters = () => {
     const dispatch = useAppDispatch();
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
 
     const toggleModalVisible = () => {
-        dispatch(changeModalVisible({ modal: "newFacetexture", visible: !facetextureStore.modal.newFacetexture.visible }));
+        dispatch(
+            changeModalVisible({
+                modal: "newFacetexture",
+                visible: !facetextureStore.modal.newFacetexture.visible,
+            }),
+        );
     };
 
     const disableNewButton = facetextureStore.facetexture.length >= 30;
@@ -32,7 +39,10 @@ const Characters = () => {
                         <FontAwesomeIcon icon={faCircleInfo} />
                     </Tooltip>
                 </Title>
-                <Button type="primary" disabled={disableNewButton} onClick={() => toggleModalVisible()}>
+                <Button
+                    type="primary"
+                    disabled={disableNewButton}
+                    onClick={() => toggleModalVisible()}>
                     Incluir Novo Personagem
                 </Button>
                 <DragAndDropCharacters />

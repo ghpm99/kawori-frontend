@@ -44,7 +44,15 @@ export default function ModalNew(props: IModalNewProps) {
                 name="contract"
                 onFinish={props.onFinish}
                 preserve={false}>
-                <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Entre com o nome da entrada" }]}>
+                <Form.Item
+                    label="Nome"
+                    name="name"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Entre com o nome da entrada",
+                        },
+                    ]}>
                     <Input placeholder="Digite o nome" />
                 </Form.Item>
             </Form>

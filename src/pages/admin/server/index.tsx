@@ -38,7 +38,9 @@ function ServerPage() {
                     </Breadcrumb>
                     <Layout>
                         <div className={styles["button-container"]}>
-                            <Button type="primary" onClick={updateContractsValue}>
+                            <Button
+                                type="primary"
+                                onClick={updateContractsValue}>
                                 Calcular valores contratos
                             </Button>
                         </div>

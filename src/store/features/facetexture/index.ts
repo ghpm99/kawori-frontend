@@ -31,40 +31,71 @@ const initialState: IFacetextureState = {
     },
 };
 
-export const fetchFacetexture = createAsyncThunk("facetexture/fetchFacetexture", async () => {
-    const classes = await fetchFaceTextureClassService();
-    const response = await fetchFacetextureService();
-    const characters = response.characters.map((item) => ({
-        ...item,
-        image: item.class.class_image,
-    }));
-    return { characters, classes };
-});
+export const fetchFacetexture = createAsyncThunk(
+    "facetexture/fetchFacetexture",
+    async () => {
+        const classes = await fetchFaceTextureClassService();
+        const response = await fetchFacetextureService();
+        const characters = response.characters.map((item) => ({
+            ...item,
+            image: item.class.class_image,
+        }));
+        return { characters, classes };
+    },
+);
 
 export const facetextureSlice = createSlice({
     name: "facetexture",
     initialState,
     reducers: {
-        updateFacetextureUrlReducer: (state: IFacetextureState, action: PayloadAction<IUpdateFacetextureUrlAction>) => {
-            const index = state.facetexture.findIndex((face) => face.id === action.payload.id);
+        updateFacetextureUrlReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<IUpdateFacetextureUrlAction>,
+        ) => {
+            const index = state.facetexture.findIndex(
+                (face) => face.id === action.payload.id,
+            );
             state.facetexture[index].image = action.payload.image;
         },
-        updateBackgroundReducer: (state: IFacetextureState, action: PayloadAction<string>) => {
+        updateBackgroundReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<string>,
+        ) => {
             state.backgroundUrl = action.payload;
         },
-        setSelectedFacetextureReducer: (state: IFacetextureState, action: PayloadAction<number>) => {
+        setSelectedFacetextureReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<number>,
+        ) => {
             state.selected = action.payload;
         },
-        reorderCharacterReducer: (state: IFacetextureState, action: PayloadAction<IReorderCharacterAction>) => {
-            const newFacetextureList = state.facetexture.filter((item, index) => index !== action.payload.indexSource);
-            newFacetextureList.splice(action.payload.indexDestination, 0, state.facetexture[action.payload.indexSource]);
+        reorderCharacterReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<IReorderCharacterAction>,
+        ) => {
+            const newFacetextureList = state.facetexture.filter(
+                (item, index) => index !== action.payload.indexSource,
+            );
+            newFacetextureList.splice(
+                action.payload.indexDestination,
+                0,
+                state.facetexture[action.payload.indexSource],
+            );
             state.facetexture = newFacetextureList;
         },
-        updateFacetextureClassModalReducer: (state: IFacetextureState, action: PayloadAction<IUpdateCharacterClassAction>) => {
+        updateFacetextureClassModalReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<IUpdateCharacterClassAction>,
+        ) => {
             state.modal.newFacetexture.data.classId = action.payload.classId;
         },
-        deleteCharacterReducer: (state: IFacetextureState, action: PayloadAction<number>) => {
-            const newFacetextureList = state.facetexture.filter((_, index) => index !== action.payload);
+        deleteCharacterReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<number>,
+        ) => {
+            const newFacetextureList = state.facetexture.filter(
+                (_, index) => index !== action.payload,
+            );
             state.facetexture = newFacetextureList;
             state.edited = true;
         },
@@ -74,7 +105,10 @@ export const facetextureSlice = createSlice({
         ) => {
             state.modal.newFacetexture.data.visible = action.payload.visible;
         },
-        setFacetextureIsEdited: (state: IFacetextureState, action: PayloadAction<boolean>) => {
+        setFacetextureIsEdited: (
+            state: IFacetextureState,
+            action: PayloadAction<boolean>,
+        ) => {
             state.edited = action.payload;
         },
         updateFacetextureImageNameModalReducer: (
@@ -83,10 +117,16 @@ export const facetextureSlice = createSlice({
         ) => {
             state.modal.newFacetexture.data.name = action.payload.name;
         },
-        changeModalVisible: (state: IFacetextureState, action: PayloadAction<changeModalVisible>) => {
+        changeModalVisible: (
+            state: IFacetextureState,
+            action: PayloadAction<changeModalVisible>,
+        ) => {
             state.modal[action.payload.modal].visible = action.payload.visible;
         },
-        changeFacetextureSavingModalReducer: (state: IFacetextureState, action: PayloadAction<boolean>) => {
+        changeFacetextureSavingModalReducer: (
+            state: IFacetextureState,
+            action: PayloadAction<boolean>,
+        ) => {
             state.modal.newFacetexture.saving = action.payload;
         },
     },
@@ -106,24 +146,40 @@ export const facetextureSlice = createSlice({
                 state.error = true;
             })
             .addCase(changeClassCharacterThunk.fulfilled, (state, action) => {
-                const facetextureIndex = state.facetexture.findIndex((item) => item.id === action.payload.id);
-                state.facetexture[facetextureIndex].class = action.payload.data.class;
-                state.facetexture[facetextureIndex].image = action.payload.data.class.class_image;
+                const facetextureIndex = state.facetexture.findIndex(
+                    (item) => item.id === action.payload.id,
+                );
+                state.facetexture[facetextureIndex].class =
+                    action.payload.data.class;
+                state.facetexture[facetextureIndex].image =
+                    action.payload.data.class.class_image;
             })
             .addCase(deleteCharacterThunk.fulfilled, (state, action) => {
-                state.facetexture = state.facetexture.filter((facetexture) => facetexture.id !== action.payload.id);
+                state.facetexture = state.facetexture.filter(
+                    (facetexture) => facetexture.id !== action.payload.id,
+                );
             })
             .addCase(reorderCharacterThunk.pending, (state, action) => {
-                const indexSource = state.facetexture.findIndex((item) => item.id === action.meta.arg.id);
-                const newFacetextureList = state.facetexture.filter((item) => item.id !== action.meta.arg.id);
-                newFacetextureList.splice(action.meta.arg.indexDestination, 0, state.facetexture[indexSource]);
+                const indexSource = state.facetexture.findIndex(
+                    (item) => item.id === action.meta.arg.id,
+                );
+                const newFacetextureList = state.facetexture.filter(
+                    (item) => item.id !== action.meta.arg.id,
+                );
+                newFacetextureList.splice(
+                    action.meta.arg.indexDestination,
+                    0,
+                    state.facetexture[indexSource],
+                );
                 state.facetexture = newFacetextureList;
             })
             .addCase(reorderCharacterThunk.fulfilled, (state, action) => {
                 const dataPayload = action.payload.data;
                 for (const index in dataPayload) {
                     const data = dataPayload[index];
-                    const indexTarget = state.facetexture.findIndex((facetexture) => facetexture.id === data.id);
+                    const indexTarget = state.facetexture.findIndex(
+                        (facetexture) => facetexture.id === data.id,
+                    );
                     if (indexTarget >= 0) {
                         state.facetexture[indexTarget].order = data.order;
                         state.facetexture.sort((a, b) => a.order - b.order);
@@ -137,13 +193,16 @@ export const facetextureSlice = createSlice({
                 state.modal.newFacetexture.saving = false;
                 state.modal.newFacetexture.visible = false;
                 state.facetexture.push(action.payload.character);
-                state.modal.newFacetexture.data = initialState.modal.newFacetexture.data;
+                state.modal.newFacetexture.data =
+                    initialState.modal.newFacetexture.data;
             })
             .addCase(newCharacterThunk.rejected, (state) => {
                 state.modal.newFacetexture.saving = false;
             })
             .addCase(changeShowClassThunk.fulfilled, (state, action) => {
-                const facetextureTarget = state.facetexture.find((facetexture) => facetexture.id === action.payload.id);
+                const facetextureTarget = state.facetexture.find(
+                    (facetexture) => facetexture.id === action.payload.id,
+                );
                 if (!facetextureTarget) {
                     return;
                 }

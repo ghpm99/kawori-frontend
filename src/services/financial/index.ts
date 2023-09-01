@@ -17,7 +17,10 @@ export async function fetchDetailPaymentService(id: number) {
     return response.data;
 }
 
-export async function savePaymentDetailService(id: number, payment: ISavePaymentRequest) {
+export async function savePaymentDetailService(
+    id: number,
+    payment: ISavePaymentRequest,
+) {
     const response = await apiDjango.post(`/financial/${id}/save`, payment);
     return response.data;
 }
@@ -43,17 +46,23 @@ export async function fetchAmountPaymentReportService() {
 }
 
 export async function fetchAmountPaymentOpenReportService() {
-    const response = await apiDjango.get("/financial/report/amount_payment_open");
+    const response = await apiDjango.get(
+        "/financial/report/amount_payment_open",
+    );
     return response.data;
 }
 
 export async function fetchAmountPaymentClosedReportService() {
-    const response = await apiDjango.get("/financial/report/amount_payment_closed");
+    const response = await apiDjango.get(
+        "/financial/report/amount_payment_closed",
+    );
     return response.data;
 }
 
 export async function fetchAmountInvoiceByTagReportService() {
-    const response = await apiDjango.get("/financial/report/amount_invoice_by_tag");
+    const response = await apiDjango.get(
+        "/financial/report/amount_invoice_by_tag",
+    );
     return response.data;
 }
 
@@ -81,15 +90,24 @@ export async function fetchDetailContractService(id: number) {
     return response.data;
 }
 
-export async function fetchDetailContractInvoicesService(id: number, filters: IInvoiceFilters) {
-    const response = await apiDjango.get(`/financial/contract/${id}/invoices/`, {
-        params: filters,
-    });
+export async function fetchDetailContractInvoicesService(
+    id: number,
+    filters: IInvoiceFilters,
+) {
+    const response = await apiDjango.get(
+        `/financial/contract/${id}/invoices/`,
+        {
+            params: filters,
+        },
+    );
     return response.data;
 }
 
 export async function includeNewInvoiceService(data: INewInvoiceRequest) {
-    const response = await apiDjango.post(`/financial/contract/${data.idContract}/invoice/`, data);
+    const response = await apiDjango.post(
+        `/financial/contract/${data.idContract}/invoice/`,
+        data,
+    );
     return response.data;
 }
 
@@ -98,7 +116,10 @@ export async function fetchDetailInvoiceService(id: number) {
     return response.data;
 }
 
-export async function fetchDetailInvoicePaymentsService(id: number, filters: IPaymentFilters) {
+export async function fetchDetailInvoicePaymentsService(
+    id: number,
+    filters: IPaymentFilters,
+) {
     const response = await apiDjango.get(`/financial/invoice/${id}/payments/`, {
         params: filters,
     });
@@ -106,7 +127,10 @@ export async function fetchDetailInvoicePaymentsService(id: number, filters: IPa
 }
 
 export async function mergeContractService(data: IMergeContractRequest) {
-    const response = await apiDjango.post(`/financial/contract/${data.id}/merge/`, data);
+    const response = await apiDjango.post(
+        `/financial/contract/${data.id}/merge/`,
+        data,
+    );
     return response.data;
 }
 
@@ -120,12 +144,20 @@ export async function includeNewTagService(tag: { name: string }) {
     return response.data;
 }
 
-export async function saveInvoiceTagsService(idInvoice: number, tags: number[]) {
-    const response = await apiDjango.post(`/financial/invoice/${idInvoice}/tags`, tags);
+export async function saveInvoiceTagsService(
+    idInvoice: number,
+    tags: number[],
+) {
+    const response = await apiDjango.post(
+        `/financial/invoice/${idInvoice}/tags`,
+        tags,
+    );
     return response;
 }
 
 export async function updateAllContractsValue() {
-    const response = await apiDjango.post("/financial/update_all_contracts_value");
+    const response = await apiDjango.post(
+        "/financial/update_all_contracts_value",
+    );
     return response;
 }

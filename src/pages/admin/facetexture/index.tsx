@@ -10,7 +10,11 @@ import Preview from "../../../components/facetexture/preview";
 import LoginHeader from "../../../components/loginHeader/Index";
 import MenuAdmin from "../../../components/menuAdmin/Index";
 import { IFacetextureCharacterApi } from "../../../services/facetexture";
-import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "../../../store/features/facetexture";
+import {
+    fetchFacetexture,
+    updateBackgroundReducer,
+    updateFacetextureUrlReducer,
+} from "../../../store/features/facetexture";
 import { RootState, useAppDispatch } from "../../../store/store";
 import { db } from "../../../util/db";
 import Styles from "./Facetexture.module.scss";
@@ -22,7 +26,9 @@ function FaceTexture() {
     const router = useRouter();
 
     const dispatch = useAppDispatch();
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
 
     useEffect(() => {
         updateBackground();

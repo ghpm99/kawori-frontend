@@ -6,12 +6,17 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import ModalNew, { INewContractForm } from "../../../../components/contracts/modalNew";
+import ModalNew, {
+    INewContractForm,
+} from "../../../../components/contracts/modalNew";
 import LoadingPage from "../../../../components/loadingPage/Index";
 import LoginHeader from "../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../components/menuAdmin/Index";
 import { saveNewContractService } from "../../../../services/financial";
-import { changeVisibleContractsModal, fetchAllContract } from "../../../../store/features/financial/Index";
+import {
+    changeVisibleContractsModal,
+    fetchAllContract,
+} from "../../../../store/features/financial/Index";
 import { RootState, useAppDispatch } from "../../../../store/store";
 import { formatMoney } from "../../../../util";
 import styles from "./Contracts.module.scss";
@@ -21,7 +26,9 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function FinancialPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.contracts);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.contracts,
+    );
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -73,7 +80,11 @@ function FinancialPage() {
             title: "Id",
             dataIndex: "id",
             key: "id",
-            render: (value: any) => <Link href={`/admin/financial/contracts/details/${value}`}>{value}</Link>,
+            render: (value: any) => (
+                <Link href={`/admin/financial/contracts/details/${value}`}>
+                    {value}
+                </Link>
+            ),
         },
         {
             title: "Nome",
@@ -102,7 +113,11 @@ function FinancialPage() {
             title: "Ações",
             dataIndex: "id",
             key: "id",
-            render: (value: any) => <Link href={`/admin/financial/contracts/details/${value}`}>Detalhes</Link>,
+            render: (value: any) => (
+                <Link href={`/admin/financial/contracts/details/${value}`}>
+                    Detalhes
+                </Link>
+            ),
         },
     ];
 
@@ -125,7 +140,9 @@ function FinancialPage() {
                                 Valores em aberto
                             </Title>
                             <div>
-                                <Button icon={<PlusOutlined />} onClick={() => openModal("newPayment")}>
+                                <Button
+                                    icon={<PlusOutlined />}
+                                    onClick={() => openModal("newPayment")}>
                                     Novo
                                 </Button>
                             </div>
@@ -133,15 +150,20 @@ function FinancialPage() {
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
+                                defaultPageSize:
+                                    financialStore.filters.page_size,
                                 current: financialStore.pagination.currentPage,
-                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
+                                total:
+                                    financialStore.pagination.totalPages *
+                                    financialStore.filters.page_size,
                                 onChange: onChangePagination,
                             }}
                             columns={headerTableFinancial}
                             dataSource={financialStore.data}
                             loading={financialStore.loading}
-                            summary={(contractData) => <TableSummary contractData={contractData} />}
+                            summary={(contractData) => (
+                                <TableSummary contractData={contractData} />
+                            )}
                         />
                         <ModalNew
                             visible={financialStore.modal.newPayment.visible}
@@ -155,7 +177,11 @@ function FinancialPage() {
     );
 }
 
-function TableSummary({ contractData }: { contractData: readonly IContractPagination[] }) {
+function TableSummary({
+    contractData,
+}: {
+    contractData: readonly IContractPagination[];
+}) {
     const { Text } = Typography;
 
     let total = 0;

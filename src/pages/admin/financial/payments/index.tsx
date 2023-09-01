@@ -1,5 +1,16 @@
 import { ClearOutlined, ToTopOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, DatePicker, Input, Layout, message, Popconfirm, Select, Table, Typography } from "antd";
+import {
+    Breadcrumb,
+    Button,
+    DatePicker,
+    Input,
+    Layout,
+    message,
+    Popconfirm,
+    Select,
+    Table,
+    Typography,
+} from "antd";
 import FilterDropdown from "components/common/filterDropdown/Index";
 import LoadingPage from "components/loadingPage/Index";
 import LoginHeader from "components/loginHeader/Index";
@@ -36,7 +47,9 @@ const messageKey = "payment_pagination_message";
 
 function FinancialPage() {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const financialStore = useSelector((state: RootState) => state.financial.payments);
+    const financialStore = useSelector(
+        (state: RootState) => state.financial.payments,
+    );
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -83,8 +96,12 @@ function FinancialPage() {
     };
 
     const handleDateRangedFilter = (name: string, dates: string[]) => {
-        const dateGte = dates[0] ? dayjs(dates[0], "DD/MM/YYYY").format("YYYY-MM-DD") : null;
-        const dateLte = dates[1] ? dayjs(dates[1], "DD/MM/YYYY").format("YYYY-MM-DD") : null;
+        const dateGte = dates[0]
+            ? dayjs(dates[0], "DD/MM/YYYY").format("YYYY-MM-DD")
+            : null;
+        const dateLte = dates[1]
+            ? dayjs(dates[1], "DD/MM/YYYY").format("YYYY-MM-DD")
+            : null;
 
         dispatch(setFilterPayments({ name: `${name}__gte`, value: dateGte }));
         dispatch(setFilterPayments({ name: `${name}__lte`, value: dateLte }));
@@ -120,7 +137,11 @@ function FinancialPage() {
     };
 
     const togglePayoffModalVisible = () => {
-        dispatch(changeVisibleModalPayoffPayments(!financialStore.modal.payoff.visible));
+        dispatch(
+            changeVisibleModalPayoffPayments(
+                !financialStore.modal.payoff.visible,
+            ),
+        );
     };
 
     const openPayoffModal = () => {
@@ -157,7 +178,9 @@ function FinancialPage() {
                     dispatch(
                         changeSingleDataSourcePayoffPayments({
                             ...data,
-                            description: error.response.data.msg ?? "Falhou em processar",
+                            description:
+                                error.response.data.msg ??
+                                "Falhou em processar",
                             status: 1,
                         }),
                     );
@@ -170,7 +193,11 @@ function FinancialPage() {
             title: "ID",
             dataIndex: "id",
             key: "id",
-            render: (value: any) => <Link href={`/admin/financial/payments/details/${value}`}>{value}</Link>,
+            render: (value: any) => (
+                <Link href={`/admin/financial/payments/details/${value}`}>
+                    {value}
+                </Link>
+            ),
         },
         {
             title: "Nome",
@@ -192,7 +219,8 @@ function FinancialPage() {
             dataIndex: "contract",
             key: "contract",
             render: (value: string, record: any) => (
-                <Link href={`/admin/financial/contracts/details/${record.contract_id}`}>
+                <Link
+                    href={`/admin/financial/contracts/details/${record.contract_id}`}>
                     {`${record.contract_id} ${record.contract_name}`}
                 </Link>
             ),
@@ -223,7 +251,10 @@ function FinancialPage() {
                     <RangePicker
                         name={"payment_date"}
                         onChange={(_, formatString) => {
-                            handleDateRangedFilter("payment_date", formatString);
+                            handleDateRangedFilter(
+                                "payment_date",
+                                formatString,
+                            );
                         }}
                         format={customFormat}
                         value={[
@@ -232,11 +263,26 @@ function FinancialPage() {
                         ]}
                         ranges={{
                             Hoje: [dayjs(), dayjs()],
-                            Ontem: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")],
-                            "Últimos 7 dias": [dayjs().subtract(7, "days"), dayjs()],
-                            "Últimos 30 dias": [dayjs().subtract(30, "days"), dayjs()],
-                            "Mês atual": [dayjs().startOf("month"), dayjs().endOf("month")],
-                            "Proximo mês": [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")],
+                            Ontem: [
+                                dayjs().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
+                            ],
+                            "Últimos 7 dias": [
+                                dayjs().subtract(7, "days"),
+                                dayjs(),
+                            ],
+                            "Últimos 30 dias": [
+                                dayjs().subtract(30, "days"),
+                                dayjs(),
+                            ],
+                            "Mês atual": [
+                                dayjs().startOf("month"),
+                                dayjs().endOf("month"),
+                            ],
+                            "Proximo mês": [
+                                dayjs().add(1, "months").startOf("month"),
+                                dayjs().add(1, "months").endOf("month"),
+                            ],
                             "Mês passado": [
                                 dayjs().subtract(1, "month").startOf("month"),
                                 dayjs().subtract(1, "month").endOf("month"),
@@ -260,7 +306,9 @@ function FinancialPage() {
                             { label: "Em aberto", value: 0 },
                             { label: "Baixado", value: 1 },
                         ]}
-                        onChange={(value) => handleSelectFilter("status", value)}
+                        onChange={(value) =>
+                            handleSelectFilter("status", value)
+                        }
                         value={financialStore.filters?.status ?? ""}
                     />
                 </FilterDropdown>
@@ -299,14 +347,32 @@ function FinancialPage() {
                             handleDateRangedFilter("date", formatString);
                         }}
                         format={customFormat}
-                        value={[dayjs(financialStore.filters?.date__gte), dayjs(financialStore.filters?.date__lte)]}
+                        value={[
+                            dayjs(financialStore.filters?.date__gte),
+                            dayjs(financialStore.filters?.date__lte),
+                        ]}
                         ranges={{
                             Hoje: [dayjs(), dayjs()],
-                            Ontem: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")],
-                            "Últimos 7 dias": [dayjs().subtract(7, "days"), dayjs()],
-                            "Últimos 30 dias": [dayjs().subtract(30, "days"), dayjs()],
-                            "Mês atual": [dayjs().startOf("month"), dayjs().endOf("month")],
-                            "Proximo mês": [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")],
+                            Ontem: [
+                                dayjs().subtract(1, "days"),
+                                dayjs().subtract(1, "days"),
+                            ],
+                            "Últimos 7 dias": [
+                                dayjs().subtract(7, "days"),
+                                dayjs(),
+                            ],
+                            "Últimos 30 dias": [
+                                dayjs().subtract(30, "days"),
+                                dayjs(),
+                            ],
+                            "Mês atual": [
+                                dayjs().startOf("month"),
+                                dayjs().endOf("month"),
+                            ],
+                            "Proximo mês": [
+                                dayjs().add(1, "months").startOf("month"),
+                                dayjs().add(1, "months").endOf("month"),
+                            ],
                             "Mês passado": [
                                 dayjs().subtract(1, "month").startOf("month"),
                                 dayjs().subtract(1, "month").endOf("month"),
@@ -335,7 +401,9 @@ function FinancialPage() {
             key: "id",
             render: (value: any, record: any) => (
                 <div>
-                    <Link href={`/admin/financial/payments/details/${value}`}>Detalhes</Link>
+                    <Link href={`/admin/financial/payments/details/${value}`}>
+                        Detalhes
+                    </Link>
                     {record.status === 0 && (
                         <Popconfirm
                             title="Baixar pagamento?"
@@ -343,7 +411,9 @@ function FinancialPage() {
                             onConfirm={(event) => payOffPayment(record.id)}
                             okText="Sim"
                             cancelText="Não">
-                            <div className={styles["popconfirm-text"]}>Baixar</div>
+                            <div className={styles["popconfirm-text"]}>
+                                Baixar
+                            </div>
                         </Popconfirm>
                     )}
                 </div>
@@ -376,7 +446,9 @@ function FinancialPage() {
                                     disabled={selectedRowKeys.length === 0}>
                                     Baixar pagamentos
                                 </Button>
-                                <Button icon={<ClearOutlined />} onClick={cleanFilter}>
+                                <Button
+                                    icon={<ClearOutlined />}
+                                    onClick={cleanFilter}>
                                     Limpar filtros
                                 </Button>
                             </div>
@@ -384,9 +456,12 @@ function FinancialPage() {
                         <Table
                             pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
+                                defaultPageSize:
+                                    financialStore.filters.page_size,
                                 current: financialStore.pagination.currentPage,
-                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
+                                total:
+                                    financialStore.pagination.totalPages *
+                                    financialStore.filters.page_size,
                                 onChange: onChangePagination,
                             }}
                             columns={headerTableFinancial}
@@ -396,14 +471,20 @@ function FinancialPage() {
                                 onChange: (selectedRowKeys, selectedRows) => {
                                     setSelectedRowKeys(selectedRowKeys);
                                 },
-                                selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT, Table.SELECTION_NONE],
+                                selections: [
+                                    Table.SELECTION_ALL,
+                                    Table.SELECTION_INVERT,
+                                    Table.SELECTION_NONE,
+                                ],
                                 getCheckboxProps: (record) => ({
                                     disabled: record.status === 1,
                                 }),
                             }}
                             dataSource={financialStore.data}
                             loading={financialStore.loading}
-                            summary={(paymentData) => <TableSummary paymentData={paymentData} />}
+                            summary={(paymentData) => (
+                                <TableSummary paymentData={paymentData} />
+                            )}
                         />
                         <ModalPayoff
                             visible={financialStore.modal.payoff.visible}
@@ -418,7 +499,11 @@ function FinancialPage() {
     );
 }
 
-function TableSummary({ paymentData }: { paymentData: readonly IPaymentPagination[] }) {
+function TableSummary({
+    paymentData,
+}: {
+    paymentData: readonly IPaymentPagination[];
+}) {
     const { Text } = Typography;
 
     let total = 0;

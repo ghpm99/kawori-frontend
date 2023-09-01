@@ -3,7 +3,10 @@ import { Button, message } from "antd";
 import { saveAs } from "file-saver";
 import { useState } from "react";
 
-import { downloadFacetextureService, previewFacetextureService } from "../../../services/facetexture";
+import {
+    downloadFacetextureService,
+    previewFacetextureService,
+} from "../../../services/facetexture";
 import { db } from "../../../util/db";
 import Styles from "./Preview.module.scss";
 import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
@@ -11,7 +14,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
 const Preview = () => {
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const facetextureStore = useSelector(
+        (state: RootState) => state.facetexture,
+    );
     const [previewBackground, setPreviewBackground] = useState();
     const [loading, setLoading] = useState(false);
     const [downloading, setDownloading] = useState(false);
@@ -100,7 +105,14 @@ const Preview = () => {
                     Baixar
                 </Button>
             </div>
-            <div>{previewBackground && <img src={URL.createObjectURL(previewBackground)} alt={"preview-background"} />}</div>
+            <div>
+                {previewBackground && (
+                    <img
+                        src={URL.createObjectURL(previewBackground)}
+                        alt={"preview-background"}
+                    />
+                )}
+            </div>
         </div>
     );
 };

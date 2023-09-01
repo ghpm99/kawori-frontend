@@ -67,7 +67,11 @@ function StatusPage(): NextPageCustom {
                     </div>
                 </Content>
             </Layout>
-            <Pusher channel="private-status" event="status" onUpdate={statusEvent} />
+            <Pusher
+                channel="private-status"
+                event="status"
+                onUpdate={statusEvent}
+            />
         </Layout>
     );
 }

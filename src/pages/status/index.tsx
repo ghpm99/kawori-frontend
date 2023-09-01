@@ -17,7 +17,10 @@ export default function Status() {
             <div className={styles["body"]}>
                 <MenuHeader />
             </div>
-            <Particles options={particlesOptions as ISourceOptions} init={particlesInit} />
+            <Particles
+                options={particlesOptions as ISourceOptions}
+                init={particlesInit}
+            />
         </div>
     );
 }
