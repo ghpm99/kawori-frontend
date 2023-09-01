@@ -62,7 +62,11 @@ export default function LoginPage() {
                         backgroundColor: 'rgb(0, 0, 27, 0)',
                     }}
                 >
+<<<<<<< HEAD
                     <div style={{ maxWidth: '50%' }}>
+=======
+                    <div className={styles['card-signin']}>
+>>>>>>> dev
                         <Card title='Login'>
                             <Form
                                 name='basic'

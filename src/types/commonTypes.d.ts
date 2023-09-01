@@ -15,7 +15,11 @@ type PagePusher = {
     name: string
 }
 
+<<<<<<< HEAD
 type NextPageCustom<P = Record<string, never>, IP = P> = NextPage<P, IP> & {
+=======
+type NextPageCustom<P = {}, IP = P> = NextPage<P, IP> & {
+>>>>>>> dev
     auth?: PageAuth
     pusher?: PagePusher
 }

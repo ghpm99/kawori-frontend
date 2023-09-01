@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { updateBackgroundReducer } from '../../../store/features/facetexture'
 import { RootState, useAppDispatch } from '../../../store/store'
 import { db } from '../../../util/db'
-import Styles from './Background.module.scss'
+import styles from './Background.module.scss'
 
 const Background = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture)
@@ -23,11 +23,11 @@ const Background = () => {
     }
 
     return (
-        <div className={Styles['background-container']}>
+        <div className={styles['background-container']}>
             <h1>Background</h1>
             <div>
-                <img src={facetextureStore.backgroundUrl} alt={'background'} />
-                <ImgCrop showReset rotationSlider aspect={4 / 3}>
+                <img className={styles['background']} src={facetextureStore.backgroundUrl} alt={'background'} />
+                <ImgCrop showReset rotationSlider aspect={920 / 837}>
                     <Dragger fileList={[]} beforeUpload={uploadNewBackground} maxCount={1}>
                         <div>
                             <p className='ant-upload-drag-icon'>

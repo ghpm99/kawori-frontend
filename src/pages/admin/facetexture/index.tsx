@@ -9,10 +9,16 @@ import Loading from '../../../components/facetexture/loading'
 import Preview from '../../../components/facetexture/preview'
 import LoginHeader from '../../../components/loginHeader/Index'
 import MenuAdmin from '../../../components/menuAdmin/Index'
+<<<<<<< HEAD
 import { IFacetextureCharacterApi, updateFacetextureService } from '../../../services/facetexture'
 import {
     fetchFacetexture,
     setFacetextureIsEdited,
+=======
+import { IFacetextureCharacterApi } from '../../../services/facetexture'
+import {
+    fetchFacetexture,
+>>>>>>> dev
     updateBackgroundReducer,
     updateFacetextureUrlReducer,
 } from '../../../store/features/facetexture'
@@ -21,10 +27,16 @@ import { db } from '../../../util/db'
 import Styles from './Facetexture.module.scss'
 
 const { Header, Content } = Layout
+<<<<<<< HEAD
 
 function FaceTexture() {
     const messageRef = 'facetexture-message-ref'
 
+=======
+export const FACETEXTURE_MESSAGE_REF = 'facetexture-message-ref'
+
+function FaceTexture() {
+>>>>>>> dev
     const router = useRouter()
 
     const dispatch = useAppDispatch()
@@ -45,11 +57,16 @@ function FaceTexture() {
                 }
             }
             payload.characters.forEach((value, index) => {
+<<<<<<< HEAD
                 updateCharacterImage(index, value.name)
+=======
+                updateCharacterImage(value.id, value.name)
+>>>>>>> dev
             })
         })
     }, [])
 
+<<<<<<< HEAD
     useEffect(() => {
         if (facetextureStore.error) {
             router.replace('/error')
@@ -77,6 +94,8 @@ function FaceTexture() {
         }
     }, [facetextureStore.edited])
 
+=======
+>>>>>>> dev
     const updateBackground = async () => {
         const background = (await db.background.toArray())[0]
 
@@ -85,7 +104,11 @@ function FaceTexture() {
         if (background) {
             backgroundImage = URL.createObjectURL(background.image)
         } else {
+<<<<<<< HEAD
             backgroundImage = '/media/default-background.png'
+=======
+            backgroundImage = '/media/background.jpg'
+>>>>>>> dev
             const blob = await fetch(backgroundImage).then((r) => r.blob())
             await db.background.add({
                 image: blob,
@@ -100,7 +123,11 @@ function FaceTexture() {
             const imageUrl = URL.createObjectURL(image.imagem)
             dispatch(
                 updateFacetextureUrlReducer({
+<<<<<<< HEAD
                     index: index,
+=======
+                    id: index,
+>>>>>>> dev
                     image: imageUrl,
                 }),
             )
@@ -111,12 +138,20 @@ function FaceTexture() {
         if (facetextureStore.loading) {
             message.loading({
                 content: 'Carregando',
+<<<<<<< HEAD
                 key: 'loading-msg',
+=======
+                key: FACETEXTURE_MESSAGE_REF,
+>>>>>>> dev
             })
         } else {
             message.success({
                 content: 'Carregado!',
+<<<<<<< HEAD
                 key: 'loading-msg',
+=======
+                key: FACETEXTURE_MESSAGE_REF,
+>>>>>>> dev
             })
         }
     }, [facetextureStore.loading])
@@ -137,6 +172,19 @@ function FaceTexture() {
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Facetexture</Breadcrumb.Item>
                     </Breadcrumb>
+<<<<<<< HEAD
+=======
+                    <div className={Styles['help-text']}>
+                        Perdido? Precisa de ajuda? Assista agora o{' '}
+                        <a target='_blank' href='https://youtu.be/_el6fCfvzXQ'>
+                            <strong>guia em video</strong>
+                        </a>{' '}
+                        ou entre em{' '}
+                        <a target='_blank' href='https://discord.gg/fykNkXyn2r'>
+                            <strong>nosso discord.</strong>
+                        </a>
+                    </div>
+>>>>>>> dev
                     <div className={Styles['container-toolkit']}>
                         <Characters />
                         <Background />

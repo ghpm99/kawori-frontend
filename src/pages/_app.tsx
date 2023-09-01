@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import '../../styles/globals.scss'
 import 'antd/dist/reset.css'
 
 import { Analytics } from '@vercel/analytics/react'
+=======
+import 'antd/dist/reset.css'
+import '../../styles/globals.scss'
+
+>>>>>>> dev
 import { ConfigProvider } from 'antd'
 import ptBr from 'antd/lib/locale/pt_BR'
 import { NextComponentType, NextPageContext } from 'next'
@@ -15,9 +21,17 @@ import PusherProvider from '../components/pusherProvider/Index'
 import { store } from '../store/store'
 import { NextPageCustom } from '../types/commonTypes'
 
+<<<<<<< HEAD
 type NextComponentCustom = NextComponentType<NextPageContext, any, Record<string, never>> & Partial<NextPageCustom>
 
 type ExtendedAppProps<P = Record<string, never>> = AppProps<P> &
+=======
+import { Analytics } from '@vercel/analytics/react'
+
+type NextComponentCustom = NextComponentType<NextPageContext, any, {}> & Partial<NextPageCustom>
+
+type ExtendedAppProps<P = {}> = AppProps<P> &
+>>>>>>> dev
     Partial<{
         Component: NextComponentCustom
         pageProps: any

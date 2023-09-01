@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+<<<<<<< HEAD
     reactStrictMode: false,
 };
 
@@ -41,3 +42,9 @@ module.exports = withSentryConfig(
         disableLogger: true,
     },
 );
+=======
+  reactStrictMode: false,
+}
+
+module.exports = nextConfig
+>>>>>>> dev

@@ -5,7 +5,11 @@ import { getSession } from 'next-auth/react'
 import LoadingPage from '../../../components/loadingPage/Index'
 import LoginHeader from '../../../components/loginHeader/Index'
 import MenuAdmin from '../../../components/menuAdmin/Index'
+<<<<<<< HEAD
 import { errorService, updateAllContractsValue } from '../../../services/financial'
+=======
+import { updateAllContractsValue } from '../../../services/financial'
+>>>>>>> dev
 import styles from './Server.module.scss'
 
 const { Header, Content } = Layout
@@ -24,12 +28,15 @@ function ServerPage() {
         })
     }
 
+<<<<<<< HEAD
     const eventError = () => {
         errorService().then((e) => {
             console.log(e)
         })
     }
 
+=======
+>>>>>>> dev
     return (
         <Layout className={styles.container}>
             <MenuAdmin selected={['server']} />
@@ -48,11 +55,14 @@ function ServerPage() {
                                 Calcular valores contratos
                             </Button>
                         </div>
+<<<<<<< HEAD
                         <div className={styles['button-container']}>
                             <Button type='primary' onClick={eventError}>
                                 Disparar error
                             </Button>
                         </div>
+=======
+>>>>>>> dev
                     </Layout>
                 </Content>
             </Layout>
