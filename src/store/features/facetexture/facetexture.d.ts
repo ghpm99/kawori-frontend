@@ -1,74 +1,74 @@
 interface IFacetextureState {
-    loading: boolean
-    class: IClass[]
-    facetexture: IFacetexture[]
-    selected?: number
-    backgroundUrl: string
-    edited: boolean
-    error: boolean
-    modal: IFacetextureModalState
+    loading: boolean;
+    class: IClass[];
+    facetexture: IFacetexture[];
+    selected?: number;
+    backgroundUrl: string;
+    edited: boolean;
+    error: boolean;
+    modal: IFacetextureModalState;
 }
 
 interface IClass {
-    id: number
-    name: string
-    abbreviation: string
-    class_image: string
+    id: number;
+    name: string;
+    abbreviation: string;
+    class_image: string;
 }
 
 interface IFacetexture {
-    id: number
-    name: string
+    id: number;
+    name: string;
     class: {
-        id: number
-        name: string
-        abbreviation: string
-        class_image: string
-    }
-    show: boolean
-    image: string
-    order: number
+        id: number;
+        name: string;
+        abbreviation: string;
+        class_image: string;
+    };
+    show: boolean;
+    image: string;
+    order: number;
 }
 
 interface IFacetextureModalState {
-    newFacetexture: INewFacetextureModal
+    newFacetexture: INewFacetextureModal;
 }
 
 interface INewFacetextureModal {
-    visible: boolean
-    saving: boolean
-    data: INewFacetextureData
+    visible: boolean;
+    saving: boolean;
+    data: INewFacetextureData;
 }
 
 interface INewFacetextureData {
-    name: string
-    classId: number
-    visible: boolean
+    name: string;
+    classId: number;
+    visible: boolean;
 }
 
 interface IReorderCharacterAction {
-    indexSource: number
-    indexDestination: number
+    indexSource: number;
+    indexDestination: number;
 }
 
 interface IUpdateFacetextureUrlAction {
-    id: number
-    image: string
+    id: number;
+    image: string;
 }
 
 interface IUpdateCharacterClassAction {
-    classId: number
+    classId: number;
 }
 
 interface IUpdateCharacterVisibleClassAction {
-    visible: boolean
+    visible: boolean;
 }
 
 interface IUpdateCharacterImageNameAction {
-    name: string
+    name: string;
 }
 
 type changeModalVisible = {
-    modal: keyof IFacetextureModalState
-    visible: boolean
-}
+    modal: keyof IFacetextureModalState;
+    visible: boolean;
+};

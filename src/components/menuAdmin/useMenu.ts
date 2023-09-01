@@ -1,21 +1,21 @@
-import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const useMenu = () => {
-    const { status, data } = useSession()
+    const { status, data } = useSession();
 
-    const [collapsed, setCollapsed] = useState<boolean>()
+    const [collapsed, setCollapsed] = useState<boolean>();
 
     const toggleCollapsed = () => {
-        setCollapsed((prev) => !prev)
-    }
+        setCollapsed((prev) => !prev);
+    };
 
     return {
         status,
         data: data,
         collapsed,
         toggleCollapsed,
-    }
-}
+    };
+};
 
-export default useMenu
+export default useMenu;

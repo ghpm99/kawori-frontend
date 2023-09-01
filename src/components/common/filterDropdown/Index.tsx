@@ -1,22 +1,22 @@
-import { Button } from 'antd'
-import React from 'react'
+import { Button } from "antd";
+import React from "react";
 
-import styles from './filterDropdown.module.scss'
+import styles from "./filterDropdown.module.scss";
 
 interface IFilterDropdownProps {
-    applyFilter: React.MouseEventHandler<HTMLElement>
-    children: React.ReactNode
+    applyFilter: React.MouseEventHandler<HTMLElement>;
+    children: React.ReactNode;
 }
 
 const FilterDropdown = (props: IFilterDropdownProps) => {
     return (
-        <div className={styles['filter-dropdown']}>
+        <div className={styles["filter-dropdown"]}>
             {props.children}
-            <Button type='link' size='small' onClick={props.applyFilter}>
+            <Button type="link" size="small" onClick={props.applyFilter}>
                 Aplicar
             </Button>
         </div>
-    )
-}
+    );
+};
 
-export default FilterDropdown
+export default FilterDropdown;

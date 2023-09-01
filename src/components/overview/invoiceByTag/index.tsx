@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
-import { Bar } from 'react-chartjs-2'
+import { useEffect } from "react";
+import { Bar } from "react-chartjs-2";
 
-import styles from './invoiceByTag.module.scss'
+import styles from "./invoiceByTag.module.scss";
 
 interface IInvoiceByTagProps {
-    datasets: IInvoiceByTag[]
+    datasets: IInvoiceByTag[];
 }
 
 const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
@@ -12,31 +12,31 @@ const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
         label: item.name,
         data: [item.amount],
         backgroundColor: item.color,
-    }))
+    }));
 
     const options = {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top' as const,
+                position: "top" as const,
             },
             title: {
                 display: true,
-                text: 'Valores por tag',
+                text: "Valores por tag",
             },
         },
-    }
+    };
 
     const data = {
-        labels: ['Tag'],
+        labels: ["Tag"],
         datasets: dataset,
-    }
+    };
 
     return (
-        <div className={styles['chart-container']}>
-            <Bar data={data} options={options} width={400} style={{ background: 'white', height: '100%' }} />
+        <div className={styles["chart-container"]}>
+            <Bar data={data} options={options} width={400} style={{ background: "white", height: "100%" }} />
         </div>
-    )
-}
+    );
+};
 
-export default InvoiceByTag
+export default InvoiceByTag;
