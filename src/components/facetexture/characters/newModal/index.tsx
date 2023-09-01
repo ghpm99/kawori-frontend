@@ -27,7 +27,7 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
     const disableOkButton = () => {
         const classInvalid = facetextureStore.modal.newFacetexture.data.classId === 0;
         const fileNameInvalid = facetextureStore.modal.newFacetexture.data.name.length <= 5;
-        return classInvalid && fileNameInvalid;
+        return classInvalid || fileNameInvalid;
     };
 
     const updateCharacterClass = (value: number) => {
