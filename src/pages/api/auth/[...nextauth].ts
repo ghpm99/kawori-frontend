@@ -1,7 +1,7 @@
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
-import { fetchUserDetails, signinService } from "../../../services/auth"
+import { fetchUserDetails, signinService } from "../../../services/auth";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 

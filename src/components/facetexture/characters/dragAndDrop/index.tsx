@@ -1,9 +1,17 @@
-import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd"
-import { useSelector } from "react-redux"
+import {
+    DragDropContext,
+    Draggable,
+    Droppable,
+    DropResult,
+} from "react-beautiful-dnd";
+import { useSelector } from "react-redux";
 
-import { reorderCharacterReducer, setSelectedFacetextureReducer } from "../../../../store/features/facetexture"
-import { RootState, useAppDispatch } from "../../../../store/store"
-import Styles from "./DnDCharacters.module.scss"
+import {
+    reorderCharacterReducer,
+    setSelectedFacetextureReducer,
+} from "../../../../store/features/facetexture";
+import { RootState, useAppDispatch } from "../../../../store/store";
+import Styles from "./DnDCharacters.module.scss";
 
 const DragAndDropCharacters = () => {
     const facetextureStore = useSelector(
@@ -11,9 +19,7 @@ const DragAndDropCharacters = () => {
     );
     const dispatch = useAppDispatch();
 
-    const onDragEnd = async (
-        result: DropResult,
-    ) => {
+    const onDragEnd = async (result: DropResult) => {
         if (!result.destination) {
             return;
         }
