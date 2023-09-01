@@ -12,5 +12,11 @@
     "autoDocstring.quoteStyle": "'''",
     "emmet.showSuggestionsAsSnippets": true,
     "editor.suggestSelection": "recentlyUsedByPrefix",
-    "svg.preview.background": "dark-transparent"
+    "svg.preview.background": "dark-transparent",
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/.hg/store/**": true
+    }
 }
