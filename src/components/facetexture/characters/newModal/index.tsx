@@ -81,6 +81,8 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
             });
     };
 
+    const classSelectOption = facetextureStore.modal.newFacetexture.data.classId == 0 ? undefined: facetextureStore.modal.newFacetexture.data.classId;
+
     return (
         <Modal
             title="Criar novo personagem"
@@ -103,6 +105,7 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
                         label: item.name,
                     }))}
                     onChange={(value: number) => updateCharacterClass(value)}
+                    value={classSelectOption}
                     style={{
                         width: "100%",
                     }}
