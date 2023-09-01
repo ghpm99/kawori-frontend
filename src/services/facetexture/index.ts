@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit'
 import { apiDjango } from '..'
 
 interface IFacetextureApi {
@@ -5,6 +6,10 @@ interface IFacetextureApi {
 }
 
 export interface IFacetextureCharacterApi {
+<<<<<<< HEAD
+=======
+    id: number
+>>>>>>> dev
     name: string
     class: {
         id: number
@@ -13,17 +18,25 @@ export interface IFacetextureCharacterApi {
         class_image: string
     }
     show: boolean
+<<<<<<< HEAD
     image: any
+=======
+    image: {}
+    order: number
+>>>>>>> dev
 }
 
 export async function fetchFacetextureService() {
     const response = await apiDjango.get('/facetexture/')
     return response.data as IFacetextureApi
+<<<<<<< HEAD
 }
 
 export async function updateFacetextureService(characters: updateFacetexturePayload) {
     const response = await apiDjango.post('/facetexture/save', characters)
     return response.data
+=======
+>>>>>>> dev
 }
 
 export async function fetchFaceTextureClassService() {
@@ -42,7 +55,10 @@ export async function previewFacetextureService(args: any) {
             },
         },
     )
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
     return response.data
 }
 
@@ -59,3 +75,78 @@ export async function downloadFacetextureService(args: any) {
     )
     return response.data
 }
+<<<<<<< HEAD
+=======
+
+export const newCharacterThunk = createAsyncThunk(
+    'facetexture/NewCharacter',
+    async (facetexture: INewFacetextureData) => {
+        const response = await apiDjango.post('facetexture/new', facetexture)
+        const data = await response.data
+        return data
+    },
+)
+
+export const reorderCharacterThunk = createAsyncThunk(
+    'facetexture/reorderCharacter',
+    async ({ id, indexDestination }: { id: number; indexDestination: number }) => {
+        const response = await apiDjango.post(`facetexture/${id}/reorder`, {
+            index_destination: indexDestination,
+        })
+        const data = await response.data
+        return data
+    },
+)
+
+export const changeClassCharacterThunk = createAsyncThunk(
+    'facetexture/changeClassCharacter',
+    async ({ id, classId }: { id: number; classId: number }) => {
+        const response = await apiDjango.post(`facetexture/${id}/change-class`, {
+            new_class: classId,
+        })
+        const data = await response.data
+        return {
+            data,
+            id,
+        }
+    },
+)
+
+export const changeCharacterNameThunk = createAsyncThunk(
+    'facetexture/changeCharacterName',
+    async ({ id, name }: { id: number; name: string }) => {
+        const response = await apiDjango.post(`facetexture/${id}/change-name`, {
+            name: name,
+        })
+        const data = await response.data
+        return {
+            data,
+            id,
+        }
+    },
+)
+
+export const changeShowClassThunk = createAsyncThunk(
+    'facetexture/changeShowClass',
+    async ({ id, visible }: { id: number; visible: boolean }) => {
+        const response = await apiDjango.post(`facetexture/${id}/change-visible`, {
+            show: visible,
+        })
+        const data = await response.data
+        return {
+            data,
+            id,
+            visible,
+        }
+    },
+)
+
+export const deleteCharacterThunk = createAsyncThunk('facetexture/deleteCharacter', async (id: number) => {
+    const response = await apiDjango.post(`facetexture/${id}/delete`)
+    const data = await response.data
+    return {
+        data,
+        id,
+    }
+})
+>>>>>>> dev

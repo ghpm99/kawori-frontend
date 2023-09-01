@@ -6,6 +6,10 @@ interface IFacetextureState {
     backgroundUrl: string
     edited: boolean
     error: boolean
+<<<<<<< HEAD
+=======
+    modal: IFacetextureModalState
+>>>>>>> dev
 }
 
 interface IClass {
@@ -16,6 +20,10 @@ interface IClass {
 }
 
 interface IFacetexture {
+<<<<<<< HEAD
+=======
+    id: number
+>>>>>>> dev
     name: string
     class: {
         id: number
@@ -25,6 +33,26 @@ interface IFacetexture {
     }
     show: boolean
     image: string
+<<<<<<< HEAD
+=======
+    order: number
+}
+
+interface IFacetextureModalState {
+    newFacetexture: INewFacetextureModal
+}
+
+interface INewFacetextureModal {
+    visible: boolean
+    saving: boolean
+    data: INewFacetextureData
+}
+
+interface INewFacetextureData {
+    name: string
+    classId: number
+    visible: boolean
+>>>>>>> dev
 }
 
 interface IReorderCharacterAction {
@@ -33,11 +61,16 @@ interface IReorderCharacterAction {
 }
 
 interface IUpdateFacetextureUrlAction {
+<<<<<<< HEAD
     index: number
+=======
+    id: number
+>>>>>>> dev
     image: string
 }
 
 interface IUpdateCharacterClassAction {
+<<<<<<< HEAD
     index: number
     class: number
 }
@@ -51,3 +84,20 @@ interface IUpdateCharacterImageNameAction {
     index: number
     name: string
 }
+=======
+    classId: number
+}
+
+interface IUpdateCharacterVisibleClassAction {
+    visible: boolean
+}
+
+interface IUpdateCharacterImageNameAction {
+    name: string
+}
+
+type changeModalVisible = {
+    modal: keyof IFacetextureModalState
+    visible: boolean
+}
+>>>>>>> dev

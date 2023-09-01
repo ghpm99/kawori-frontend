@@ -3,3 +3,13 @@
     text-align: center;
     margin-bottom: 14px;
 }
+<<<<<<< HEAD
+=======
+
+.card-signin{
+    max-width: 50%;
+    @media screen and (max-width: 600px) {
+        max-width: none;
+    }
+}
+>>>>>>> dev

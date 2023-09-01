@@ -41,7 +41,10 @@ function TagPage() {
         }
 
         includeNewTagService(newTag).then((e) => {
+<<<<<<< HEAD
             console.log(e)
+=======
+>>>>>>> dev
             message.success(e.msg)
             closeModal('newTag')
             dispatch(fetchTags())
