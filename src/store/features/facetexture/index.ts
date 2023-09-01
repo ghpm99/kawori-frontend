@@ -47,7 +47,6 @@ export const facetextureSlice = createSlice({
     reducers: {
         updateFacetextureUrlReducer: (state: IFacetextureState, action: PayloadAction<IUpdateFacetextureUrlAction>) => {
             const index = state.facetexture.findIndex((face) => face.id === action.payload.id);
-            console.log('index')
             state.facetexture[index].image = action.payload.image;
         },
         updateBackgroundReducer: (state: IFacetextureState, action: PayloadAction<string>) => {
@@ -138,6 +137,7 @@ export const facetextureSlice = createSlice({
                 state.modal.newFacetexture.saving = false;
                 state.modal.newFacetexture.visible = false;
                 state.facetexture.push(action.payload.character);
+                state.modal.newFacetexture.data = initialState.modal.newFacetexture.data
             })
             .addCase(newCharacterThunk.rejected, (state) => {
                 state.modal.newFacetexture.saving = false;

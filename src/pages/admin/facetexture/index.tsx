@@ -65,7 +65,6 @@ function FaceTexture() {
         const image = await db.image.where("name").equals(name).first();
         if (image) {
             const imageUrl = URL.createObjectURL(image.imagem);
-            console.log(index, name, imageUrl);
             dispatch(
                 updateFacetextureUrlReducer({
                     id: index,
