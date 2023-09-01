@@ -6,10 +6,7 @@ interface IFacetextureApi {
 }
 
 export interface IFacetextureCharacterApi {
-<<<<<<< HEAD
-=======
     id: number
->>>>>>> dev
     name: string
     class: {
         id: number
@@ -18,25 +15,13 @@ export interface IFacetextureCharacterApi {
         class_image: string
     }
     show: boolean
-<<<<<<< HEAD
-    image: any
-=======
     image: {}
     order: number
->>>>>>> dev
 }
 
 export async function fetchFacetextureService() {
     const response = await apiDjango.get('/facetexture/')
     return response.data as IFacetextureApi
-<<<<<<< HEAD
-}
-
-export async function updateFacetextureService(characters: updateFacetexturePayload) {
-    const response = await apiDjango.post('/facetexture/save', characters)
-    return response.data
-=======
->>>>>>> dev
 }
 
 export async function fetchFaceTextureClassService() {
@@ -55,10 +40,6 @@ export async function previewFacetextureService(args: any) {
             },
         },
     )
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
     return response.data
 }
 
@@ -75,8 +56,6 @@ export async function downloadFacetextureService(args: any) {
     )
     return response.data
 }
-<<<<<<< HEAD
-=======
 
 export const newCharacterThunk = createAsyncThunk(
     'facetexture/NewCharacter',
@@ -149,4 +128,3 @@ export const deleteCharacterThunk = createAsyncThunk('facetexture/deleteCharacte
         id,
     }
 })
->>>>>>> dev

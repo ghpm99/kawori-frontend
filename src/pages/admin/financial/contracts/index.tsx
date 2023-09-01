@@ -47,10 +47,6 @@ function FinancialPage() {
         }
 
         saveNewContractService(newContract).then((e) => {
-<<<<<<< HEAD
-            console.log(e)
-=======
->>>>>>> dev
             message.success(e.msg)
             closeModal('newPayment')
             dispatch(

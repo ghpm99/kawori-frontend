@@ -129,11 +129,3 @@ export async function updateAllContractsValue() {
     const response = await apiDjango.post('/financial/update_all_contracts_value')
     return response
 }
-<<<<<<< HEAD
-
-export async function errorService() {
-    const response = await apiDjango.get('/error/')
-    return response
-}
-=======
->>>>>>> dev
