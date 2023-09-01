@@ -5,6 +5,8 @@ import { reorderCharacterThunk } from "services/facetexture";
 import { setSelectedFacetextureReducer } from "../../../../store/features/facetexture";
 import { RootState, useAppDispatch } from "../../../../store/store";
 import Styles from "./DnDCharacters.module.scss";
+import { message } from "antd";
+import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 
 const DragAndDropCharacters = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
@@ -24,14 +26,31 @@ const DragAndDropCharacters = () => {
             return;
         }
 
+        message.loading({
+            content: "Alterando ordem",
+            key: FACETEXTURE_MESSAGE_REF,
+        });
+
         dispatch(
             reorderCharacterThunk({
                 id: facetextureSource.id,
                 indexDestination,
             }),
-        ).catch((e) => {
-            console.log(e);
-        });
+        )
+            .then((value) => {
+                if (value.type.includes("fulfilled")) {
+                    message.success({
+                        content: "Ordem alterada com sucesso!",
+                        key: FACETEXTURE_MESSAGE_REF,
+                    });
+                }
+            })
+            .catch((e) => {
+                message.error({
+                    content: "Falhou em alterar ordem!",
+                    key: FACETEXTURE_MESSAGE_REF,
+                });
+            });
     };
 
     const setSelectedCharacter = (id: number) => {
