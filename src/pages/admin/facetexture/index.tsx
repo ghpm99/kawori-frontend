@@ -10,11 +10,7 @@ import Preview from "../../../components/facetexture/preview";
 import LoginHeader from "../../../components/loginHeader/Index";
 import MenuAdmin from "../../../components/menuAdmin/Index";
 import { IFacetextureCharacterApi } from "../../../services/facetexture";
-import {
-    fetchFacetexture,
-    updateBackgroundReducer,
-    updateFacetextureUrlReducer
-} from "../../../store/features/facetexture";
+import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "../../../store/features/facetexture";
 import { RootState, useAppDispatch } from "../../../store/store";
 import { db } from "../../../util/db";
 import Styles from "./Facetexture.module.scss";
@@ -69,7 +65,7 @@ function FaceTexture() {
         const image = await db.image.where("name").equals(name).first();
         if (image) {
             const imageUrl = URL.createObjectURL(image.imagem);
-            console.log(index, name, imageUrl)
+            console.log(index, name, imageUrl);
             dispatch(
                 updateFacetextureUrlReducer({
                     id: index,
@@ -109,6 +105,16 @@ function FaceTexture() {
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Facetexture</Breadcrumb.Item>
                     </Breadcrumb>
+                    <div className={Styles["help-text"]}>
+                        Perdido? Precisa de ajuda? Assista agora o{" "}
+                        <a target="_blank" href="https://youtu.be/_el6fCfvzXQ">
+                            <strong>guia em video</strong>
+                        </a>{" "}
+                        ou entre em{" "}
+                        <a target="_blank" href="https://discord.gg/fykNkXyn2r">
+                            <strong>nosso discord.</strong>
+                        </a>
+                    </div>
                     <div className={Styles["container-toolkit"]}>
                         <Characters />
                         <Background />
