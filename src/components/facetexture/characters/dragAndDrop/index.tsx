@@ -1,37 +1,24 @@
-import {
-    DragDropContext,
-    Draggable,
-    Droppable,
-    DropResult,
-} from "react-beautiful-dnd";
-import { useSelector } from "react-redux";
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
+import { useSelector } from 'react-redux'
 
-import {
-    reorderCharacterReducer,
-    setSelectedFacetextureReducer,
-} from "../../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import Styles from "./DnDCharacters.module.scss";
+import { reorderCharacterReducer, setSelectedFacetextureReducer } from '../../../../store/features/facetexture'
+import { RootState, useAppDispatch } from '../../../../store/store'
+import Styles from './DnDCharacters.module.scss'
 
 const DragAndDropCharacters = () => {
-    const facetextureStore = useSelector(
-        (state: RootState) => state.facetexture,
-    );
-    const dispatch = useAppDispatch();
+    const facetextureStore = useSelector((state: RootState) => state.facetexture)
+    const dispatch = useAppDispatch()
 
     const onDragEnd = async (result: DropResult) => {
         if (!result.destination) {
-            return;
+            return
         }
 
-        const indexSource =
-            result.source.index + parseInt(result.source.droppableId) * 7;
-        const indexDestination =
-            result.destination.index +
-            parseInt(result.destination.droppableId) * 7;
+        const indexSource = result.source.index + parseInt(result.source.droppableId) * 7
+        const indexDestination = result.destination.index + parseInt(result.destination.droppableId) * 7
 
         if (!indexDestination) {
-            return;
+            return
         }
 
         dispatch(
@@ -39,60 +26,56 @@ const DragAndDropCharacters = () => {
                 indexSource,
                 indexDestination,
             }),
-        );
-    };
+        )
+    }
 
     const setSelectedCharacter = (id: number) => {
-        dispatch(setSelectedFacetextureReducer(id));
-    };
+        dispatch(setSelectedFacetextureReducer(id))
+    }
 
     function listToMatrix(list: IFacetexture[], elementsPerSubArray: number) {
-        const matrix = [];
+        const matrix = []
         let i = 0,
-            k = 0;
+            k = 0
 
         for (i = 0, k = -1; i < list.length; i++) {
             if (i % elementsPerSubArray === 0) {
-                k++;
-                const emptyArray: IFacetexture[] = [];
-                matrix[k] = emptyArray;
+                k++
+                const emptyArray: IFacetexture[] = []
+                matrix[k] = emptyArray
             }
-            matrix[k].push(list[i]);
+            matrix[k].push(list[i])
         }
-        return matrix;
+        return matrix
     }
 
-    const facetextureMatrix = listToMatrix(facetextureStore.facetexture, 7);
+    const facetextureMatrix = listToMatrix(facetextureStore.facetexture, 7)
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             {facetextureMatrix.map((row, indexRow) => (
-                <Droppable
-                    key={indexRow}
-                    droppableId={`${indexRow}`}
-                    direction="horizontal">
+                <Droppable key={indexRow} droppableId={`${indexRow}`} direction='horizontal'>
                     {(provided) => (
                         <div
                             ref={provided.innerRef}
-                            className={Styles["characters-container"]}
-                            {...provided.droppableProps}>
+                            className={Styles['characters-container']}
+                            {...provided.droppableProps}
+                        >
                             {row.map((character, index) => (
                                 <Draggable
                                     key={`${indexRow}-${index}`}
                                     draggableId={`${indexRow}-${index}`}
-                                    index={index}>
+                                    index={index}
+                                >
                                     {(provided) => (
                                         <div
                                             ref={provided.innerRef}
                                             {...provided.dragHandleProps}
                                             {...provided.draggableProps}
                                             key={`${indexRow}-${index}`}
-                                            className={Styles["character"]}
-                                            onClick={() =>
-                                                setSelectedCharacter(
-                                                    indexRow * 7 + index,
-                                                )
-                                            }>
+                                            className={Styles['character']}
+                                            onClick={() => setSelectedCharacter(indexRow * 7 + index)}
+                                        >
                                             {character.image && (
                                                 <img
                                                     src={character.image}
@@ -111,7 +94,7 @@ const DragAndDropCharacters = () => {
                 </Droppable>
             ))}
         </DragDropContext>
-    );
-};
+    )
+}
 
-export default DragAndDropCharacters;
+export default DragAndDropCharacters
