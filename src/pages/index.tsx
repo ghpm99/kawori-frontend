@@ -9,24 +9,18 @@ export default function Home() {
                 <MenuHeader />
                 <div className={styles["body"]}>
                     <h1 className={styles["title"]}>
-                        Você está a apenas um passo de um novo nivel de
-                        personalização do seu jogo!
+                        Você está a apenas um passo de um novo nivel de personalização do seu jogo!
                     </h1>
                     <div className={styles["signup-container"]}>
                         <div className={styles["text-container"]}>
-                            <h1 className={styles["signup-text"]}>
-                                O cadastro é gratuito, simples e rapido.
-                            </h1>
+                            <h1 className={styles["signup-text"]}>O cadastro é gratuito, simples e rapido.</h1>
                         </div>
                         <div className={styles["signup-form"]}>
                             <div className={styles["form-title"]}>Cadastro</div>
                             <SingupForm />
                         </div>
                         <div className={styles["text-container"]}>
-                            <h1 className={styles["signup-text"]}>
-                                Cadastre-se e estilize sua tela de seleção agora
-                                mesmo!
-                            </h1>
+                            <h1 className={styles["signup-text"]}>Cadastre-se e estilize sua tela de seleção agora mesmo!</h1>
                         </div>
                     </div>
                     <div className={styles["footer-text"]}>

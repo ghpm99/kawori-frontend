@@ -70,11 +70,7 @@ export default function LoginPage() {
                                 onFinish={onFinish}
                                 onFinishFailed={onFinishFailed}
                                 autoComplete="off">
-                                {error && (
-                                    <div className={styles["error"]}>
-                                        Usuario ou senha incorretos
-                                    </div>
-                                )}
+                                {error && <div className={styles["error"]}>Usuario ou senha incorretos</div>}
 
                                 <Form.Item
                                     label="Usuario"
@@ -82,8 +78,7 @@ export default function LoginPage() {
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                "Por favor insira seu usuario!",
+                                            message: "Por favor insira seu usuario!",
                                         },
                                     ]}>
                                     <Input />
@@ -95,17 +90,13 @@ export default function LoginPage() {
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                "Por favor insira sua senha!",
+                                            message: "Por favor insira sua senha!",
                                         },
                                     ]}>
                                     <Input.Password />
                                 </Form.Item>
 
-                                <Form.Item
-                                    name="remember"
-                                    valuePropName="checked"
-                                    wrapperCol={{ offset: 8, span: 16 }}>
+                                <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
                                     <Checkbox>Lembrar-se de mim</Checkbox>
                                 </Form.Item>
 
@@ -119,10 +110,7 @@ export default function LoginPage() {
                     </div>
                 </Layout>
             </Content>
-            <Particles
-                options={particlesOptions as ISourceOptions}
-                init={particlesInit}
-            />
+            <Particles options={particlesOptions as ISourceOptions} init={particlesInit} />
         </Layout>
     );
 }

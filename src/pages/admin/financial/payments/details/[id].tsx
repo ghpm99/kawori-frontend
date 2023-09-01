@@ -1,18 +1,18 @@
-import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from 'antd'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { Content, Header } from 'antd/lib/layout/layout'
-import dayjs from 'dayjs'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { Content, Header } from "antd/lib/layout/layout";
+import dayjs from "dayjs";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import LoadingPage from '../../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../../components/menuAdmin/Index'
-import { payoffPaymentService, savePaymentDetailService } from '../../../../../services/financial'
+import LoadingPage from "../../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../../components/menuAdmin/Index";
+import { payoffPaymentService, savePaymentDetailService } from "../../../../../services/financial";
 import {
     changeActivePaymentDetails,
     changeFixedPaymentDetails,
@@ -22,9 +22,9 @@ import {
     changeTypePaymentDetails,
     changeValuePaymentDetails,
     fetchPaymentDetails,
-} from '../../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../../store/store'
-import styles from './Details.module.scss'
+} from "../../../../../store/features/financial/Index";
+import { RootState, useAppDispatch } from "../../../../../store/store";
+import styles from "./Details.module.scss";
 
 const { Paragraph } = Typography;
 const { Option } = Select;
@@ -35,9 +35,7 @@ export default function PaymentDetails() {
     const router = useRouter();
     const { id } = router.query;
 
-    const financialStore = useSelector(
-        (state: RootState) => state.financial.paymentDetail
-    );
+    const financialStore = useSelector((state: RootState) => state.financial.paymentDetail);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -50,10 +48,7 @@ export default function PaymentDetails() {
     const date = new Date(financialStore.data?.date).toLocaleDateString();
 
     const save = () => {
-        savePaymentDetailService(
-            financialStore.data.id,
-            financialStore.data
-        ).then((response) => {
+        savePaymentDetailService(financialStore.data.id, financialStore.data).then((response) => {
             message.success({
                 content: response.msg,
                 key: msgRef,
@@ -118,29 +113,19 @@ export default function PaymentDetails() {
                         <Card loading={financialStore.loading}>
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles["label"]}>
-                                        ID: {financialStore.data?.id}
-                                    </div>
+                                    <div className={styles["label"]}>ID: {financialStore.data?.id}</div>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <Link
-                                        href={`/admin/financial/contracts/details/${financialStore.data?.contract}`}>
-                                        <div
-                                            className={styles["label"]}
-                                            style={{ cursor: "pointer" }}>
-                                            Contrato:{" "}
-                                            {`${financialStore.data?.contract} - ${financialStore.data?.contract_name}`}
+                                    <Link href={`/admin/financial/contracts/details/${financialStore.data?.contract}`}>
+                                        <div className={styles["label"]} style={{ cursor: "pointer" }}>
+                                            Contrato: {`${financialStore.data?.contract} - ${financialStore.data?.contract_name}`}
                                         </div>
                                     </Link>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <Link
-                                        href={`/admin/financial/invoices/details/${financialStore.data?.invoice}`}>
-                                        <div
-                                            className={styles["label"]}
-                                            style={{ cursor: "pointer" }}>
-                                            Nota:{" "}
-                                            {`${financialStore.data?.invoice} - ${financialStore.data?.invoice_name}`}
+                                    <Link href={`/admin/financial/invoices/details/${financialStore.data?.invoice}`}>
+                                        <div className={styles["label"]} style={{ cursor: "pointer" }}>
+                                            Nota: {`${financialStore.data?.invoice} - ${financialStore.data?.invoice_name}`}
                                         </div>
                                     </Link>
                                 </div>
@@ -148,26 +133,18 @@ export default function PaymentDetails() {
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Nome:</div>
-                                    <Paragraph
-                                        style={{ margin: "0" }}
-                                        editable={{ onChange: changeName }}>
+                                    <Paragraph style={{ margin: "0" }} editable={{ onChange: changeName }}>
                                         {financialStore.data?.name}
                                     </Paragraph>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>
-                                        Dia de lançamento:
-                                    </div>
+                                    <div className={styles.label}>Dia de lançamento:</div>
                                     <div>{date}</div>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>
-                                        Dia de pagamento:
-                                    </div>
+                                    <div className={styles.label}>Dia de pagamento:</div>
                                     <DatePicker
-                                        value={dayjs(
-                                            financialStore.data?.payment_date
-                                        )}
+                                        value={dayjs(financialStore.data?.payment_date)}
                                         format="DD/MM/YYYY"
                                         onChange={changePaymentDate}
                                     />
@@ -176,11 +153,7 @@ export default function PaymentDetails() {
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Status:</div>
-                                    <div>
-                                        {financialStore.data?.status === 0
-                                            ? "Em aberto"
-                                            : "Baixado"}
-                                    </div>
+                                    <div>{financialStore.data?.status === 0 ? "Em aberto" : "Baixado"}</div>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Tipo:</div>
@@ -193,38 +166,25 @@ export default function PaymentDetails() {
                                     </Select>
                                 </div>
                                 <div className={styles["label-detail"]}>
-                                    <div className={styles.label}>
-                                        Parcelas:
-                                    </div>
-                                    <div>
-                                        {financialStore.data?.installments}
-                                    </div>
+                                    <div className={styles.label}>Parcelas:</div>
+                                    <div>{financialStore.data?.installments}</div>
                                 </div>
                             </div>
                             <div className={styles["row"]}>
                                 <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Valor:</div>
-                                    <InputNumber
-                                        value={financialStore.data?.value}
-                                        onChange={changeValue}
-                                    />
+                                    <InputNumber value={financialStore.data?.value} onChange={changeValue} />
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div>
-                                        <Checkbox
-                                            checked={financialStore.data?.fixed}
-                                            onChange={changeFixed}>
+                                        <Checkbox checked={financialStore.data?.fixed} onChange={changeFixed}>
                                             Fixo
                                         </Checkbox>
                                     </div>
                                 </div>
                                 <div className={styles["label-detail"]}>
                                     <div>
-                                        <Checkbox
-                                            checked={
-                                                financialStore.data?.active
-                                            }
-                                            onChange={changeActive}>
+                                        <Checkbox checked={financialStore.data?.active} onChange={changeActive}>
                                             Ativo
                                         </Checkbox>
                                     </div>
@@ -232,19 +192,13 @@ export default function PaymentDetails() {
                             </div>
                             <div className={styles.buttons}>
                                 {financialStore.data?.status === 0 ? (
-                                    <Button
-                                        danger
-                                        type="default"
-                                        onClick={payoff}>
+                                    <Button danger type="default" onClick={payoff}>
                                         Baixar pagamento
                                     </Button>
                                 ) : (
                                     <></>
                                 )}
-                                <Button
-                                    type="primary"
-                                    onClick={save}
-                                    className={styles.button_save}>
+                                <Button type="primary" onClick={save} className={styles.button_save}>
                                     Salvar
                                 </Button>
                             </div>

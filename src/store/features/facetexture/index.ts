@@ -142,11 +142,11 @@ export const facetextureSlice = createSlice({
                 state.modal.newFacetexture.saving = false;
             })
             .addCase(changeShowClassThunk.fulfilled, (state, action) => {
-                const facetextureTarget = state.facetexture.find(facetexture => facetexture.id === action.payload.id)
-                if(!facetextureTarget){
-                    return
+                const facetextureTarget = state.facetexture.find((facetexture) => facetexture.id === action.payload.id);
+                if (!facetextureTarget) {
+                    return;
                 }
-                facetextureTarget.show = action.payload.visible
+                facetextureTarget.show = action.payload.visible;
             });
     },
 });
