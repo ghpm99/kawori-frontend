@@ -11,21 +11,21 @@ import {
     Table,
     Tag,
     Typography,
-} from 'antd'
-import { Content, Header } from 'antd/lib/layout/layout'
-import dayjs from 'dayjs'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { MouseEventHandler, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+} from "antd";
+import { Content, Header } from "antd/lib/layout/layout";
+import dayjs from "dayjs";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { MouseEventHandler, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import ModalNewInvoice, { IFormNewInvoice } from '../../../../../components/contracts/modalNewInvoice'
-import LoadingPage from '../../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../../components/menuAdmin/Index'
-import { includeNewInvoiceService, mergeContractService } from '../../../../../services/financial'
+import ModalNewInvoice, { IFormNewInvoice } from "../../../../../components/contracts/modalNewInvoice";
+import LoadingPage from "../../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../../components/menuAdmin/Index";
+import { includeNewInvoiceService, mergeContractService } from "../../../../../services/financial";
 import {
     changeValueMergeModal,
     changeVisibleModalContract,
@@ -33,37 +33,37 @@ import {
     fetchContractDetails,
     fetchContractInvoicesDetails,
     fetchTags,
-} from '../../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../../store/store'
-import { formatMoney, formatterDate } from '../../../../../util'
-import styles from './Details.module.scss'
+} from "../../../../../store/features/financial/Index";
+import { RootState, useAppDispatch } from "../../../../../store/store";
+import { formatMoney, formatterDate } from "../../../../../util";
+import styles from "./Details.module.scss";
 
-const { Paragraph } = Typography
-const { Option } = Select
+const { Paragraph } = Typography;
+const { Option } = Select;
 
 export default function ContractDetails() {
-    const msgRef = 'contract-details-msg'
+    const msgRef = "contract-details-msg";
 
-    const router = useRouter()
-    const { id } = router.query
+    const router = useRouter();
+    const { id } = router.query;
 
-    const financialStore = useSelector((state: RootState) => state.financial.contractDetail)
-    const tagStore = useSelector((state: RootState) => state.financial.tags)
-    const dispatch = useAppDispatch()
+    const financialStore = useSelector((state: RootState) => state.financial.contractDetail);
+    const tagStore = useSelector((state: RootState) => state.financial.tags);
+    const dispatch = useAppDispatch();
 
-    const [searchText, setSearchText] = useState('')
+    const [searchText, setSearchText] = useState("");
 
     const mergeContractOption = financialStore.contracts
         .filter((item) => item.id !== financialStore.data?.id)
         .map((item) => ({
             value: item.id,
             label: `Id: ${item.id} Name: ${item.name}`,
-        }))
+        }));
 
     useEffect(() => {
         if (id) {
-            const idContract = parseInt(id as string)
-            dispatch(fetchContractDetails(idContract))
+            const idContract = parseInt(id as string);
+            dispatch(fetchContractDetails(idContract));
             dispatch(
                 fetchContractInvoicesDetails({
                     id: idContract,
@@ -72,9 +72,9 @@ export default function ContractDetails() {
                         page_size: 20,
                     },
                 }),
-            )
+            );
         }
-    }, [id])
+    }, [id]);
 
     useEffect(() => {
         dispatch(
@@ -82,17 +82,17 @@ export default function ContractDetails() {
                 page: 1,
                 page_size: 100,
             }),
-        )
-        dispatch(fetchTags())
-    }, [])
+        );
+        dispatch(fetchTags());
+    }, []);
 
     const save: MouseEventHandler<HTMLButtonElement> = (event) => {
-        console.log(event)
-    }
+        console.log(event);
+    };
 
     const changeName = (event: string) => {
-        console.log(event)
-    }
+        console.log(event);
+    };
 
     const includeNewInvoice = (values: IFormNewInvoice) => {
         includeNewInvoiceService({
@@ -100,47 +100,47 @@ export default function ContractDetails() {
             status: 0,
             type: values.type,
             name: values.name,
-            date: dayjs(values.date).format('YYYY-MM-DD'),
+            date: dayjs(values.date).format("YYYY-MM-DD"),
             installments: values.installments,
-            payment_date: dayjs(values.payment_date).format('YYYY-MM-DD'),
+            payment_date: dayjs(values.payment_date).format("YYYY-MM-DD"),
             fixed: values.fixed ? true : false,
             active: true,
             value: values.value,
             tags: values.tags,
         }).then((e) => {
-            dispatch(fetchContractDetails(financialStore.data.id))
-            closeModal('newInvoice')
-        })
-    }
+            dispatch(fetchContractDetails(financialStore.data.id));
+            closeModal("newInvoice");
+        });
+    };
 
-    const onMenuClick: MenuProps['onClick'] = (e) => {
+    const onMenuClick: MenuProps["onClick"] = (e) => {
         switch (e.key) {
-            case '1':
+            case "1":
                 dispatch(
                     changeVisibleModalContract({
-                        modal: 'newInvoice',
+                        modal: "newInvoice",
                         visible: true,
                     }),
-                )
-                break
-            case '2':
+                );
+                break;
+            case "2":
                 dispatch(
                     changeVisibleModalContract({
-                        modal: 'mergeContract',
+                        modal: "mergeContract",
                         visible: true,
                     }),
-                )
-                break
+                );
+                break;
         }
-    }
+    };
 
     const handleMergeSelectEvent = (value: any) => {
-        dispatch(changeValueMergeModal(value))
-    }
+        dispatch(changeValueMergeModal(value));
+    };
 
     const onSearch = (value: string) => {
-        setSearchText(value)
-    }
+        setSearchText(value);
+    };
 
     const closeModal = (modal: keyof IModalContract) => {
         dispatch(
@@ -148,20 +148,20 @@ export default function ContractDetails() {
                 modal: modal,
                 visible: false,
             }),
-        )
-    }
+        );
+    };
 
     const mergeContractEvent = () => {
-        console.log(financialStore.modal.mergeContract.id)
+        console.log(financialStore.modal.mergeContract.id);
         mergeContractService({
             id: financialStore.data.id,
             contracts: financialStore.modal.mergeContract.id,
         }).then((e) => {
-            closeModal('mergeContract')
-            message.success(e.msg)
-            dispatch(fetchContractDetails(financialStore.data.id))
-        })
-    }
+            closeModal("mergeContract");
+            message.success(e.msg);
+            dispatch(fetchContractDetails(financialStore.data.id));
+        });
+    };
 
     const onChangePagination = (page: number, pageSize: number) => {
         dispatch(
@@ -173,28 +173,28 @@ export default function ContractDetails() {
                     page_size: pageSize,
                 },
             }),
-        )
-    }
+        );
+    };
 
     const menu = (
         <Menu
             onClick={onMenuClick}
             items={[
                 {
-                    key: '1',
-                    label: 'Incluir nova nota',
+                    key: "1",
+                    label: "Incluir nova nota",
                 },
                 {
-                    key: '2',
-                    label: 'Mesclar contrato',
+                    key: "2",
+                    label: "Mesclar contrato",
                 },
             ]}
         />
-    )
+    );
 
     return (
         <Layout className={styles.container}>
-            <MenuAdmin selected={['sub2', 'contracts']} />
+            <MenuAdmin selected={["sub2", "contracts"]} />
             <Layout>
                 <Header className={styles.header}>
                     <LoginHeader />
@@ -208,20 +208,20 @@ export default function ContractDetails() {
                     </Breadcrumb>
                     <Layout className={styles.container_labels}>
                         <Card loading={financialStore.loading}>
-                            <div className={styles['row']}>
-                                <div className={styles['label-detail']}>
+                            <div className={styles["row"]}>
+                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>ID: {financialStore.data?.id}</div>
                                 </div>
-                                <div className={styles['label-detail']}>
+                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Nome:</div>
-                                    <Paragraph style={{ margin: '0' }} editable={{ onChange: changeName }}>
+                                    <Paragraph style={{ margin: "0" }} editable={{ onChange: changeName }}>
                                         {financialStore.data?.name}
                                     </Paragraph>
                                 </div>
-                                <div className={`${styles['label-detail']} ${styles['action-Button']}`}>
+                                <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
                                     <Dropdown.Button
                                         overlay={menu}
-                                        type='primary'
+                                        type="primary"
                                         onClick={save}
                                         className={styles.button_save}
                                     >
@@ -229,25 +229,25 @@ export default function ContractDetails() {
                                     </Dropdown.Button>
                                 </div>
                             </div>
-                            <div className={styles['row']}>
-                                <div className={styles['label-detail']}>
+                            <div className={styles["row"]}>
+                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
                                         <>Valor Total: {formatMoney(financialStore.data?.value)}</>
                                     </div>
                                 </div>
-                                <div className={styles['label-detail']}>
+                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
                                         <>Valor Baixado: {formatMoney(financialStore.data?.value_closed)}</>
                                     </div>
                                 </div>
-                                <div className={styles['label-detail']}>
+                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>
                                         <>Valor em Aberto: {formatMoney(financialStore.data?.value_open)}</>
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles['row']}>
-                                <div className={styles['label-detail']}>
+                            <div className={styles["row"]}>
+                                <div className={styles["label-detail"]}>
                                     <div className={styles.label}>Notas:</div>
                                 </div>
                             </div>
@@ -264,48 +264,48 @@ export default function ContractDetails() {
                                 loading={financialStore.invoices.loading}
                                 columns={[
                                     {
-                                        title: 'Id',
-                                        dataIndex: 'id',
-                                        key: 'id',
+                                        title: "Id",
+                                        dataIndex: "id",
+                                        key: "id",
                                     },
                                     {
-                                        title: 'Nome',
-                                        dataIndex: 'name',
-                                        key: 'name',
+                                        title: "Nome",
+                                        dataIndex: "name",
+                                        key: "name",
                                     },
                                     {
-                                        title: 'Valor',
-                                        dataIndex: 'value',
-                                        key: 'value',
+                                        title: "Valor",
+                                        dataIndex: "value",
+                                        key: "value",
                                         render: (value) => formatMoney(value),
                                     },
                                     {
-                                        title: 'Baixado',
-                                        dataIndex: 'value_closed',
-                                        key: 'value_closed',
+                                        title: "Baixado",
+                                        dataIndex: "value_closed",
+                                        key: "value_closed",
                                         render: (value) => formatMoney(value),
                                     },
                                     {
-                                        title: 'Em aberto',
-                                        dataIndex: 'value_open',
-                                        key: 'value_open',
+                                        title: "Em aberto",
+                                        dataIndex: "value_open",
+                                        key: "value_open",
                                         render: (value) => formatMoney(value),
                                     },
                                     {
-                                        title: 'Parcelas',
-                                        dataIndex: 'installments',
-                                        key: 'installments',
+                                        title: "Parcelas",
+                                        dataIndex: "installments",
+                                        key: "installments",
                                     },
                                     {
-                                        title: 'Dia',
-                                        dataIndex: 'date',
-                                        key: 'date',
+                                        title: "Dia",
+                                        dataIndex: "date",
+                                        key: "date",
                                         render: (value) => formatterDate(value),
                                     },
                                     {
-                                        title: 'Tags',
-                                        dataIndex: 'tags',
-                                        key: 'tags',
+                                        title: "Tags",
+                                        dataIndex: "tags",
+                                        key: "tags",
                                         render: (_, { tags }) => (
                                             <>
                                                 {tags.map((tag) => (
@@ -317,9 +317,9 @@ export default function ContractDetails() {
                                         ),
                                     },
                                     {
-                                        title: 'Ações',
-                                        dataIndex: 'id',
-                                        key: 'id',
+                                        title: "Ações",
+                                        dataIndex: "id",
+                                        key: "id",
                                         render: (value) => (
                                             <Link href={`/admin/financial/invoices/details/${value}`}>Detalhes</Link>
                                         ),
@@ -332,16 +332,16 @@ export default function ContractDetails() {
                 </Content>
             </Layout>
             <Modal
-                title='Mesclar contrato'
+                title="Mesclar contrato"
                 open={financialStore.modal.mergeContract.visible}
-                onCancel={() => closeModal('mergeContract')}
+                onCancel={() => closeModal("mergeContract")}
                 onOk={mergeContractEvent}
             >
                 <div>Contrato:</div>
                 <Select
                     showSearch
-                    placeholder='Selecione um contrato:'
-                    mode='multiple'
+                    placeholder="Selecione um contrato:"
+                    mode="multiple"
                     onChange={handleMergeSelectEvent}
                     onSearch={onSearch}
                     filterOption={(input, option) =>
@@ -349,38 +349,38 @@ export default function ContractDetails() {
                     }
                     options={mergeContractOption}
                     style={{
-                        width: '100%',
+                        width: "100%",
                     }}
                 />
             </Modal>
             <ModalNewInvoice
                 visible={financialStore.modal.newInvoice.visible}
-                onCancel={() => closeModal('newInvoice')}
+                onCancel={() => closeModal("newInvoice")}
                 onFinish={includeNewInvoice}
                 tags={tagStore.data}
             />
         </Layout>
-    )
+    );
 }
 
 ContractDetails.auth = {
-    role: 'admin',
+    role: "admin",
     loading: <LoadingPage />,
-    unauthorized: '/signin',
-}
+    unauthorized: "/signin",
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req })
+    const session = await getSession({ req });
 
-    const isSuperuser = session?.user.isSuperuser ?? false
+    const isSuperuser = session?.user.isSuperuser ?? false;
 
     if (!isSuperuser) {
         return {
             redirect: {
-                destination: '/',
+                destination: "/",
                 permanent: false,
             },
-        }
+        };
     }
-    return { props: {} }
-}
+    return { props: {} };
+};

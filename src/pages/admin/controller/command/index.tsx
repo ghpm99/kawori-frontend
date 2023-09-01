@@ -1,34 +1,34 @@
-import { Breadcrumb, Button, Input, Layout, Typography } from 'antd'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import { redirect } from 'next/dist/server/api-utils'
-import { useState } from 'react'
-import Pusher from 'react-pusher'
+import { Breadcrumb, Button, Input, Layout, Typography } from "antd";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
+import { useState } from "react";
+import Pusher from "react-pusher";
 
-import LoadingPage from '../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../components/menuAdmin/Index'
-import { sendCommandService } from '../../../../services/remote'
-import styles from './Command.module.scss'
+import LoadingPage from "../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../components/menuAdmin/Index";
+import { sendCommandService } from "../../../../services/remote";
+import styles from "./Command.module.scss";
 
-const { Header, Content } = Layout
-const { Title } = Typography
-const { TextArea } = Input
+const { Header, Content } = Layout;
+const { Title } = Typography;
+const { TextArea } = Input;
 
-let pusher
+let pusher;
 
 function CommandPage() {
-    const [command, setCommand] = useState('')
-    const [commandReturn, setCommandReturn] = useState('')
+    const [command, setCommand] = useState("");
+    const [commandReturn, setCommandReturn] = useState("");
 
     const sendCommand = () => {
-        sendCommandService(command)
-        setCommand('')
-    }
+        sendCommandService(command);
+        setCommand("");
+    };
 
     return (
         <Layout className={styles.container}>
-            <MenuAdmin selected={['controller', 'command']} />
+            <MenuAdmin selected={["controller", "command"]} />
             <Layout>
                 <Header className={styles.header}>
                     <LoginHeader />
@@ -43,18 +43,18 @@ function CommandPage() {
                             <div className={styles.command_input}>
                                 <div className={styles.input}>
                                     <Input
-                                        placeholder='Digite um comando'
-                                        name='command'
+                                        placeholder="Digite um comando"
+                                        name="command"
                                         onChange={(event) => {
-                                            setCommand(event.target.value)
+                                            setCommand(event.target.value);
                                         }}
                                         value={command}
                                     />
                                 </div>
                                 <Button
-                                    type='primary'
+                                    type="primary"
                                     onClick={() => {
-                                        sendCommand()
+                                        sendCommand();
                                     }}
                                 >
                                     Enviar comando
@@ -69,43 +69,43 @@ function CommandPage() {
                 </Content>
             </Layout>
             <Pusher
-                channel='private-display'
-                event='command-return'
+                channel="private-display"
+                event="command-return"
                 onUpdate={(data: any) => setCommandReturn(data.output)}
             />
         </Layout>
-    )
+    );
 }
 
 CommandPage.auth = {
-    role: 'admin',
+    role: "admin",
     loading: <LoadingPage />,
-    unauthorized: '/signin',
-}
+    unauthorized: "/signin",
+};
 
 CommandPage.pusher = {
-    name: 'command',
-}
+    name: "command",
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req })
+    const session = await getSession({ req });
 
-    const isSuperuser = session?.user.isSuperuser ?? false
+    const isSuperuser = session?.user.isSuperuser ?? false;
 
     if (!isSuperuser) {
         return {
             redirect: {
-                destination: '/',
+                destination: "/",
                 permanent: false,
             },
-        }
+        };
     }
 
     const props = {
         pusher_key: process.env.PUSHER_KEY,
         pusher_cluster: process.env.PUSHER_CLUSTER,
-    }
-    return { props }
-}
+    };
+    return { props };
+};
 
-export default CommandPage
+export default CommandPage;

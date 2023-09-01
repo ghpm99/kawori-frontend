@@ -1,37 +1,37 @@
-import { Breadcrumb, Layout, Progress, Typography } from 'antd'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import Pusher from 'react-pusher'
-import { useDispatch, useSelector } from 'react-redux'
+import { Breadcrumb, Layout, Progress, Typography } from "antd";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import Pusher from "react-pusher";
+import { useDispatch, useSelector } from "react-redux";
 
-import LoadingPage from '../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../components/menuAdmin/Index'
-import { setCpuAndMemoryValue } from '../../../../store/features/status/Index'
-import { RootState } from '../../../../store/store'
-import { NextPageCustom } from '../../../../types/commonTypes'
-import S from './Status.module.scss'
+import LoadingPage from "../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../components/menuAdmin/Index";
+import { setCpuAndMemoryValue } from "../../../../store/features/status/Index";
+import { RootState } from "../../../../store/store";
+import { NextPageCustom } from "../../../../types/commonTypes";
+import S from "./Status.module.scss";
 
-const { Header, Content } = Layout
-const { Title } = Typography
+const { Header, Content } = Layout;
+const { Title } = Typography;
 
 function StatusPage(): NextPageCustom {
-    const statusStore = useSelector((state: RootState) => state.status)
-    const dispatch = useDispatch()
+    const statusStore = useSelector((state: RootState) => state.status);
+    const dispatch = useDispatch();
 
     const statusEvent = (data: any) => {
-        const usedMemory = (100 - data.memory).toFixed(1)
+        const usedMemory = (100 - data.memory).toFixed(1);
         dispatch(
             setCpuAndMemoryValue({
                 cpu: data.cpu,
                 memory: usedMemory,
             }),
-        )
-    }
+        );
+    };
 
     return (
         <Layout className={S.layout}>
-            <MenuAdmin selected={['controller', 'status']} />
+            <MenuAdmin selected={["controller", "status"]} />
             <Layout>
                 <Header className={S.header}>
                     <LoginHeader />
@@ -45,10 +45,10 @@ function StatusPage(): NextPageCustom {
                         <div className={S.indicator}>
                             <Title level={2}>Uso de CPU</Title>
                             <Progress
-                                type='circle'
+                                type="circle"
                                 strokeColor={{
-                                    '0%': '#108ee9',
-                                    '100%': '#ff0000',
+                                    "0%": "#108ee9",
+                                    "100%": "#ff0000",
                                 }}
                                 percent={statusStore.cpu}
                             />
@@ -56,10 +56,10 @@ function StatusPage(): NextPageCustom {
                         <div className={S.indicator}>
                             <Title level={2}>Uso de Memoria</Title>
                             <Progress
-                                type='circle'
+                                type="circle"
                                 strokeColor={{
-                                    '0%': '#108ee9',
-                                    '100%': '#ff0000',
+                                    "0%": "#108ee9",
+                                    "100%": "#ff0000",
                                 }}
                                 percent={statusStore.memory}
                             />
@@ -67,40 +67,40 @@ function StatusPage(): NextPageCustom {
                     </div>
                 </Content>
             </Layout>
-            <Pusher channel='private-status' event='status' onUpdate={statusEvent} />
+            <Pusher channel="private-status" event="status" onUpdate={statusEvent} />
         </Layout>
-    )
+    );
 }
 
 StatusPage.auth = {
-    role: 'admin',
+    role: "admin",
     loading: <LoadingPage />,
-    unauthorized: '/signin',
-}
+    unauthorized: "/signin",
+};
 
 StatusPage.pusher = {
-    name: 'status',
-}
+    name: "status",
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req })
+    const session = await getSession({ req });
 
-    const isSuperuser = session?.user.isSuperuser ?? false
+    const isSuperuser = session?.user.isSuperuser ?? false;
 
     if (!isSuperuser) {
         return {
             redirect: {
-                destination: '/',
+                destination: "/",
                 permanent: false,
             },
-        }
+        };
     }
 
     const props = {
         pusher_key: process.env.PUSHER_KEY,
         pusher_cluster: process.env.PUSHER_CLUSTER,
-    }
-    return { props }
-}
+    };
+    return { props };
+};
 
-export default StatusPage
+export default StatusPage;
