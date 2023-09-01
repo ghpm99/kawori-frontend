@@ -28,9 +28,7 @@ function FaceTexture() {
     const router = useRouter();
 
     const dispatch = useAppDispatch();
-    const facetextureStore = useSelector(
-        (state: RootState) => state.facetexture,
-    );
+    const facetextureStore = useSelector((state: RootState) => state.facetexture);
 
     useEffect(() => {
         updateBackground();

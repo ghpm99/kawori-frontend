@@ -32,9 +32,7 @@ const SingupForm = () => {
                 signin(values.username, values.password);
             })
             .catch((error) => {
-                message.error(
-                    error.response.data.msg ?? "Falhou em criar usuário"
-                );
+                message.error(error.response.data.msg ?? "Falhou em criar usuário");
             });
     };
 
@@ -53,20 +51,10 @@ const SingupForm = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off">
-            <Form.Item
-                label="Nome"
-                name="name"
-                rules={[
-                    { required: true, message: "Por favor insira sua senha!" },
-                ]}>
+            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Por favor insira sua senha!" }]}>
                 <Input />
             </Form.Item>
-            <Form.Item
-                label="Sobrenome"
-                name="last_name"
-                rules={[
-                    { required: true, message: "Por favor insira sua senha!" },
-                ]}>
+            <Form.Item label="Sobrenome" name="last_name" rules={[{ required: true, message: "Por favor insira sua senha!" }]}>
                 <Input />
             </Form.Item>
             <Form.Item
@@ -118,19 +106,18 @@ const SingupForm = () => {
                             if (!value || getFieldValue("password") === value) {
                                 return Promise.resolve();
                             }
-                            return Promise.reject(
-                                new Error(
-                                    "As duas senhas que você digitou não correspondem!"
-                                )
-                            );
+                            return Promise.reject(new Error("As duas senhas que você digitou não correspondem!"));
                         },
                     }),
                 ]}>
                 <Input.Password />
             </Form.Item>
-            <Button style={{
-                float: 'right'
-            }} type="primary" htmlType="submit">
+            <Button
+                style={{
+                    float: "right",
+                }}
+                type="primary"
+                htmlType="submit">
                 Cadastrar
             </Button>
         </Form>

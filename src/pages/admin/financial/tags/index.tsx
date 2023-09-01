@@ -1,143 +1,133 @@
-import { PlusOutlined } from '@ant-design/icons'
-import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from 'antd'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { PlusOutlined } from "@ant-design/icons";
+import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from "antd";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import LoadingPage from '../../../../components/loadingPage/Index'
-import LoginHeader from '../../../../components/loginHeader/Index'
-import MenuAdmin from '../../../../components/menuAdmin/Index'
-import ModalNewTag, { IFormModalNewTag } from '../../../../components/tags/modalNew'
-import { includeNewTagService } from '../../../../services/financial'
-import { changeVisibleModalTag, fetchTags } from '../../../../store/features/financial/Index'
-import { RootState, useAppDispatch } from '../../../../store/store'
-import styles from './tags.module.scss'
+import LoadingPage from "../../../../components/loadingPage/Index";
+import LoginHeader from "../../../../components/loginHeader/Index";
+import MenuAdmin from "../../../../components/menuAdmin/Index";
+import ModalNewTag, { IFormModalNewTag } from "../../../../components/tags/modalNew";
+import { includeNewTagService } from "../../../../services/financial";
+import { changeVisibleModalTag, fetchTags } from "../../../../store/features/financial/Index";
+import { RootState, useAppDispatch } from "../../../../store/store";
+import styles from "./tags.module.scss";
 
+const { Header, Content } = Layout;
 
-const { Header, Content } = Layout
-
-const { Title } = Typography
+const { Title } = Typography;
 
 function TagPage() {
-
-    const financialStore = useSelector((state: RootState) => state.financial.tags)
-    const dispatch = useAppDispatch()
+    const financialStore = useSelector((state: RootState) => state.financial.tags);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchTags())
-    }, [])
+        dispatch(fetchTags());
+    }, []);
 
     const openModal = (modal: keyof IModalTags) => {
-        dispatch(changeVisibleModalTag({ modal, visible: true }))
-    }
+        dispatch(changeVisibleModalTag({ modal, visible: true }));
+    };
 
     const closeModal = (modal: keyof IModalTags) => {
-        dispatch(changeVisibleModalTag({  modal, visible: false }))
-    }
+        dispatch(changeVisibleModalTag({ modal, visible: false }));
+    };
 
     const onFinish = (values: IFormModalNewTag) => {
         const newTag = {
-            'name': values.name,
-            'color': values.color
-        }
+            name: values.name,
+            color: values.color,
+        };
 
-        includeNewTagService(newTag).then(e => {
-            message.success(e.msg)
-            closeModal('newTag')
-            dispatch(fetchTags())
-        })
-    }
+        includeNewTagService(newTag).then((e) => {
+            message.success(e.msg);
+            closeModal("newTag");
+            dispatch(fetchTags());
+        });
+    };
 
     const headerTableFinancial = [
         {
-            title: 'Id',
-            dataIndex: 'id',
-            key: 'id'
+            title: "Id",
+            dataIndex: "id",
+            key: "id",
         },
         {
-            title: 'Nome',
-            dataIndex: 'name',
-            key: 'name',
-            render: (_: any, tag: ITags) => (
-                <Tag
-                    color={tag.color}
-                >
-                    { tag.name }
-                </Tag>
-            ),
-        }
-    ]
+            title: "Nome",
+            dataIndex: "name",
+            key: "name",
+            render: (_: any, tag: ITags) => <Tag color={tag.color}>{tag.name}</Tag>,
+        },
+    ];
 
     return (
-        <Layout className={ styles.container }>
-            <MenuAdmin selected={ ['tags'] } />
+        <Layout className={styles.container}>
+            <MenuAdmin selected={["tags"]} />
             <Layout>
-                <Header className={ styles.header } >
+                <Header className={styles.header}>
                     <LoginHeader />
                 </Header>
                 <Content>
-                    <Breadcrumb className={ styles.breadcrumb }>
+                    <Breadcrumb className={styles.breadcrumb}>
                         <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                         <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
                         <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
                     </Breadcrumb>
                     <Layout>
-                        <div className={ styles.header_command }>
-                            <Title level={ 3 } className={ styles.title }>
+                        <div className={styles.header_command}>
+                            <Title level={3} className={styles.title}>
                                 Valores em aberto
                             </Title>
                             <div>
-                                <Button icon={ <PlusOutlined /> } onClick={ () => openModal('newTag') }>
+                                <Button icon={<PlusOutlined />} onClick={() => openModal("newTag")}>
                                     Novo
                                 </Button>
                             </div>
-
                         </div>
                         <Table
-                            pagination={ {
+                            pagination={{
                                 showSizeChanger: true,
-                                defaultPageSize: 20
-                            } }
-                            columns={ headerTableFinancial }
-                            dataSource={ financialStore.data }
-                            loading={ financialStore.loading }
+                                defaultPageSize: 20,
+                            }}
+                            columns={headerTableFinancial}
+                            dataSource={financialStore.data}
+                            loading={financialStore.loading}
                         />
                         <ModalNewTag
-                            visible={ financialStore.modal.newTag.visible }
-                            onCancel={ () => closeModal('newTag') }
-                            onFinish={ onFinish }
+                            visible={financialStore.modal.newTag.visible}
+                            onCancel={() => closeModal("newTag")}
+                            onFinish={onFinish}
                         />
                     </Layout>
                 </Content>
             </Layout>
         </Layout>
-
-    )
+    );
 }
 
 TagPage.auth = {
-    role: 'admin',
+    role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req })
+    const session = await getSession({ req });
 
-    const isSuperuser = session?.user.isSuperuser ?? false
+    const isSuperuser = session?.user.isSuperuser ?? false;
 
     if (!isSuperuser) {
         return {
             redirect: {
-                destination: '/',
+                destination: "/",
                 permanent: false,
             },
-        }
+        };
     }
     return {
-        props: {}
-    }
-}
+        props: {},
+    };
+};
 
-export default TagPage
+export default TagPage;
