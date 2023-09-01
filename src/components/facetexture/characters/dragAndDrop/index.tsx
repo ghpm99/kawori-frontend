@@ -58,9 +58,8 @@ const DragAndDropCharacters = () => {
     };
 
     function listToMatrix(list: IFacetexture[], elementsPerSubArray: number) {
-        let matrix = [],
-            i,
-            k;
+        const matrix = [];
+        let i, k;
 
         for (i = 0, k = -1; i < list.length; i++) {
             if (i % elementsPerSubArray === 0) {
