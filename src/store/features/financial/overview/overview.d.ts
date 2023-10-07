@@ -1,4 +1,4 @@
-interface IOverviewStore  {
+interface IOverviewStore {
     loading: boolean;
     data: {
         payments: IPaymentCharts[];
@@ -12,4 +12,4 @@ interface IOverviewStore  {
         amountPaymentOpen: number;
         amountPaymentClosed: number;
     };
-};
+}
