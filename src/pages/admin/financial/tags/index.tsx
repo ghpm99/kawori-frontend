@@ -19,7 +19,7 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function TagPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.tags);
+    const financialStore = useSelector((state: RootState) => state.financial.tag);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

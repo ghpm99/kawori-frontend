@@ -24,8 +24,6 @@ interface IFinancialStore {
         loading: boolean;
         data: {
             payments: IPaymentCharts[];
-            open: IPaymentReportOpen[];
-            closed: IPaymentReportClosed[];
             fixed_debit: number;
             fixed_credit: number;
             invoiceByTag: IInvoiceByTag[];

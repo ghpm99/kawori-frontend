@@ -19,7 +19,7 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function FinancialPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.invoices);
+    const financialStore = useSelector((state: RootState) => state.financial.invoice);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

@@ -13,8 +13,6 @@ const initialState: IOverviewStore = {
     loading: true,
     data: {
         payments: [],
-        open: [],
-        closed: [],
         fixed_credit: 0,
         fixed_debit: 0,
         invoiceByTag: [],
@@ -35,23 +33,31 @@ export const financialOverviewSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchPaymentReportThunk.fulfilled, (state, action) => {
-                state.data = action.payload.data;
+                const { data } = action.payload;
+                state.data.payments = data.payments;
+                state.data.fixed_debit = data.fixed_debit;
+                state.data.fixed_credit = data.fixed_credit;
                 state.loading = false;
             })
             .addCase(fetchCountPaymentReportThunk.fulfilled, (state, action) => {
-                state.data.countPayment = action.payload.data;
+                const { data } = action.payload;
+                state.data.countPayment = data;
             })
             .addCase(fetchAmountPaymentReportThunk.fulfilled, (state, action) => {
-                state.data.amountPayment = action.payload.data;
+                const { data } = action.payload;
+                state.data.amountPayment = data;
             })
             .addCase(fetchAmountPaymentOpenReportThunk.fulfilled, (state, action) => {
-                state.data.amountPaymentOpen = action.payload.data;
+                const { data } = action.payload;
+                state.data.amountPaymentOpen = data;
             })
             .addCase(fetchAmountPaymentClosedReportThunk.fulfilled, (state, action) => {
-                state.data.amountPaymentClosed = action.payload.data;
+                const { data } = action.payload;
+                state.data.amountPaymentClosed = data;
             })
             .addCase(fetchAmountInvoiceByTagReportThunk.fulfilled, (state, action) => {
-                state.data.invoiceByTag = action.payload.data;
+                const { data } = action.payload;
+                state.data.invoiceByTag = data;
             });
     },
 });

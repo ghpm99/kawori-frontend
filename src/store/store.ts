@@ -1,15 +1,33 @@
-import { Action, configureStore, ThunkDispatch } from "@reduxjs/toolkit";
-import statusReducer from "./features/status/Index";
-import commonReducer from "./features/common/Index";
-import financialReducer from "./features/financial/Index";
-import facetextureReducer from "./features/facetexture";
+import { Action, ThunkDispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import commonReducer from "./features/common/Index";
+import facetextureReducer from "./features/facetexture";
+import contractReducer from "./features/financial/contract";
+import contractDetailsReducer from "./features/financial/contract/detail";
+import invoiceReducer from "./features/financial/invoice";
+import invoiceDetailsReducer from "./features/financial/invoice/detail";
+import overviewReducer from "./features/financial/overview";
+import paymentReducer from "./features/financial/payment";
+import paymentDetailsReducer from "./features/financial/payment/detail";
+import tagReducer from "./features/financial/tag";
+import statusReducer from "./features/status/Index";
+
+const financialStore = combineReducers({
+    overview: overviewReducer,
+    contract: contractReducer,
+    contractDetail: contractDetailsReducer,
+    invoice: invoiceReducer,
+    invoiceDetail: invoiceDetailsReducer,
+    payment: paymentReducer,
+    paymentDetail: paymentDetailsReducer,
+    tag: tagReducer,
+});
 
 export const store = configureStore({
     reducer: {
         status: statusReducer,
         common: commonReducer,
-        financial: financialReducer,
+        financial: financialStore,
         facetexture: facetextureReducer,
     },
     devTools: process.env.NODE_ENV === "development",

@@ -63,8 +63,6 @@ const initialState: IFinancialStore = {
         loading: true,
         data: {
             payments: [],
-            open: [],
-            closed: [],
             fixed_credit: 0,
             fixed_debit: 0,
             invoiceByTag: [],

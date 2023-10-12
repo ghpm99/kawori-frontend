@@ -5,8 +5,8 @@ import {
     CategoryScale,
     Chart as ChartJS,
     Legend,
-    LinearScale,
     LineElement,
+    LinearScale,
     PointElement,
     Title,
     Tooltip,
@@ -16,6 +16,14 @@ import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
+import {
+    fetchAmountInvoiceByTagReportThunk,
+    fetchAmountPaymentClosedReportThunk,
+    fetchAmountPaymentOpenReportThunk,
+    fetchAmountPaymentReportThunk,
+    fetchCountPaymentReportThunk,
+    fetchPaymentReportThunk,
+} from "services/financial/overview";
 import LoadingPage from "../../../../components/loadingPage/Index";
 import LoginHeader from "../../../../components/loginHeader/Index";
 import MenuAdmin from "../../../../components/menuAdmin/Index";
@@ -24,41 +32,45 @@ import InvoiceByTag from "../../../../components/overview/invoiceByTag";
 import PaymentFixed from "../../../../components/overview/paymentFixed";
 import PaymentWithFixed from "../../../../components/overview/paymentWithFixed";
 import PaymentWithoutFixed from "../../../../components/overview/paymentWithoutFixed";
-import { fetchPaymentReport } from "../../../../store/features/financial/Index";
 import { RootState, useAppDispatch } from "../../../../store/store";
 import styles from "./Overview.module.scss";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Overview() {
-    const financialStore = useSelector((state: RootState) => state.financial.paymentReport);
+    const overviewStore = useSelector((state: RootState) => state.financial.overview);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchPaymentReport());
+        dispatch(fetchPaymentReportThunk());
+        dispatch(fetchCountPaymentReportThunk());
+        dispatch(fetchAmountPaymentReportThunk());
+        dispatch(fetchAmountPaymentOpenReportThunk());
+        dispatch(fetchAmountPaymentClosedReportThunk());
+        dispatch(fetchAmountInvoiceByTagReportThunk());
     }, []);
 
     function OverviewReport() {
         return (
             <>
                 <Cards
-                    countPayment={financialStore.data.countPayment}
-                    amountPayment={financialStore.data.amountPayment}
-                    amountPaymentOpen={financialStore.data.amountPaymentOpen}
-                    amountPaymentClosed={financialStore.data.amountPaymentClosed}
-                    loading={financialStore.loading}
+                    countPayment={overviewStore.data.countPayment}
+                    amountPayment={overviewStore.data.amountPayment}
+                    amountPaymentOpen={overviewStore.data.amountPaymentOpen}
+                    amountPaymentClosed={overviewStore.data.amountPaymentClosed}
+                    loading={overviewStore.loading}
                 />
                 <div>
-                    <PaymentWithFixed data={financialStore.data.payments} />
+                    <PaymentWithFixed data={overviewStore.data.payments} />
                 </div>
                 <div>
-                    <InvoiceByTag datasets={financialStore.data.invoiceByTag} />
+                    <InvoiceByTag data={overviewStore.data.invoiceByTag} />
                 </div>
                 <div className={styles["charts-container"]}>
-                    <PaymentWithoutFixed payments={financialStore.data.payments} />
+                    <PaymentWithoutFixed payments={overviewStore.data.payments} />
                     <PaymentFixed
-                        fixedCredit={financialStore.data.fixed_credit}
-                        fixedDebit={financialStore.data.fixed_debit}
+                        fixedCredit={overviewStore.data.fixed_credit}
+                        fixedDebit={overviewStore.data.fixed_debit}
                     />
                 </div>
             </>

@@ -48,7 +48,7 @@ export default function ContractDetails() {
     const { id } = router.query;
 
     const financialStore = useSelector((state: RootState) => state.financial.contractDetail);
-    const tagStore = useSelector((state: RootState) => state.financial.tags);
+    const tagStore = useSelector((state: RootState) => state.financial.tag);
     const dispatch = useAppDispatch();
 
     const [searchText, setSearchText] = useState("");

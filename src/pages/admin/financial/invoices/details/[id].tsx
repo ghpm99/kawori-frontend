@@ -31,7 +31,7 @@ export default function InvoiceDetails() {
     const { id } = router.query;
 
     const financialStore = useSelector((state: RootState) => state.financial.invoiceDetail);
-    const tagsStore = useSelector((state: RootState) => state.financial.tags);
+    const tagsStore = useSelector((state: RootState) => state.financial.tag);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
