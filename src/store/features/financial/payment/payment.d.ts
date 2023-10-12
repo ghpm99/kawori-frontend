@@ -1,19 +1,19 @@
 interface IPaymentStore {
     data: IPaymentPagination[];
-        pagination: {
-            currentPage: number;
-            hasNext: boolean;
-            hasPrevious: boolean;
-            totalPages: number;
+    pagination: {
+        currentPage: number;
+        hasNext: boolean;
+        hasPrevious: boolean;
+        totalPages: number;
+    };
+    loading: boolean;
+    filters: IPaymentFilters;
+    modal: {
+        payoff: {
+            visible: boolean;
+            data: IPaymentModalPayoffDataSource[];
         };
-        loading: boolean;
-        filters: IPaymentFilters;
-        modal: {
-            payoff: {
-                visible: boolean;
-                data: IPaymentModalPayoffDataSource[];
-            };
-        };
+    };
 }
 
 interface IPaymentPagination {
