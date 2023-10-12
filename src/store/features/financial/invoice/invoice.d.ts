@@ -1,14 +1,14 @@
 interface IInvoiceStore {
     data: IInvoicePagination[];
-        loading: boolean;
-        modal: IModalInvoice;
-        pagination: {
-            currentPage: number;
-            hasNext: boolean;
-            hasPrevious: boolean;
-            totalPages: number;
-        };
-        filters: IInvoiceFilters;
+    loading: boolean;
+    modal: IModalInvoice;
+    pagination: {
+        currentPage: number;
+        hasNext: boolean;
+        hasPrevious: boolean;
+        totalPages: number;
+    };
+    filters: IInvoiceFilters;
 }
 
 interface IInvoicePagination {
