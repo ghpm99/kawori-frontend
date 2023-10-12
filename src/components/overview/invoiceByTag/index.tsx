@@ -4,11 +4,11 @@ import { Bar } from "react-chartjs-2";
 import styles from "./invoiceByTag.module.scss";
 
 interface IInvoiceByTagProps {
-    datasets: IInvoiceByTag[];
+    data: IInvoiceByTag[];
 }
 
-const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
-    const dataset = datasets.map((item) => ({
+const InvoiceByTag = ({ data }: IInvoiceByTagProps) => {
+    const dataset = data.map((item) => ({
         label: item.name,
         data: [item.amount],
         backgroundColor: item.color,
@@ -27,14 +27,14 @@ const InvoiceByTag = ({ datasets }: IInvoiceByTagProps) => {
         },
     };
 
-    const data = {
+    const dataSource = {
         labels: ["Tag"],
         datasets: dataset,
     };
 
     return (
         <div className={styles["chart-container"]}>
-            <Bar data={data} options={options} width={400} style={{ background: "white", height: "100%" }} />
+            <Bar data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
         </div>
     );
 };

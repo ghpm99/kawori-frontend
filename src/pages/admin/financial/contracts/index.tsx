@@ -21,7 +21,7 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function FinancialPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.contracts);
+    const financialStore = useSelector((state: RootState) => state.financial.contract);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

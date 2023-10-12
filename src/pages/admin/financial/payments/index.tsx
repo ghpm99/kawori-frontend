@@ -36,7 +36,7 @@ const messageKey = "payment_pagination_message";
 
 function FinancialPage() {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const financialStore = useSelector((state: RootState) => state.financial.payments);
+    const financialStore = useSelector((state: RootState) => state.financial.payment);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
