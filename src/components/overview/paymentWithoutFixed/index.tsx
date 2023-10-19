@@ -4,11 +4,12 @@ import { Line } from "react-chartjs-2";
 import { formatterMonthYearDate } from "../../../util";
 import styles from "./paymentWithoutFixed.module.scss";
 
-interface IPaymentWithoutFixedProps {
+interface IAccumulatedValueProps {
     payments: IPaymentCharts[];
+    amountForecastValue: number;
 }
 
-export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
+export default function AccumulatedValue(props: IAccumulatedValueProps) {
     const options = {
         responsive: true,
         interaction: {
@@ -39,6 +40,12 @@ export default function PaymentWithoutFixed(props: IPaymentWithoutFixedProps) {
                 data: props.payments?.map((data) => data.accumulated),
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
+            },
+            {
+                label: "Valor de reserva",
+                data: props.payments?.map((data) => props.amountForecastValue),
+                borderColor: "rgb(235, 53, 53)",
+                backgroundColor: "rgba(235, 53, 53, 0.5)",
             },
         ],
     };
