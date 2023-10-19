@@ -45,3 +45,9 @@ export const fetchAmountInvoiceByTagReportThunk = createAsyncThunk(
         return data;
     },
 );
+
+export const fetchAmountForecastValueThunk = createAsyncThunk("financial/fetchAmountForecastValueThunk", async () => {
+    const response = await apiDjango.get("/financial/report/amount_forecast_value");
+    const data = await response.data;
+    return data;
+});

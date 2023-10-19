@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import {
+    fetchAmountForecastValueThunk,
     fetchAmountInvoiceByTagReportThunk,
     fetchAmountPaymentClosedReportThunk,
     fetchAmountPaymentOpenReportThunk,
@@ -20,6 +21,7 @@ const initialState: IOverviewStore = {
         amountPayment: 0,
         amountPaymentClosed: 0,
         amountPaymentOpen: 0,
+        amountForecastValue: 0,
     },
 };
 
@@ -58,6 +60,10 @@ export const financialOverviewSlice = createSlice({
             .addCase(fetchAmountInvoiceByTagReportThunk.fulfilled, (state, action) => {
                 const { data } = action.payload;
                 state.data.invoiceByTag = data;
+            })
+            .addCase(fetchAmountForecastValueThunk.fulfilled, (state, action) => {
+                const { data } = action.payload;
+                state.data.amountForecastValue = data;
             });
     },
 });

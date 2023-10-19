@@ -9,5 +9,6 @@ interface IOverviewStore {
         amountPayment: number;
         amountPaymentOpen: number;
         amountPaymentClosed: number;
+        amountForecastValue: number;
     };
 }

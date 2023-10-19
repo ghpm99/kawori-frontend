@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import {
+    fetchAmountForecastValueThunk,
     fetchAmountInvoiceByTagReportThunk,
     fetchAmountPaymentClosedReportThunk,
     fetchAmountPaymentOpenReportThunk,
@@ -31,7 +32,7 @@ import Cards from "../../../../components/overview/cards";
 import InvoiceByTag from "../../../../components/overview/invoiceByTag";
 import PaymentFixed from "../../../../components/overview/paymentFixed";
 import PaymentWithFixed from "../../../../components/overview/paymentWithFixed";
-import PaymentWithoutFixed from "../../../../components/overview/paymentWithoutFixed";
+import AccumulatedValue from "../../../../components/overview/paymentWithoutFixed";
 import { RootState, useAppDispatch } from "../../../../store/store";
 import styles from "./Overview.module.scss";
 
@@ -48,6 +49,7 @@ function Overview() {
         dispatch(fetchAmountPaymentOpenReportThunk());
         dispatch(fetchAmountPaymentClosedReportThunk());
         dispatch(fetchAmountInvoiceByTagReportThunk());
+        dispatch(fetchAmountForecastValueThunk());
     }, []);
 
     function OverviewReport() {
@@ -67,7 +69,10 @@ function Overview() {
                     <InvoiceByTag data={overviewStore.data.invoiceByTag} />
                 </div>
                 <div className={styles["charts-container"]}>
-                    <PaymentWithoutFixed payments={overviewStore.data.payments} />
+                    <AccumulatedValue
+                        payments={overviewStore.data.payments}
+                        amountForecastValue={overviewStore.data.amountForecastValue}
+                    />
                     <PaymentFixed
                         fixedCredit={overviewStore.data.fixed_credit}
                         fixedDebit={overviewStore.data.fixed_debit}
