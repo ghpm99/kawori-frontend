@@ -16,8 +16,15 @@
         "noEmit": true,
         "jsx": "preserve",
         "incremental": true,
-        "baseUrl": "./src"
+        "baseUrl": "./src",
+        "paths": {
+            "@pages/*": ["pages/*"],
+            "@/components/*": ["components/*"],
+            "@/services/*": ["services/*"],
+            "@/store/*": ["store/*"],
+            "@/util/*": ["util/*"]
+        }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "additional.d.ts"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "additional.d.ts", "node_modules/@types/jest"],
     "exclude": ["node_modules"]
 }
