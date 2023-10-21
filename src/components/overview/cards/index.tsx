@@ -15,16 +15,16 @@ const Cards = (props: ICardsProps) => {
     return (
         <div className={styles["cards-container"]}>
             <Card title="Total de pagamentos" style={{ flexGrow: "1" }} loading={props.loading}>
-                {props.countPayment}
+                <div data-testid="countPayment">{props.countPayment}</div>
             </Card>
             <Card title="Valor total de pagamentos" style={{ flexGrow: "1" }} loading={props.loading}>
-                {formatMoney(props.amountPayment)}
+                <div data-testid="amountPayment">{formatMoney(props.amountPayment)}</div>
             </Card>
             <Card title="Valor total de pagamentos em aberto" style={{ flexGrow: "1" }} loading={props.loading}>
-                {formatMoney(props.amountPaymentOpen)}
+                <div data-testid="amountPaymentOpen">{formatMoney(props.amountPaymentOpen)}</div>
             </Card>
             <Card title="Valor total de pagamentos fechados" style={{ flexGrow: "1" }} loading={props.loading}>
-                {formatMoney(props.amountPaymentClosed)}
+                <div data-testid="amountPaymentClosed">{formatMoney(props.amountPaymentClosed)}</div>
             </Card>
         </div>
     );
