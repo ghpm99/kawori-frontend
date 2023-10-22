@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { apiDjango } from "services";
+import { apiDjango } from "@/services/index";
 
 export const fetchPaymentReportThunk = createAsyncThunk("financial/fetchPaymentReportThunk", async () => {
     const response = await apiDjango.get("/financial/report/");

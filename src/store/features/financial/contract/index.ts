@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchAllContractService } from "services/financial";
+import { fetchAllContractService } from "@/services/financial";
 
 const initialState: IContractStore = {
     data: [],

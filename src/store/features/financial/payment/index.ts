@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchAllPaymentService, saveNewPaymentService } from "services/financial";
+import { fetchAllPaymentService, saveNewPaymentService } from "@/services/financial";
 
 const initialState: IPaymentStore = {
     data: [],
