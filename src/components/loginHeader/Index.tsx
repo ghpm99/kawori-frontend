@@ -24,10 +24,10 @@ export default function LoginHeader() {
                 </Popover>
             ) : (
                 <div className={S.buttons}>
-                    <Button type="ghost" className={S.button}>
+                    <Button type="primary" className={S.button}>
                         <Link href="/signin">Sign in</Link>
                     </Button>
-                    <Button type="ghost" className={S.button}>
+                    <Button type="default" className={S.button}>
                         Sign up
                     </Button>
                 </div>
