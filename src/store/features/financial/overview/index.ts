@@ -8,7 +8,7 @@ import {
     fetchAmountPaymentReportThunk,
     fetchCountPaymentReportThunk,
     fetchPaymentReportThunk,
-} from "services/financial/overview";
+} from "@/services/financial/overview";
 
 const initialState: IOverviewStore = {
     loading: true,

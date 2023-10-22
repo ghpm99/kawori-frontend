@@ -3,7 +3,7 @@ import {
     fetchAllContractService,
     fetchDetailContractInvoicesService,
     fetchDetailContractService,
-} from "services/financial";
+} from "@/services/financial";
 
 const initialState: IContractDetailStore = {
     data: {

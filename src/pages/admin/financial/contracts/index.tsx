@@ -1,19 +1,19 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Layout, message, Table, Typography } from "antd";
+import { Breadcrumb, Layout, message, Table, Typography } from "antd";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import ModalNew, { INewContractForm } from "../../../../components/contracts/modalNew";
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import { saveNewContractService } from "../../../../services/financial";
-import { changeVisibleContractsModal, fetchAllContract } from "../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import { formatMoney } from "../../../../util";
+import ModalNew, { INewContractForm } from "@/components/contracts/modalNew";
+import OpenModalNewContract from "@/components/financial/contracts/openModalNewContract";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { saveNewContractService } from "@/services/financial";
+import { changeVisibleContractsModal, fetchAllContract } from "@/store/features/financial/contract";
+import { RootState, useAppDispatch } from "@/store/store";
+import { formatMoney } from "@/util/index";
 import styles from "./Contracts.module.scss";
 
 const { Header, Content } = Layout;
@@ -32,10 +32,6 @@ function FinancialPage() {
             }),
         );
     }, []);
-
-    const openModal = (modal: keyof IModalContracts) => {
-        dispatch(changeVisibleContractsModal({ modal: modal, visible: true }));
-    };
 
     const closeModal = (modal: keyof IModalContracts) => {
         dispatch(changeVisibleContractsModal({ modal: modal, visible: false }));
@@ -124,11 +120,7 @@ function FinancialPage() {
                             <Title level={3} className={styles.title}>
                                 Valores em aberto
                             </Title>
-                            <div>
-                                <Button icon={<PlusOutlined />} onClick={() => openModal("newPayment")}>
-                                    Novo
-                                </Button>
-                            </div>
+                            <OpenModalNewContract />
                         </div>
                         <Table
                             pagination={{
