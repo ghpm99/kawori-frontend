@@ -22,7 +22,8 @@
             "@/components/*": ["components/*"],
             "@/services/*": ["services/*"],
             "@/store/*": ["store/*"],
-            "@/util/*": ["util/*"]
+            "@/util/*": ["util/*"],
+            "@/types/*": ["types/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "additional.d.ts", "node_modules/@types/jest"],

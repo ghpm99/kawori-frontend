@@ -6,12 +6,12 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import { fetchAllInvoice } from "../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import { formatMoney, formatterDate } from "../../../../util";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { fetchAllInvoice } from "@/store/features/financial/invoice";
+import { RootState, useAppDispatch } from "@/store/store";
+import { formatMoney, formatterDate } from "@/util/index";
 import styles from "./Invoices.module.scss";
 
 const { Header, Content } = Layout;

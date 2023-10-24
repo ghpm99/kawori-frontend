@@ -3,8 +3,8 @@ import { Button, message } from "antd";
 import { saveAs } from "file-saver";
 import { useState } from "react";
 
-import { downloadFacetextureService, previewFacetextureService } from "../../../services/facetexture";
-import { db } from "../../../util/db";
+import { downloadFacetextureService, previewFacetextureService } from "@/services/facetexture";
+import { db } from "@/util/db";
 import Styles from "./Preview.module.scss";
 import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 import { useSelector } from "react-redux";

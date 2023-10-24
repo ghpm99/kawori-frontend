@@ -4,12 +4,12 @@ import { getSession } from "next-auth/react";
 import Pusher from "react-pusher";
 import { useDispatch, useSelector } from "react-redux";
 
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import { setCpuAndMemoryValue } from "../../../../store/features/status/Index";
-import { RootState } from "../../../../store/store";
-import { NextPageCustom } from "../../../../types/commonTypes";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { setCpuAndMemoryValue } from "@/store/features/status/Index";
+import { RootState } from "@/store/store";
+import { NextPageCustom } from "@/types/commonTypes";
 import S from "./Status.module.scss";
 
 const { Header, Content } = Layout;

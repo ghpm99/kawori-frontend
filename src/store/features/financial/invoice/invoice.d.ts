@@ -31,3 +31,8 @@ interface IModalInvoice {
         errorMsg: string;
     };
 }
+
+type PayloadChangeVisibleModalInvoiceAction = {
+    modal: keyof IModalInvoice;
+    visible: boolean;
+};

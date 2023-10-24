@@ -21,22 +21,22 @@ import { useRouter } from "next/router";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import ModalNewInvoice, { IFormNewInvoice } from "../../../../../components/contracts/modalNewInvoice";
-import LoadingPage from "../../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../../components/menuAdmin/Index";
-import { includeNewInvoiceService, mergeContractService } from "../../../../../services/financial";
+import ModalNewInvoice, { IFormNewInvoice } from "@/components/contracts/modalNewInvoice";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { includeNewInvoiceService, mergeContractService } from "@/services/financial";
+import { fetchAllContract } from "@/store/features/financial/contract";
+import { RootState, useAppDispatch } from "@/store/store";
+import { formatMoney, formatterDate } from "@/util/index";
+import styles from "./Details.module.scss";
 import {
     changeValueMergeModal,
     changeVisibleModalContract,
-    fetchAllContract,
     fetchContractDetails,
     fetchContractInvoicesDetails,
-    fetchTags,
-} from "../../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../../store/store";
-import { formatMoney, formatterDate } from "../../../../../util";
-import styles from "./Details.module.scss";
+} from "@/store/features/financial/contract/detail";
+import { fetchTags } from "@/store/features/financial/tag";
 
 const { Paragraph } = Typography;
 const { Option } = Select;
@@ -308,7 +308,7 @@ export default function ContractDetails() {
                                         key: "tags",
                                         render: (_, { tags }) => (
                                             <>
-                                                {tags.map((tag) => (
+                                                {tags.map((tag: any) => (
                                                     <Tag color={tag.color} key={`contract-tags-${tag.id}`}>
                                                         {tag.name}
                                                     </Tag>

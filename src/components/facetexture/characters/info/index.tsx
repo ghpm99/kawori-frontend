@@ -12,9 +12,9 @@ import {
     changeShowClassThunk,
     deleteCharacterThunk,
 } from "services/facetexture";
-import { updateFacetextureUrlReducer } from "../../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../../store/store";
-import { db } from "../../../../util/db";
+import { updateFacetextureUrlReducer } from "@/store/features/facetexture";
+import { RootState, useAppDispatch } from "@/store/store";
+import { db } from "@/util/db";
 import Styles from "./Info.module.scss";
 import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
 

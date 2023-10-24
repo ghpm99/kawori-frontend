@@ -9,10 +9,10 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import LoadingPage from "../../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../../components/menuAdmin/Index";
-import { payoffPaymentService, savePaymentDetailService } from "../../../../../services/financial";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { payoffPaymentService, savePaymentDetailService } from "@/services/financial";
 import {
     changeActivePaymentDetails,
     changeFixedPaymentDetails,
@@ -22,8 +22,8 @@ import {
     changeTypePaymentDetails,
     changeValuePaymentDetails,
     fetchPaymentDetails,
-} from "../../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../../store/store";
+} from "@/store/features/financial/payment/detail";
+import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./Details.module.scss";
 
 const { Paragraph } = Typography;

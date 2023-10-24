@@ -10,3 +10,24 @@ interface IContractStore {
     };
     filters: IContractFilters;
 }
+
+interface IModalContracts {
+    newPayment: {
+        visible: boolean;
+        error: boolean;
+        errorMsg: string;
+    };
+}
+
+type PayloadChangeVisibleModalContractsAction = {
+    modal: keyof IModalContracts;
+    visible: boolean;
+};
+
+interface IContractPagination {
+    id: number;
+    name: string;
+    value: number;
+    value_open: number;
+    value_closed: number;
+}

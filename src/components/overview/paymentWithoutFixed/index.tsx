@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 
-import { formatterMonthYearDate } from "../../../util";
+import { formatterMonthYearDate } from "@/util/index";
 import styles from "./paymentWithoutFixed.module.scss";
 
 interface IAccumulatedValueProps {

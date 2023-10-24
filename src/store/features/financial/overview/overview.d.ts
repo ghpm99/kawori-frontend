@@ -12,3 +12,19 @@ interface IOverviewStore {
         amountForecastValue: number;
     };
 }
+
+interface IPaymentCharts {
+    label: string;
+    debit: number;
+    credit: number;
+    total: number;
+    difference: number;
+    accumulated: number;
+}
+
+interface IInvoiceByTag {
+    id: number;
+    name: string;
+    color: string;
+    amount: number;
+}
