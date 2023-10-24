@@ -3,20 +3,16 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import Background from "../../../components/facetexture/background";
-import Characters from "../../../components/facetexture/characters";
-import Loading from "../../../components/facetexture/loading";
-import Preview from "../../../components/facetexture/preview";
-import LoginHeader from "../../../components/loginHeader/Index";
-import MenuAdmin from "../../../components/menuAdmin/Index";
-import { IFacetextureCharacterApi } from "../../../services/facetexture";
-import {
-    fetchFacetexture,
-    updateBackgroundReducer,
-    updateFacetextureUrlReducer,
-} from "../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../store/store";
-import { db } from "../../../util/db";
+import Background from "@/components/facetexture/background";
+import Characters from "@/components/facetexture/characters";
+import Loading from "@/components/facetexture/loading";
+import Preview from "@/components/facetexture/preview";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { IFacetextureCharacterApi } from "@/services/facetexture";
+import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "@/store/features/facetexture";
+import { RootState, useAppDispatch } from "@/store/store";
+import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
 
 const { Header, Content } = Layout;

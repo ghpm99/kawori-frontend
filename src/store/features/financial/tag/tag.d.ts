@@ -17,3 +17,8 @@ interface IModalTags {
         errorMsg: string;
     };
 }
+
+type PayloadChangeVisibleModalTagsAction = {
+    modal: keyof IModalTags;
+    visible: boolean;
+};

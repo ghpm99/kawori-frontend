@@ -5,14 +5,14 @@ import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import ModalNewTag, { IFormModalNewTag } from "../../../../components/tags/modalNew";
-import { includeNewTagService } from "../../../../services/financial";
-import { changeVisibleModalTag, fetchTags } from "../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../store/store";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import ModalNewTag, { IFormModalNewTag } from "@/components/tags/modalNew";
+import { includeNewTagService } from "@/services/financial";
+import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./tags.module.scss";
+import { changeVisibleModalTag, fetchTags } from "@/store/features/financial/tag";
 
 const { Header, Content } = Layout;
 

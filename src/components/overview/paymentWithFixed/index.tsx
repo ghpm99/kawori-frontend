@@ -1,6 +1,6 @@
 import { Line } from "react-chartjs-2";
 
-import { formatterMonthYearDate } from "../../../util";
+import { formatterMonthYearDate } from "@/util/index";
 import styles from "./paymentWithFixed.module.scss";
 
 interface IPaymentWithFixedProps {

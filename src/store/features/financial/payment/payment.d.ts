@@ -33,3 +33,8 @@ interface IPaymentModalPayoffDataSource {
     id: number;
     description: string;
 }
+
+type PayloadChangeStatusPaymentPaginationAction = {
+    id: number;
+    status: number;
+};

@@ -8,18 +8,15 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import LoadingPage from "../../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../../components/menuAdmin/Index";
-import { saveInvoiceTagsService } from "../../../../../services/financial";
-import {
-    fetchInvoiceDetails,
-    fetchInvoicePaymentsDetails,
-    fetchTags,
-} from "../../../../../store/features/financial/Index";
-import { RootState, useAppDispatch } from "../../../../../store/store";
-import { formatMoney, formatterDate } from "../../../../../util";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { saveInvoiceTagsService } from "@/services/financial";
+import { fetchInvoiceDetails, fetchInvoicePaymentsDetails } from "@/store/features/financial/invoice/detail";
+import { RootState, useAppDispatch } from "@/store/store";
+import { formatMoney, formatterDate } from "@/util/index";
 import styles from "./Details.module.scss";
+import { fetchTags } from "@/store/features/financial/tag";
 
 const { Paragraph } = Typography;
 const { Option } = Select;

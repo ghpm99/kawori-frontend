@@ -1,6 +1,6 @@
 import { Card } from "antd";
 
-import { formatMoney } from "../../../util";
+import { formatMoney } from "@/util/index";
 import styles from "./cards.module.scss";
 
 interface ICardsProps {

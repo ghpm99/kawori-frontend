@@ -2,8 +2,8 @@ import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } 
 import { useSelector } from "react-redux";
 
 import { reorderCharacterThunk } from "services/facetexture";
-import { setSelectedFacetextureReducer } from "../../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../../store/store";
+import { setSelectedFacetextureReducer } from "@/store/features/facetexture";
+import { RootState, useAppDispatch } from "@/store/store";
 import Styles from "./DnDCharacters.module.scss";
 import { message } from "antd";
 import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";

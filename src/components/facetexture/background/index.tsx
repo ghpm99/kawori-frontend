@@ -4,9 +4,9 @@ import { RcFile } from "antd/lib/upload";
 import Dragger from "antd/lib/upload/Dragger";
 import { useSelector } from "react-redux";
 
-import { updateBackgroundReducer } from "../../../store/features/facetexture";
-import { RootState, useAppDispatch } from "../../../store/store";
-import { db } from "../../../util/db";
+import { updateBackgroundReducer } from "@/store/features/facetexture";
+import { RootState, useAppDispatch } from "@/store/store";
+import { db } from "@/util/db";
 import styles from "./Background.module.scss";
 
 const Background = () => {

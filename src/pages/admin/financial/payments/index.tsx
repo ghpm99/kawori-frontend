@@ -1,5 +1,14 @@
+import {
+    changeDataSourcePayoffPayments,
+    changeSingleDataSourcePayoffPayments,
+    changeStatusPaymentPagination,
+    changeVisibleModalPayoffPayments,
+    cleanFilterPayments,
+    fetchAllPayment,
+    setFilterPayments,
+} from "@/store/features/financial/payment";
 import { ClearOutlined, ToTopOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, DatePicker, Input, Layout, message, Popconfirm, Select, Table, Typography } from "antd";
+import { Breadcrumb, Button, DatePicker, Input, Layout, Popconfirm, Select, Table, Typography, message } from "antd";
 import FilterDropdown from "components/common/filterDropdown/Index";
 import LoadingPage from "components/loadingPage/Index";
 import LoginHeader from "components/loginHeader/Index";
@@ -12,18 +21,9 @@ import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { payoffPaymentService } from "services/financial";
-import {
-    changeDataSourcePayoffPayments,
-    changeSingleDataSourcePayoffPayments,
-    changeStatusPaymentPagination,
-    changeVisibleModalPayoffPayments,
-    cleanFilterPayments,
-    fetchAllPayment,
-    setFilterPayments,
-} from "store/features/financial/Index";
 import { RootState, useAppDispatch } from "store/store";
 
-import { formatMoney, formatterDate } from "../../../../util";
+import { formatMoney, formatterDate } from "@/util/index";
 import styles from "./Payments.module.scss";
 
 const { Header, Content } = Layout;

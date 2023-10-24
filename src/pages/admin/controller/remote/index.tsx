@@ -1,12 +1,12 @@
 import { Breadcrumb, Button, Input, Layout, Slider, Typography } from "antd";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
-import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pusher from "react-pusher";
 
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
 import {
     hotkeyService,
     keyPressService,
@@ -15,7 +15,7 @@ import {
     mouseMoveService,
     mouseScrollService,
     screenSizeService,
-} from "../../../../services/remote";
+} from "@/services/remote";
 import styles from "./Remote.module.scss";
 
 const { Header, Content } = Layout;

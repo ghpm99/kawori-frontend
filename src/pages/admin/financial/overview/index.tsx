@@ -25,15 +25,15 @@ import {
     fetchCountPaymentReportThunk,
     fetchPaymentReportThunk,
 } from "services/financial/overview";
-import LoadingPage from "../../../../components/loadingPage/Index";
-import LoginHeader from "../../../../components/loginHeader/Index";
-import MenuAdmin from "../../../../components/menuAdmin/Index";
-import Cards from "../../../../components/overview/cards";
-import InvoiceByTag from "../../../../components/overview/invoiceByTag";
-import PaymentFixed from "../../../../components/overview/paymentFixed";
-import PaymentWithFixed from "../../../../components/overview/paymentWithFixed";
-import AccumulatedValue from "../../../../components/overview/paymentWithoutFixed";
-import { RootState, useAppDispatch } from "../../../../store/store";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import Cards from "@/components/overview/cards";
+import InvoiceByTag from "@/components/overview/invoiceByTag";
+import PaymentFixed from "@/components/overview/paymentFixed";
+import PaymentWithFixed from "@/components/overview/paymentWithFixed";
+import AccumulatedValue from "@/components/overview/paymentWithoutFixed";
+import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./Overview.module.scss";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
