@@ -6,9 +6,9 @@ import { useState } from "react";
 import { downloadFacetextureService, previewFacetextureService } from "@/services/facetexture";
 import { db } from "@/util/db";
 import Styles from "./Preview.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
+import { FACETEXTURE_MESSAGE_REF } from "@/pages/admin/facetexture";
 import { useSelector } from "react-redux";
-import { RootState } from "store/store";
+import { RootState } from "@/store/store";
 
 const Preview = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);

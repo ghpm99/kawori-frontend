@@ -3,7 +3,8 @@ import Characters from ".";
 
 describe("Test Characters container", () => {
     it("Check render", () => {
-        const { baseElement } = renderWithProviders(<Characters />);
+        const { baseElement, getByText } = renderWithProviders(<Characters />);
         expect(baseElement).toBeInTheDocument();
+        expect(getByText("Incluir Novo Personagem")).toBeInTheDocument();
     });
 });
