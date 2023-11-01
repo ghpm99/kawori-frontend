@@ -6,15 +6,15 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { RcFile } from "antd/lib/upload";
 import Dragger from "antd/lib/upload/Dragger";
 import { useSelector } from "react-redux";
-import { newCharacterThunk } from "services/facetexture";
+import { newCharacterThunk } from "@/services/facetexture";
 import {
     updateFacetextureClassModalReducer,
     updateFacetextureImageNameModalReducer,
     updateFacetextureVisibleClassModalReducer,
-} from "store/features/facetexture";
-import { RootState, useAppDispatch } from "store/store";
+} from "@/store/features/facetexture";
+import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./newModal.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "pages/admin/facetexture";
+import { FACETEXTURE_MESSAGE_REF } from "@/pages/admin/facetexture";
 
 const { Title } = Typography;
 
