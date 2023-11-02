@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Characters container Check render 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-layout ant-layout-has-sider container css-dev-only-do-not-override-xu9wm8"
+    >
+      <aside
+        class="ant-layout-sider ant-layout-sider-dark ant-layout-sider-has-trigger"
+        style="flex: 0 0 200px; max-width: 200px; min-width: 200px; width: 200px;"
+      >
+        <div
+          class="ant-layout-sider-children"
+        >
+          <a
+            href="/"
+          >
+            <p
+              class="logo"
+            >
+              Kawori
+            </p>
+          </a>
+          <ul
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-xu9wm8"
+            data-menu-list="true"
+            role="menu"
+            tabindex="0"
+          >
+            <li
+              class="ant-menu-item"
+              data-menu-id="rc-menu-uuid-test-home"
+              role="menuitem"
+              style="padding-left: 24px;"
+              tabindex="-1"
+            >
+              <span
+                aria-label="home"
+                class="anticon anticon-home ant-menu-item-icon"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="home"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 00-44.4 0L77.5 505a63.9 63.9 0 00-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0018.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="ant-menu-title-content"
+              >
+                <a
+                  href="/"
+                >
+                  Inicio
+                </a>
+              </span>
+            </li>
+            <li
+              class="ant-menu-item"
+              data-menu-id="rc-menu-uuid-test-user"
+              role="menuitem"
+              style="padding-left: 24px;"
+              tabindex="-1"
+              title="Usuario"
+            >
+              <span
+                aria-label="user"
+                class="anticon anticon-user ant-menu-item-icon"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="user"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="ant-menu-title-content"
+              >
+                <a
+                  href="/admin/user"
+                >
+                  Conta
+                </a>
+              </span>
+            </li>
+            <li
+              class="ant-menu-item ant-menu-item-selected"
+              data-menu-id="rc-menu-uuid-test-facetexture"
+              role="menuitem"
+              style="padding-left: 24px;"
+              tabindex="-1"
+            >
+              <span
+                aria-label="appstore"
+                class="anticon anticon-appstore ant-menu-item-icon"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="appstore"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H212V212h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H612V212h200v200zM464 544H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H212V612h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H612V612h200v200z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="ant-menu-title-content"
+              >
+                <a
+                  href="/admin/facetexture"
+                >
+                  Facetexture
+                </a>
+              </span>
+            </li>
+          </ul>
+          <div
+            aria-hidden="true"
+            style="display: none;"
+          />
+        </div>
+        <div
+          class="ant-layout-sider-trigger"
+          style="width: 200px;"
+        >
+          <span
+            aria-label="left"
+            class="anticon anticon-left"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="left"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+              />
+            </svg>
+          </span>
+        </div>
+      </aside>
+      <div
+        class="ant-layout css-dev-only-do-not-override-xu9wm8"
+      >
+        <header
+          class="ant-layout-header header css-dev-only-do-not-override-xu9wm8"
+        >
+          <div
+            class="layout"
+          >
+            <span
+              class="ant-avatar ant-avatar-sm ant-avatar-circle ant-avatar-icon css-dev-only-do-not-override-xu9wm8"
+            >
+              <span
+                aria-label="user"
+                class="anticon anticon-user"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="user"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </header>
+        <main
+          class="ant-layout-content css-dev-only-do-not-override-xu9wm8"
+        >
+          <nav
+            class="ant-breadcrumb breadcrumb css-dev-only-do-not-override-xu9wm8"
+          >
+            <ol>
+              <li>
+                <span
+                  class="ant-breadcrumb-link"
+                >
+                  Kawori
+                </span>
+              </li>
+              <li
+                aria-hidden="true"
+                class="ant-breadcrumb-separator"
+              >
+                /
+              </li>
+              <li>
+                <span
+                  class="ant-breadcrumb-link"
+                >
+                  Facetexture
+                </span>
+              </li>
+            </ol>
+          </nav>
+          <div
+            class="container-toolkit"
+          >
+            <div
+              class="characters"
+            >
+              <div>
+                <h1>
+                  Personagens
+                </h1>
+                <div
+                  class="ant-skeleton ant-skeleton-element css-dev-only-do-not-override-xu9wm8"
+                >
+                  <div
+                    class="ant-skeleton-image"
+                  >
+                    <svg
+                      class="ant-skeleton-image-svg"
+                      viewBox="0 0 1098 1024"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        class="ant-skeleton-image-path"
+                        d="M365.714286 329.142857q0 45.714286-32.036571 77.677714t-77.677714 32.036571-77.677714-32.036571-32.036571-77.677714 32.036571-77.677714 77.677714-32.036571 77.677714 32.036571 32.036571 77.677714zM950.857143 548.571429l0 256-804.571429 0 0-109.714286 182.857143-182.857143 91.428571 91.428571 292.571429-292.571429zM1005.714286 146.285714l-914.285714 0q-7.460571 0-12.873143 5.412571t-5.412571 12.873143l0 694.857143q0 7.460571 5.412571 12.873143t12.873143 5.412571l914.285714 0q7.460571 0 12.873143-5.412571t5.412571-12.873143l0-694.857143q0-7.460571-5.412571-12.873143t-12.873143-5.412571zM1097.142857 164.571429l0 694.857143q0 37.741714-26.843429 64.585143t-64.585143 26.843429l-914.285714 0q-37.741714 0-64.585143-26.843429t-26.843429-64.585143l0-694.857143q0-37.741714 26.843429-64.585143t64.585143-26.843429l914.285714 0q37.741714 0 64.585143 26.843429t26.843429 64.585143z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="character-info"
+              >
+                <div
+                  class="ant-skeleton css-dev-only-do-not-override-xu9wm8"
+                >
+                  <div
+                    class="ant-skeleton-content"
+                  >
+                    <h3
+                      class="ant-skeleton-title"
+                      style="width: 38%;"
+                    />
+                    <ul
+                      class="ant-skeleton-paragraph"
+                    >
+                      <li />
+                      <li />
+                      <li
+                        style="width: 61%;"
+                      />
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="background-container"
+            >
+              <h1>
+                Background
+              </h1>
+              <div>
+                <div
+                  class="ant-skeleton ant-skeleton-element css-dev-only-do-not-override-xu9wm8"
+                >
+                  <div
+                    class="ant-skeleton-image"
+                  >
+                    <svg
+                      class="ant-skeleton-image-svg"
+                      viewBox="0 0 1098 1024"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        class="ant-skeleton-image-path"
+                        d="M365.714286 329.142857q0 45.714286-32.036571 77.677714t-77.677714 32.036571-77.677714-32.036571-32.036571-77.677714 32.036571-77.677714 77.677714-32.036571 77.677714 32.036571 32.036571 77.677714zM950.857143 548.571429l0 256-804.571429 0 0-109.714286 182.857143-182.857143 91.428571 91.428571 292.571429-292.571429zM1005.714286 146.285714l-914.285714 0q-7.460571 0-12.873143 5.412571t-5.412571 12.873143l0 694.857143q0 7.460571 5.412571 12.873143t12.873143 5.412571l914.285714 0q7.460571 0 12.873143-5.412571t5.412571-12.873143l0-694.857143q0-7.460571-5.412571-12.873143t-12.873143-5.412571zM1097.142857 164.571429l0 694.857143q0 37.741714-26.843429 64.585143t-64.585143 26.843429l-914.285714 0q-37.741714 0-64.585143-26.843429t-26.843429-64.585143l0-694.857143q0-37.741714 26.843429-64.585143t64.585143-26.843429l914.285714 0q37.741714 0 64.585143 26.843429t26.843429 64.585143z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="preview-container"
+            >
+              <h1>
+                Preview
+              </h1>
+              <div>
+                <div
+                  class="ant-skeleton ant-skeleton-element css-dev-only-do-not-override-xu9wm8"
+                >
+                  <div
+                    class="ant-skeleton-image"
+                  >
+                    <svg
+                      class="ant-skeleton-image-svg"
+                      viewBox="0 0 1098 1024"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        class="ant-skeleton-image-path"
+                        d="M365.714286 329.142857q0 45.714286-32.036571 77.677714t-77.677714 32.036571-77.677714-32.036571-32.036571-77.677714 32.036571-77.677714 77.677714-32.036571 77.677714 32.036571 32.036571 77.677714zM950.857143 548.571429l0 256-804.571429 0 0-109.714286 182.857143-182.857143 91.428571 91.428571 292.571429-292.571429zM1005.714286 146.285714l-914.285714 0q-7.460571 0-12.873143 5.412571t-5.412571 12.873143l0 694.857143q0 7.460571 5.412571 12.873143t12.873143 5.412571l914.285714 0q7.460571 0 12.873143-5.412571t5.412571-12.873143l0-694.857143q0-7.460571-5.412571-12.873143t-12.873143-5.412571zM1097.142857 164.571429l0 694.857143q0 37.741714-26.843429 64.585143t-64.585143 26.843429l-914.285714 0q-37.741714 0-64.585143-26.843429t-26.843429-64.585143l0-694.857143q0-37.741714 26.843429-64.585143t64.585143-26.843429l914.285714 0q37.741714 0 64.585143 26.843429t26.843429 64.585143z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</body>
+`;
