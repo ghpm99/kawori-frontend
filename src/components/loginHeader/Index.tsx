@@ -2,7 +2,6 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Popover } from "antd";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
 
 import S from "./Login.module.scss";
 
