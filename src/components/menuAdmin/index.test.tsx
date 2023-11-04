@@ -34,7 +34,7 @@ describe("Test Characters container", () => {
             expires: new Date(Date.now() + 2 * 86400).toISOString(),
             user: { name: "Teste123" },
         };
-        useSession.mockReturnValue({ data: session, status: "" });
+        (useSession as jest.Mock).mockReturnValue({ data: session, status: "" });
         const { baseElement, getByText, queryByText } = renderWithProviders(<MenuAdmin selected={["home"]} />);
         expect(baseElement).toBeInTheDocument();
 
@@ -63,7 +63,7 @@ describe("Test Characters container", () => {
             expires: new Date(Date.now() + 2 * 86400).toISOString(),
             user: { name: "Teste123" },
         };
-        useSession.mockReturnValue({ data: session, status: "authenticated" });
+        (useSession as jest.Mock).mockReturnValue({ data: session, status: "authenticated" });
         const { baseElement, getByText, queryByText } = renderWithProviders(<MenuAdmin selected={["home"]} />);
         expect(baseElement).toBeInTheDocument();
 
@@ -92,7 +92,7 @@ describe("Test Characters container", () => {
             expires: new Date(Date.now() + 2 * 86400).toISOString(),
             user: { name: "Teste123", isSuperuser: false },
         };
-        useSession.mockReturnValue({ data: session, status: "authenticated" });
+        (useSession as jest.Mock).mockReturnValue({ data: session, status: "authenticated" });
         const { baseElement, getByText, queryByText } = renderWithProviders(<MenuAdmin selected={["home"]} />);
         expect(baseElement).toBeInTheDocument();
 
@@ -121,7 +121,7 @@ describe("Test Characters container", () => {
             expires: new Date(Date.now() + 2 * 86400).toISOString(),
             user: { name: "Teste123", isSuperuser: true },
         };
-        useSession.mockReturnValue({ data: session, status: "authenticated" });
+        (useSession as jest.Mock).mockReturnValue({ data: session, status: "authenticated" });
         const { baseElement, getByText, queryByText } = renderWithProviders(<MenuAdmin selected={["home"]} />);
 
         expect(baseElement).toBeInTheDocument();
