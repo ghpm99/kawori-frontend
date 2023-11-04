@@ -10,7 +10,7 @@ const createJestConfig = nextJest({
 const config = {
     // Add more setup options before each test is run
     setupFiles: ["<rootDir>/jest.setupFiles.js"],
-    setupFilesAfterEnv: ["@testing-library/jest-dom", "react-intersection-observer/test-utils", "<rootDir>/jest.setup.js"],
+    setupFilesAfterEnv: ["<rootDir>/jest.setupFilesAfterEnv.js"],
     moduleNameMapper: {
         "^dexie$": "<rootDir>/node_modules/dexie",
     },

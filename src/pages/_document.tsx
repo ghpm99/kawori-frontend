@@ -1,6 +1,5 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
-import Script from "next/script";
 import React from "react";
 
 React.useLayoutEffect = React.useEffect;

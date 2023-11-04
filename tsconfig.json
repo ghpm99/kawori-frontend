@@ -26,6 +26,15 @@
             "@/types/*": ["types/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "additional.d.ts", "node_modules/@types/jest", "jest.config.ts", "jest.setupFiles.js", "jest.setup.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "additional.d.ts",
+        "node_modules/@types/jest",
+        "jest.config.ts",
+        "jest.setupFiles.js",
+        "jest.setupFilesAfterEnv.js"
+    ],
     "exclude": ["node_modules"]
 }
