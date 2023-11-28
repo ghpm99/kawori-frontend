@@ -20,6 +20,7 @@ export default function LoginPage() {
     }, []);
 
     const onFinish = (values: any) => {
+        console.log("Success:", values);
         signIn("credentials", {
             username: values.username,
             password: values.password,
