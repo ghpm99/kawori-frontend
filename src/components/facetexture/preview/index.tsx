@@ -41,7 +41,7 @@ const Preview = () => {
                     content: "Falhou em atualizar preview!",
                     key: FACETEXTURE_MESSAGE_REF,
                 });
-                console.log(reason);
+                console.error(reason);
             })
             .finally(() => {
                 setLoading(false);
@@ -69,7 +69,7 @@ const Preview = () => {
                     content: "Falhou em baixar!",
                     key: FACETEXTURE_MESSAGE_REF,
                 });
-                console.log(reason);
+                console.error(reason);
             })
             .finally(() => {
                 setDownloading(false);

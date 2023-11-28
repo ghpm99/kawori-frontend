@@ -152,7 +152,6 @@ export default function ContractDetails() {
     };
 
     const mergeContractEvent = () => {
-        console.log(financialStore.modal.mergeContract.id);
         mergeContractService({
             id: financialStore.data.id,
             contracts: financialStore.modal.mergeContract.id,

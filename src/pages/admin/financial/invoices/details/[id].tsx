@@ -64,14 +64,12 @@ export default function InvoiceDetails() {
     };
 
     const onMenuClick: MenuProps["onClick"] = (e) => {
-        console.log("click", e);
         if (e.key === "1") {
             includeNewInvoice();
         }
     };
 
     const handleChangeTags = (value: number[], option: DefaultOptionType | DefaultOptionType[]) => {
-        console.log(`selected ${value}`, option);
         saveInvoiceTagsService(
             financialStore.data.id,
             option.map((item: any) => item.value),
@@ -82,7 +80,7 @@ export default function InvoiceDetails() {
                 }
             },
             (reason) => {
-                console.log(reason);
+                console.error(reason);
                 message.error("Falhou em atualizar tags");
             },
         );
