@@ -1,18 +1,20 @@
 import { Button, Form, Input, message } from "antd";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
-import { signupService } from "services/auth";
+import { signupService } from "@/services/auth";
 
 const SingupForm = () => {
     const [form] = Form.useForm();
 
     const signin = (username: string, password: string) => {
+        console.log("username", username, "password", password);
         signIn("credentials", {
             username: username,
             password: password,
             redirect: false,
         })
             .then((e) => {
+                console.log("e", e);
                 if (e?.status !== 200) {
                     message.error("Falhou em logar");
                 } else {
@@ -25,14 +27,16 @@ const SingupForm = () => {
     };
 
     const onFinish = (values: any) => {
+        console.log("Success:", values);
         signupService(values)
             .then((response) => {
+                console.log(response.data.msg);
                 message.success(response.data.msg);
                 form.resetFields();
                 signin(values.username, values.password);
             })
             .catch((error) => {
-                message.error(error.response.data.msg ?? "Falhou em criar usuário");
+                message.error(error?.response?.data?.msg ?? "Falhou em criar usuário");
             });
     };
 
