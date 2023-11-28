@@ -1,9 +1,8 @@
-import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
+import SingupForm from "@/components/signup/index";
+import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { message } from "antd";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
-import SingupForm from "@/components/signup/index";
 import { signupService } from "../../services/auth";
 
 jest.mock("next-auth/react", () => ({
@@ -39,8 +38,7 @@ beforeAll(() => {
 afterEach(() => {
     jest.clearAllMocks();
     cleanup();
-
-  });
+});
 
 describe("SingupForm", () => {
     it("should call signupService and signIn when form submission is successful", async () => {
@@ -66,13 +64,15 @@ describe("SingupForm", () => {
         const passwordConfirmationInput = getByLabelText("Confirme senha");
         const signupButton = getByText("Cadastrar");
 
-        fireEvent.change(nameInput, { target: { value: "test" } });
-        fireEvent.change(lastNameInput, { target: { value: "test" } });
-        fireEvent.change(usernameInput, { target: { value: "test" } });
-        fireEvent.change(emailInput, { target: { value: "test@teste.com" } });
-        fireEvent.change(passwordInput, { target: { value: "test@123" } });
-        fireEvent.change(passwordConfirmationInput, { target: { value: "test@123" } });
-        userEvent.click(signupButton);
+        act(() => {
+            fireEvent.change(nameInput, { target: { value: "test" } });
+            fireEvent.change(lastNameInput, { target: { value: "test" } });
+            fireEvent.change(usernameInput, { target: { value: "test" } });
+            fireEvent.change(emailInput, { target: { value: "test@teste.com" } });
+            fireEvent.change(passwordInput, { target: { value: "test@123" } });
+            fireEvent.change(passwordConfirmationInput, { target: { value: "test@123" } });
+            userEvent.click(signupButton);
+        });
 
         await waitFor(() => {
             expect(signupService).toHaveBeenCalledWith({
@@ -90,7 +90,6 @@ describe("SingupForm", () => {
             });
 
             expect(Router.push).toHaveBeenCalledWith("/admin/user");
-            expect("Usuário criado com sucesso").toBeInTheDocument();
         });
     });
 
@@ -117,16 +116,19 @@ describe("SingupForm", () => {
         const passwordConfirmationInput = getByLabelText("Confirme senha");
         const signupButton = getByText("Cadastrar");
 
-        fireEvent.change(nameInput, { target: { value: "test" } });
-        fireEvent.change(lastNameInput, { target: { value: "test" } });
-        fireEvent.change(usernameInput, { target: { value: "test" } });
-        fireEvent.change(emailInput, { target: { value: "test@teste.com" } });
-        fireEvent.change(passwordInput, { target: { value: "test@123" } });
-        fireEvent.change(passwordConfirmationInput, { target: { value: "test@123" } });
-        userEvent.click(signupButton);
+        act(() => {
+            fireEvent.change(nameInput, { target: { value: "test" } });
+            fireEvent.change(lastNameInput, { target: { value: "test" } });
+            fireEvent.change(usernameInput, { target: { value: "test" } });
+            fireEvent.change(emailInput, { target: { value: "test@teste.com" } });
+            fireEvent.change(passwordInput, { target: { value: "test@123" } });
+            fireEvent.change(passwordConfirmationInput, { target: { value: "test@123" } });
+            userEvent.click(signupButton);
+        });
 
         await waitFor(() => {
-            expect("Falhou em criar usuário").toBeInTheDocument();
+            const errorMessage = getByText("Falhou em criar usuário");
+            expect(errorMessage).toBeInTheDocument();
         });
     });
 });

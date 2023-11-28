@@ -7,14 +7,12 @@ const SingupForm = () => {
     const [form] = Form.useForm();
 
     const signin = (username: string, password: string) => {
-        console.log("username", username, "password", password);
         signIn("credentials", {
             username: username,
             password: password,
             redirect: false,
         })
             .then((e) => {
-                console.log("e", e);
                 if (e?.status !== 200) {
                     message.error("Falhou em logar");
                 } else {
@@ -22,15 +20,13 @@ const SingupForm = () => {
                 }
             })
             .catch((err) => {
-                console.log("error", err);
+                console.error("error", err);
             });
     };
 
     const onFinish = (values: any) => {
-        console.log("Success:", values);
         signupService(values)
             .then((response) => {
-                console.log(response.data.msg);
                 message.success(response.data.msg);
                 form.resetFields();
                 signin(values.username, values.password);
@@ -41,7 +37,7 @@ const SingupForm = () => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("Failed:", errorInfo);
+        console.error("Failed:", errorInfo);
     };
 
     return (
