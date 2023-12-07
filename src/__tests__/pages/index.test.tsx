@@ -1,9 +1,9 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
-import { renderWithProviders } from "@/util/test-utils";
+import { renderWithProviders } from "@/tests/util/test-utils";
 import { cleanup } from "@testing-library/react";
-import Home from ".";
+import Home from "@/pages/index";
 
-jest.mock("../components/menuHeader/useMenuHeader");
+jest.mock("@/components/menuHeader/useMenuHeader");
 
 Object.defineProperty(window, "matchMedia", {
     writable: true,

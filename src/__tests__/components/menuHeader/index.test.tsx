@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import useMenuHeader from "./useMenuHeader";
+import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import MenuHeader from "@/components/menuHeader/index";
 
-jest.mock("./useMenuHeader");
+jest.mock("@/components/menuHeader/useMenuHeader");
 
 describe("MenuHeader", () => {
     it("should render the menu header with user options when authenticated", () => {

@@ -1,5 +1,6 @@
-import { renderWithProviders } from "@/util/test-utils";
-import LoginHeader from "./Index";
+import { renderWithProviders } from "@/tests/util/test-utils";
+import "@testing-library/jest-dom";
+import Loading from "../../../../components/facetexture/loading";
 
 jest.mock("next-auth/react", () => {
     const originalModule = jest.requireActual("next-auth/react");
@@ -32,8 +33,15 @@ Object.defineProperty(window, "matchMedia", {
 
 describe("Test Characters container", () => {
     it("Check render", () => {
-        const { baseElement, getByRole } = renderWithProviders(<LoginHeader />);
+        const { baseElement, getByText, getAllByText } = renderWithProviders(<Loading />);
         expect(baseElement).toBeInTheDocument();
-        expect(getByRole("img")).toBeInTheDocument();
+        expect(baseElement).toMatchSnapshot();
+
+        expect(getByText("Conta")).toBeInTheDocument();
+        expect(getAllByText("Kawori")).toHaveLength(2);
+        expect(getAllByText("Facetexture")).toHaveLength(2);
+        expect(getByText("Personagens")).toBeInTheDocument();
+        expect(getByText("Background")).toBeInTheDocument();
+        expect(getByText("Preview")).toBeInTheDocument();
     });
 });

@@ -23,7 +23,7 @@ jest.mock("next/router", () => ({
     push: jest.fn(),
 }));
 
-jest.mock("../../services/auth", () => ({
+jest.mock("@/services/auth", () => ({
     signinService: jest.fn(() => Promise.resolve({ status: 200 })),
 }));
 
