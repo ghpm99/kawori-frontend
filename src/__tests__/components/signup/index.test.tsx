@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react
 import userEvent from "@testing-library/user-event";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
-import { signupService } from "../../services/auth";
+import { signupService } from "../../../services/auth";
 
 jest.mock("next-auth/react", () => ({
     signIn: jest.fn(),
@@ -13,7 +13,7 @@ jest.mock("next/router", () => ({
     push: jest.fn(),
 }));
 
-jest.mock("../../services/auth", () => ({
+jest.mock("@/services/auth", () => ({
     signupService: jest.fn(),
 }));
 

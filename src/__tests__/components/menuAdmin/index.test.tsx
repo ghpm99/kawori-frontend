@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import MenuAdmin from "./Index";
-import useMenu from "./useMenu";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import useMenu from "@/components/menuAdmin/useMenu";
 
-jest.mock("./useMenu");
+jest.mock("@/components/menuAdmin/useMenu");
 
 describe("Test Characters container", () => {
     it("renders correctly for unauthenticated users", () => {
