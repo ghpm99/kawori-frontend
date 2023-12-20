@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from "antd";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
-import { signupService } from "services/auth";
+import { signupService } from "@/services/auth";
 
 const SingupForm = () => {
     const [form] = Form.useForm();
@@ -20,7 +20,7 @@ const SingupForm = () => {
                 }
             })
             .catch((err) => {
-                console.log("error", err);
+                console.error("error", err);
             });
     };
 
@@ -32,12 +32,12 @@ const SingupForm = () => {
                 signin(values.username, values.password);
             })
             .catch((error) => {
-                message.error(error.response.data.msg ?? "Falhou em criar usuário");
+                message.error(error?.response?.data?.msg ?? "Falhou em criar usuário");
             });
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("Failed:", errorInfo);
+        console.error("Failed:", errorInfo);
     };
 
     return (

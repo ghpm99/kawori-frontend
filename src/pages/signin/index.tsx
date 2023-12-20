@@ -33,13 +33,13 @@ export default function LoginPage() {
                 }
             })
             .catch((err) => {
-                console.log("error", err);
+                console.error("error", err);
                 setError(true);
             });
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("Failed:", errorInfo);
+        console.error("Failed:", errorInfo);
     };
 
     return (

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import LoadingPage from "./Index";
+import LoadingPage from "../../../components/loadingPage/Index";
 
 describe("Test Characters container", () => {
     test("Check render", async () => {

@@ -1,5 +1,5 @@
-import SingupForm from "components/signup";
-import MenuHeader from "../components/menuHeader";
+import SingupForm from "@/components/signup";
+import MenuHeader from "@/components/menuHeader";
 import styles from "./Home.module.scss";
 
 export default function Home() {
