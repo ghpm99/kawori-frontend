@@ -1,10 +1,7 @@
-import { Button, Card, Form, Input, Layout, message } from "antd";
-import { signIn } from "next-auth/react";
-import Router from "next/router";
+import { Card, Layout } from "antd";
 
-import MenuHeader from "../../components/menuHeader";
-import { signupService } from "../../services/auth";
 import SingupForm from "components/signup";
+import MenuHeader from "../../components/menuHeader";
 
 const { Content } = Layout;
 

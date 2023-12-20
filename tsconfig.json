@@ -23,7 +23,8 @@
             "@/services/*": ["services/*"],
             "@/store/*": ["store/*"],
             "@/util/*": ["util/*"],
-            "@/types/*": ["types/*"]
+            "@/types/*": ["types/*"],
+            "@/tests/*": ["__tests__/*"]
         }
     },
     "include": [
