@@ -53,7 +53,7 @@ function FinancialPage() {
 
     return (
         <Layout className={styles.container}>
-            <MenuAdmin selected={["payments"]} />
+            <MenuAdmin selected={["month-payments"]} />
             <Layout>
                 <Header className={styles.header}>
                     <LoginHeader />
