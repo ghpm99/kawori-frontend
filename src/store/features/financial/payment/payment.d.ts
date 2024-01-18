@@ -43,5 +43,6 @@ type PayloadChangeStatusPaymentPaginationAction = {
 interface IPaymentMonth {
     id: number
     name: string
+    type: number
     total_value: number
 }
