@@ -61,6 +61,9 @@ function MenuAdmin(props: { selected: string[] }) {
                                     <Menu.Item key="payments">
                                         <Link href={"/admin/financial/payments"}>Pagamentos</Link>
                                     </Menu.Item>
+                                    <Menu.Item key="month-payments">
+                                        <Link href={"/admin/financial/payments/month"}>Pagamentos do Mês</Link>
+                                    </Menu.Item>
                                     <Menu.Item key="tags">
                                         <Link href={"/admin/financial/tags"}>Tags</Link>
                                     </Menu.Item>
