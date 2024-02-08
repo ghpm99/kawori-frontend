@@ -4,7 +4,7 @@ import { useState } from "react";
 const useMenu = () => {
     const { status, data } = useSession();
 
-    const [collapsed, setCollapsed] = useState<boolean>();
+    const [collapsed, setCollapsed] = useState<boolean>(false);
 
     const toggleCollapsed = () => {
         setCollapsed((prev) => !prev);

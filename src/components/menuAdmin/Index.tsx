@@ -19,7 +19,7 @@ function MenuAdmin(props: { selected: string[] }) {
     const context = useMenu();
 
     return (
-        <Sider collapsible collapsed={context.collapsed} onCollapse={context.toggleCollapsed}>
+        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={context.toggleCollapsed}>
             <Link href="/">
                 <p className={styles.logo}>Kawori</p>
             </Link>
