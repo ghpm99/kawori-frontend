@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout } from "antd";
+import { Breadcrumb, Flex, Layout } from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import {
     BarElement,
@@ -10,6 +10,7 @@ import {
     PointElement,
     Title,
     Tooltip,
+    ArcElement,
 } from "chart.js";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
@@ -35,8 +36,9 @@ import PaymentWithFixed from "@/components/overview/paymentWithFixed";
 import AccumulatedValue from "@/components/overview/paymentWithoutFixed";
 import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./Overview.module.scss";
+import Sider from "antd/lib/layout/Sider";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 function Overview() {
     const overviewStore = useSelector((state: RootState) => state.financial.overview);
@@ -54,7 +56,7 @@ function Overview() {
 
     function OverviewReport() {
         return (
-            <>
+            <Flex align='center' vertical gap={'8px'}>
                 <Cards
                     countPayment={overviewStore.data.countPayment}
                     amountPayment={overviewStore.data.amountPayment}
@@ -62,13 +64,9 @@ function Overview() {
                     amountPaymentClosed={overviewStore.data.amountPaymentClosed}
                     loading={overviewStore.loading}
                 />
-                <div>
-                    <PaymentWithFixed data={overviewStore.data.payments} />
-                </div>
-                <div>
-                    <InvoiceByTag data={overviewStore.data.invoiceByTag} />
-                </div>
-                <div className={styles["charts-container"]}>
+                <PaymentWithFixed data={overviewStore.data.payments} />
+                <InvoiceByTag data={overviewStore.data.invoiceByTag} />
+
                     <AccumulatedValue
                         payments={overviewStore.data.payments}
                         amountForecastValue={overviewStore.data.amountForecastValue}
@@ -77,8 +75,8 @@ function Overview() {
                         fixedCredit={overviewStore.data.fixed_credit}
                         fixedDebit={overviewStore.data.fixed_debit}
                     />
-                </div>
-            </>
+
+            </Flex>
         );
     }
 
