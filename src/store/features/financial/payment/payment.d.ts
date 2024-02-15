@@ -14,7 +14,6 @@ interface IPaymentStore {
             data: IPaymentModalPayoffDataSource[];
         };
     };
-    month: IPaymentMonth[]
 }
 
 interface IPaymentPagination {
@@ -39,10 +38,3 @@ type PayloadChangeStatusPaymentPaginationAction = {
     id: number;
     status: number;
 };
-
-interface IPaymentMonth {
-    id: number
-    name: string
-    type: number
-    total_value: number
-}
