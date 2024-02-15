@@ -9,6 +9,7 @@ import {
     fetchCountPaymentReportThunk,
     fetchPaymentReportThunk,
 } from "@/services/financial/overview";
+import { fetchMonthPayments } from "../payment"
 
 const initialState: IOverviewStore = {
     loading: true,
@@ -22,6 +23,7 @@ const initialState: IOverviewStore = {
         amountPaymentClosed: 0,
         amountPaymentOpen: 0,
         amountForecastValue: 0,
+        month: [],
     },
 };
 
@@ -64,6 +66,9 @@ export const financialOverviewSlice = createSlice({
             .addCase(fetchAmountForecastValueThunk.fulfilled, (state, action) => {
                 const { data } = action.payload;
                 state.data.amountForecastValue = data;
+            })
+            .addCase(fetchMonthPayments.fulfilled, (state, action) => {
+                state.data.month = action.payload.data
             });
     },
 });

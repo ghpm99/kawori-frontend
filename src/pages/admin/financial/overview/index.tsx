@@ -1,4 +1,4 @@
-import { Breadcrumb, Flex, Layout } from "antd";
+import { Breadcrumb, Flex, Layout, Table, Typography } from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import {
     BarElement,
@@ -37,14 +37,58 @@ import AccumulatedValue from "@/components/overview/paymentWithoutFixed";
 import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./Overview.module.scss";
 import Sider from "antd/lib/layout/Sider";
+import { fetchMonthPayments } from '@/store/features/financial/payment'
+import { formatMoney } from '@/util/index'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
+const headerTableFinancial = [
+    {
+        title: "ID",
+        dataIndex: "id",
+        key: "id",
+    },
+    {
+        title: "Nome",
+        dataIndex: "name",
+        key: "name",
+    },
+    {
+        title: "Total entrada",
+        dataIndex: "total_value_credit",
+        key: "total_value_credit",
+        render: (value: any) => value ? formatMoney(value) : '',
+    },
+    {
+        title: "Total saida",
+        dataIndex: "total_value_debit",
+        key: "total_value_debit",
+        render: (value: any) => value ? formatMoney(value) : '',
+    },
+    {
+        title: "Total em aberto",
+        dataIndex: "total_value_open",
+        key: "total_value_open",
+        render: (value: any) => value ? formatMoney(value) : '',
+    },
+    {
+        title: "Total baixado",
+        dataIndex: "total_value_closed",
+        key: "total_value_closed",
+        render: (value: any) => value ? formatMoney(value) : '',
+    },
+    {
+        title: "Totais de pagamentos",
+        dataIndex: "total_payments",
+        key: "total_payments",
+    },
+];
 function Overview() {
     const overviewStore = useSelector((state: RootState) => state.financial.overview);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        dispatch(fetchMonthPayments());
         dispatch(fetchPaymentReportThunk());
         dispatch(fetchCountPaymentReportThunk());
         dispatch(fetchAmountPaymentReportThunk());
@@ -53,6 +97,8 @@ function Overview() {
         dispatch(fetchAmountInvoiceByTagReportThunk());
         dispatch(fetchAmountForecastValueThunk());
     }, []);
+
+
 
     function OverviewReport() {
         return (
@@ -64,6 +110,12 @@ function Overview() {
                     amountPaymentClosed={overviewStore.data.amountPaymentClosed}
                     loading={overviewStore.loading}
                 />
+                <Table
+                            columns={headerTableFinancial}
+                            dataSource={overviewStore.data.month}
+                            loading={overviewStore.loading}
+                            summary={(paymentData) => <TableSummary paymentData={paymentData} />}
+                        />
                 <PaymentWithFixed data={overviewStore.data.payments} />
                 <InvoiceByTag data={overviewStore.data.invoiceByTag} />
 
@@ -99,6 +151,34 @@ function Overview() {
                 </Content>
             </Layout>
         </Layout>
+    );
+}
+
+function TableSummary({ paymentData }: { paymentData: readonly IPaymentMonth[] }) {
+    const { Text } = Typography;
+
+    let total = 0;
+    let totalCredit = 0;
+    let totalDebit = 0;
+    paymentData.forEach((payment) => {
+            totalCredit = totalCredit + payment.total_value_credit;
+            totalDebit = totalDebit + payment.total_value_debit;
+    });
+
+    return (
+        <>
+            <Table.Summary.Row>
+                <Table.Summary.Cell colSpan={2} index={0}>
+                    <Text>Total: {formatMoney(total)}</Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={1}>
+                    <Text>Total Credito: {formatMoney(totalCredit)}</Text>
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>
+                    <Text>Total Debito: {formatMoney(totalDebit)}</Text>
+                </Table.Summary.Cell>
+            </Table.Summary.Row>
+        </>
     );
 }
 
