@@ -35,3 +35,11 @@
     flex-wrap: wrap;
     max-width: 1024px;
 }
+
+.table {
+    width: 100%;
+    max-width: 1024px;
+    :global(.ant-table-content) {
+        overflow-x: auto;
+    }
+}
