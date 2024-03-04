@@ -31,11 +31,11 @@ interface IInvoiceByTag {
 }
 
 interface IPaymentMonth {
-    id: number
-    name: string
-    total_value_credit: number
-    total_value_debit: number
-    total_value_open: number
-    total_value_closed: number
-    total_payments: number
+    id: number;
+    name: string;
+    total_value_credit: number;
+    total_value_debit: number;
+    total_value_open: number;
+    total_value_closed: number;
+    total_payments: number;
 }

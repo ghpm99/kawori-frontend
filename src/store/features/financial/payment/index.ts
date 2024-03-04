@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAllPaymentService, saveNewPaymentService } from "@/services/financial";
-import { apiDjango } from "@/services/index"
+import { apiDjango } from "@/services/index";
 
 const initialState: IPaymentStore = {
     data: [],
@@ -42,7 +42,7 @@ export const saveNewPayment = createAsyncThunk(
 export const fetchMonthPayments = createAsyncThunk("financial/fetchMonthPayments", async () => {
     const response = await apiDjango.get("/financial/payment/month/");
     return response.data;
-})
+});
 
 export const financialSlice = createSlice({
     name: "financial",
@@ -100,7 +100,7 @@ export const financialSlice = createSlice({
             })
             .addCase(saveNewPayment.fulfilled, (state, action) => {
                 state.data.push(action.payload);
-            })
+            });
     },
 });
 
