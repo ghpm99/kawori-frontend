@@ -8,12 +8,13 @@ interface IInvoiceByTagProps {
 }
 
 const InvoiceByTag = ({ data }: IInvoiceByTagProps) => {
-
-    const dataset = [{
-        label: '# Valor total por tag',
-        data: data.map((item) => item.amount),
-        backgroundColor: data.map((item) => item.color),
-    }]
+    const dataset = [
+        {
+            label: "# Valor total por tag",
+            data: data.map((item) => item.amount),
+            backgroundColor: data.map((item) => item.color),
+        },
+    ];
 
     const options = {
         responsive: true,
