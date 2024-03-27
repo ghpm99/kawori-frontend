@@ -1,12 +1,8 @@
 import { Button, Card, Checkbox, Form, Input, Layout } from "antd";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
-import { useCallback, useState } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-import { Engine, ISourceOptions } from "tsparticles-engine";
+import { useState } from "react";
 
-import particlesOptions from "../../../public/particles.json";
 import MenuHeader from "../../components/menuHeader";
 import styles from "./Signin.module.scss";
 
@@ -14,10 +10,6 @@ const { Content } = Layout;
 
 export default function LoginPage() {
     const [error, setError] = useState(false);
-
-    const particlesInit = useCallback(async (engine: Engine) => {
-        await loadFull(engine);
-    }, []);
 
     const onFinish = (values: any) => {
         signIn("credentials", {
@@ -115,7 +107,6 @@ export default function LoginPage() {
                     </div>
                 </Layout>
             </Content>
-            <Particles options={particlesOptions as ISourceOptions} init={particlesInit} />
         </Layout>
     );
 }
