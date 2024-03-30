@@ -1,6 +1,8 @@
 import SingupForm from "@/components/signup";
 import MenuHeader from "@/components/menuHeader";
 import styles from "./Home.module.scss";
+import LogoKawori from "@/public/kaori_logo3.jpg";
+import Image from "next/image";
 
 export default function Home() {
     return (
@@ -8,16 +10,19 @@ export default function Home() {
             <div className={styles["container"]}>
                 <MenuHeader />
                 <div className={styles["body"]}>
+                    <div className={styles["form-container"]}>
+                        <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500}/>
+                        <div className={styles["signup-form"]}>
+                            <div className={styles["form-title"]}>Cadastro</div>
+                            <SingupForm />
+                        </div>
+                    </div>
                     <h1 className={styles["title"]}>
                         Você está a apenas um passo de um novo nivel de personalização do seu jogo!
                     </h1>
                     <div className={styles["signup-container"]}>
                         <div className={styles["text-container"]}>
                             <h1 className={styles["signup-text"]}>O cadastro é gratuito, simples e rapido.</h1>
-                        </div>
-                        <div className={styles["signup-form"]}>
-                            <div className={styles["form-title"]}>Cadastro</div>
-                            <SingupForm />
                         </div>
                         <div className={styles["text-container"]}>
                             <h1 className={styles["signup-text"]}>

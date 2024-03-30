@@ -24,7 +24,8 @@
             "@/store/*": ["store/*"],
             "@/util/*": ["util/*"],
             "@/types/*": ["types/*"],
-            "@/tests/*": ["__tests__/*"]
+            "@/tests/*": ["__tests__/*"],
+            "@/public/*": ["../public/*"]
         }
     },
     "include": [
