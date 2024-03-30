@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+
 const nextConfig = {
   reactStrictMode: false,
   transpilePackages: [
@@ -13,8 +15,32 @@ const nextConfig = {
     'rc-table',
     '@tsparticles',
     'tsparticles',
-    'tsparticles-engine'
-  ]
+    'tsparticles-engine',
+    'favicons-webpack-plugin'
+  ],
+  webpack: (config, { dev }) => {
+    config.plugins.push(
+        new FaviconsWebpackPlugin({
+            logo: './public/favicon.jpg',
+            cache: true,
+            inject: true,
+            favicons: {
+                appName: 'Kawori',
+                appDescription: 'Kawori website',
+                developerName: 'KaworiChan',
+                developerURL: null,
+                background: '#fff',
+                theme_color: '#333',
+                icons: {
+                    coast: false,
+                    yandex: false
+                }
+            }
+
+        })
+    )
+    return config
+  }
 }
 
 module.exports = nextConfig

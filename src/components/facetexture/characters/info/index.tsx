@@ -97,7 +97,7 @@ const Info = () => {
         const localImage = await db.image.filter((image) => image.name === name).first();
 
         if (localImage && localImage.id) {
-            db.image.update(localImage.id, { image: file });
+            db.image.update(localImage.id, { imagem: file });
         } else {
             db.image.add({
                 name: name,
