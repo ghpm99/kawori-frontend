@@ -15,8 +15,7 @@ const nextConfig = {
     'rc-table',
     '@tsparticles',
     'tsparticles',
-    'tsparticles-engine',
-    'favicons-webpack-plugin'
+    'tsparticles-engine'
   ],
   webpack: (config, { dev }) => {
     config.plugins.push(
