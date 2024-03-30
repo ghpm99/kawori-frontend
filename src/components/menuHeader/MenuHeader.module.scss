@@ -1,15 +1,14 @@
 .menu-header {
-    color: white;
+    color: black;
     display: flex;
     width: 100%;
-    background-color: rgb(0, 0, 27);
+    background-color: white;
     border-bottom: 5px solid #111;
 }
 
 .menu {
     flex-grow: 1;
     display: flex;
-    margin: 6px;
 }
 
 .menu-item {
@@ -19,11 +18,13 @@
     cursor: pointer;
     text-align: center;
     overflow: hidden;
+    transition: 0.5s;
+    transition-delay: 0.5s;
 }
 
 .menu-item:hover {
-    background: #2b3d5b;
-    color: #fff;
+    background: white;
+    color: black;
     box-shadow: 0 0 50px #2b3d5b;
     transition: 0.5s;
     transition-delay: 0.5s;
@@ -36,7 +37,6 @@
     left: 0;
     width: 0px;
     height: 0px;
-
     transition: 0.5s;
 }
 
@@ -63,6 +63,7 @@
     height: 100%;
     border-bottom: 2px solid #2b3d5b;
     border-right: 2px solid #2b3d5b;
+
 }
 
 .user-container {

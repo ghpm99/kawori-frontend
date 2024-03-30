@@ -3,6 +3,8 @@ import Link from "next/link";
 import AccountMenuInfo from "../accountMenuInfo";
 import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
+import Image from 'next/image'
+import LogoImage from '@/public/logo4.jpg'
 
 export default function MenuHeader() {
     const context = useMenuHeader();
@@ -11,7 +13,7 @@ export default function MenuHeader() {
         <div className={styles["menu-header"]}>
             <div className={styles["menu"]}>
                 <Link href="/" className={styles["menu-item"]}>
-                    Kawori
+                    <Image alt='Logo' src={LogoImage} width={200}/>
                 </Link>
             </div>
             <div className={styles["user-container"]}>
