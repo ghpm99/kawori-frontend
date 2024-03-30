@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const nextConfig = {
   reactStrictMode: false,
@@ -35,8 +36,10 @@ const nextConfig = {
                     yandex: false
                 }
             }
-
         })
+    )
+    config.plugins.push(
+        new HtmlWebpackPlugin()
     )
     return config
   }
