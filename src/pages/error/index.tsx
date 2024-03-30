@@ -1,20 +1,11 @@
-import { Card, Layout, Typography } from "antd";
-import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-import { Engine, ISourceOptions } from "tsparticles-engine";
+import { Card, Layout, Typography } from "antd"
 
-import particlesOptions from "../../../public/particles.json";
-import MenuHeader from "../../components/menuHeader";
+import MenuHeader from "../../components/menuHeader"
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
 
 export default function ErrorPage() {
-    const particlesInit = useCallback(async (engine: Engine) => {
-        await loadFull(engine);
-    }, []);
-
     return (
         <Layout
             style={{
@@ -48,7 +39,6 @@ export default function ErrorPage() {
                     </div>
                 </Layout>
             </Content>
-            <Particles options={particlesOptions as ISourceOptions} init={particlesInit} />
         </Layout>
     );
 }
