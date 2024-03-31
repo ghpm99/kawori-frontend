@@ -13,7 +13,7 @@ export default function MenuHeader() {
         <div className={styles["menu-header"]}>
             <div className={styles["menu"]}>
                 <Link href="/" className={styles["menu-item"]}>
-                    <Image alt='Logo' src={LogoImage} width={150}/>
+                    <Image alt='Logo' src={LogoImage} width={100}/>
                 </Link>
             </div>
             <div className={styles["user-container"]}>
