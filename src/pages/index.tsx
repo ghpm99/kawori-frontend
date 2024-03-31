@@ -3,6 +3,31 @@ import MenuHeader from "@/components/menuHeader";
 import styles from "./Home.module.scss";
 import LogoKawori from "@/public/kaori_logo3.jpg";
 import Image from "next/image";
+import { Tabs, TabsProps } from "antd";
+import LoginPage from "./signin";
+
+const itens: TabsProps["items"] = [
+    {
+        key: "signup",
+        label: "Cadastro",
+        children: (
+            <div className={styles["form-container"]}>
+                <div className={styles["form-title"]}>Cadastro</div>
+                <SingupForm />
+            </div>
+        ),
+    },
+    {
+        key: "signin",
+        label: "Login",
+        children: (
+            <div className={styles["form-container"]}>
+                <div className={styles["form-title"]}>Login</div>
+                <LoginPage />
+            </div>
+        ),
+    },
+];
 
 export default function Home() {
     return (
@@ -10,11 +35,10 @@ export default function Home() {
             <div className={styles["container"]}>
                 <MenuHeader />
                 <div className={styles["body"]}>
-                    <div className={styles["form-container"]}>
-                        <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500}/>
-                        <div className={styles["signup-form"]}>
-                            <div className={styles["form-title"]}>Cadastro</div>
-                            <SingupForm />
+                    <div className={styles["section"]}>
+                        <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500} />
+                        <div className={styles["tabs"]}>
+                            <Tabs centered items={itens} />
                         </div>
                     </div>
                     <h1 className={styles["title"]}>

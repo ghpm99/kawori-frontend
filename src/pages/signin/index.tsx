@@ -35,78 +35,67 @@ export default function LoginPage() {
     };
 
     return (
-        <Layout
-            style={{
-                minHeight: "100vh",
-                backgroundColor: "rgb(0, 0, 27, 0.8)",
-            }}
+        <Form
+            name="basic"
+            style={{ maxWidth: 600 }}
+            labelCol={{ span: 4 }}
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
         >
-            <MenuHeader />
-            <Content>
-                <Layout
+            {error && <div className={styles["error"]}>Usuario ou senha incorretos</div>}
+
+            <Form.Item
+                label="Usuario"
+                name="username"
+                rules={[
+                    {
+                        required: true,
+                        message: "Por favor insira seu usuario!",
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                label="Senha"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: "Por favor insira sua senha!",
+                    },
+                ]}
+            >
+                <Input.Password />
+            </Form.Item>
+
+            <Form.Item>
+                <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Lembrar-se de mim</Checkbox>
+                </Form.Item>
+                <a
+                    href=""
                     style={{
-                        width: "100vw",
-                        height: "90vh",
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "rgb(0, 0, 27, 0)",
+                        float: "right",
                     }}
                 >
-                    <div className={styles["card-signin"]}>
-                        <Card title="Login">
-                            <Form
-                                name="basic"
-                                labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 16 }}
-                                initialValues={{ remember: true }}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                                autoComplete="off"
-                            >
-                                {error && <div className={styles["error"]}>Usuario ou senha incorretos</div>}
+                    Esqueci minha senha
+                </a>
+            </Form.Item>
 
-                                <Form.Item
-                                    label="Usuario"
-                                    name="username"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Por favor insira seu usuario!",
-                                        },
-                                    ]}
-                                >
-                                    <Input />
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="Senha"
-                                    name="password"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Por favor insira sua senha!",
-                                        },
-                                    ]}
-                                >
-                                    <Input.Password />
-                                </Form.Item>
-
-                                <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Checkbox>Lembrar-se de mim</Checkbox>
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Logar
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    </div>
-                </Layout>
-            </Content>
-        </Layout>
+            <Button
+                style={{
+                    float: "right",
+                    width: "100%",
+                }}
+                type="primary"
+                htmlType="submit"
+            >
+                Logar
+            </Button>
+        </Form>
     );
 }
