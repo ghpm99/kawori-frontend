@@ -126,6 +126,7 @@ const User = () => {
                                     float: "right",
                                 }}
                                 type="primary"
+                                danger
                                 onClick={() => signOut()}
                             >
                                 Deslogar

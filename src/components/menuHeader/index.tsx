@@ -4,7 +4,7 @@ import AccountMenuInfo from "../accountMenuInfo";
 import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
 import Image from 'next/image'
-import LogoImage from '@/public/logo4.jpg'
+import LogoImage from '@/public/logo.png'
 
 export default function MenuHeader() {
     const context = useMenuHeader();
@@ -13,7 +13,7 @@ export default function MenuHeader() {
         <div className={styles["menu-header"]}>
             <div className={styles["menu"]}>
                 <Link href="/" className={styles["menu-item"]}>
-                    <Image alt='Logo' src={LogoImage} width={200}/>
+                    <Image alt='Logo' src={LogoImage} width={150}/>
                 </Link>
             </div>
             <div className={styles["user-container"]}>

@@ -3,10 +3,12 @@ import MenuHeader from "@/components/menuHeader";
 import styles from "./Home.module.scss";
 import LogoKawori from "@/public/kaori_logo3.jpg";
 import Image from "next/image";
-import { Button, Tabs, TabsProps } from "antd";
+import { Button, List, Tabs, TabsProps, Typography } from "antd";
 import LoginPage from "./signin";
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import AccountMenuInfo from "@/components/accountMenuInfo";
+import Link from 'next/link'
+import { signOut, useSession } from "next-auth/react";
 
 const itens: TabsProps["items"] = [
     {
@@ -46,19 +48,42 @@ export default function Home() {
                         <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500} />
                         {context.status === "authenticated" && (
                             <div className={styles["user-container"]}>
-                                <div>Usuario logado</div>
+                                <div className={styles["form-title"]}>Usuario logado</div>
                                 <div className={styles["user-options"]}>
-                                    <div>{context.data?.user.name}</div>
+                                    <div>Nome: {context.data?.user.name}</div>
                                     <div>
+                                        Data de cadastro:{" "}
                                         {context.data?.user.dateJoined ? formatDate(context.data?.user.dateJoined) : ""}
                                     </div>
                                     <div>
+                                        Ultimo login:{" "}
                                         {context.data?.user.lastLogin ? formatDate(context.data?.user.lastLogin) : ""}
                                     </div>
                                     <div>{context.data?.user.image}</div>
                                     <div>{context.data?.user.isActive}</div>
                                 </div>
-                                <Button type='primary' danger>Deslogar</Button>
+                                <div className={styles['access-list']}>
+                                <List
+                                    header={<div>Acesso Rápido</div>}
+                                    bordered
+                                    dataSource={[
+                                        {text: 'Perfil', link: '/admin/user'},
+                                        {text: 'Facetexture', link: '/admin/facetexture'},
+                                    ]}
+                                    renderItem={(item) => (
+                                        <List.Item>
+                                            <Link href={item.link}>{item.text}</Link>
+                                        </List.Item>
+                                    )}
+                                    />
+                                    </div>
+                                <div>
+                                    <Button type="primary" danger onClick={() => signOut()} style={{
+                                        float: "right",
+                                    }}>
+                                        Deslogar
+                                    </Button>
+                                </div>
                             </div>
                         )}
                         {context.status === "unauthenticated" && (
