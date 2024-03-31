@@ -3,8 +3,10 @@ import MenuHeader from "@/components/menuHeader";
 import styles from "./Home.module.scss";
 import LogoKawori from "@/public/kaori_logo3.jpg";
 import Image from "next/image";
-import { Tabs, TabsProps } from "antd";
+import { Button, Tabs, TabsProps } from "antd";
 import LoginPage from "./signin";
+import useMenuHeader from "@/components/menuHeader/useMenuHeader";
+import AccountMenuInfo from "@/components/accountMenuInfo";
 
 const itens: TabsProps["items"] = [
     {
@@ -30,6 +32,11 @@ const itens: TabsProps["items"] = [
 ];
 
 export default function Home() {
+    const context = useMenuHeader();
+    const formatDate = (date: string) => {
+        const dateFormat = new Date(date);
+        return dateFormat.toLocaleString();
+    };
     return (
         <>
             <div className={styles["container"]}>
@@ -37,9 +44,28 @@ export default function Home() {
                 <div className={styles["body"]}>
                     <div className={styles["section"]}>
                         <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500} />
-                        <div className={styles["tabs"]}>
-                            <Tabs centered items={itens} />
-                        </div>
+                        {context.status === "authenticated" && (
+                            <div className={styles["user-container"]}>
+                                <div>Usuario logado</div>
+                                <div className={styles["user-options"]}>
+                                    <div>{context.data?.user.name}</div>
+                                    <div>
+                                        {context.data?.user.dateJoined ? formatDate(context.data?.user.dateJoined) : ""}
+                                    </div>
+                                    <div>
+                                        {context.data?.user.lastLogin ? formatDate(context.data?.user.lastLogin) : ""}
+                                    </div>
+                                    <div>{context.data?.user.image}</div>
+                                    <div>{context.data?.user.isActive}</div>
+                                </div>
+                                <Button type='primary' danger>Deslogar</Button>
+                            </div>
+                        )}
+                        {context.status === "unauthenticated" && (
+                            <div className={styles["tabs"]}>
+                                <Tabs centered items={itens} />
+                            </div>
+                        )}
                     </div>
                     <h1 className={styles["title"]}>
                         Você está a apenas um passo de um novo nivel de personalização do seu jogo!
