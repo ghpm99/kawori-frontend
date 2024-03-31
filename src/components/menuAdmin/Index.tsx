@@ -24,7 +24,7 @@ function MenuAdmin(props: { selected: string[] }) {
     return (
         <Sider breakpoint="lg" collapsedWidth="0" onCollapse={context.toggleCollapsed}>
             <Link href="/" className={styles["menu-item"]}>
-                <Image className={styles.logo} alt="Logo" src={LogoImage} width={130} />
+                <Image className={styles.logo} alt="Logo" src={LogoImage} width={100} />
             </Link>
             <Menu theme="dark" selectedKeys={props.selected} mode="inline">
                 <Menu.Item key="home" icon={<HomeOutlined />}>
