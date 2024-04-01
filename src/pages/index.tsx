@@ -136,8 +136,8 @@ export default function Home() {
                         <div className={styles["intro-text"]}>
                             <Typography.Title level={2}>Bem vindo a Kawori!</Typography.Title>
                             <Typography.Paragraph>
-                                A Kawori é uma plataforma de personalização de tela de seleção de personagens para jogos
-                                online. Com a Kawori você pode personalizar a tela de seleção de personagens do seu jogo
+                                A Kawori é uma plataforma de personalização de tela de seleção de personagens para Black Desert Online.
+                                Com a Kawori você pode personalizar a tela de seleção de personagens do seu jogo
                                 favorito com imagens, gifs e videos.
                             </Typography.Paragraph>
                         </div>
