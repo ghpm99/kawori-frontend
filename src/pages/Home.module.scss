@@ -36,7 +36,7 @@
 
 .body {
     background-color: #f7f8f3;
-    min-height: 93vh;
+    height: 89vh;
     position: relative;
 }
 
@@ -165,4 +165,10 @@
 
 .access-list{
     margin-block:auto;
+}
+
+.internal-page{
+    padding: 16px;
+    height: 94%;
+    overflow-y: auto;
 }
