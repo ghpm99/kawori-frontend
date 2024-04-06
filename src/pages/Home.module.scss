@@ -1,42 +1,13 @@
 .container {
-    min-height: 100vh;
-    width: 100vw;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
 
-.background {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    overflow: hidden;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: -2;
-    background: linear-gradient(0deg, #00001b 30%, #000030, #23a6d5, #23d5ab 80%);
-    background-size: 400% 400%;
-    animation: gradient 30s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 50% 50%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 50% 50%;
-    }
-}
-
 .body {
-    background-color: #f7f8f3;
-    height: 89vh;
+    background-color: white;
+    color:black;
     position: relative;
 }
 
@@ -95,7 +66,7 @@
     left: 0;
     z-index: -1;
     opacity: 0.9;
-    background-color: #00001b;
+    //background-color: #00001b;
 }
 
 .title {
@@ -169,6 +140,5 @@
 
 .internal-page{
     padding: 16px;
-    height: 94%;
     overflow-y: auto;
 }

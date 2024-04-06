@@ -1,7 +1,7 @@
 import "antd/dist/reset.css";
 import "../../styles/globals.scss";
 
-import { ConfigProvider } from "antd";
+import { ConfigProvider, theme } from "antd";
 import ptBr from "antd/lib/locale/pt_BR";
 import { NextComponentType, NextPageContext } from "next";
 import { SessionProvider, useSession } from "next-auth/react";
