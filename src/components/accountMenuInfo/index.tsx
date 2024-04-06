@@ -1,30 +1,39 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import styles from "./AccountMenuInfo.module.scss";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { faUser } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Dropdown } from "antd"
+import { MenuProps } from "antd/lib/menu"
+import { signOut } from "next-auth/react"
+import Link from "next/link"
+
+const items: MenuProps["items"] = [
+    {
+        key: "1",
+        label: (
+            <Link href={"/admin/user"}>
+                Conta
+            </Link>
+        ),
+    },
+    {
+        key: "2",
+        label: <div onClick={() => signOut()}>Sair</div>,
+        danger: true,
+    },
+];
 
 const AccountMenuInfo = (props: IAccountMenuInfoProps) => {
     return (
-        <div className={styles["dropdown"]}>
-            <Link href={"/admin/user"}>
-                <span>
-                    <FontAwesomeIcon
-                        icon={faUser}
-                        style={{
-                            marginRight: "6px",
-                        }}
-                    />
-                    {props.user.name}
-                </span>
-            </Link>
-            <div className={styles["dropdown-content"]}>
-                <Link href={"/admin/user"}>
-                    <p>Conta</p>
-                </Link>
-                <p onClick={() => signOut()}>Sair</p>
-            </div>
-        </div>
+        <Dropdown menu={{ items }}>
+            <a onClick={(e) => e.preventDefault()}>
+                <FontAwesomeIcon
+                    icon={faUser}
+                    style={{
+                        marginRight: "6px",
+                    }}
+                />
+                {props.user.name}
+            </a>
+        </Dropdown>
     );
 };
 

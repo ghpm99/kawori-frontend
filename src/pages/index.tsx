@@ -1,15 +1,20 @@
 import SingupForm from "@/components/signup";
 import MenuHeader from "@/components/menuHeader";
 import styles from "./Home.module.scss";
-import LogoKawori from "@/public/kaori_logo3.jpg";
+import LogoKawori from "@/public/kaori_logo4.png";
 import Image from "next/image";
-import { Button, List, Menu, MenuProps, Tabs, TabsProps, Typography } from "antd";
+import { Button, Divider, List, Menu, MenuProps, Tabs, TabsProps, Typography } from "antd";
 import LoginPage from "./signin";
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import AccountMenuInfo from "@/components/accountMenuInfo";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import facetextureImage1 from "@/public/facetexture-1.png";
+
+import News from "@/components/landing/news";
+import Welcome from "@/components/landing/welcome";
+import Facetexture from "@/components/landing/facetexture";
+import { Footer } from "antd/lib/layout/layout";
+import FAQ from '@/components/landing/FAQ'
 
 const tabItens: TabsProps["items"] = [
     {
@@ -34,23 +39,6 @@ const tabItens: TabsProps["items"] = [
     },
 ];
 
-const menuItens: MenuProps["items"] = [
-    {
-        label: "Inicio",
-        key: "home",
-    },
-    {
-        label: "Black Desert",
-        key: "blackdesert",
-        children: [
-            {
-                label: "Facetexture",
-                key: "facetexture",
-            },
-        ],
-    },
-];
-
 export default function Home() {
     const context = useMenuHeader();
     const formatDate = (date: string) => {
@@ -62,15 +50,12 @@ export default function Home() {
             <div className={styles["container"]}>
                 <MenuHeader />
                 <div className={styles["body"]}>
-                    <div className={styles["menu"]}>
-                        <Menu mode="horizontal" items={menuItens} />
-                    </div>
                     <div className={styles["internal-page"]}>
                         <div className={styles["section"]}>
                             <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500} />
                             {context.status === "authenticated" && (
                                 <div className={styles["user-container"]}>
-                                    <div className={styles["form-title"]}>Usuario logado</div>
+                                    <strong className={styles["form-title"]}>Usuario logado</strong>
                                     <div className={styles["user-options"]}>
                                         <div>Nome: {context.data?.user.name}</div>
                                         <div>
@@ -123,58 +108,24 @@ export default function Home() {
                                 </div>
                             )}
                         </div>
-                        <div className={styles["section"]}>
-                            <div className={styles["news-list"]}>
-                                <List
-                                    header={<strong>Novidades</strong>}
-                                    bordered
-                                    dataSource={[
-                                        { text: "Novas funcionalidades!", link: "/admin/facetexture" },
-                                        { text: "Novidades na plataforma!", link: "/admin/user" },
-                                    ]}
-                                    renderItem={(item) => (
-                                        <List.Item>
-                                            <Link href={item.link}>{item.text}</Link>
-                                        </List.Item>
-                                    )}
-                                />
-                            </div>
-                            <div className={styles["intro-text"]}>
-                                <Typography.Title level={2}>Bem vindo a Kawori!</Typography.Title>
-                                <Typography.Paragraph>
-                                    A Kawori é uma plataforma de personalização de tela de seleção de personagens para
-                                    Black Desert Online. Com a Kawori você pode personalizar a tela de seleção de
-                                    personagens do seu jogo favorito com sua imagem de preferencia, deixando seu jogo
-                                    mais unico e especial.
-                                </Typography.Paragraph>
-                            </div>
-                        </div>
-                        <Image alt="Facetexture" src={facetextureImage1} />
-                        <h1 className={styles["title"]}>
-                            Você está a apenas um passo de um novo nivel de personalização do seu jogo!
-                        </h1>
-                        <div className={styles["signup-container"]}>
-                            <div className={styles["text-container"]}>
-                                <h1 className={styles["signup-text"]}>O cadastro é gratuito, simples e rapido.</h1>
-                            </div>
-                            <div className={styles["text-container"]}>
-                                <h1 className={styles["signup-text"]}>
-                                    Cadastre-se e estilize sua tela de seleção agora mesmo!
-                                </h1>
-                            </div>
-                        </div>
-                        <div className={styles["footer-text"]}>
-                            Sinta-se a vontade para entrar para
-                            <a target="_blank" href="https://discord.gg/fykNkXyn2r">
-                                &nbsp;nossa comunidade&nbsp;
-                            </a>
-                            caso tenha alguma duvida ou sugestão!
-                        </div>
-                        <div className={styles["body-background"]} />
+                        <Divider />
+                        <News />
+                        <Divider />
+                        <Welcome />
+                        <Facetexture />
+                        <Divider />
+                        <FAQ />
+                        <Divider />
                     </div>
                 </div>
             </div>
-            <div className={styles["background"]} />
+            <Footer style={{ textAlign: "center" }}>
+                Sinta-se a vontade para entrar para
+                <a target="_blank" href="https://discord.gg/fykNkXyn2r">
+                    &nbsp;nossa comunidade&nbsp;
+                </a>
+                caso tenha alguma duvida ou sugestão!
+            </Footer>
         </>
     );
 }
