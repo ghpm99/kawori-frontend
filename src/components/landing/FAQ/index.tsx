@@ -39,7 +39,7 @@ const items: CollapseProps["items"] = [
 ];
 
 const FAQ = () => {
-    return <Collapse items={items} defaultActiveKey={["1"]} />;
+    return <Collapse items={items} />;
 };
 
 export default FAQ;
