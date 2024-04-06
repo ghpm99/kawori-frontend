@@ -1,20 +1,19 @@
-import SingupForm from "@/components/signup";
-import MenuHeader from "@/components/menuHeader";
-import styles from "./Home.module.scss";
-import LogoKawori from "@/public/kaori_logo4.png";
-import Image from "next/image";
-import { Button, Divider, List, Menu, MenuProps, Tabs, TabsProps, Typography } from "antd";
-import LoginPage from "./signin";
-import useMenuHeader from "@/components/menuHeader/useMenuHeader";
-import AccountMenuInfo from "@/components/accountMenuInfo";
-import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+import MenuHeader from "@/components/menuHeader"
+import useMenuHeader from "@/components/menuHeader/useMenuHeader"
+import SingupForm from "@/components/signup"
+import LogoKawori from "@/public/kaori_logo4.png"
+import { Button, Divider, List, Tabs, TabsProps } from "antd"
+import { signOut } from "next-auth/react"
+import Image from "next/image"
+import Link from "next/link"
+import styles from "./Home.module.scss"
+import LoginPage from "./signin"
 
-import News from "@/components/landing/news";
-import Welcome from "@/components/landing/welcome";
-import Facetexture from "@/components/landing/facetexture";
-import { Footer } from "antd/lib/layout/layout";
+import Facetexture from "@/components/landing/facetexture"
 import FAQ from '@/components/landing/FAQ'
+import News from "@/components/landing/news"
+import Welcome from "@/components/landing/welcome"
+import { Footer } from "antd/lib/layout/layout"
 
 const tabItens: TabsProps["items"] = [
     {
