@@ -137,7 +137,7 @@ export async function getStaticProps({ previewData }: GetStaticPropsContext) {
     // drafts from the Page Builder.
     const client = createClient({ previewData });
 
-    const page = await client.getAllByType("platform_news_1");
+    const page = await client.getAllByType("platform_news");
 
     const pageList = page.map(item => ({
         first_publication_date: item.first_publication_date,

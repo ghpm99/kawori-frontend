@@ -20,7 +20,7 @@ const Facetexture = () => {
                 </div>
                 <div className={styles["item-right"]}>
                     <h2 className={styles["text"]}>
-                        Com a Kawori você pode personalizar a tela de seleção de personagens do seu jogo favorito com
+                        Com Kawori você pode personalizar a tela de seleção de personagens do seu jogo favorito com
                         sua imagem de preferencia, deixando seu jogo mais unico e especial.
                     </h2>
                 </div>

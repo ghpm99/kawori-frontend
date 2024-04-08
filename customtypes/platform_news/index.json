@@ -1,7 +1,7 @@
 {
   "format": "page",
-  "id": "platform_news_1",
-  "label": "Novidades na plataforma!",
+  "id": "platform_news",
+  "label": "Novidades na plataforma",
   "repeatable": true,
   "status": true,
   "json": {
@@ -17,13 +17,10 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "alternate_grid": {
+            "alternate_grid_2": {
               "type": "SharedSlice"
             },
-            "hero": {
-              "type": "SharedSlice"
-            },
-            "call_to_action": {
+            "header": {
               "type": "SharedSlice"
             }
           }
@@ -51,7 +48,7 @@
       },
       "meta_title": {
         "config": {
-          "label": "Novidades",
+          "label": "Meta Title",
           "placeholder": "A title of the page used for social media and search engines"
         },
         "type": "Text"
