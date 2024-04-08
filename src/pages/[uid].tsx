@@ -8,7 +8,7 @@ import { createClient } from "prismicio";
 
 import styles from "./Home.module.scss";
 import MenuHeader from "@/components/menuHeader";
-import { Footer } from 'antd/lib/layout/layout'
+import { Footer } from "antd/lib/layout/layout";
 
 type Params = { uid: string };
 
@@ -24,7 +24,9 @@ export default function Page({ page }: InferGetStaticPropsType<typeof getStaticP
             <div className={styles["container"]}>
                 <MenuHeader />
                 <div className={styles["body"]}>
-                    <SliceZone slices={page.data.slices} components={components} />
+                    <div className={styles["section"]}>
+                        <SliceZone slices={page.data.slices} components={components} />
+                    </div>
                 </div>
             </div>
             <Footer style={{ textAlign: "center" }}>
@@ -43,7 +45,7 @@ export async function getStaticProps({ params, previewData }: GetStaticPropsCont
     // drafts from the Page Builder.
     const client = createClient({ previewData });
 
-    const page = await client.getByUID("platform_news_1", params!.uid);
+    const page = await client.getByUID("platform_news", params!.uid);
 
     return {
         props: { page },
@@ -53,7 +55,7 @@ export async function getStaticProps({ params, previewData }: GetStaticPropsCont
 export async function getStaticPaths() {
     const client = createClient();
 
-    const pages = await client.getAllByType("platform_news_1");
+    const pages = await client.getAllByType("platform_news");
 
     return {
         paths: pages.map((page) => {
