@@ -10,8 +10,6 @@ interface NewsProps {
 }
 
 const News = ({data}) => {
-    console.log(data);
-
     return (
         <div className={styles["news-list"]}>
             <List
