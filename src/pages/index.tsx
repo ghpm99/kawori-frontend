@@ -14,6 +14,8 @@ import FAQ from '@/components/landing/FAQ'
 import News from "@/components/landing/news"
 import Welcome from "@/components/landing/welcome"
 import { Footer } from "antd/lib/layout/layout"
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import { createClient } from 'prismicio'
 
 const tabItens: TabsProps["items"] = [
     {
@@ -38,12 +40,13 @@ const tabItens: TabsProps["items"] = [
     },
 ];
 
-export default function Home() {
+export default function Home({ pageList }: InferGetStaticPropsType<typeof getStaticProps>) {
     const context = useMenuHeader();
     const formatDate = (date: string) => {
         const dateFormat = new Date(date);
         return dateFormat.toLocaleString();
     };
+
     return (
         <>
             <div className={styles["container"]}>
@@ -108,7 +111,7 @@ export default function Home() {
                             )}
                         </div>
                         <Divider />
-                        <News />
+                        <News data={pageList}/>
                         <Divider />
                         <Welcome />
                         <Facetexture />
@@ -127,4 +130,22 @@ export default function Home() {
             </Footer>
         </>
     );
+}
+
+export async function getStaticProps({ previewData }: GetStaticPropsContext) {
+    // The `previewData` parameter allows your app to preview
+    // drafts from the Page Builder.
+    const client = createClient({ previewData });
+
+    const page = await client.getAllByType("platform_news_1");
+
+    const pageList = page.map(item => ({
+        first_publication_date: item.first_publication_date,
+        url: item.url,
+        title: item.data.meta_title,
+    }))
+
+    return {
+        props: { pageList },
+    };
 }

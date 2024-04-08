@@ -15,6 +15,7 @@ import { store } from "../store/store";
 import { NextPageCustom } from "../types/commonTypes";
 
 import { Analytics } from "@vercel/analytics/react";
+import { PrismicPreview } from '@prismicio/next'
 
 type NextComponentCustom = NextComponentType<NextPageContext, any, {}> & Partial<NextPageCustom>;
 
@@ -53,6 +54,7 @@ export default function MyApp({ Component, pageProps }: ExtendedAppProps) {
                     </Provider>
                 )}
                 <Analytics />
+                <PrismicPreview repositoryName={'kawori-frontend'} />
             </ConfigProvider>
         </SessionProvider>
     );

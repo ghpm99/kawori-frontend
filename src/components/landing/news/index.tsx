@@ -1,20 +1,29 @@
-import { List } from 'antd'
+import { List } from "antd";
+import Link from "next/link";
 import styles from "./news.module.scss";
-import Link from 'next/link'
+import { formatterDate } from "@/util/index";
 
-const News = () => {
+interface NewsProps {
+    first_publication_date: string;
+    url: string;
+    title: string;
+}
+
+const News = ({data}) => {
+    console.log(data);
+
     return (
         <div className={styles["news-list"]}>
             <List
                 header={<strong>Novidades</strong>}
                 bordered
-                dataSource={[
-                    { text: "Novas funcionalidades!", link: "/admin/facetexture" },
-                    { text: "Novidades na plataforma!", link: "/admin/user" },
-                ]}
-                renderItem={(item) => (
+                dataSource={data}
+                renderItem={(item: NewsProps) => (
                     <List.Item>
-                        <Link href={item.link}>{item.text}</Link>
+                        <Link href={item.url}>
+                            [{formatterDate(item.first_publication_date)}]{" - "}
+                            {item.title}
+                        </Link>
                     </List.Item>
                 )}
             />
