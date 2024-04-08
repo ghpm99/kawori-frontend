@@ -1,16 +1,22 @@
 import Image from "next/image";
 import styles from "./facetexture.module.scss";
-import facetextureImage1 from "@/public/facetexture-1.png";
-import facetextureImage2 from "@/public/facetexture-2.png";
-import facetextureImage3 from "@/public/facetexture-3.png";
-import facetextureImage4 from "@/public/facetexture-4.png";
+import facetextureImage1 from "@/public/facetexture-ynomade.png";
+import facetextureImage2 from "@/public/facetexture-scorpionemtv.png";
+import facetextureImage3 from "@/public/facetexture-kunash.png";
+import facetextureImage4 from "@/public/facetexture-1.png";
 
 const Facetexture = () => {
     return (
         <div className={styles["container"]}>
             <div className={styles["section"]}>
                 <div className={styles["item-left"]}>
-                    <Image alt="Facetexture" className={styles["image"]} src={facetextureImage1} />
+                    <Image
+                        alt="Personalização de tela de ynomade"
+                        title="Personalização de tela de ynomade"
+                        className={styles["image"]}
+                        src={facetextureImage1}
+                        width={600}
+                    />
                 </div>
                 <div className={styles["item-right"]}>
                     <h2 className={styles["text"]}>
@@ -26,12 +32,24 @@ const Facetexture = () => {
                     </h2>
                 </div>
                 <div className={styles["item-right"]}>
-                    <Image alt="Facetexture" className={styles["image"]} src={facetextureImage2} />
+                    <Image
+                        alt="Personalização de tela de scorpionemtv"
+                        title="Personalização de tela de scorpionemtv"
+                        className={styles["image"]}
+                        src={facetextureImage2}
+                        width={600}
+                    />
                 </div>
             </div>
             <div className={styles["section"]}>
                 <div className={styles["item-left"]}>
-                    <Image alt="Facetexture" className={styles["image"]} src={facetextureImage3} />
+                    <Image
+                        alt="Personalização de tela de kunash"
+                        title="Personalização de tela de kunash"
+                        className={styles["image"]}
+                        src={facetextureImage3}
+                        width={600}
+                    />
                 </div>
                 <div className={styles["item-right"]}>
                     <h2 className={styles["text"]}>O cadastro é gratuito, simples e rapido.</h2>
@@ -42,7 +60,13 @@ const Facetexture = () => {
                     <h2 className={styles["text"]}>Cadastre-se e estilize sua tela de seleção agora mesmo!</h2>
                 </div>
                 <div className={styles["item-right"]}>
-                    <Image alt="Facetexture" className={styles["image"]} src={facetextureImage4} />
+                    <Image
+                        alt="Personalização de tela de kawori"
+                        title="Personalização de tela de kawori"
+                        className={styles["image"]}
+                        src={facetextureImage4}
+                        width={600}
+                    />
                 </div>
             </div>
         </div>

@@ -11,13 +11,17 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "compile": "tsc",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@prismicio/client": "^7.4.0",
+    "@prismicio/next": "^1.5.0",
+    "@prismicio/react": "^2.7.4",
     "@reduxjs/toolkit": "^2.2.2",
     "@sentry/nextjs": "^7.108.0",
     "@vercel/analytics": "^1.2.2",
@@ -41,6 +45,7 @@
     "react-redux": "^9.1.0"
   },
   "devDependencies": {
+    "@slicemachine/adapter-next": "^0.3.38",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
     "@testing-library/user-event": "^14.5.2",
@@ -58,6 +63,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.2.5",
     "sass": "^1.72.0",
+    "slice-machine-ui": "^1.26.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
