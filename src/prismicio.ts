@@ -21,7 +21,7 @@ const routes: prismic.ClientConfig["routes"] = [
     // },
     {
         type: "platform_news",
-        path: "/:uid",
+        path: "/news/:uid",
     },
 ];
 

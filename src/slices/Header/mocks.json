@@ -13,6 +13,40 @@
 						}
 					}
 				]
+			},
+			"illustration": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+					"width": 4024,
+					"height": 4024
+				},
+				"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+				"width": 4024,
+				"height": 4024,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"sub_title": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading2",
+						"content": {
+							"text": "Given"
+						}
+					}
+				]
 			}
 		},
 		"items": [
@@ -20,43 +54,31 @@
 				"__TYPE__": "GroupItemContent",
 				"value": [
 					[
-						"description",
+						"sub_title",
 						{
 							"__TYPE__": "StructuredTextContent",
 							"value": [
 								{
-									"type": "heading2",
+									"type": "heading3",
 									"content": {
-										"text": "Brass"
+										"text": "Divide"
 									}
 								}
 							]
 						}
 					],
 					[
-						"illustration",
+						"description",
 						{
-							"origin": {
-								"id": "main",
-								"url": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853",
-								"width": 5243,
-								"height": 3495
-							},
-							"url": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853",
-							"width": 5243,
-							"height": 3495,
-							"edit": {
-								"zoom": 1,
-								"crop": {
-									"x": 0,
-									"y": 0
-								},
-								"background": "transparent"
-							},
-							"credits": null,
-							"alt": null,
-							"__TYPE__": "ImageContent",
-							"thumbnails": {}
+							"__TYPE__": "StructuredTextContent",
+							"value": [
+								{
+									"type": "paragraph",
+									"content": {
+										"text": "Veniam veniam anim sunt sunt dolore officia aliqua ipsum consectetur culpa. Ut laboris non eiusmod anim quis sit quis commodo consequat."
+									}
+								}
+							]
 						}
 					]
 				]
