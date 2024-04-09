@@ -20,6 +20,9 @@ export default function MenuHeader() {
             </div>
             <div className={styles["user-container"]}>
                 <Menu
+                    style={{
+                        border: "none",
+                    }}
                     disabledOverflow
                     mode="horizontal"
                     items={[
