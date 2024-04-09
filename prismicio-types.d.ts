@@ -609,12 +609,42 @@ export interface HeaderSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   title: prismic.RichTextField;
+
+  /**
+   * Sub Title field in *Header → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: header.primary.sub_title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_title: prismic.RichTextField;
+
+  /**
+   * Illustration field in *Header → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: header.primary.illustration
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  illustration: prismic.ImageField<never>;
 }
 
 /**
  * Primary content in *Header → Items*
  */
 export interface HeaderSliceDefaultItem {
+  /**
+   * Sub Title field in *Header → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: header.items[].sub_title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sub_title: prismic.RichTextField;
+
   /**
    * Description field in *Header → Items*
    *
@@ -624,16 +654,6 @@ export interface HeaderSliceDefaultItem {
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   description: prismic.RichTextField;
-
-  /**
-   * Illustration field in *Header → Items*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: header.items[].illustration
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  illustration: prismic.ImageField<never>;
 }
 
 /**

@@ -20,13 +20,11 @@
             "allowTargetBlank": true,
             "multi": "heading1"
           }
-        }
-      },
-      "items": {
-        "description": {
+        },
+        "sub_title": {
           "type": "StructuredText",
           "config": {
-            "label": "Description",
+            "label": "Sub Title",
             "placeholder": "",
             "allowTargetBlank": true,
             "multi": "heading2"
@@ -38,6 +36,26 @@
             "label": "Illustration",
             "constraint": {},
             "thumbnails": []
+          }
+        }
+      },
+      "items": {
+        "sub_title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Sub Title",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "heading3"
+          }
+        },
+        "description": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Description",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "list-item"
           }
         }
       }

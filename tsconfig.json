@@ -12,7 +12,7 @@
             "@/types/*": ["types/*"],
             "@/tests/*": ["__tests__/*"],
             "@/public/*": ["../public/*"],
-            "@/slices/*": ["slices/*"],
+            "@/slices/*": ["slices/*"]
         },
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
