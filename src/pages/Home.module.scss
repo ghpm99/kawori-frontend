@@ -134,6 +134,10 @@
     }
 }
 
+.user-option{
+    margin-bottom: 8px;
+}
+
 .access-list{
     margin-block:auto;
 }
@@ -143,4 +147,29 @@
     margin: 0 auto;
     padding: 16px;
     //overflow-y: auto;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+}
+
+.status-indicator {
+    border-radius: 9000px;
+    width: 0.8rem;
+    height: 0.8rem;
+    display: inline-block;
+    position: relative;
+
+    &.active{
+        background-color: #00db84;
+    }
+
+    &.inactive{
+        background-color: #ff0000;
+    }
+}
+
+.status-text {
+    margin-left: 6px;
 }

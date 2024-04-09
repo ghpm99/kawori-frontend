@@ -24,7 +24,7 @@ export default function MenuHeader() {
                     mode="horizontal"
                     items={[
                         {
-                            label: "Inicio",
+                            label:  <Link href={"/"}>Inicio</Link>,
                             key: "home",
                         },
                         {
@@ -32,7 +32,7 @@ export default function MenuHeader() {
                             key: "blackdesert",
                             children: [
                                 {
-                                    label: "Facetexture",
+                                    label: <Link href={"/facetexture"}>Facetexture</Link>,
                                     key: "facetexture",
                                 },
                             ],
@@ -56,12 +56,9 @@ export default function MenuHeader() {
                                 },
                             ],
                         } : {
-                            label: (
-                                <Link href="/signin">
-                                    Logar
-                                </Link>
-                            ),
+                            label: "Logar",
                             key: "login",
+                            disabled: true,
                         }
                     ]}
                 />
