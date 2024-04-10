@@ -3,12 +3,15 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    background: url("../../public/bg.png");
 }
 
 .body {
+    box-shadow: 0 0 7px 1px rgba(0,0,0,.1);
     background-color: white;
     color:black;
     position: relative;
+    padding: 8px;
 }
 
 .menu {
@@ -145,8 +148,6 @@
 .internal-page{
     max-width: 1300px;
     margin: 0 auto;
-    padding: 16px;
-    //overflow-y: auto;
 }
 
 .status {

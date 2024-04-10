@@ -3,9 +3,9 @@
 import dynamic from "next/dynamic";
 
 export const components = {
-  alternate_grid: dynamic(() => import("./AlternateGrid")),
-  alternate_grid_2: dynamic(() => import("./AlternateGrid2")),
-  call_to_action: dynamic(() => import("./CallToAction")),
-  header: dynamic(() => import("./Header")),
-  hero: dynamic(() => import("./Hero")),
+    alternate_grid: dynamic(() => import("./AlternateGrid")),
+    alternate_grid_2: dynamic(() => import("./AlternateGrid2")),
+    call_to_action: dynamic(() => import("./CallToAction")),
+    header: dynamic(() => import("./Header")),
+    hero: dynamic(() => import("./Hero")),
 };

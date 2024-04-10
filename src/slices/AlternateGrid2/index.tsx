@@ -2,80 +2,71 @@ import { PrismicNextImage } from "@prismicio/next";
 import { type Content, isFilled } from "@prismicio/client";
 import { SliceComponentProps, PrismicRichText } from "@prismicio/react";
 
-export type AlternateGrid2Props =
-  SliceComponentProps<Content.AlternateGrid2Slice>;
+export type AlternateGrid2Props = SliceComponentProps<Content.AlternateGrid2Slice>;
 
 const AlternateGrid2 = ({ slice }: AlternateGrid2Props): JSX.Element => {
-  return (
-    <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
-      className="es-bounded es-alternate-grid"
-    >
-      <div
-        className={`
+    return (
+        <section
+            data-slice-type={slice.slice_type}
+            data-slice-variation={slice.variation}
+            className="es-bounded es-alternate-grid"
+        >
+            <div
+                className={`
 					es-alternate-grid__content
-					${
-            isFilled.image(slice.primary.image)
-              ? "es-alternate-grid__content--with-image"
-              : ""
-          }
+					${isFilled.image(slice.primary.image) ? "es-alternate-grid__content--with-image" : ""}
         `}
-      >
-        {isFilled.image(slice.primary.image) && (
-          <PrismicNextImage
-            field={slice.primary.image}
-            className={`
+            >
+                {isFilled.image(slice.primary.image) && (
+                    <PrismicNextImage
+                        field={slice.primary.image}
+                        className={`
               				es-alternate-grid__image
-							${
-                slice.variation === "imageRight"
-                  ? "es-alternate-grid__image--right"
-                  : "es-alternate-grid__image--left"
-              }
+							${slice.variation === "imageRight" ? "es-alternate-grid__image--right" : "es-alternate-grid__image--left"}
             			`}
-          />
-        )}
-        <div className="es-alternate-grid__primary-content">
-          <div className="es-alternate-grid__primary-content__intro">
-            {isFilled.keyText(slice.primary.eyebrowHeadline) && (
-              <p className="es-alternate-grid__primary-content__intro__eyebrow">
-                {slice.primary.eyebrowHeadline}
-              </p>
-            )}
-            {isFilled.richText(slice.primary.title) && (
-              <div className="es-alternate-grid__primary-content__intro__headline">
-                <PrismicRichText field={slice.primary.title} />
-              </div>
-            )}
-            {isFilled.richText(slice.primary.description) && (
-              <div className="es-alternate-grid__primary-content__intro__description">
-                <PrismicRichText field={slice.primary.description} />
-              </div>
-            )}
-          </div>
-          {slice.items.length > 0 && (
-            <div className="es-alternate-grid__primary-content__items">
-              {slice.items.map((item, i) => (
-                <div key={`item-${i + 1}`} className="es-alternate-grid__item">
-                  {isFilled.richText(item.title) && (
-                    <div className="es-alternate-grid__item__heading">
-                      <PrismicRichText field={item.title} />
+                    />
+                )}
+                <div className="es-alternate-grid__primary-content">
+                    <div className="es-alternate-grid__primary-content__intro">
+                        {isFilled.keyText(slice.primary.eyebrowHeadline) && (
+                            <p className="es-alternate-grid__primary-content__intro__eyebrow">
+                                {slice.primary.eyebrowHeadline}
+                            </p>
+                        )}
+                        {isFilled.richText(slice.primary.title) && (
+                            <div className="es-alternate-grid__primary-content__intro__headline">
+                                <PrismicRichText field={slice.primary.title} />
+                            </div>
+                        )}
+                        {isFilled.richText(slice.primary.description) && (
+                            <div className="es-alternate-grid__primary-content__intro__description">
+                                <PrismicRichText field={slice.primary.description} />
+                            </div>
+                        )}
                     </div>
-                  )}
-                  {isFilled.richText(item.description) && (
-                    <div className="es-alternate-grid__item__description">
-                      <PrismicRichText field={item.description} />
-                    </div>
-                  )}
+                    {slice.items.length > 0 && (
+                        <div className="es-alternate-grid__primary-content__items">
+                            {slice.items.map((item, i) => (
+                                <div key={`item-${i + 1}`} className="es-alternate-grid__item">
+                                    {isFilled.richText(item.title) && (
+                                        <div className="es-alternate-grid__item__heading">
+                                            <PrismicRichText field={item.title} />
+                                        </div>
+                                    )}
+                                    {isFilled.richText(item.description) && (
+                                        <div className="es-alternate-grid__item__description">
+                                            <PrismicRichText field={item.description} />
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-              ))}
             </div>
-          )}
-        </div>
-      </div>
 
-      <style>
-        {`
+            <style>
+                {`
 					.es-bounded {
 							margin: 0px;
 							min-width: 0px;
@@ -224,9 +215,9 @@ const AlternateGrid2 = ({ slice }: AlternateGrid2Props): JSX.Element => {
 							margin: 0;
 					}
 			`}
-      </style>
-    </section>
-  );
+            </style>
+        </section>
+    );
 };
 
 export default AlternateGrid2;
