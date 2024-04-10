@@ -9,7 +9,7 @@ interface NewsProps {
     title: string;
 }
 
-const News = ({data}) => {
+const News = ({ data }) => {
     return (
         <div className={styles["news-list"]}>
             <List

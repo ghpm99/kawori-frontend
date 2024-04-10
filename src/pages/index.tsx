@@ -129,7 +129,7 @@ export default function Home({ pageList }: InferGetStaticPropsType<typeof getSta
                     </div>
                 </div>
             </div>
-            <Footer style={{ textAlign: "center" }}>
+            <Footer style={{ textAlign: "center", boxShadow: "0 0 7px 1px rgba(0,0,0,.1)" }}>
                 Sinta-se a vontade para entrar para
                 <a target="_blank" href="https://discord.gg/fykNkXyn2r">
                     &nbsp;nossa comunidade&nbsp;

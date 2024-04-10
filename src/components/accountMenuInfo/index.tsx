@@ -1,18 +1,14 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Dropdown } from "antd"
-import { MenuProps } from "antd/lib/menu"
-import { signOut } from "next-auth/react"
-import Link from "next/link"
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Dropdown } from "antd";
+import { MenuProps } from "antd/lib/menu";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const items: MenuProps["items"] = [
     {
         key: "1",
-        label: (
-            <Link href={"/admin/user"}>
-                Conta
-            </Link>
-        ),
+        label: <Link href={"/admin/user"}>Conta</Link>,
     },
     {
         key: "2",

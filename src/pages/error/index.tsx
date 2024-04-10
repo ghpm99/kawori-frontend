@@ -1,6 +1,6 @@
-import { Card, Layout, Typography } from "antd"
+import { Card, Layout, Typography } from "antd";
 
-import MenuHeader from "../../components/menuHeader"
+import MenuHeader from "../../components/menuHeader";
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;

@@ -1,12 +1,11 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import LogoImage from "@/public/logo.png"
-import { Menu } from "antd"
-import { signOut } from "next-auth/react"
-import Image from "next/image"
-import styles from "./MenuHeader.module.scss"
-import useMenuHeader from "./useMenuHeader"
-
+import LogoImage from "@/public/logo.png";
+import { Menu } from "antd";
+import { signOut } from "next-auth/react";
+import Image from "next/image";
+import styles from "./MenuHeader.module.scss";
+import useMenuHeader from "./useMenuHeader";
 
 export default function MenuHeader() {
     const context = useMenuHeader();
@@ -27,7 +26,7 @@ export default function MenuHeader() {
                     mode="horizontal"
                     items={[
                         {
-                            label:  <Link href={"/"}>Inicio</Link>,
+                            label: <Link href={"/"}>Inicio</Link>,
                             key: "home",
                         },
                         {
@@ -40,29 +39,31 @@ export default function MenuHeader() {
                                 },
                             ],
                         },
-                        context.status === "authenticated" ? {
-                            label: context.data?.user.name,
-                            key: "user",
-                            children: [
-                                {
-                                    label: <Link href={"/admin/user"}>Conta</Link>,
-                                    key: "user-account",
-                                },
-                                {
-                                    label:  <Link href={"/admin/facetexture"}>Facetexture</Link>,
-                                    key: "user-facetexture",
-                                },
-                                {
-                                    label: <div onClick={() => signOut()}>Sair</div>,
-                                    key: "user-logout",
-                                    danger: true,
-                                },
-                            ],
-                        } : {
-                            label: "Logar",
-                            key: "login",
-                            disabled: true,
-                        }
+                        context.status === "authenticated"
+                            ? {
+                                  label: context.data?.user.name,
+                                  key: "user",
+                                  children: [
+                                      {
+                                          label: <Link href={"/admin/user"}>Conta</Link>,
+                                          key: "user-account",
+                                      },
+                                      {
+                                          label: <Link href={"/admin/facetexture"}>Facetexture</Link>,
+                                          key: "user-facetexture",
+                                      },
+                                      {
+                                          label: <div onClick={() => signOut()}>Sair</div>,
+                                          key: "user-logout",
+                                          danger: true,
+                                      },
+                                  ],
+                              }
+                            : {
+                                  label: "Logar",
+                                  key: "login",
+                                  disabled: true,
+                              },
                     ]}
                 />
             </div>

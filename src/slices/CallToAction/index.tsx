@@ -5,45 +5,39 @@ import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 export type CallToActionProps = SliceComponentProps<Content.CallToActionSlice>;
 
 const CallToAction = ({ slice }: CallToActionProps): JSX.Element => {
-  const alignment = slice.variation === "alignLeft" ? "left" : "center";
+    const alignment = slice.variation === "alignLeft" ? "left" : "center";
 
-  return (
-    <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
-      className="es-bounded es-call-to-action"
-    >
-      <div className="es-bounded__content es-call-to-action__content">
-        {isFilled.image(slice.primary.image) && (
-          <PrismicNextImage
-            className="es-call-to-action__image"
-            field={slice.primary.image}
-          />
-        )}
-        <div className="es-call-to-action__content">
-          {isFilled.richText(slice.primary.title) && (
-            <div className="es-call-to-action__content__heading">
-              <PrismicRichText field={slice.primary.title} />
+    return (
+        <section
+            data-slice-type={slice.slice_type}
+            data-slice-variation={slice.variation}
+            className="es-bounded es-call-to-action"
+        >
+            <div className="es-bounded__content es-call-to-action__content">
+                {isFilled.image(slice.primary.image) && (
+                    <PrismicNextImage className="es-call-to-action__image" field={slice.primary.image} />
+                )}
+                <div className="es-call-to-action__content">
+                    {isFilled.richText(slice.primary.title) && (
+                        <div className="es-call-to-action__content__heading">
+                            <PrismicRichText field={slice.primary.title} />
+                        </div>
+                    )}
+                    {isFilled.richText(slice.primary.paragraph) && (
+                        <div className="es-call-to-action__content__paragraph">
+                            <PrismicRichText field={slice.primary.paragraph} />
+                        </div>
+                    )}
+                </div>
+                {isFilled.link(slice.primary.buttonLink) && (
+                    <PrismicNextLink className="es-call-to-action__button" field={slice.primary.buttonLink}>
+                        {slice.primary.buttonLabel || "Learn more…"}
+                    </PrismicNextLink>
+                )}
             </div>
-          )}
-          {isFilled.richText(slice.primary.paragraph) && (
-            <div className="es-call-to-action__content__paragraph">
-              <PrismicRichText field={slice.primary.paragraph} />
-            </div>
-          )}
-        </div>
-        {isFilled.link(slice.primary.buttonLink) && (
-          <PrismicNextLink
-            className="es-call-to-action__button"
-            field={slice.primary.buttonLink}
-          >
-            {slice.primary.buttonLabel || "Learn more…"}
-          </PrismicNextLink>
-        )}
-      </div>
 
-      <style>
-        {`
+            <style>
+                {`
           .es-bounded {
             padding: 8vw 2rem;
           }
@@ -123,9 +117,9 @@ const CallToAction = ({ slice }: CallToActionProps): JSX.Element => {
             background-color: #0d5e4c;
           }
         `}
-      </style>
-    </section>
-  );
+            </style>
+        </section>
+    );
 };
 
 export default CallToAction;

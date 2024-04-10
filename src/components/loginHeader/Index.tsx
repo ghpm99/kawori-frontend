@@ -18,7 +18,7 @@ export default function LoginHeader() {
     return (
         <div className={S.layout}>
             {status === "authenticated" ? (
-                <Popover content={content} title="Conta" className={S['user']}>
+                <Popover content={content} title="Conta" className={S["user"]}>
                     <Avatar size="small" icon={<UserOutlined />} />
                     {data?.user?.name}
                 </Popover>
