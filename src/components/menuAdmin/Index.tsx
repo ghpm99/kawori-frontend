@@ -38,6 +38,9 @@ function MenuAdmin(props: { selected: string[] }) {
                         <Menu.Item key="facetexture" icon={<AppstoreOutlined />}>
                             <Link href={"/admin/facetexture"}>Facetexture</Link>
                         </Menu.Item>
+                        <Menu.Item key="rank" icon={<AppstoreOutlined />}>
+                            <Link href={"/admin/rank"}>Rank de classes</Link>
+                        </Menu.Item>
                         {context.data?.user.isSuperuser && (
                             <>
                                 <Menu.SubMenu key="controller" icon={<DesktopOutlined />} title="Remoto">
