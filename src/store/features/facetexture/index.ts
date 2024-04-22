@@ -8,7 +8,7 @@ import {
     fetchFacetextureService,
     newCharacterThunk,
     reorderCharacterThunk,
-} from "../../../services/facetexture";
+} from "@/services/facetexture";
 
 const initialState: IFacetextureState = {
     loading: true,

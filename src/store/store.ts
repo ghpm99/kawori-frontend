@@ -1,6 +1,7 @@
 import { Action, ThunkDispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import commonReducer from "./features/common/Index";
+import classificationReducer from "./features/classification";
 import facetextureReducer from "./features/facetexture";
 import contractReducer from "./features/financial/contract";
 import contractDetailsReducer from "./features/financial/contract/detail";
@@ -29,6 +30,7 @@ export const store = configureStore({
         common: commonReducer,
         financial: financialStore,
         facetexture: facetextureReducer,
+        classification: classificationReducer,
     },
     devTools: process.env.NODE_ENV === "development",
 });
