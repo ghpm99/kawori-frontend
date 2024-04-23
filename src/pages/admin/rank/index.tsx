@@ -8,6 +8,7 @@ import Styles from "./rank.module.scss";
 import { useAppDispatch } from "@/store/store";
 import { useEffect } from "react";
 import { getAllAnswers } from "@/services/classification";
+import Link from "next/link";
 
 const { Header, Content } = Layout;
 export const RANK_MESSAGE_REF = "rank-message-ref";
@@ -35,6 +36,12 @@ function Rank() {
                     </Breadcrumb>
                     <div className={Styles["container-toolkit"]}>
                         <Layout>
+                            <div className={Styles["help-text"]}>
+                                Deseja votar em alguma classe?
+                                <Link href="/admin/rank/vote">
+                                    <strong>Clique aqui</strong>
+                                </Link>
+                            </div>
                             <Table
                                 title={() => "Meus ultimos votos"}
                                 columns={[
