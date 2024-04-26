@@ -1,38 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+
 
 import { refreshTokenService, verifyTokenService } from '@/services/common/auth'
 import TokenService from '@/services/common/auth/authToken'
-import { RootState, useAppDispatch } from '@/store'
-import { setToken } from '@/store/features/common/account'
+
+import { setToken } from '@/store/features/auth'
+import { useAppDispatch } from '@/store/store'
+
+import { useRouter } from 'next/router'
 
 const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
-    const navigate = useNavigate()
+    const navigate = useRouter()
     const [loading, setLoading] = useState(true)
-    const [searchParams] = useSearchParams()
-    const theme = useSelector((state: RootState) => state.common.account.theme)
 
-    const accessToken = searchParams.get('access')
-    const refreshToken = searchParams.get('refresh')
-
-    const getUserByParams = () => {
-        if (!accessToken || !refreshToken) {
-            return undefined
-        }
-
-        const local = TokenService.getUser()
-
-        const user: IUser = {
-            theme: local?.theme ?? theme,
-            tokens: {
-                access: accessToken,
-                refresh: refreshToken,
-            },
-            remember: local?.remember ?? true,
-        }
-        return user
-    }
 
     const dispatch = useAppDispatch()
 
@@ -53,7 +33,7 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
                 })
             })
             .catch(() => {
-                navigate('/signin')
+                navigate.push('/signin')
             })
     }
 
@@ -68,11 +48,11 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
     }
 
     useEffect(() => {
-        const user = getUserByParams() ?? TokenService.getUser()
+        const user = TokenService.getUser()
         if (user) {
             verifyToken(user)
         } else {
-            navigate('/signin')
+            navigate.push('/signin')
             return
         }
     }, [])
