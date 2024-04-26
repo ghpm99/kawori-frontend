@@ -4,8 +4,8 @@ const initialState = {
     token: undefined,
 };
 
-export const commonSlice = createSlice({
-    name: "common",
+export const authSlice = createSlice({
+    name: "auth",
     initialState,
     reducers: {
         setToken: (state, action) => {
@@ -14,6 +14,6 @@ export const commonSlice = createSlice({
     },
 });
 
-export const { setToken } = commonSlice.actions;
+export const { setToken } = authSlice.actions;
 
-export default commonSlice.reducer;
+export default authSlice.reducer;
