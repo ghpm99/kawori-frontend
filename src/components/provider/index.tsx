@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 
-import { refreshTokenService, verifyTokenService } from '@/services/common/auth'
-import TokenService from '@/services/common/auth/authToken'
+import { refreshTokenService, verifyTokenService } from '@/services/auth'
+import TokenService from '@/services/auth/authToken'
 
 import { setToken } from '@/store/features/auth'
 import { useAppDispatch } from '@/store/store'

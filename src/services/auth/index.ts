@@ -5,13 +5,53 @@ const apiLogin = axios.create({
 });
 
 export async function signinService(username: string, password: string) {
-    const response = await apiLogin.post("/signin", {
+    const response = await apiLogin.post("/token", {
         credentials: {
             username,
             password,
         },
     });
     return response;
+}
+
+export async function refreshTokenService(refreshToken: string) {
+    const response = await apiLogin.post(
+        "/token/refresh/",
+        {
+            refresh: refreshToken,
+        },
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+            },
+        },
+    );
+    return {
+        data: response.data,
+        status: response.status,
+        statusText: response.statusText,
+    };
+}
+
+export async function verifyTokenService(token: string) {
+    const response = await apiLogin.post(
+         "/token/verify/",
+        {
+            token: token,
+        },
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+            },
+        },
+    );
+    return {
+        data: response.data,
+        status: response.status,
+        statusText: response.statusText,
+    };
 }
 
 interface INewUser {
