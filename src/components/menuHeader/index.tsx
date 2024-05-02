@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import LogoImage from "@/public/logo.png";
 import { Menu } from "antd";
-import { signOut } from "next-auth/react";
+
 import Image from "next/image";
 import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
@@ -53,7 +53,7 @@ export default function MenuHeader() {
                                           key: "user-facetexture",
                                       },
                                       {
-                                          label: <div onClick={() => signOut()}>Sair</div>,
+                                          label: <div >Sair</div>,
                                           key: "user-logout",
                                           danger: true,
                                       },

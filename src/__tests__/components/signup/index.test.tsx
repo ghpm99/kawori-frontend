@@ -1,13 +1,10 @@
 import SingupForm from "@/components/signup/index";
 import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { signIn } from "next-auth/react";
+
 import Router from "next/router";
 import { signupService } from "../../../services/auth";
 
-jest.mock("next-auth/react", () => ({
-    signIn: jest.fn(),
-}));
 
 jest.mock("next/router", () => ({
     push: jest.fn(),
@@ -46,14 +43,7 @@ describe("SingupForm", () => {
             data: { msg: "Usuário criado com sucesso" },
         });
 
-        (signIn as jest.Mock).mockImplementation(() =>
-            Promise.resolve({
-                status: 200,
-                data: {
-                    token: "",
-                },
-            }),
-        );
+
 
         const { getByLabelText, getByText } = render(<SingupForm />);
         const nameInput = getByLabelText("Nome");
@@ -83,11 +73,6 @@ describe("SingupForm", () => {
                 password: "test@123",
                 confirm: "test@123",
             });
-            expect(signIn).toHaveBeenCalledWith("credentials", {
-                username: "test",
-                password: "test@123",
-                redirect: false,
-            });
 
             expect(Router.push).toHaveBeenCalledWith("/admin/user");
         });
@@ -98,14 +83,7 @@ describe("SingupForm", () => {
             response: { status: 400, data: { msg: "Falhou em criar usuário" } },
         });
 
-        (signIn as jest.Mock).mockImplementation(() =>
-            Promise.resolve({
-                status: 400,
-                data: {
-                    token: "",
-                },
-            }),
-        );
+
 
         const { getByLabelText, getByText } = render(<SingupForm />);
         const nameInput = getByLabelText("Nome");

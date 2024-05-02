@@ -1,3 +1,11 @@
+interface IUser {
+    tokens: {
+        refresh: string
+        access: string
+    }
+    remember: boolean
+}
+
 class TokenService {
     userItemName: string
 
@@ -19,11 +27,6 @@ class TokenService {
     getLocalAccessToken() {
         const user = this.getUser()
         return user?.tokens.access
-    }
-
-    getLocalPurchaseApiAccessToken() {
-        const user = this.getUser()
-        return user?.tokens.api_token
     }
 
     setUser(user: IUser) {
