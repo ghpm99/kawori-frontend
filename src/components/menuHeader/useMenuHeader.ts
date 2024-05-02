@@ -8,6 +8,10 @@ const useMenuHeader = () => {
     return {
         status: 'authenticated',
         data: {
+
+            user: {
+                name: 'test'
+            },
             token,
         },
     };

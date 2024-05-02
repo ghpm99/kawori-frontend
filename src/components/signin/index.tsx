@@ -1,27 +1,24 @@
-import { Button, Card, Checkbox, Form, Input, Layout } from "antd";
-import { signIn } from "next-auth/react";
-import Router from "next/router";
-import { useState } from "react";
+import { Button, Checkbox, Form, Input, Layout } from "antd"
+import Router from "next/router"
+import { useState } from "react"
 
-import MenuHeader from "../../components/menuHeader";
-import styles from "./Signin.module.scss";
+import styles from "./Signin.module.scss"
+import { signinControlledRequest } from '@/services/auth'
+import { isFulfilled } from '@reduxjs/toolkit'
 
-const { Content } = Layout;
 
 export default function LoginPage() {
     const [error, setError] = useState(false);
 
     const onFinish = (values: any) => {
-        signIn("credentials", {
+        signinControlledRequest.dispatchRequest({
             username: values.username,
             password: values.password,
-            redirect: false,
-        })
-            .then((e) => {
-                if (e?.status !== 200) {
-                    setError(true);
-                } else {
+        }).then((action) => {
+                if (isFulfilled(action)) {
                     Router.push("/admin/user");
+                } else {
+                    setError(true);
                 }
             })
             .catch((err) => {

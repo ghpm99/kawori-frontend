@@ -1,58 +1,40 @@
 import axios from "axios";
+import { createControlledPostRequest, createControlledRequest } from "../request";
 
 const apiLogin = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/auth",
 });
 
-export async function signinService(username: string, password: string) {
-    const response = await apiLogin.post("/token", {
-        credentials: {
-            username,
-            password,
-        },
-    });
-    return response;
-}
+export const signinControlledRequest = createControlledRequest<
+    { username: string; password: string },
+    { accessToken: string; refreshToken: string }
+>("auth/signin", apiLogin.post, "/token", {}, true);
 
-export async function refreshTokenService(refreshToken: string) {
-    const response = await apiLogin.post(
-        "/token/refresh/",
-        {
-            refresh: refreshToken,
+export const verifyTokenControlledRequest = createControlledRequest<{ accessToken: string }, undefined>(
+    "auth/verify",
+    apiLogin.post,
+    "/token/verify/",
+    {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
         },
-        {
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-            },
-        },
-    );
-    return {
-        data: response.data,
-        status: response.status,
-        statusText: response.statusText,
-    };
-}
+    },
+    true,
+);
 
-export async function verifyTokenService(token: string) {
-    const response = await apiLogin.post(
-         "/token/verify/",
-        {
-            token: token,
+export const refreshTokenControlledRequest = createControlledRequest<{ refreshToken: string }, { accessToken: string }>(
+    "auth/refresh",
+    apiLogin.post,
+    "/token/refresh/",
+    {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
         },
-        {
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-            },
-        },
-    );
-    return {
-        data: response.data,
-        status: response.status,
-        statusText: response.statusText,
-    };
-}
+    },
+    true,
+);
 
 interface INewUser {
     username: string;
@@ -62,18 +44,12 @@ interface INewUser {
     last_name: string;
 }
 
-export async function signupService(user: INewUser) {
-    const response = await apiLogin.post("/signup", user);
-    return {
-        data: response.data,
-        status: response.status,
-        statusText: response.statusText,
-    };
-}
+export const signupControlledRequest = createControlledRequest<INewUser, { msg: string }>(
+    "auth/signup",
+    apiLogin.post,
+    "/signup",
+    {},
+    true,
+);
 
-export async function fetchUserDetails(token: string) {
-    const response = await apiLogin.get("/user", {
-        headers: { Authorization: "Basic " + token },
-    });
-    return response;
-}
+

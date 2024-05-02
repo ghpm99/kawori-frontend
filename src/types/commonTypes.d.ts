@@ -19,3 +19,5 @@ type NextPageCustom<P = {}, IP = P> = NextPage<P, IP> & {
     auth?: PageAuth;
     pusher?: PagePusher;
 };
+
+type LoadingType = 'starting' | 'idle' | 'pending' | 'succeeded' | 'failed'

@@ -1,23 +1,10 @@
 import LoginPage from "@/pages/signin/index";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { signIn } from "next-auth/react";
+
 import Router from "next/router";
 
-jest.mock("next-auth/react", () => {
-    const originalModule = jest.requireActual("next-auth/react");
-    const mockSession = {
-        expires: new Date(Date.now() + 2 * 86400).toISOString(),
-        user: { name: "Teste123" },
-    };
-    return {
-        ...originalModule,
-        useSession: jest.fn(() => {
-            return { data: mockSession, status: "authenticated" };
-        }),
-        signIn: jest.fn(),
-    };
-});
+
 
 jest.mock("next/router", () => ({
     push: jest.fn(),
@@ -51,7 +38,7 @@ describe("LoginPage", () => {
     });
 
     it("should show an error message when login fails", async () => {
-        (signIn as jest.Mock).mockImplementation(() => Promise.resolve({ status: 400 }));
+
 
         const { getByLabelText, getByText } = render(<LoginPage />);
         const usernameInput = getByLabelText("Usuario");
@@ -68,14 +55,7 @@ describe("LoginPage", () => {
     });
 
     it("should redirect to /admin/user when login is successful", async () => {
-        (signIn as jest.Mock).mockImplementation(() =>
-            Promise.resolve({
-                status: 200,
-                data: {
-                    token: "",
-                },
-            }),
-        );
+
 
         const { getByLabelText, getByText } = render(<LoginPage />);
         const usernameInput = getByLabelText("Usuario");
