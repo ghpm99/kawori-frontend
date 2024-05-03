@@ -1,7 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from "antd";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -10,9 +8,9 @@ import LoginHeader from "@/components/loginHeader/Index";
 import MenuAdmin from "@/components/menuAdmin/Index";
 import ModalNewTag, { IFormModalNewTag } from "@/components/tags/modalNew";
 import { includeNewTagService } from "@/services/financial";
+import { changeVisibleModalTag, fetchTags } from "@/store/features/financial/tag";
 import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./tags.module.scss";
-import { changeVisibleModalTag, fetchTags } from "@/store/features/financial/tag";
 
 const { Header, Content } = Layout;
 
@@ -110,24 +108,6 @@ TagPage.auth = {
     role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-    return {
-        props: {},
-    };
 };
 
 export default TagPage;

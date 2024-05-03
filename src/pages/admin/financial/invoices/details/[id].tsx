@@ -2,7 +2,7 @@ import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Select, T
 import { Content, Header } from "antd/lib/layout/layout";
 import { DefaultOptionType } from "antd/lib/select";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -288,20 +288,4 @@ InvoiceDetails.auth = {
     role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-    return { props: {} };
 };

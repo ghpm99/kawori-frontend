@@ -1,34 +1,34 @@
-import { RootState } from '@/store/store'
-import { createListenerMiddleware } from '@reduxjs/toolkit'
+import { RootState } from "@/store/store";
+import { createListenerMiddleware } from "@reduxjs/toolkit";
 
-import { setLoading } from '.'
-import { LoadingType } from '@/types/common'
+import { setLoading } from ".";
+import { LoadingType } from "@/types/common";
 
-export const LoadingMiddleware = createListenerMiddleware()
+export const LoadingMiddleware = createListenerMiddleware();
 
 LoadingMiddleware.startListening({
     predicate: (action) => {
-        const actionType: string = action.type
+        const actionType: string = action.type;
         if (actionType === undefined) {
-            return false
+            return false;
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, reducer, lifecycle] = actionType.split('/')
-        if (lifecycle === undefined || reducer === 'setupLoading') {
-            return false
+        const [_, reducer, lifecycle] = actionType.split("/");
+        if (lifecycle === undefined || reducer === "setupLoading") {
+            return false;
         }
 
-        return ['pending', 'fulfilled', 'rejected'].indexOf(lifecycle) !== -1
+        return ["pending", "fulfilled", "rejected"].indexOf(lifecycle) !== -1;
     },
 
     effect: async (action, listenerApi) => {
-        const requestId: string = action.meta.requestId
-        const actionType: string = action.type
-        const state = listenerApi.getState() as RootState
+        const requestId: string = action.meta.requestId;
+        const actionType: string = action.type;
+        const state = listenerApi.getState() as RootState;
 
-        const [slice, reducer, lifecycle] = actionType.split('/')
-        const effect = `${slice}/${reducer}`
+        const [slice, reducer, lifecycle] = actionType.split("/");
+        const effect = `${slice}/${reducer}`;
 
         const loading = _registerEffect({
             initialState: state.loading,
@@ -36,18 +36,18 @@ LoadingMiddleware.startListening({
             effect,
             lifecycle,
             requestId,
-        })
+        });
 
-        listenerApi.dispatch(setLoading(loading))
+        listenerApi.dispatch(setLoading(loading));
     },
-})
+});
 
 interface EffectArgs {
-    initialState: LoadingState
-    slice: string
-    effect: string
-    lifecycle: string
-    requestId: string
+    initialState: LoadingState;
+    slice: string;
+    effect: string;
+    lifecycle: string;
+    requestId: string;
 }
 
 function _registerEffect(args: EffectArgs): LoadingState {
@@ -56,44 +56,44 @@ function _registerEffect(args: EffectArgs): LoadingState {
         slices: { ...args.initialState.slices },
         effects: { ...args.initialState.effects },
         requests: { ...args.initialState.requests },
-    }
+    };
 
     if (!state.slices[args.slice]) {
-        state.slices[args.slice] = 'starting'
+        state.slices[args.slice] = "starting";
     }
     if (!state.effects[args.effect]) {
-        state.effects[args.effect] = 'starting'
+        state.effects[args.effect] = "starting";
     }
     if (!state.requests[args.effect]) {
-        state.requests[args.effect] = []
+        state.requests[args.effect] = [];
     }
 
-    if (args.lifecycle === 'pending') {
-        state.global = true
-        state.slices[args.slice] = 'pending'
-        state.effects[args.effect] = 'pending'
-        state.requests[args.effect] = [...state.requests[args.effect], args.requestId]
+    if (args.lifecycle === "pending") {
+        state.global = true;
+        state.slices[args.slice] = "pending";
+        state.effects[args.effect] = "pending";
+        state.requests[args.effect] = [...state.requests[args.effect], args.requestId];
 
-        return state
+        return state;
     }
 
-    const loadingState: LoadingType = args.lifecycle === 'rejected' ? 'failed' : 'idle'
+    const loadingState: LoadingType = args.lifecycle === "rejected" ? "failed" : "idle";
 
     // cleanup requests/effects
-    state.requests[args.effect] = state.requests[args.effect].filter((id) => id !== args.requestId)
-    state.effects[args.effect] = state.requests[args.effect].length ? 'pending' : loadingState
+    state.requests[args.effect] = state.requests[args.effect].filter((id) => id !== args.requestId);
+    state.effects[args.effect] = state.requests[args.effect].length ? "pending" : loadingState;
 
     // cleanup slices
-    const activeReqs = Object.keys(state.requests).filter((effect) => !!state.requests[effect].length)
-    const activeSlices = activeReqs.map((item) => item.split('/')[0])
+    const activeReqs = Object.keys(state.requests).filter((effect) => !!state.requests[effect].length);
+    const activeSlices = activeReqs.map((item) => item.split("/")[0]);
 
-    const slices = Object.keys(state.slices)
+    const slices = Object.keys(state.slices);
     for (let i = 0; i < slices.length; i += 1) {
-        state.slices[slices[i]] = activeSlices.indexOf(slices[i]) !== -1 ? 'pending' : loadingState
+        state.slices[slices[i]] = activeSlices.indexOf(slices[i]) !== -1 ? "pending" : loadingState;
     }
 
     // cleanup global
-    state.global = !!activeSlices.length
+    state.global = !!activeSlices.length;
 
-    return state
+    return state;
 }

@@ -1,7 +1,6 @@
 import AccountMenuInfo from "@/components/accountMenuInfo/index";
 import { fireEvent, render } from "@testing-library/react";
 
-
 describe("AccountMenuInfo", () => {
     const user = {
         name: "Test User",
@@ -20,5 +19,4 @@ describe("AccountMenuInfo", () => {
 
         expect(getByText("Conta")).toBeInTheDocument();
     });
-
 });

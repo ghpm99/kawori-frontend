@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Popover } from "antd";
 
@@ -10,12 +10,12 @@ export default function LoginHeader() {
     const { data, status } = {
         data: { user: { name: "test" } },
         status: "authenticated",
-    }
+    };
 
     const content = (
         <div>
             <div>{data?.user?.name}</div>
-            <Button >Deslogar</Button>
+            <Button>Deslogar</Button>
         </div>
     );
 

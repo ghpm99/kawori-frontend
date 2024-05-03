@@ -1,4 +1,4 @@
-import AuthProvider from '@/components/provider'
+import AuthProvider from "@/components/provider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 export const metadata = {
@@ -11,8 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="pt-br">
             <body>
                 <AuthProvider>
-
-                <AntdRegistry>{children}</AntdRegistry>
+                    <AntdRegistry>{children}</AntdRegistry>
                 </AuthProvider>
             </body>
         </html>

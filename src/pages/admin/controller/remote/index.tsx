@@ -1,6 +1,6 @@
 import { Breadcrumb, Button, Input, Layout, Slider, Typography } from "antd";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+
 import { useEffect, useState } from "react";
 import Pusher from "react-pusher";
 
@@ -231,19 +231,6 @@ RemotePage.pusher = {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-
     const props = {
         pusher_key: process.env.PUSHER_KEY,
         pusher_cluster: process.env.PUSHER_CLUSTER,

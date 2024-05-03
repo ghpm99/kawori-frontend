@@ -13,7 +13,7 @@ import {
     ArcElement,
 } from "chart.js";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -200,24 +200,6 @@ Overview.auth = {
     role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-    return {
-        props: {},
-    };
 };
 
 export default Overview;

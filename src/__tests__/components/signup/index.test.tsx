@@ -5,7 +5,6 @@ import userEvent from "@testing-library/user-event";
 import Router from "next/router";
 import { signupService } from "../../../services/auth";
 
-
 jest.mock("next/router", () => ({
     push: jest.fn(),
 }));
@@ -42,8 +41,6 @@ describe("SingupForm", () => {
         (signupService as jest.Mock).mockResolvedValue({
             data: { msg: "Usuário criado com sucesso" },
         });
-
-
 
         const { getByLabelText, getByText } = render(<SingupForm />);
         const nameInput = getByLabelText("Nome");
@@ -82,8 +79,6 @@ describe("SingupForm", () => {
         (signupService as jest.Mock).mockRejectedValue({
             response: { status: 400, data: { msg: "Falhou em criar usuário" } },
         });
-
-
 
         const { getByLabelText, getByText } = render(<SingupForm />);
         const nameInput = getByLabelText("Nome");

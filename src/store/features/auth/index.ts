@@ -1,16 +1,22 @@
-import { IUser } from "@/services/profile"
-import { createSlice } from "@reduxjs/toolkit";
+import { IToken } from "@/services/auth/authToken";
+import { IUser } from "@/services/profile";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAuthState {
-    token: string | undefined;
-    user: IUser
+    token: IToken;
+    user: IUser;
 }
-
 
 export const authSlice = createSlice({
     name: "auth",
     initialState: {
-        token: undefined,
+        token: {
+            tokens: {
+                refresh: "",
+                access: "",
+            },
+            remember: false,
+        },
         user: {
             id: 0,
             name: "",
@@ -21,12 +27,12 @@ export const authSlice = createSlice({
             is_staff: false,
             is_active: false,
             is_superuser: false,
-            last_login: new Date(),
-            date_joined: new Date(),
-        }
+            last_login: "",
+            date_joined: "",
+        },
     } as IAuthState,
     reducers: {
-        setToken: (state, action) => {
+        setToken: (state, action: PayloadAction<IToken>) => {
             state.token = action.payload;
         },
     },
