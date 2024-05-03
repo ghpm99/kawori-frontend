@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import { apiDjango } from ".."
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiDjango } from "..";
 
 interface AnswerData {
     question_id: number;

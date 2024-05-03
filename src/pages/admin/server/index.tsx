@@ -1,6 +1,5 @@
 import { Breadcrumb, Button, Layout, message } from "antd";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
 
 import LoadingPage from "../../../components/loadingPage/Index";
 import LoginHeader from "../../../components/loginHeader/Index";
@@ -53,22 +52,6 @@ ServerPage.auth = {
     role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-    return { props: {} };
 };
 
 export default ServerPage;

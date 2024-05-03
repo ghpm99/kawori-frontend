@@ -3,16 +3,16 @@ import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import SingupForm from "@/components/signup";
 import LogoKawori from "@/public/kaori_logo4.png";
 import { Button, Divider, List, Tabs, TabsProps } from "antd";
-import { signOut } from "next-auth/react";
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Home.module.scss";
-import LoginPage from "./signin";
 
 import Facetexture from "@/components/landing/facetexture";
 import FAQ from "@/components/landing/FAQ";
 import News from "@/components/landing/news";
 import Welcome from "@/components/landing/welcome";
+import LoginPage from "@/components/signin";
 import { Footer } from "antd/lib/layout/layout";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { createClient } from "prismicio";
@@ -62,24 +62,24 @@ export default function Home({ pageList }: InferGetStaticPropsType<typeof getSta
                                         <div className={styles["user-option"]}>Nome: {context.data?.user.name}</div>
                                         <div className={styles["user-option"]}>
                                             Data de cadastro:{" "}
-                                            {context.data?.user.dateJoined
-                                                ? formatDate(context.data?.user.dateJoined)
+                                            {context.data?.user.date_joined
+                                                ? formatDate(context.data?.user.date_joined)
                                                 : ""}
                                         </div>
                                         <div className={styles["user-option"]}>
                                             Ultimo login:{" "}
-                                            {context.data?.user.lastLogin
-                                                ? formatDate(context.data?.user.lastLogin)
+                                            {context.data?.user.last_login
+                                                ? formatDate(context.data?.user.last_login)
                                                 : ""}
                                         </div>
                                         <div className={styles["status"]}>
                                             <div
                                                 className={`${styles["status-indicator"]} ${
-                                                    context.data?.user.isActive ? styles["active"] : styles["inactive"]
+                                                    context.data?.user.is_active ? styles["active"] : styles["inactive"]
                                                 }`}
                                             ></div>
                                             <div className={styles["status-text"]}>
-                                                {context.data?.user.isActive ? "Ativo" : "Banido"}
+                                                {context.data?.user.is_active ? "Ativo" : "Banido"}
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +102,6 @@ export default function Home({ pageList }: InferGetStaticPropsType<typeof getSta
                                         <Button
                                             type="primary"
                                             danger
-                                            onClick={() => signOut()}
                                             style={{
                                                 float: "right",
                                             }}

@@ -4,8 +4,6 @@ import userEvent from "@testing-library/user-event";
 
 import Router from "next/router";
 
-
-
 jest.mock("next/router", () => ({
     push: jest.fn(),
 }));
@@ -38,8 +36,6 @@ describe("LoginPage", () => {
     });
 
     it("should show an error message when login fails", async () => {
-
-
         const { getByLabelText, getByText } = render(<LoginPage />);
         const usernameInput = getByLabelText("Usuario");
         const passwordInput = getByLabelText("Senha");
@@ -55,8 +51,6 @@ describe("LoginPage", () => {
     });
 
     it("should redirect to /admin/user when login is successful", async () => {
-
-
         const { getByLabelText, getByText } = render(<LoginPage />);
         const usernameInput = getByLabelText("Usuario");
         const passwordInput = getByLabelText("Senha");

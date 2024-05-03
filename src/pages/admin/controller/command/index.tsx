@@ -1,6 +1,6 @@
 import { Breadcrumb, Button, Input, Layout, Typography } from "antd";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+
 import { useState } from "react";
 import Pusher from "react-pusher";
 
@@ -87,18 +87,7 @@ CommandPage.pusher = {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
+    console.log(req, res);
 
     const props = {
         pusher_key: process.env.PUSHER_KEY,

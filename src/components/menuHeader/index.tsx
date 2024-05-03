@@ -53,7 +53,7 @@ export default function MenuHeader() {
                                           key: "user-facetexture",
                                       },
                                       {
-                                          label: <div >Sair</div>,
+                                          label: <div>Sair</div>,
                                           key: "user-logout",
                                           danger: true,
                                       },

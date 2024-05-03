@@ -11,7 +11,7 @@ const items: MenuProps["items"] = [
     },
     {
         key: "2",
-        label: <div >Sair</div>,
+        label: <div>Sair</div>,
         danger: true,
     },
 ];

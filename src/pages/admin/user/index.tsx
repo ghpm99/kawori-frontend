@@ -1,31 +1,30 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, Layout, Typography } from "antd";
-import { signOut, useSession } from "next-auth/react";
 
 import LoadingPage from "../../../components/loadingPage/Index";
 import LoginHeader from "../../../components/loginHeader/Index";
 import MenuAdmin from "../../../components/menuAdmin/Index";
 import styles from "./User.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const { Header, Content } = Layout;
 const { Title, Paragraph } = Typography;
 
 const User = () => {
-    const { data } = useSession();
-
-    const session = data ? data : null;
+    const { user } = useSelector((state: RootState) => state.auth);
 
     const getBorderColor = () => {
-        if (!session) {
+        if (!user) {
             return "#fff";
         }
-        if (session.user.isSuperuser) {
+        if (user.is_superuser) {
             return "blue";
         }
-        if (session.user.isStaff) {
+        if (user.is_staff) {
             return "violet";
         }
-        if (session.user.isActive) {
+        if (user.is_active) {
             return "green";
         } else {
             return "red";
@@ -55,7 +54,7 @@ const User = () => {
                                 shape="square"
                                 size="large"
                                 icon={<UserOutlined />}
-                                src={session?.user?.image}
+                                src={user?.image}
                                 style={{
                                     border: `1px solid ${getBorderColor()}`,
                                     marginBottom: "10px",
@@ -66,11 +65,11 @@ const User = () => {
                             <div className={styles["info-container"]}>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Nome</Title>
-                                    <Paragraph>{session?.user?.name ?? ""}</Paragraph>
+                                    <Paragraph>{user?.name ?? ""}</Paragraph>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Username</Title>
-                                    <div>{session?.user?.username ?? ""}</div>
+                                    <div>{user?.username ?? ""}</div>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Status</Title>
@@ -88,7 +87,7 @@ const User = () => {
                                             tooltip: "Editar nome",
                                         }}
                                     >
-                                        {session?.user?.firstName ?? ""}
+                                        {user?.first_name ?? ""}
                                     </Paragraph>
                                 </div>
                                 <div className={styles["info"]}>
@@ -98,22 +97,22 @@ const User = () => {
                                             tooltip: "Editar nome",
                                         }}
                                     >
-                                        {session?.user?.lastName ?? ""}
+                                        {user?.last_name ?? ""}
                                     </Paragraph>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>E-mail</Title>
-                                    <Paragraph>{session?.user?.email ?? ""}</Paragraph>
+                                    <Paragraph>{user?.email ?? ""}</Paragraph>
                                 </div>
                             </div>
                             <div className={styles["info-container"]}>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Ultimo login</Title>
-                                    <div>{session?.user?.lastLogin ? formatDate(session.user.lastLogin) : ""}</div>
+                                    <div>{user?.last_login ? formatDate(user.last_login) : ""}</div>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Data cadastrada</Title>
-                                    <div>{session?.user?.dateJoined ? formatDate(session.user.dateJoined) : ""}</div>
+                                    <div>{user?.date_joined ? formatDate(user.date_joined) : ""}</div>
                                 </div>
                                 <div className={styles["info"]}>
                                     <Title level={3}>Senha</Title>
@@ -127,7 +126,6 @@ const User = () => {
                                 }}
                                 type="primary"
                                 danger
-                                onClick={() => signOut()}
                             >
                                 Deslogar
                             </Button>

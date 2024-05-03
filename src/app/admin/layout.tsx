@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Breadcrumb, Layout, Table } from "antd";
 import { useRouter } from "next/router";
 
@@ -13,29 +13,22 @@ import Link from "next/link";
 
 const { Header, Content } = Layout;
 
-
-  export default function RootLayout({
-    children,
-  }: {
-    children: React.ReactNode
-  }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <Layout className={Styles["container"]}>
-        <MenuAdmin selected={["rank"]} />
-        <Layout>
-            <Header className={Styles["header"]}>
-                <LoginHeader />
-            </Header>
-            <Content>
-                <Breadcrumb className={Styles["breadcrumb"]}>
-                    <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                    <Breadcrumb.Item>Rank de classes</Breadcrumb.Item>
-                </Breadcrumb>
-                <div className={Styles["container-toolkit"]}>
-                    {children}
-                </div>
-            </Content>
+            <MenuAdmin selected={["rank"]} />
+            <Layout>
+                <Header className={Styles["header"]}>
+                    <LoginHeader />
+                </Header>
+                <Content>
+                    <Breadcrumb className={Styles["breadcrumb"]}>
+                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                        <Breadcrumb.Item>Rank de classes</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <div className={Styles["container-toolkit"]}>{children}</div>
+                </Content>
+            </Layout>
         </Layout>
-    </Layout>
-    )
-  }
+    );
+}

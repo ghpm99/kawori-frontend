@@ -1,67 +1,72 @@
-import React, { useEffect, useState } from 'react'
+"use client";
 
+import React, { useEffect, useState } from "react";
 
-import { refreshTokenService, verifyTokenService } from '@/services/auth'
-import TokenService from '@/services/auth/authToken'
+import TokenService, { IToken } from "@/services/auth/authToken";
 
-import { setToken } from '@/store/features/auth'
-import { useAppDispatch } from '@/store/store'
+import { setToken } from "@/store/features/auth";
+import { useAppDispatch } from "@/store/store";
 
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import { refreshTokenControlledRequest, verifyTokenControlledRequest } from "@/services/auth";
+import { isFulfilled } from "@reduxjs/toolkit";
 
 const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
-    const navigate = useRouter()
-    const [loading, setLoading] = useState(true)
+    const navigate = useRouter();
+    const [loading, setLoading] = useState(true);
 
+    const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch()
+    const updateValidatedToken = (token: IToken) => {
+        dispatch(setToken(token));
+        setLoading(false);
+    };
 
-    const updateValidatedToken = (user: IUser) => {
-        dispatch(setToken(user))
-        setLoading(false)
-    }
-
-    const refreshTokenAccess = (user: IUser) => {
-        refreshTokenService(user.tokens.refresh)
+    const refreshTokenAccess = (token: IToken) => {
+        refreshTokenControlledRequest
+            .dispatchRequest({ refreshToken: token.tokens.refresh })
             .then((response) => {
-                updateValidatedToken({
-                    ...user,
-                    tokens: {
-                        ...user.tokens,
-                        access: response.data.access,
-                    },
-                })
+                if (isFulfilled(response)) {
+                    updateValidatedToken({
+                        ...token,
+                        tokens: {
+                            ...token.tokens,
+                            access: response.payload.data.access,
+                        },
+                    });
+                }
             })
             .catch(() => {
-                navigate.push('/signin')
-            })
-    }
+                navigate.push("/signout");
+            });
+    };
 
-    const verifyToken = (user: IUser) => {
-        verifyTokenService(user.tokens.access)
+    const verifyToken = (token: IToken) => {
+        verifyTokenControlledRequest
+            .dispatchRequest({ accessToken: token.tokens.access })
             .then(() => {
-                updateValidatedToken(user)
+                updateValidatedToken(token);
             })
             .catch(() => {
-                refreshTokenAccess(user)
-            })
-    }
+                refreshTokenAccess(token);
+            });
+    };
 
     useEffect(() => {
-        const user = TokenService.getUser()
+        const user = TokenService.getToken();
         if (user) {
-            verifyToken(user)
+            verifyToken(user);
         } else {
-            navigate.push('/signin')
-            return
+            navigate.push("/signout");
+            return;
         }
-    }, [])
+    }, []);
 
     if (loading) {
-        return <></>
+        return <></>;
     } else {
-        return children
+        return children;
     }
-}
+};
 
-export default AuthProvider
+export default AuthProvider;

@@ -10,8 +10,9 @@ export interface IUser {
     is_staff: boolean;
     is_active: boolean;
     is_superuser: boolean;
-    last_login: Date;
-    date_joined: Date;
+    last_login: string;
+    date_joined: string;
+    image?: string;
 }
 
 export const userDetailsControlledRequest = createControlledGetRequest<undefined, IUser>(

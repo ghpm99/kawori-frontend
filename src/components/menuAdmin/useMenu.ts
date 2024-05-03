@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 
 const useMenu = () => {
     const { status, data } = {
         status: "authenticated",
-        data: { user: { name: 'test'}}
-    }
+        data: { user: { name: "test" } },
+    };
 
     const [collapsed, setCollapsed] = useState<boolean>(false);
 

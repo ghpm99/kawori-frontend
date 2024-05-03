@@ -1,5 +1,5 @@
 import axios from "axios";
-import TokenService from './auth/authToken'
+import TokenService from "./auth/authToken";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
@@ -16,7 +16,7 @@ const sleepRequest = (milliseconds: number, originalRequest: any) => {
 };
 
 apiDjango.interceptors.request.use(async (request) => {
-    const token = TokenService.getLocalAccessToken()
+    const token = TokenService.getLocalAccessToken();
     if (token) {
         request.headers!.Authorization = `Bearer ${token}`;
     }

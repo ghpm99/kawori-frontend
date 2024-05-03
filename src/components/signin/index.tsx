@@ -1,20 +1,21 @@
-import { Button, Checkbox, Form, Input, Layout } from "antd"
-import Router from "next/router"
-import { useState } from "react"
+import { Button, Checkbox, Form, Input, Layout } from "antd";
+import Router from "next/router";
+import { useState } from "react";
 
-import styles from "./Signin.module.scss"
-import { signinControlledRequest } from '@/services/auth'
-import { isFulfilled } from '@reduxjs/toolkit'
-
+import styles from "./Signin.module.scss";
+import { signinControlledRequest } from "@/services/auth";
+import { isFulfilled } from "@reduxjs/toolkit";
 
 export default function LoginPage() {
     const [error, setError] = useState(false);
 
     const onFinish = (values: any) => {
-        signinControlledRequest.dispatchRequest({
-            username: values.username,
-            password: values.password,
-        }).then((action) => {
+        signinControlledRequest
+            .dispatchRequest({
+                username: values.username,
+                password: values.password,
+            })
+            .then((action) => {
                 if (isFulfilled(action)) {
                     Router.push("/admin/user");
                 } else {

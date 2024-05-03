@@ -1,6 +1,6 @@
 import { Breadcrumb, Layout, message, Table, Typography } from "antd";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+
 import Link from "next/link";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -180,24 +180,6 @@ FinancialPage.auth = {
     role: "admin",
     loading: <LoadingPage />,
     unauthorized: "/signin",
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    const session = await getSession({ req });
-
-    const isSuperuser = session?.user.isSuperuser ?? false;
-
-    if (!isSuperuser) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-    return {
-        props: {},
-    };
 };
 
 export default FinancialPage;

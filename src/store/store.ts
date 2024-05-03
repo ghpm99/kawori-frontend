@@ -12,8 +12,8 @@ import paymentReducer from "./features/financial/payment";
 import paymentDetailsReducer from "./features/financial/payment/detail";
 import tagReducer from "./features/financial/tag";
 import statusReducer from "./features/status/Index";
-import { LoadingMiddleware } from './features/loading'
-import loadingReducer from './features/loading'
+import { LoadingMiddleware } from "./features/loading";
+import loadingReducer from "./features/loading";
 
 const financialStore = combineReducers({
     overview: overviewReducer,
@@ -37,7 +37,7 @@ export const store = configureStore({
     },
     devTools: process.env.NODE_ENV === "development",
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().prepend(LoadingMiddleware.middleware)
+        return getDefaultMiddleware().prepend(LoadingMiddleware.middleware);
     },
 });
 

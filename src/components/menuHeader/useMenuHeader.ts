@@ -1,17 +1,13 @@
-import { RootState } from "@/store/store"
-import { useSelector } from "react-redux"
-
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 const useMenuHeader = () => {
-    const { token } = useSelector((state: RootState) => state.auth)
+    const { token, user } = useSelector((state: RootState) => state.auth);
 
     return {
-        status: 'authenticated',
+        status: "authenticated",
         data: {
-
-            user: {
-                name: 'test'
-            },
+            user,
             token,
         },
     };
