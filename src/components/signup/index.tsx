@@ -3,22 +3,22 @@
 import { Button, Form, Input, message } from "antd";
 
 import Router from "next/router";
-import { signupService } from "@/services/auth";
+import { INewUser, signinControlledRequest, signupControlledRequest } from "@/services/auth";
+import { isFulfilled } from '@reduxjs/toolkit'
 
 const SingupForm = () => {
     const [form] = Form.useForm();
 
     const signin = (username: string, password: string) => {
-        signIn("credentials", {
+        signinControlledRequest.dispatchRequest({
             username: username,
             password: password,
-            redirect: false,
         })
-            .then((e) => {
-                if (e?.status !== 200) {
-                    message.error("Falhou em logar");
-                } else {
+            .then((action) => {
+                if (isFulfilled(action)) {
                     Router.push("/admin/user");
+                } else {
+                    message.error("Falhou em logar");
                 }
             })
             .catch((err) => {
@@ -26,12 +26,14 @@ const SingupForm = () => {
             });
     };
 
-    const onFinish = (values: any) => {
-        signupService(values)
+    const onFinish = (values: INewUser) => {
+        signupControlledRequest.dispatchRequest(values)
             .then((response) => {
-                message.success(response.data.msg);
-                form.resetFields();
-                signin(values.username, values.password);
+                if(isFulfilled(response)){
+                    message.success(response.payload.data.msg);
+                    form.resetFields();
+                    signin(values.username, values.password);
+                }
             })
             .catch((error) => {
                 message.error(error?.response?.data?.msg ?? "Falhou em criar usuário");

@@ -36,7 +36,7 @@ export const refreshTokenControlledRequest = createControlledRequest<{ refreshTo
     true,
 );
 
-interface INewUser {
+export interface INewUser {
     username: string;
     password: string;
     email: string;

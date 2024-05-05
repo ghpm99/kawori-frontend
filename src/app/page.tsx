@@ -1,7 +1,7 @@
 import MenuHeader from "@/components/menuHeader";
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import SingupForm from "@/components/signup";
-import LogoKawori from "@/public/kaori_logo4.png";
+import LogoKawori from "assets/kaori_logo4.png";
 import { Button, Divider, List, Tabs, TabsProps } from "antd";
 
 import Image from "next/image";

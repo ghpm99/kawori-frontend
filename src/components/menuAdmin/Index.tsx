@@ -14,7 +14,7 @@ import Link from "next/link";
 import styles from "./Menu.module.scss";
 import useMenu from "./useMenu";
 
-import LogoImage from "@/public/logo-white.png";
+import LogoImage from "assets/logo-white.png";
 import Image from "next/image";
 
 const { Sider } = Layout;

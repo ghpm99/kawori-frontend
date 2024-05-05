@@ -1,9 +1,9 @@
 import Image from "next/image";
 import styles from "./facetexture.module.scss";
-import facetextureImage1 from "@/public/facetexture-ynomade.png";
-import facetextureImage2 from "@/public/facetexture-scorpionemtv.png";
-import facetextureImage3 from "@/public/facetexture-kunash.png";
-import facetextureImage4 from "@/public/facetexture-amigona.jpg";
+import facetextureImage1 from "assets/facetexture-ynomade.png";
+import facetextureImage2 from "assets/facetexture-scorpionemtv.png";
+import facetextureImage3 from "assets/facetexture-kunash.png";
+import facetextureImage4 from "assets/facetexture-amigona.jpg";
 
 const Facetexture = () => {
     return (

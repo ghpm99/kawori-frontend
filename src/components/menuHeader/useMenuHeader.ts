@@ -1,4 +1,4 @@
-import { RootState } from "@/store/store";
+import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 
 const useMenuHeader = () => {

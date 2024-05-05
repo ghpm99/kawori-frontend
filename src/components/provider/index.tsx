@@ -31,12 +31,13 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
                         ...token,
                         tokens: {
                             ...token.tokens,
-                            access: response.payload.data.access,
+                            access: response.payload.data.accessToken,
                         },
                     });
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                console.error(error)
                 navigate.push("/signout");
             });
     };
@@ -56,9 +57,6 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         const user = TokenService.getToken();
         if (user) {
             verifyToken(user);
-        } else {
-            navigate.push("/signout");
-            return;
         }
     }, []);
 

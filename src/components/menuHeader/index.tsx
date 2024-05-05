@@ -1,6 +1,7 @@
+'use client'
 import Link from "next/link";
 
-import LogoImage from "@/public/logo.png";
+import LogoImage from "assets/logo.png";
 import { Menu } from "antd";
 
 import Image from "next/image";
