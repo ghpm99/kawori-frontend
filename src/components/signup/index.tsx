@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Form, Input, message } from "antd";
 
 import Router from "next/router";

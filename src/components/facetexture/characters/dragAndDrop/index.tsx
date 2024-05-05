@@ -6,7 +6,7 @@ import { setSelectedFacetextureReducer } from "@/store/features/facetexture";
 import { RootState, useAppDispatch } from "@/store/store";
 import Styles from "./DnDCharacters.module.scss";
 import { message } from "antd";
-import { FACETEXTURE_MESSAGE_REF } from "@/pages/admin/facetexture";
+import { FACETEXTURE_MESSAGE_REF } from "app/admin/facetexture";
 
 const DragAndDropCharacters = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);

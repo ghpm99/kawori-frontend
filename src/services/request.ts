@@ -1,4 +1,4 @@
-import { RootState, store } from "@/store/store";
+import { RootState, store } from "@/lib/store";
 import { createAsyncThunk, isPending } from "@reduxjs/toolkit";
 import { Axios, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { apiDjango } from ".";
