@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 
 import TokenService, { IToken } from "@/services/auth/authToken";
 
-import { setToken } from "@/store/features/auth";
-import { useAppDispatch } from "@/store/store";
+import { setToken } from "@/lib/features/auth";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { refreshTokenControlledRequest, verifyTokenControlledRequest } from "@/services/auth";
 import { isFulfilled } from "@reduxjs/toolkit";
+import { useAppDispatch } from "@/lib/hooks";
 
 const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
     const navigate = useRouter();

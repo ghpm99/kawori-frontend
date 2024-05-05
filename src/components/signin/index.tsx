@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Checkbox, Form, Input, Layout } from "antd";
 import Router from "next/router";
 import { useState } from "react";
