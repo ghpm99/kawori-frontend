@@ -1,7 +1,7 @@
-import { RootState, store } from "@/lib/store";
-import { createAsyncThunk, isPending } from "@reduxjs/toolkit";
-import { Axios, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { apiDjango } from ".";
+import { RootState, store } from "@/lib/store"
+import { createAsyncThunk, isPending } from "@reduxjs/toolkit"
+import { Axios, AxiosError, AxiosRequestConfig } from "axios"
+import { apiDjango } from "."
 
 type requestMap = Map<string, any>;
 
@@ -61,7 +61,7 @@ export const createControlledRequest = <T, R>(
                 };
             } catch (err) {
                 console.log("erro de request", err);
-                if (err instanceof AxiosError) {
+                if (err instanceof AxiosError && err.response) {
                     return rejectWithValue(err.response.data ?? err.message);
                 } else {
                     return rejectWithValue(err);
@@ -71,7 +71,7 @@ export const createControlledRequest = <T, R>(
     );
 
     const dispatchRequest = (args: T) => {
-        const promise = store.dispatch(asyncThunk(args));
+        const promise = store().dispatch(asyncThunk(args));
         promise.then(() => {
             thunkMap.get(typePrefix)?.delete(promise.requestId);
         });
