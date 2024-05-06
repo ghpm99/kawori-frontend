@@ -1,6 +1,7 @@
-import { asLink, isFilled } from "@prismicio/client";
+"use server";
+import { asLink, asText, isFilled } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType, Metadata } from "next";
 import Head from "next/head";
 
 import { components } from "@/slices/index";
@@ -10,13 +11,35 @@ import { formatterDate } from "@/util/index";
 import { Breadcrumb, List } from "antd";
 import { Footer } from "antd/lib/layout/layout";
 import Link from "next/link";
-import styles from "../Home.module.scss";
+import styles from "@/app/Home.module.scss";
 import stylesNews from "./news.module.scss";
 import { createClient } from "@/prismicio";
+import ListNews from "./listNews";
 
 type Params = { uid: string };
 
-export default function Page({ page, pageList }: InferGetStaticPropsType<typeof getStaticProps>) {
+// export const dynamicParams = false;
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+    const client = createClient();
+    const page = await client.getByUID("platform_news", params.uid);
+
+    return {
+        title: `${page.data.meta_title}`,
+        description: page.data.meta_description,
+    };
+}
+
+export default async function Page({ params }: { params: Params }) {
+    const client = createClient();
+    const page = await client.getByUID("platform_news", params.uid);
+    const pages = await client.getAllByType("platform_news");
+    const pageList = pages.map((item) => ({
+        first_publication_date: item.first_publication_date,
+        url: item.url,
+        title: item.data.meta_title,
+    }));
+
     return (
         <>
             <Head>
@@ -44,22 +67,7 @@ export default function Page({ page, pageList }: InferGetStaticPropsType<typeof 
                                 <SliceZone slices={page.data.slices} components={components} />
                             </div>
                             <div className={stylesNews["box-floating"]}>
-                                <List
-                                    style={{
-                                        height: "100%",
-                                    }}
-                                    header={<strong>Recentes</strong>}
-                                    bordered
-                                    dataSource={pageList}
-                                    renderItem={(item) => (
-                                        <List.Item>
-                                            <Link href={item.url ?? ""}>
-                                                [{formatterDate(item.first_publication_date)}]{" - "}
-                                                {item.title}
-                                            </Link>
-                                        </List.Item>
-                                    )}
-                                />
+                                <ListNews items={pageList} />
                             </div>
                         </div>
                     </div>
@@ -76,34 +84,12 @@ export default function Page({ page, pageList }: InferGetStaticPropsType<typeof 
     );
 }
 
-export async function getStaticProps({ params, previewData }: GetStaticPropsContext<Params>) {
-    // The `previewData` parameter allows your app to preview
-    // drafts from the Page Builder.
-    const client = createClient({ previewData });
-
-    const pages = await client.getAllByType("platform_news");
-    const page = await client.getByUID("platform_news", params!.uid);
-
-    const pageList = pages.map((item) => ({
-        first_publication_date: item.first_publication_date,
-        url: item.url,
-        title: item.data.meta_title,
-    }));
-
-    return {
-        props: { page, pageList },
-    };
-}
-
-export async function getStaticPaths() {
+export async function generateStaticParams() {
     const client = createClient();
 
     const pages = await client.getAllByType("platform_news");
 
-    return {
-        paths: pages.map((page) => {
-            return asLink(page);
-        }),
-        fallback: false,
-    };
+    return pages.map((page) => {
+        return { uid: page.uid };
+    });
 }
