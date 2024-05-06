@@ -1,10 +1,10 @@
-import { List } from "antd";
-import Link from "next/link";
-import styles from "./news.module.scss";
-import { formatterDate } from "@/util/index";
-import { createClient } from "@/prismicio";
+"use server";
 
-interface NewsProps {
+import { createClient } from "@/prismicio";
+import styles from "./news.module.scss";
+import NewsList from "./newsList";
+
+export interface NewsProps {
     first_publication_date: string;
     url: string;
     title: string;
@@ -25,22 +25,10 @@ async function create() {
 }
 
 const News = async () => {
-    const data = await create();
+    const data: NewsProps[] = await create();
     return (
         <div className={styles["news-list"]}>
-            <List
-                header={<strong>Novidades</strong>}
-                bordered
-                dataSource={data}
-                renderItem={(item: NewsProps) => (
-                    <List.Item>
-                        <Link href={item.url}>
-                            [{formatterDate(item.first_publication_date)}]{" - "}
-                            {item.title}
-                        </Link>
-                    </List.Item>
-                )}
-            />
+            <NewsList data={data} />
         </div>
     );
 };

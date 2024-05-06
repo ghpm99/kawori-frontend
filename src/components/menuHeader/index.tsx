@@ -9,7 +9,48 @@ import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
 
 export default function MenuHeader() {
-    const context = useMenuHeader();
+    const { data, status } = useMenuHeader();
+
+    const menuItens = [
+        {
+            label: <Link href={"/"}>Inicio</Link>,
+            key: "home",
+        },
+        {
+            label: "Black Desert",
+            key: "blackdesert",
+            children: [
+                {
+                    label: <Link href={"/facetexture"}>Facetexture</Link>,
+                    key: "facetexture",
+                },
+            ],
+        },
+        status === "authenticated"
+            ? {
+                  label: data.name,
+                  key: "user",
+                  children: [
+                      {
+                          label: <Link href={"/internal/user"}>Conta</Link>,
+                          key: "user-account",
+                      },
+                      {
+                          label: <Link href={"/internal/facetexture"}>Facetexture</Link>,
+                          key: "user-facetexture",
+                      },
+                      {
+                          label: <div>Sair</div>,
+                          key: "user-logout",
+                          danger: true,
+                      },
+                  ],
+              }
+            : {
+                  label: <Link href={"/#login"}>Logar</Link>,
+                  key: "login",
+              },
+    ];
 
     return (
         <div className={styles["menu-header"]}>
@@ -25,47 +66,7 @@ export default function MenuHeader() {
                     }}
                     disabledOverflow
                     mode="horizontal"
-                    items={[
-                        {
-                            label: <Link href={"/"}>Inicio</Link>,
-                            key: "home",
-                        },
-                        {
-                            label: "Black Desert",
-                            key: "blackdesert",
-                            children: [
-                                {
-                                    label: <Link href={"/facetexture"}>Facetexture</Link>,
-                                    key: "facetexture",
-                                },
-                            ],
-                        },
-                        context.status === "authenticated"
-                            ? {
-                                  label: context.data?.user.name,
-                                  key: "user",
-                                  children: [
-                                      {
-                                          label: <Link href={"/admin/user"}>Conta</Link>,
-                                          key: "user-account",
-                                      },
-                                      {
-                                          label: <Link href={"/admin/facetexture"}>Facetexture</Link>,
-                                          key: "user-facetexture",
-                                      },
-                                      {
-                                          label: <div>Sair</div>,
-                                          key: "user-logout",
-                                          danger: true,
-                                      },
-                                  ],
-                              }
-                            : {
-                                  label: "Logar",
-                                  key: "login",
-                                  disabled: true,
-                              },
-                    ]}
+                    items={menuItens}
                 />
             </div>
         </div>

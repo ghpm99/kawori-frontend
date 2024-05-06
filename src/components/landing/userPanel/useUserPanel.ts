@@ -1,9 +1,9 @@
 "use client";
+import { useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { useSelector } from "react-redux";
 
 const useUserPanel = () => {
-    const { token, user } = useSelector((state: RootState) => state.auth);
+    const { status, user } = useAppSelector((state: RootState) => state.auth);
 
     const formatDate = (date: string) => {
         const dateFormat = new Date(date);
@@ -11,11 +11,8 @@ const useUserPanel = () => {
     };
 
     return {
-        status: "authenticated",
-        data: {
-            user,
-            token,
-        },
+        status: status,
+        data: user,
         formatDate,
     };
 };
