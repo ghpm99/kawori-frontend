@@ -4,16 +4,17 @@ import { Button, Form, Input, message } from "antd";
 
 import Router from "next/router";
 import { INewUser, signinControlledRequest, signupControlledRequest } from "@/services/auth";
-import { isFulfilled } from '@reduxjs/toolkit'
+import { isFulfilled } from "@reduxjs/toolkit";
 
 const SingupForm = () => {
     const [form] = Form.useForm();
 
     const signin = (username: string, password: string) => {
-        signinControlledRequest.dispatchRequest({
-            username: username,
-            password: password,
-        })
+        signinControlledRequest
+            .dispatchRequest({
+                username: username,
+                password: password,
+            })
             .then((action) => {
                 if (isFulfilled(action)) {
                     Router.push("/admin/user");
@@ -27,9 +28,10 @@ const SingupForm = () => {
     };
 
     const onFinish = (values: INewUser) => {
-        signupControlledRequest.dispatchRequest(values)
+        signupControlledRequest
+            .dispatchRequest(values)
             .then((response) => {
-                if(isFulfilled(response)){
+                if (isFulfilled(response)) {
                     message.success(response.payload.data.msg);
                     form.resetFields();
                     signin(values.username, values.password);

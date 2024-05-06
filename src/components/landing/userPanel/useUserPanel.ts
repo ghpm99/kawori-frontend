@@ -2,8 +2,13 @@
 import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 
-const useMenuHeader = () => {
+const useUserPanel = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
+
+    const formatDate = (date: string) => {
+        const dateFormat = new Date(date);
+        return dateFormat.toLocaleString();
+    };
 
     return {
         status: "authenticated",
@@ -11,7 +16,8 @@ const useMenuHeader = () => {
             user,
             token,
         },
+        formatDate,
     };
 };
 
-export default useMenuHeader;
+export default useUserPanel;

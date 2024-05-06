@@ -37,7 +37,7 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
                 }
             })
             .catch((error) => {
-                console.error(error)
+                console.error(error);
                 navigate.push("/signout");
             });
     };
@@ -59,11 +59,11 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
             verifyToken(user);
         }
     }, []);
+    return children;
 
     if (loading) {
         return <></>;
     } else {
-        return children;
     }
 };
 

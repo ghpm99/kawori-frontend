@@ -1,50 +1,20 @@
+"use client";
+
 import MenuHeader from "@/components/menuHeader";
-import useMenuHeader from "@/components/menuHeader/useMenuHeader";
-import SingupForm from "@/components/signup";
+import { Divider } from "antd";
 import LogoKawori from "assets/kaori_logo4.png";
-import { Button, Divider, List, Tabs, TabsProps } from "antd";
 
 import Image from "next/image";
-import Link from "next/link";
 import styles from "./Home.module.scss";
 
 import Facetexture from "@/components/landing/facetexture";
 import FAQ from "@/components/landing/FAQ";
 import News from "@/components/landing/news";
+import UserPanel from "@/components/landing/userPanel";
 import Welcome from "@/components/landing/welcome";
-import LoginPage from "@/components/signin";
 import { Footer } from "antd/lib/layout/layout";
 
-const tabItens: TabsProps["items"] = [
-    {
-        key: "signup",
-        label: "Cadastro",
-        children: (
-            <div className={styles["form-container"]}>
-                <div className={styles["form-title"]}>Cadastro</div>
-                <SingupForm />
-            </div>
-        ),
-    },
-    {
-        key: "signin",
-        label: "Login",
-        children: (
-            <div className={styles["form-container"]}>
-                <div className={styles["form-title"]}>Login</div>
-                <LoginPage />
-            </div>
-        ),
-    },
-];
-
 export default function Home() {
-    const context = useMenuHeader();
-    const formatDate = (date: string) => {
-        const dateFormat = new Date(date);
-        return dateFormat.toLocaleString();
-    };
-
     return (
         <>
             <div className={styles["container"]}>
@@ -53,67 +23,7 @@ export default function Home() {
                     <div className={styles["internal-page"]}>
                         <div className={styles["section"]}>
                             <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500} />
-                            {context.status === "authenticated" && (
-                                <div className={styles["user-container"]}>
-                                    <strong className={styles["form-title"]}>Usuario logado</strong>
-                                    <div>
-                                        <div className={styles["user-option"]}>Nome: {context.data?.user.name}</div>
-                                        <div className={styles["user-option"]}>
-                                            Data de cadastro:{" "}
-                                            {context.data?.user.date_joined
-                                                ? formatDate(context.data?.user.date_joined)
-                                                : ""}
-                                        </div>
-                                        <div className={styles["user-option"]}>
-                                            Ultimo login:{" "}
-                                            {context.data?.user.last_login
-                                                ? formatDate(context.data?.user.last_login)
-                                                : ""}
-                                        </div>
-                                        <div className={styles["status"]}>
-                                            <div
-                                                className={`${styles["status-indicator"]} ${
-                                                    context.data?.user.is_active ? styles["active"] : styles["inactive"]
-                                                }`}
-                                            ></div>
-                                            <div className={styles["status-text"]}>
-                                                {context.data?.user.is_active ? "Ativo" : "Banido"}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles["access-list"]}>
-                                        <List
-                                            header={<strong>Acesso Rápido</strong>}
-                                            bordered
-                                            dataSource={[
-                                                { text: "Perfil", link: "/admin/user" },
-                                                { text: "Facetexture", link: "/admin/facetexture" },
-                                            ]}
-                                            renderItem={(item) => (
-                                                <List.Item>
-                                                    <Link href={item.link}>{item.text}</Link>
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </div>
-                                    <div>
-                                        <Button
-                                            type="primary"
-                                            danger
-                                            style={{
-                                                float: "right",
-                                            }}
-                                        >
-                                            Deslogar
-                                        </Button>
-                                    </div>
-                                </div>
-                            )}
-                            {context.status === "unauthenticated" && (
-                                <div className={styles["tabs"]}>
-                                    <Tabs centered items={tabItens} />
-                                </div>
-                            )}
+                            <UserPanel />
                         </div>
                         <Divider />
                         <News />

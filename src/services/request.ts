@@ -1,7 +1,7 @@
-import { RootState, store } from "@/lib/store"
-import { createAsyncThunk, isPending } from "@reduxjs/toolkit"
-import { Axios, AxiosError, AxiosRequestConfig } from "axios"
-import { apiDjango } from "."
+import { RootState, store } from "@/lib/store";
+import { createAsyncThunk, isPending } from "@reduxjs/toolkit";
+import { Axios, AxiosError, AxiosRequestConfig } from "axios";
+import { apiDjango } from ".";
 
 type requestMap = Map<string, any>;
 

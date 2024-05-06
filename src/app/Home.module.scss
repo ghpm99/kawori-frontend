@@ -34,14 +34,7 @@
     }
 }
 
-.tabs{
-    height: 100%;
-    width: 50%;
-    max-width: 500px;
-    @media screen and (max-width: 850px) {
-        width: 100%;
-    }
-}
+
 
 .news-list {
     width: 50%;
@@ -120,58 +113,14 @@
     text-align: center;
 }
 
-.form-title {
-    padding-bottom: 16px;
-    text-align: center;
-}
 
-.user-container {
-    width: 50%;
-    max-width: 500px;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    gap: 8px;
 
-    @media screen and (max-width: 850px) {
-        width: 100%;
-    }
-}
 
-.user-option{
-    margin-bottom: 8px;
-}
 
-.access-list{
-    margin-block:auto;
-}
 
 .internal-page{
     max-width: 1300px;
     margin: 0 auto;
 }
 
-.status {
-    display: flex;
-    align-items: center;
-}
 
-.status-indicator {
-    border-radius: 9000px;
-    width: 0.8rem;
-    height: 0.8rem;
-    display: inline-block;
-    position: relative;
-
-    &.active{
-        background-color: #00db84;
-    }
-
-    &.inactive{
-        background-color: #ff0000;
-    }
-}
-
-.status-text {
-    margin-left: 6px;
-}
