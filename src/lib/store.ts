@@ -1,5 +1,4 @@
-import { Action, ThunkDispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth";
 import classificationReducer from "./features/classification";
 import facetextureReducer from "./features/facetexture";
@@ -11,9 +10,8 @@ import overviewReducer from "./features/financial/overview";
 import paymentReducer from "./features/financial/payment";
 import paymentDetailsReducer from "./features/financial/payment/detail";
 import tagReducer from "./features/financial/tag";
+import loadingReducer, { LoadingMiddleware } from "./features/loading";
 import statusReducer from "./features/status/Index";
-import { LoadingMiddleware } from "./features/loading";
-import loadingReducer from "./features/loading";
 
 const financialStore = combineReducers({
     overview: overviewReducer,

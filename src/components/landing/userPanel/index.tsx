@@ -33,61 +33,64 @@ const tabItens: TabsProps["items"] = [
 const UserPanel = () => {
     const { data, status, formatDate } = useUserPanel();
 
+    console.log(status);
+
+    if (!status || status === "unauthenticated") {
+        return (
+            <div className={styles["tabs"]}>
+                <Tabs centered items={tabItens} />
+            </div>
+        );
+    }
+
     return (
         <>
-            {status === "authenticated" && (
-                <div className={styles["user-container"]}>
-                    <strong className={styles["form-title"]}>Usuario logado</strong>
-                    <div>
-                        <div className={styles["user-option"]}>Nome: {data?.user.name}</div>
-                        <div className={styles["user-option"]}>
-                            Data de cadastro: {data?.user.date_joined ? formatDate(data?.user.date_joined) : ""}
-                        </div>
-                        <div className={styles["user-option"]}>
-                            Ultimo login: {data?.user.last_login ? formatDate(data?.user.last_login) : ""}
-                        </div>
-                        <div className={styles["status"]}>
-                            <div
-                                className={`${styles["status-indicator"]} ${
-                                    data?.user.is_active ? styles["active"] : styles["inactive"]
-                                }`}
-                            ></div>
-                            <div className={styles["status-text"]}>{data?.user.is_active ? "Ativo" : "Banido"}</div>
-                        </div>
+            <div className={styles["user-container"]}>
+                <strong className={styles["form-title"]}>Usuario logado</strong>
+                <div>
+                    <div className={styles["user-option"]}>Nome: {data?.name}</div>
+                    <div className={styles["user-option"]}>
+                        Data de cadastro: {data?.date_joined ? formatDate(data?.date_joined) : ""}
                     </div>
-                    <div className={styles["access-list"]}>
-                        <List
-                            header={<strong>Acesso Rápido</strong>}
-                            bordered
-                            dataSource={[
-                                { text: "Perfil", link: "/admin/user" },
-                                { text: "Facetexture", link: "/admin/facetexture" },
-                            ]}
-                            renderItem={(item) => (
-                                <List.Item>
-                                    <Link href={item.link}>{item.text}</Link>
-                                </List.Item>
-                            )}
-                        />
+                    <div className={styles["user-option"]}>
+                        Ultimo login: {data?.last_login ? formatDate(data?.last_login) : ""}
                     </div>
-                    <div>
-                        <Button
-                            type="primary"
-                            danger
-                            style={{
-                                float: "right",
-                            }}
-                        >
-                            Deslogar
-                        </Button>
+                    <div className={styles["status"]}>
+                        <div
+                            className={`${styles["status-indicator"]} ${
+                                data?.is_active ? styles["active"] : styles["inactive"]
+                            }`}
+                        ></div>
+                        <div className={styles["status-text"]}>{data?.is_active ? "Ativo" : "Banido"}</div>
                     </div>
                 </div>
-            )}
-            {status === "unauthenticated" && (
-                <div className={styles["tabs"]}>
-                    <Tabs centered items={tabItens} />
+                <div className={styles["access-list"]}>
+                    <List
+                        header={<strong>Acesso Rápido</strong>}
+                        bordered
+                        dataSource={[
+                            { text: "Perfil", link: "/internal/user" },
+                            { text: "Facetexture", link: "/internal/facetexture" },
+                        ]}
+                        renderItem={(item) => (
+                            <List.Item>
+                                <Link href={item.link}>{item.text}</Link>
+                            </List.Item>
+                        )}
+                    />
                 </div>
-            )}
+                <div>
+                    <Button
+                        type="primary"
+                        danger
+                        style={{
+                            float: "right",
+                        }}
+                    >
+                        Deslogar
+                    </Button>
+                </div>
+            </div>
         </>
     );
 };
