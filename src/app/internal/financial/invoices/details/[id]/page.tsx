@@ -1,23 +1,23 @@
+"use client";
 import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Select, Table, Typography } from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import { DefaultOptionType } from "antd/lib/select";
-import { GetServerSideProps } from "next";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "@/components/loadingPage/Index";
 import LoginHeader from "@/components/loginHeader/Index";
 import MenuAdmin from "@/components/menuAdmin/Index";
-import { saveInvoiceTagsService } from "@/services/financial";
 import { fetchInvoiceDetails, fetchInvoicePaymentsDetails } from "@/lib/features/financial/invoice/detail";
-import { RootState } from "@/lib/store";
-import { formatMoney, formatterDate } from "@/util/index";
-import styles from "./Details.module.scss";
 import { fetchTags } from "@/lib/features/financial/tag";
 import { useAppDispatch } from "@/lib/hooks";
+import { RootState } from "@/lib/store";
+import { saveInvoiceTagsService } from "@/services/financial";
+import { formatMoney, formatterDate } from "@/util/index";
+import styles from "./Details.module.scss";
 
 const { Paragraph } = Typography;
 const { Option } = Select;

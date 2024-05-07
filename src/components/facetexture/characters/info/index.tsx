@@ -12,11 +12,13 @@ import {
     changeShowClassThunk,
     deleteCharacterThunk,
 } from "@/services/facetexture";
-import { updateFacetextureUrlReducer } from "@/store/features/facetexture";
-import { RootState, useAppDispatch } from "@/store/store";
+import { updateFacetextureUrlReducer } from "@/lib/features/facetexture";
+import { RootState } from "@/lib/store";
 import { db } from "@/util/db";
 import Styles from "./Info.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "app/admin/facetexture";
+import { useAppDispatch } from '@/lib/hooks'
+import { FACETEXTURE_MESSAGE_REF } from '@/app/internal/facetexture/page'
+
 
 const { Title } = Typography;
 

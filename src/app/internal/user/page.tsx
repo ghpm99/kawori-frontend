@@ -1,12 +1,13 @@
+"use client";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, Layout, Typography } from "antd";
 
-import LoadingPage from "../../../components/loadingPage/Index";
-import LoginHeader from "../../../components/loginHeader/Index";
-import MenuAdmin from "../../../components/menuAdmin/Index";
-import styles from "./User.module.scss";
-import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import { useSelector } from "react-redux";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import styles from "./User.module.scss";
 
 const { Header, Content } = Layout;
 const { Title, Paragraph } = Typography;

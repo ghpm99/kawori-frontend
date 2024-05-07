@@ -1,3 +1,4 @@
+"use client";
 import { Breadcrumb, Flex, Layout, Table, Tag, Typography } from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import {
@@ -25,8 +26,8 @@ import PaymentFixed from "@/components/overview/paymentFixed";
 import PaymentWithFixed from "@/components/overview/paymentWithFixed";
 import AccumulatedValue from "@/components/overview/paymentWithoutFixed";
 import { fetchMonthPayments } from "@/lib/features/financial/payment";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { formatMoney } from "@/util/index";
 import {
     fetchAmountForecastValueThunk,
     fetchAmountInvoiceByTagReportThunk,
@@ -36,8 +37,8 @@ import {
     fetchCountPaymentReportThunk,
     fetchPaymentReportThunk,
 } from "@/services/financial/overview";
+import { formatMoney } from "@/util/index";
 import styles from "./Overview.module.scss";
-import { useAppDispatch } from "@/lib/hooks";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 

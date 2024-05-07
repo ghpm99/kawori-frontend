@@ -1,20 +1,22 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Checkbox, Modal, Select, Tooltip, Typography, message } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { RcFile } from "antd/lib/upload";
-import Dragger from "antd/lib/upload/Dragger";
-import { useSelector } from "react-redux";
-import { newCharacterThunk } from "@/services/facetexture";
 import {
     updateFacetextureClassModalReducer,
     updateFacetextureImageNameModalReducer,
     updateFacetextureVisibleClassModalReducer,
-} from "@/store/features/facetexture";
-import { RootState, useAppDispatch } from "@/store/store";
-import styles from "./newModal.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "app/admin/facetexture";
+} from "@/lib/features/facetexture"
+import { useAppDispatch } from '@/lib/hooks'
+import { RootState } from "@/lib/store"
+import { newCharacterThunk } from "@/services/facetexture"
+import { PlusOutlined } from "@ant-design/icons"
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Checkbox, Modal, Select, Tooltip, Typography, message } from "antd"
+import { CheckboxChangeEvent } from "antd/lib/checkbox"
+import { RcFile } from "antd/lib/upload"
+import Dragger from "antd/lib/upload/Dragger"
+import { useSelector } from "react-redux"
+import styles from "./newModal.module.scss"
+import { FACETEXTURE_MESSAGE_REF } from '@/app/internal/facetexture/page'
+
 
 const { Title } = Typography;
 

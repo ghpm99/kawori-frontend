@@ -1,6 +1,6 @@
+"use client";
 import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from "antd";
 import dayjs from "dayjs";
-import { GetServerSideProps } from "next";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,8 +8,8 @@ import LoadingPage from "@/components/loadingPage/Index";
 import LoginHeader from "@/components/loginHeader/Index";
 import MenuCollapsible from "@/components/menuAdmin/Index";
 
-import styles from "./Report.module.scss";
 import { RootState } from "@/lib/store";
+import styles from "./Report.module.scss";
 
 const { Header, Content, Footer } = Layout;
 

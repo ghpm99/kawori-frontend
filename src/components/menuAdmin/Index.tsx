@@ -20,10 +20,13 @@ import Image from "next/image";
 const { Sider } = Layout;
 
 function MenuAdmin(props: { selected: string[] }) {
-    const context = useMenu();
+    const {
+        collapsed,
+        status,toggleCollapsed,user
+    } = useMenu();
 
     return (
-        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={context.toggleCollapsed}>
+        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed}>
             <Link href="/" className={styles["menu-item"]}>
                 <Image className={styles.logo} alt="Logo" src={LogoImage} width={100} />
             </Link>
@@ -31,7 +34,7 @@ function MenuAdmin(props: { selected: string[] }) {
                 <Menu.Item key="home" icon={<HomeOutlined />}>
                     <Link href={"/"}>Inicio</Link>
                 </Menu.Item>
-                {context.status === "authenticated" && (
+                {status === "authenticated" && (
                     <>
                         <Menu.Item key="user" icon={<UserOutlined />} title="Usuario">
                             <Link href={"/admin/user"}>Conta</Link>
@@ -42,7 +45,7 @@ function MenuAdmin(props: { selected: string[] }) {
                         <Menu.Item key="rank" icon={<AppstoreOutlined />}>
                             <Link href={"/admin/rank"}>Rank de classes</Link>
                         </Menu.Item>
-                        {context.data?.user.isSuperuser && (
+                        {user.is_superuser && (
                             <>
                                 <Menu.SubMenu key="controller" icon={<DesktopOutlined />} title="Remoto">
                                     <Menu.Item key="command" icon={<DesktopOutlined />}>

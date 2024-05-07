@@ -1,3 +1,4 @@
+"use client";
 import { PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from "antd";
 import { useEffect } from "react";

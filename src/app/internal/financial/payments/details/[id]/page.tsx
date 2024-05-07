@@ -1,3 +1,4 @@
+"use client";
 import { Breadcrumb, Button, Card, Checkbox, DatePicker, InputNumber, Layout, message, Select, Typography } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { Content, Header } from "antd/lib/layout/layout";

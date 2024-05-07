@@ -1,3 +1,4 @@
+"use client";
 import {
     Breadcrumb,
     Card,
@@ -14,7 +15,6 @@ import {
 } from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
 import dayjs from "dayjs";
-import { GetServerSideProps } from "next";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -25,11 +25,7 @@ import ModalNewInvoice, { IFormNewInvoice } from "@/components/contracts/modalNe
 import LoadingPage from "@/components/loadingPage/Index";
 import LoginHeader from "@/components/loginHeader/Index";
 import MenuAdmin from "@/components/menuAdmin/Index";
-import { includeNewInvoiceService, mergeContractService } from "@/services/financial";
 import { fetchAllContract } from "@/lib/features/financial/contract";
-import { RootState } from "@/lib/store";
-import { formatMoney, formatterDate } from "@/util/index";
-import styles from "./Details.module.scss";
 import {
     changeValueMergeModal,
     changeVisibleModalContract,
@@ -38,6 +34,10 @@ import {
 } from "@/lib/features/financial/contract/detail";
 import { fetchTags } from "@/lib/features/financial/tag";
 import { useAppDispatch } from "@/lib/hooks";
+import { RootState } from "@/lib/store";
+import { includeNewInvoiceService, mergeContractService } from "@/services/financial";
+import { formatMoney, formatterDate } from "@/util/index";
+import styles from "./Details.module.scss";
 
 const { Paragraph } = Typography;
 const { Option } = Select;

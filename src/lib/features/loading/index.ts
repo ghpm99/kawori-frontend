@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { LoadingMiddleware } from "./middleware";
-import { RootState } from "@/store/store";
+import { RootState } from "@/lib/store";
 
 const initialState: LoadingState = {
     global: false,

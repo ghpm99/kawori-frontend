@@ -1,5 +1,5 @@
+"use client";
 import { Breadcrumb, Layout, message, Table, Typography } from "antd";
-import { GetServerSideProps } from "next";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -10,12 +10,12 @@ import OpenModalNewContract from "@/components/financial/contracts/openModalNewC
 import LoadingPage from "@/components/loadingPage/Index";
 import LoginHeader from "@/components/loginHeader/Index";
 import MenuAdmin from "@/components/menuAdmin/Index";
-import { saveNewContractService } from "@/services/financial";
 import { changeVisibleContractsModal, fetchAllContract } from "@/lib/features/financial/contract";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
+import { saveNewContractService } from "@/services/financial";
 import { formatMoney } from "@/util/index";
 import styles from "./Contracts.module.scss";
-import { useAppDispatch } from "@/lib/hooks";
 
 const { Header, Content } = Layout;
 

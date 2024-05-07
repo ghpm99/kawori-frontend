@@ -1,12 +1,10 @@
 "use client";
 
+import { useAppSelector } from "@/lib/hooks"
 import { useState } from "react";
 
 const useMenu = () => {
-    const { status, data } = {
-        status: "authenticated",
-        data: { user: { name: "test" } },
-    };
+    const { status, user } = useAppSelector((state) => state.auth)
 
     const [collapsed, setCollapsed] = useState<boolean>(false);
 
@@ -16,7 +14,7 @@ const useMenu = () => {
 
     return {
         status,
-        data: data,
+        user,
         collapsed,
         toggleCollapsed,
     };

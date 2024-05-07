@@ -1,13 +1,14 @@
-import { InboxOutlined } from "@ant-design/icons";
-import ImgCrop from "antd-img-crop";
-import { RcFile } from "antd/lib/upload";
-import Dragger from "antd/lib/upload/Dragger";
-import { useSelector } from "react-redux";
+import { InboxOutlined } from "@ant-design/icons"
+import ImgCrop from "antd-img-crop"
+import { RcFile } from "antd/lib/upload"
+import Dragger from "antd/lib/upload/Dragger"
+import { useSelector } from "react-redux"
 
-import { updateBackgroundReducer } from "@/store/features/facetexture";
-import { RootState, useAppDispatch } from "@/store/store";
-import { db } from "@/util/db";
-import styles from "./Background.module.scss";
+import { updateBackgroundReducer } from "@/lib/features/facetexture"
+import { useAppDispatch } from '@/lib/hooks'
+import { RootState } from "@/lib/store"
+import { db } from "@/util/db"
+import styles from "./Background.module.scss"
 
 const Background = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);

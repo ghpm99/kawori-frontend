@@ -1,3 +1,9 @@
+"use client";
+import FilterDropdown from "@/components/common/filterDropdown/Index";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import ModalPayoff, { ITableDataSource } from "@/components/payments/modalPayoff";
 import {
     changeDataSourcePayoffPayments,
     changeSingleDataSourcePayoffPayments,
@@ -9,18 +15,13 @@ import {
 } from "@/lib/features/financial/payment";
 import { ClearOutlined, ToTopOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, DatePicker, Input, Layout, Popconfirm, Select, Table, Typography, message } from "antd";
-import FilterDropdown from "@/components/common/filterDropdown/Index";
-import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
-import ModalPayoff, { ITableDataSource } from "@/components/payments/modalPayoff";
 import dayjs from "dayjs";
 
 import { RootState } from "@/lib/store";
+import { payoffPaymentService } from "@/services/financial";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { payoffPaymentService } from "@/services/financial";
 
 import { useAppDispatch } from "@/lib/hooks";
 import { formatMoney, formatterDate } from "@/util/index";

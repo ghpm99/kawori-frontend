@@ -1,6 +1,6 @@
+"use client";
 import { SearchOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Layout, Table, Tag, Typography } from "antd";
-import { GetServerSideProps } from "next";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -10,10 +10,10 @@ import LoadingPage from "@/components/loadingPage/Index";
 import LoginHeader from "@/components/loginHeader/Index";
 import MenuAdmin from "@/components/menuAdmin/Index";
 import { fetchAllInvoice } from "@/lib/features/financial/invoice";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { formatMoney, formatterDate } from "@/util/index";
 import styles from "./Invoices.module.scss";
-import { useAppDispatch } from "@/lib/hooks";
 
 const { Header, Content } = Layout;
 
