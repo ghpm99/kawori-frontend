@@ -1,3 +1,4 @@
+"use server";
 import Link from "next/link";
 
 import MenuHeader from "../../components/menuHeader";
@@ -9,7 +10,7 @@ import facetextureImage2 from "assets/facetexture-2.png";
 import facetextureImage3 from "assets/facetexture-3.png";
 import facetextureImage4 from "assets/facetexture-4.png";
 
-export default function Facetexture() {
+export default async function Facetexture() {
     return (
         <div className={styles["container"]}>
             <div className={styles["body"]}>

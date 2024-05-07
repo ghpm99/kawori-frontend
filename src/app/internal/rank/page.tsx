@@ -1,3 +1,4 @@
+"use client";
 import { Breadcrumb, Layout, Table } from "antd";
 import { useRouter } from "next/router";
 
@@ -6,10 +7,10 @@ import LoginHeader from "@/components/loginHeader/Index";
 import MenuAdmin from "@/components/menuAdmin/Index";
 import Styles from "./rank.module.scss";
 
-import { useEffect } from "react";
+import { useAppDispatch } from "@/lib/hooks";
 import { getAllAnswers } from "@/services/classification";
 import Link from "next/link";
-import { useAppDispatch } from "@/lib/hooks";
+import { useEffect } from "react";
 
 const { Header, Content } = Layout;
 export const RANK_MESSAGE_REF = "rank-message-ref";

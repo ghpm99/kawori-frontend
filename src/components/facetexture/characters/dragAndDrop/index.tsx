@@ -1,12 +1,14 @@
-import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd";
-import { useSelector } from "react-redux";
+import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd"
+import { useSelector } from "react-redux"
 
-import { reorderCharacterThunk } from "@/services/facetexture";
-import { setSelectedFacetextureReducer } from "@/store/features/facetexture";
-import { RootState, useAppDispatch } from "@/store/store";
-import Styles from "./DnDCharacters.module.scss";
-import { message } from "antd";
-import { FACETEXTURE_MESSAGE_REF } from "app/admin/facetexture";
+import { FACETEXTURE_MESSAGE_REF } from '@/app/internal/facetexture/page'
+import { setSelectedFacetextureReducer } from "@/lib/features/facetexture"
+import { useAppDispatch } from '@/lib/hooks'
+import { RootState } from "@/lib/store"
+import { reorderCharacterThunk } from "@/services/facetexture"
+import { message } from "antd"
+import Styles from "./DnDCharacters.module.scss"
+
 
 const DragAndDropCharacters = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);

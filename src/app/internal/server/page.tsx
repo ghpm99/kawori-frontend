@@ -1,10 +1,10 @@
+"use client";
 import { Breadcrumb, Button, Layout, message } from "antd";
-import { GetServerSideProps } from "next";
 
-import LoadingPage from "../../../components/loadingPage/Index";
-import LoginHeader from "../../../components/loginHeader/Index";
-import MenuAdmin from "../../../components/menuAdmin/Index";
-import { updateAllContractsValue } from "../../../services/financial";
+import LoadingPage from "@/components/loadingPage/Index";
+import LoginHeader from "@/components/loginHeader/Index";
+import MenuAdmin from "@/components/menuAdmin/Index";
+import { updateAllContractsValue } from "@/services/financial";
 import styles from "./Server.module.scss";
 
 const { Header, Content } = Layout;

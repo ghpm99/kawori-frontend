@@ -1,8 +1,9 @@
-import { RootState } from "@/store/store";
+import { RootState } from "@/lib/store";
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 
 import { setLoading } from ".";
-import { LoadingType } from "@/types/common";
+import { LoadingType } from "@/types/commonTypes"
+
 
 export const LoadingMiddleware = createListenerMiddleware();
 
@@ -13,7 +14,6 @@ LoadingMiddleware.startListening({
             return false;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, reducer, lifecycle] = actionType.split("/");
         if (lifecycle === undefined || reducer === "setupLoading") {
             return false;

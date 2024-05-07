@@ -2,12 +2,13 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Tooltip, Typography } from "antd";
 import { useSelector } from "react-redux";
-import { changeModalVisible } from "@/store/features/facetexture";
-import { RootState, useAppDispatch } from "@/store/store";
+import { changeModalVisible } from "@/lib/features/facetexture";
+import { RootState } from "@/lib/store";
 import Styles from "./Characters.module.scss";
 import DragAndDropCharacters from "./dragAndDrop";
 import Info from "./info";
 import NewModal from "./newModal";
+import { useAppDispatch } from '@/lib/hooks'
 
 const { Title } = Typography;
 const Characters = () => {
