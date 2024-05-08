@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 // As a basic setup, import your same slice reducers
 
 import { AppStore, RootState } from "@/lib/store";
-import { PreloadedStateShapeFromReducersMapObject } from '@reduxjs/toolkit'
+import { PreloadedStateShapeFromReducersMapObject } from "@reduxjs/toolkit";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.

@@ -1,15 +1,18 @@
 "use client";
 
-import { Button, Checkbox, Form, Input, Layout } from "antd";
-import Router from "next/router";
+import { Button, Checkbox, Form, Input } from "antd";
+
 import { useState } from "react";
 
-import styles from "./Signin.module.scss";
 import { signinControlledRequest } from "@/services/auth";
 import { isFulfilled } from "@reduxjs/toolkit";
 
+import styles from "./Signin.module.scss";
+import { useRouter } from "next/navigation";
+
 export default function LoginPage() {
     const [error, setError] = useState(false);
+    const navigate = useRouter();
 
     const onFinish = (values: any) => {
         signinControlledRequest
@@ -18,8 +21,9 @@ export default function LoginPage() {
                 password: values.password,
             })
             .then((action) => {
+                console.log(action);
                 if (isFulfilled(action)) {
-                    Router.push("/admin/user");
+                    navigate.push("/internal/user");
                 } else {
                     setError(true);
                 }

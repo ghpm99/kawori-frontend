@@ -8,7 +8,7 @@ import Styles from "./Characters.module.scss";
 import DragAndDropCharacters from "./dragAndDrop";
 import Info from "./info";
 import NewModal from "./newModal";
-import { useAppDispatch } from '@/lib/hooks'
+import { useAppDispatch } from "@/lib/hooks";
 
 const { Title } = Typography;
 const Characters = () => {

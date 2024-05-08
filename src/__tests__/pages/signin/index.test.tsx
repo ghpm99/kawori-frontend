@@ -1,5 +1,4 @@
-
-import LoginPage from '@/components/signin'
+import LoginPage from "@/components/signin";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

@@ -9,7 +9,7 @@ import Styles from "./Preview.module.scss";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { FACETEXTURE_MESSAGE_REF } from '@/app/internal/facetexture/page'
+import { FACETEXTURE_MESSAGE_REF } from "@/app/internal/facetexture/page";
 
 const Preview = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);

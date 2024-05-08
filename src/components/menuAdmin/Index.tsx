@@ -20,10 +20,7 @@ import Image from "next/image";
 const { Sider } = Layout;
 
 function MenuAdmin(props: { selected: string[] }) {
-    const {
-        collapsed,
-        status,toggleCollapsed,user
-    } = useMenu();
+    const { collapsed, status, toggleCollapsed, user } = useMenu();
 
     return (
         <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed}>
