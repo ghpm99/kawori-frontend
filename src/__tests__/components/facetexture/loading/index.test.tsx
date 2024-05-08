@@ -1,4 +1,4 @@
-import { renderWithProviders } from "@/tests/util/test-utils";
+import { renderWithProviders } from "@/__tests__/util/test-utils";
 import "@testing-library/jest-dom";
 import Loading from "../../../../components/facetexture/loading";
 

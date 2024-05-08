@@ -1,5 +1,5 @@
 import { changeVisibleContractsModal } from "@/lib/features/financial/contract";
-import { useAppDispatch } from '@/lib/hooks'
+import { useAppDispatch } from "@/lib/hooks";
 
 import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";

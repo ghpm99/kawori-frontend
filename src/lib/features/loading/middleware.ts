@@ -2,8 +2,7 @@ import { RootState } from "@/lib/store";
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 
 import { setLoading } from ".";
-import { LoadingType } from "@/types/commonTypes"
-
+import { LoadingType } from "@/types/commonTypes";
 
 export const LoadingMiddleware = createListenerMiddleware();
 

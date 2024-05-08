@@ -1,5 +1,5 @@
-import { renderWithProviders } from "@/tests/util/test-utils";
-import LoginHeader from "../../../components/loginHeader/Index";
+import { renderWithProviders } from "@/__tests__/util/test-utils";
+import LoginHeader from "@/components/loginHeader/Index";
 
 Object.defineProperty(window, "matchMedia", {
     writable: true,

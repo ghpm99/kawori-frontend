@@ -1,7 +1,8 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
-import { renderWithProviders } from "@/tests/util/test-utils";
+
 import { cleanup } from "@testing-library/react";
-import Home from "@/pages/index";
+import { renderWithProviders } from "../util/test-utils";
+import Home from "@/app/page";
 
 jest.mock("@/components/menuHeader/useMenuHeader");
 
