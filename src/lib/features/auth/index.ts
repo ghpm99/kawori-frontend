@@ -1,6 +1,9 @@
+import { signinControlledRequest } from "@/services/auth"
 import { IToken } from "@/services/auth/authToken";
 import { IUser } from "@/services/profile";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import build from "next/dist/build"
+import State from "pusher-js/types/src/core/http/state"
 
 interface IAuthState {
     token: IToken;
@@ -39,9 +42,20 @@ export const authSlice = createSlice({
         setToken: (state, action: PayloadAction<IToken>) => {
             state.token = action.payload;
         },
+        signout : (state) => {
+            state = initialState
+        }
     },
+    extraReducers: (builder) => {
+        builder.addCase(signinControlledRequest.asyncThunk.pending, (state) => {
+            state.status = "unauthenticated";
+        })
+        .addCase(signinControlledRequest.asyncThunk.fulfilled, (state, action) => {
+
+        })
+    }
 });
 
-export const { setToken } = authSlice.actions;
+export const { setToken, signout } = authSlice.actions;
 
 export default authSlice.reducer;
