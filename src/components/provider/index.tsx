@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
-import TokenService, { IToken } from "@/services/auth/authToken";
+import TokenService, { IToken } from "@/services/auth/authToken"
 
-import { setToken } from "@/lib/features/auth";
 
-import { useRouter } from "next/navigation";
-import { refreshTokenControlledRequest, verifyTokenControlledRequest } from "@/services/auth";
-import { isFulfilled } from "@reduxjs/toolkit";
-import { useAppDispatch } from "@/lib/hooks";
+
+import { useAppDispatch } from "@/lib/hooks"
+import { refreshTokenControlledRequest, verifyTokenControlledRequest } from "@/services/auth"
+import { isFulfilled } from "@reduxjs/toolkit"
+import { useRouter } from "next/navigation"
+import { setToken } from '@/lib/features/auth'
 
 const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
     const navigate = useRouter();
@@ -24,14 +25,14 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
     const refreshTokenAccess = (token: IToken) => {
         refreshTokenControlledRequest
-            .dispatchRequest({ refreshToken: token.tokens.refresh })
+            .dispatchRequest({ refresh: token.tokens.refresh })
             .then((response) => {
                 if (isFulfilled(response)) {
                     updateValidatedToken({
                         ...token,
                         tokens: {
                             ...token.tokens,
-                            access: response.payload.data.accessToken,
+                            access: response.payload.data.access,
                         },
                     });
                 }
@@ -44,7 +45,7 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
     const verifyToken = (token: IToken) => {
         verifyTokenControlledRequest
-            .dispatchRequest({ accessToken: token.tokens.access })
+            .dispatchRequest({ token: token.tokens.access })
             .then(() => {
                 updateValidatedToken(token);
             })

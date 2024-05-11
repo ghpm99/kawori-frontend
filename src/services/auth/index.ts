@@ -6,11 +6,11 @@ const apiLogin = axios.create({
 });
 
 export const signinControlledRequest = createControlledRequest<
-    { username: string; password: string },
-    { accessToken: string; refreshToken: string }
+    { username: string; password: string, remember: boolean },
+    {tokens:{ access: string; refresh: string }}
 >("auth/signin", apiLogin.post, "/token/", {}, true);
 
-export const verifyTokenControlledRequest = createControlledRequest<{ accessToken: string }, undefined>(
+export const verifyTokenControlledRequest = createControlledRequest<{ token: string }, undefined>(
     "auth/verify",
     apiLogin.post,
     "/token/verify/",
@@ -23,7 +23,7 @@ export const verifyTokenControlledRequest = createControlledRequest<{ accessToke
     true,
 );
 
-export const refreshTokenControlledRequest = createControlledRequest<{ refreshToken: string }, { accessToken: string }>(
+export const refreshTokenControlledRequest = createControlledRequest<{ refresh: string }, { access: string }>(
     "auth/refresh",
     apiLogin.post,
     "/token/refresh/",
