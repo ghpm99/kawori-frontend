@@ -19,6 +19,7 @@ export default function LoginPage() {
             .dispatchRequest({
                 username: values.username,
                 password: values.password,
+                remember: values.remember,
             })
             .then((action) => {
                 console.log(action);
