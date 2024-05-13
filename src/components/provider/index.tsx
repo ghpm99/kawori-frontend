@@ -10,17 +10,15 @@ import { useAppDispatch } from "@/lib/hooks"
 import { refreshTokenControlledRequest, verifyTokenControlledRequest } from "@/services/auth"
 import { isFulfilled } from "@reduxjs/toolkit"
 import { useRouter } from "next/navigation"
-import { setToken } from '@/lib/features/auth'
+import { setToken, userDetailsControlledRequest } from '@/lib/features/auth'
 
 const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
     const navigate = useRouter();
-    const [loading, setLoading] = useState(true);
-
     const dispatch = useAppDispatch();
 
     const updateValidatedToken = (token: IToken) => {
         dispatch(setToken(token));
-        setLoading(false);
+        userDetailsControlledRequest.dispatchRequest()
     };
 
     const refreshTokenAccess = (token: IToken) => {
@@ -61,11 +59,6 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         }
     }, []);
     return children;
-
-    if (loading) {
-        return <></>;
-    } else {
-    }
 };
 
 export default AuthProvider;

@@ -1,11 +1,26 @@
 import { signinControlledRequest } from "@/services/auth"
 import TokenService, { IToken } from '@/services/auth/authToken'
-import { IUser } from "@/services/profile"
+import { createControlledGetRequest } from "@/services/request"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface IAuthState {
     user: IUser;
     status: "authenticated" | "unauthenticated";
+}
+
+interface IUser {
+    id: number;
+    name: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_staff: boolean;
+    is_active: boolean;
+    is_superuser: boolean;
+    last_login: string;
+    date_joined: string;
+    image?: string;
 }
 
 const initialState: IAuthState = {
@@ -24,6 +39,15 @@ const initialState: IAuthState = {
     },
     status: "unauthenticated",
 };
+
+
+
+export const userDetailsControlledRequest = createControlledGetRequest<void, IUser>(
+    "profile/userDetails",
+    "/profile/",
+    {},
+    true,
+);
 
 export const authSlice = createSlice({
     name: "auth",
@@ -57,6 +81,10 @@ export const authSlice = createSlice({
                 remember: action.payload.args.remember,
             })
             state.status = "authenticated"
+        })
+        .addCase(userDetailsControlledRequest.asyncThunk.fulfilled, (state, action) => {
+            console.log(action.payload)
+            state.user = action.payload.data
         })
     }
 });

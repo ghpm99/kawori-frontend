@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { Action, combineReducers, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import authReducer from "./features/auth";
 import classificationReducer from "./features/classification";
 import facetextureReducer from "./features/facetexture";
@@ -42,3 +42,10 @@ export const store = () =>
 export type AppStore = ReturnType<typeof store>;
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
+
+export type AppThunk<ThunkReturnType = void> = ThunkAction<
+  ThunkReturnType,
+  RootState,
+  unknown,
+  Action
+>;
