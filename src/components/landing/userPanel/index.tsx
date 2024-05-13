@@ -1,11 +1,12 @@
 "use client";
-import { Button, List, Tabs, TabsProps } from "antd";
-import useUserPanel from "./useUserPanel";
 
-import styles from "./userPanel.module.scss";
-import SingupForm from "@/components/signup";
-import LoginPage from "@/components/signin";
-import Link from "next/link";
+import { Button, List, Tabs, TabsProps } from "antd"
+import useUserPanel from "./useUserPanel"
+
+import LoginPage from "@/components/signin"
+import SingupForm from "@/components/signup"
+import Link from "next/link"
+import styles from "./userPanel.module.scss"
 
 const tabItens: TabsProps["items"] = [
     {
@@ -31,9 +32,9 @@ const tabItens: TabsProps["items"] = [
 ];
 
 const UserPanel = () => {
-    const { data, status, formatDate } = useUserPanel();
+    const { user, status, formatDate } = useUserPanel();
 
-    console.log(status);
+    console.log("user panel", status, user);
 
     if (!status || status === "unauthenticated") {
         return (
@@ -48,20 +49,20 @@ const UserPanel = () => {
             <div className={styles["user-container"]}>
                 <strong className={styles["form-title"]}>Usuario logado</strong>
                 <div>
-                    <div className={styles["user-option"]}>Nome: {data?.name}</div>
+                    <div className={styles["user-option"]}>Nome: {user.name}</div>
                     <div className={styles["user-option"]}>
-                        Data de cadastro: {data?.date_joined ? formatDate(data?.date_joined) : ""}
+                        Data de cadastro: {user.date_joined ? formatDate(user.date_joined) : ""}
                     </div>
                     <div className={styles["user-option"]}>
-                        Ultimo login: {data?.last_login ? formatDate(data?.last_login) : ""}
+                        Ultimo login: {user.last_login ? formatDate(user.last_login) : ""}
                     </div>
                     <div className={styles["status"]}>
                         <div
                             className={`${styles["status-indicator"]} ${
-                                data?.is_active ? styles["active"] : styles["inactive"]
+                                user.is_active ? styles["active"] : styles["inactive"]
                             }`}
                         ></div>
-                        <div className={styles["status-text"]}>{data?.is_active ? "Ativo" : "Banido"}</div>
+                        <div className={styles["status-text"]}>{user.is_active ? "Ativo" : "Banido"}</div>
                     </div>
                 </div>
                 <div className={styles["access-list"]}>
