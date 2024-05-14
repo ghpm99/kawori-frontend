@@ -13,7 +13,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const authStore = useAppSelector((state) => state.auth);
     const navigate = useRouter();
 
-    if (authStore.status === "unauthenticated") {
+    console.log("authStore", authStore);
+    if (authStore.loading === false && authStore.status === "unauthenticated") {
+        console.log("nao autenticado");
         navigate.push("/signout");
     }
     return (
@@ -23,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Header className={styles["header"]}>
                     <LoginHeader />
                 </Header>
-                <Content>{children}</Content>
+                <Content>{authStore.loading ? <div>Loading...</div> : children}</Content>
             </Layout>
         </Layout>
     );

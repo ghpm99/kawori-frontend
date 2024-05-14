@@ -1,3 +1,4 @@
+"use server";
 import { isFilled } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 import { Metadata } from "next";

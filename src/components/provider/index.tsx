@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import TokenService, { IToken } from "@/services/auth/authToken";
 
-import { setToken, userDetailsThunk } from "@/lib/features/auth";
+import { setLoading, setToken, userDetailsThunk } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
 import { refreshTokenService, verifyTokenService } from "@/services/auth";
 
@@ -15,6 +15,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const updateValidatedToken = (token: IToken) => {
         dispatch(setToken(token));
         dispatch(userDetailsThunk());
+        dispatch(setLoading(false));
     };
 
     const refreshTokenAccess = (token: IToken) => {
@@ -46,9 +47,13 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
     useEffect(() => {
         const user = TokenService.getToken();
+        console.log("user", user);
         if (user) {
             verifyToken(user);
+        } else {
+            dispatch(setLoading(false));
         }
     }, []);
+
     return children;
 }

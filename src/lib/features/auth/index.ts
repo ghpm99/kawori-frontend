@@ -8,6 +8,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface IAuthState {
     user: IUser;
     status: "authenticated" | "unauthenticated";
+    loading: boolean;
 }
 
 export interface IUser {
@@ -40,6 +41,7 @@ const initialState: IAuthState = {
         date_joined: "",
     },
     status: "unauthenticated",
+    loading: true,
 };
 
 export const userDetailsThunk = createAsyncThunk("profile/userDetails", async () => {
@@ -65,6 +67,9 @@ export const authSlice = createSlice({
             state.status = "unauthenticated";
             state.user = initialState.user;
         },
+        setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -88,6 +93,6 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setToken, signout } = authSlice.actions;
+export const { setToken, signout, setLoading } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -13,10 +13,15 @@ import News from "@/components/landing/news";
 import UserPanel from "@/components/landing/userPanel";
 import Welcome from "@/components/landing/welcome";
 import { Footer } from "antd/lib/layout/layout";
+import Head from "next/head";
 
 export default function Home() {
     return (
         <>
+            <Head>
+                <title>Kawori</title>
+                <meta name="Kawori" content="Kawori é uma plataforma de facetexture e rank de classe." />
+            </Head>
             <div className={styles["container"]}>
                 <MenuHeader />
                 <div className={styles["body"]}>
