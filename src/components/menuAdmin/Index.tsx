@@ -1,4 +1,4 @@
-"use client";
+
 import {
     AppstoreOutlined,
     DesktopOutlined,

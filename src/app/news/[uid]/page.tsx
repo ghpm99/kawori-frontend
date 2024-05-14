@@ -1,20 +1,19 @@
-"use server";
-import { asLink, asText, isFilled } from "@prismicio/client";
-import { SliceZone } from "@prismicio/react";
-import { GetStaticPropsContext, InferGetStaticPropsType, Metadata } from "next";
-import Head from "next/head";
 
-import { components } from "@/slices/index";
+import { isFilled } from "@prismicio/client"
+import { SliceZone } from "@prismicio/react"
+import { Metadata } from "next"
+import Head from "next/head"
 
-import MenuHeader from "@/components/menuHeader";
-import { formatterDate } from "@/util/index";
-import { Breadcrumb, List } from "antd";
-import { Footer } from "antd/lib/layout/layout";
-import Link from "next/link";
-import styles from "@/app/Home.module.scss";
-import stylesNews from "./news.module.scss";
-import { createClient } from "@/prismicio";
-import ListNews from "./listNews";
+import { components } from "@/slices/index"
+
+import styles from "@/app/Home.module.scss"
+import MenuHeader from "@/components/menuHeader"
+import { createClient } from "@/prismicio"
+import { formatterDate } from "@/util/index"
+import { Breadcrumb } from "antd"
+import { Footer } from "antd/lib/layout/layout"
+import ListNews from "./listNews"
+import stylesNews from "./news.module.scss"
 
 type Params = { uid: string };
 

@@ -1,4 +1,4 @@
-"use client";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Popover } from "antd";
 

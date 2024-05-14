@@ -1,4 +1,4 @@
-"use client";
+
 
 import { formatterDate } from "@/util";
 import { List } from "antd";

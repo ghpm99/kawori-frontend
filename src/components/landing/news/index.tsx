@@ -1,8 +1,10 @@
-"use server";
 
-import { createClient } from "@/prismicio";
-import styles from "./news.module.scss";
-import NewsList from "./newsList";
+
+import { createClient } from "@/prismicio"
+import styles from "./news.module.scss"
+import NewsList from "./newsList"
+import { fetchProjectDetailData } from '@/app/api/lib/news'
+import { useEffect, useState } from 'react'
 
 export interface NewsProps {
     first_publication_date: string;
@@ -10,22 +12,17 @@ export interface NewsProps {
     title: string;
 }
 
-async function create() {
-    const client = createClient();
+const News = () => {
 
-    const page = await client.getAllByType("platform_news");
+    const [data, setData] = useState<NewsProps[]>([])
 
-    const pageList = page.map((item) => ({
-        first_publication_date: item.first_publication_date,
-        url: item.url ?? "/",
-        title: item.data.meta_title,
-    }));
+    useEffect(() => {
 
-    return pageList;
-}
+        fetchProjectDetailData().then(response => {
+            setData(response)
+        })
+    }, [])
 
-const News = async () => {
-    const data: NewsProps[] = await create();
     return (
         <div className={styles["news-list"]}>
             <NewsList data={data} />

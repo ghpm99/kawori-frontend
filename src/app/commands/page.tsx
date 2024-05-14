@@ -1,4 +1,4 @@
-"use client";
+
 import MenuHeader from "../../components/menuHeader";
 import styles from "./Commands.module.scss";
 

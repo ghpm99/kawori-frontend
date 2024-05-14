@@ -43,9 +43,4 @@ export type AppStore = ReturnType<typeof store>;
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
 
-export type AppThunk<ThunkReturnType = void> = ThunkAction<
-  ThunkReturnType,
-  RootState,
-  unknown,
-  Action
->;
+export type AppThunk<ThunkReturnType = void> = ThunkAction<ThunkReturnType, RootState, unknown, Action>;

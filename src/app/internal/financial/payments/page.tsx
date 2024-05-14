@@ -1,4 +1,4 @@
-"use client";
+
 import FilterDropdown from "@/components/common/filterDropdown/Index";
 import LoadingPage from "@/components/loadingPage/Index";
 import LoginHeader from "@/components/loginHeader/Index";

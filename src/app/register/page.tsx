@@ -1,4 +1,4 @@
-"use client";
+
 import { Card, Layout } from "antd";
 
 import SingupForm from "@/components/signup";

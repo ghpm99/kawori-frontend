@@ -1,4 +1,4 @@
-"use client";
+
 import { List } from "antd";
 import { NewsProps } from "..";
 import Link from "next/link";

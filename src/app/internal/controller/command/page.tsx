@@ -1,4 +1,4 @@
-"use client";
+
 import { Breadcrumb, Button, Input, Layout, Typography } from "antd";
 import { GetServerSideProps } from "next";
 

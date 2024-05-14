@@ -1,4 +1,4 @@
-"use client";
+
 import { Breadcrumb, Layout, Table } from "antd";
 import { useRouter } from "next/router";
 
