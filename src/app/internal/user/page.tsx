@@ -1,12 +1,10 @@
-
+"use client";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, Layout, Typography } from "antd";
 
+import LoadingPage from "@/components/loadingPage/Index";
 import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
-import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
 import styles from "./User.module.scss";
 
 const { Header, Content } = Layout;
@@ -120,6 +118,7 @@ const User = () => {
                     }}
                     type="primary"
                     danger
+                    href="/signout"
                 >
                     Deslogar
                 </Button>

@@ -1,16 +1,12 @@
+import React, { useEffect } from "react";
 
+import TokenService, { IToken } from "@/services/auth/authToken";
 
-import React, { useEffect, useState } from "react"
+import { setToken, userDetailsThunk } from "@/lib/features/auth";
+import { useAppDispatch } from "@/lib/hooks";
+import { refreshTokenService, verifyTokenService } from "@/services/auth";
 
-import TokenService, { IToken } from "@/services/auth/authToken"
-
-
-
-import { useAppDispatch } from "@/lib/hooks"
-import { refreshTokenControlledRequest, verifyTokenControlledRequest } from "@/services/auth"
-import { isFulfilled } from "@reduxjs/toolkit"
-import { useRouter } from "next/navigation"
-import { setToken, userDetailsControlledRequest } from '@/lib/features/auth'
+import { useRouter } from "next/navigation";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
     const navigate = useRouter();
@@ -18,22 +14,19 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
     const updateValidatedToken = (token: IToken) => {
         dispatch(setToken(token));
-        userDetailsControlledRequest.dispatchRequest()
+        dispatch(userDetailsThunk());
     };
 
     const refreshTokenAccess = (token: IToken) => {
-        refreshTokenControlledRequest
-            .dispatchRequest({ refresh: token.tokens.refresh })
+        refreshTokenService({ refresh: token.tokens.refresh })
             .then((response) => {
-                if (isFulfilled(response)) {
-                    updateValidatedToken({
-                        ...token,
-                        tokens: {
-                            ...token.tokens,
-                            access: response.payload.data.access,
-                        },
-                    });
-                }
+                updateValidatedToken({
+                    ...token,
+                    tokens: {
+                        ...token.tokens,
+                        access: response.data.access,
+                    },
+                });
             })
             .catch((error) => {
                 console.error(error);
@@ -42,8 +35,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     };
 
     const verifyToken = (token: IToken) => {
-        verifyTokenControlledRequest
-            .dispatchRequest({ token: token.tokens.access })
+        verifyTokenService({ token: token.tokens.access })
             .then(() => {
                 updateValidatedToken(token);
             })
@@ -59,4 +51,4 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         }
     }, []);
     return children;
-};
+}

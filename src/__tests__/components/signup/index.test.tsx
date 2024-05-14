@@ -1,5 +1,6 @@
 import SingupForm from "@/components/signup/index";
-import { signupControlledRequest } from "@/services/auth";
+import { signupService } from "@/services/auth";
+
 import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -38,7 +39,7 @@ afterEach(() => {
 
 describe("SingupForm", () => {
     it("should call signupService and signIn when form submission is successful", async () => {
-        (signupControlledRequest.dispatchRequest as jest.Mock).mockResolvedValue({
+        (signupService as jest.Mock).mockResolvedValue({
             data: { msg: "Usuário criado com sucesso" },
         });
 
@@ -62,7 +63,7 @@ describe("SingupForm", () => {
         });
 
         await waitFor(() => {
-            expect(signupControlledRequest).toHaveBeenCalledWith({
+            expect(signupService).toHaveBeenCalledWith({
                 name: "test",
                 last_name: "test",
                 username: "test",
@@ -76,7 +77,7 @@ describe("SingupForm", () => {
     });
 
     it("should show an error message when signupService fails", async () => {
-        (signupControlledRequest.dispatchRequest as jest.Mock).mockRejectedValue({
+        (signupService as jest.Mock).mockRejectedValue({
             response: { status: 400, data: { msg: "Falhou em criar usuário" } },
         });
 

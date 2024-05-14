@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import MenuHeader from "@/components/menuHeader";
 import { Divider } from "antd";

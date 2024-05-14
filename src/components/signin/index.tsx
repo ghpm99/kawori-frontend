@@ -1,26 +1,27 @@
-
-
 import { Button, Checkbox, Form, Input } from "antd";
 
 import { useState } from "react";
 
-import { signinControlledRequest } from "@/services/auth";
 import { isFulfilled } from "@reduxjs/toolkit";
 
 import styles from "./Signin.module.scss";
 import { useRouter } from "next/navigation";
+import { signinThunk } from "@/services/auth";
+import { useAppDispatch, useAppThunkDispatch } from "@/lib/hooks";
 
 export default function LoginPage() {
     const [error, setError] = useState(false);
     const navigate = useRouter();
+    const dispatch = useAppThunkDispatch();
 
     const onFinish = (values: any) => {
-        signinControlledRequest
-            .dispatchRequest({
+        dispatch(
+            signinThunk({
                 username: values.username,
                 password: values.password,
                 remember: values.remember,
-            })
+            }),
+        )
             .then((action) => {
                 console.log(action);
                 if (isFulfilled(action)) {

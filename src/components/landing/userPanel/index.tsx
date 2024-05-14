@@ -1,10 +1,10 @@
-import { Button, List, Tabs, TabsProps } from "antd"
-import useUserPanel from "./useUserPanel"
+import { Button, List, Tabs, TabsProps } from "antd";
+import useUserPanel from "./useUserPanel";
 
-import LoginPage from "@/components/signin"
-import SingupForm from "@/components/signup"
-import Link from "next/link"
-import styles from "./userPanel.module.scss"
+import LoginPage from "@/components/signin";
+import SingupForm from "@/components/signup";
+import Link from "next/link";
+import styles from "./userPanel.module.scss";
 
 const tabItens: TabsProps["items"] = [
     {
@@ -31,8 +31,6 @@ const tabItens: TabsProps["items"] = [
 
 const UserPanel = () => {
     const { user, status, formatDate } = useUserPanel();
-
-    console.log("user panel", status, user);
 
     if (!status || status === "unauthenticated") {
         return (
@@ -85,6 +83,7 @@ const UserPanel = () => {
                         style={{
                             float: "right",
                         }}
+                        href="/signout"
                     >
                         Deslogar
                     </Button>
