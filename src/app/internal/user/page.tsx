@@ -4,10 +4,10 @@ import { Avatar, Breadcrumb, Button, Layout, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
 import { RootState } from "@/lib/store";
+import Head from "next/head";
 import { useSelector } from "react-redux";
 import styles from "./User.module.scss";
 
-const { Header, Content } = Layout;
 const { Title, Paragraph } = Typography;
 
 const User = () => {
@@ -37,6 +37,10 @@ const User = () => {
 
     return (
         <>
+            <Head>
+                <title>Kawori Profile</title>
+                <meta name="Kawori" content="Kawori é uma plataforma de facetexture e rank de classe." />
+            </Head>
             <Breadcrumb className={styles["breadcrumb"]}>
                 <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                 <Breadcrumb.Item>Usuário</Breadcrumb.Item>

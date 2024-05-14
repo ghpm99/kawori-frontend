@@ -1,3 +1,4 @@
+"use client";
 import { formatterDate } from "@/util";
 import { List } from "antd";
 import Link from "next/link";
