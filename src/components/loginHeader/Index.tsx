@@ -1,4 +1,3 @@
-
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Popover } from "antd";
 
@@ -15,7 +14,7 @@ export default function LoginHeader() {
     const content = (
         <div>
             <div>{data?.user?.name}</div>
-            <Button>Deslogar</Button>
+            <Button href="/signout">Deslogar</Button>
         </div>
     );
 

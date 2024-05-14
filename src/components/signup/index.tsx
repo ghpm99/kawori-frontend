@@ -1,20 +1,22 @@
-
-
 import { Button, Form, Input, message } from "antd";
 
-import Router from "next/router";
-import { INewUser, signinControlledRequest, signupControlledRequest } from "@/services/auth";
+import { useAppThunkDispatch } from "@/lib/hooks";
+import { INewUser, signinThunk, signupService } from "@/services/auth";
 import { isFulfilled } from "@reduxjs/toolkit";
+import Router from "next/router";
 
 const SingupForm = () => {
     const [form] = Form.useForm();
+    const dispatch = useAppThunkDispatch();
 
     const signin = (username: string, password: string) => {
-        signinControlledRequest
-            .dispatchRequest({
+        dispatch(
+            signinThunk({
                 username: username,
                 password: password,
-            })
+                remember: true,
+            }),
+        )
             .then((action) => {
                 if (isFulfilled(action)) {
                     Router.push("/admin/user");
@@ -28,14 +30,11 @@ const SingupForm = () => {
     };
 
     const onFinish = (values: INewUser) => {
-        signupControlledRequest
-            .dispatchRequest(values)
+        signupService(values)
             .then((response) => {
-                if (isFulfilled(response)) {
-                    message.success(response.payload.data.msg);
-                    form.resetFields();
-                    signin(values.username, values.password);
-                }
+                message.success(response.data.msg);
+                form.resetFields();
+                signin(values.username, values.password);
             })
             .catch((error) => {
                 message.error(error?.response?.data?.msg ?? "Falhou em criar usuário");

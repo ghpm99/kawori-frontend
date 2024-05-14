@@ -1,4 +1,3 @@
-
 import { Breadcrumb, Button, Layout, message } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";

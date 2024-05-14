@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 import MenuHeader from "../../components/menuHeader";

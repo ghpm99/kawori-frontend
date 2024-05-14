@@ -1,4 +1,3 @@
-
 import { Breadcrumb, Button, Input, Layout, Typography } from "antd";
 import { GetServerSideProps } from "next";
 
@@ -88,8 +87,6 @@ CommandPage.pusher = {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-    console.log(req, res);
-
     const props = {
         pusher_key: process.env.PUSHER_KEY,
         pusher_cluster: process.env.PUSHER_CLUSTER,

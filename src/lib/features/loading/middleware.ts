@@ -22,7 +22,7 @@ LoadingMiddleware.startListening({
     },
 
     effect: async (action, listenerApi) => {
-        const requestId: string = action.meta.requestId;
+        const requestId: string = (action.meta as any).requestId;
         const actionType: string = action.type;
         const state = listenerApi.getState() as RootState;
 

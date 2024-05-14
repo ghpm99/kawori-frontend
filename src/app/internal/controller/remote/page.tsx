@@ -1,4 +1,3 @@
-
 import { Breadcrumb, Button, Input, Layout, Slider, Typography } from "antd";
 import { GetServerSideProps } from "next";
 

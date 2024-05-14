@@ -1,18 +1,16 @@
-
-
-import { userDetailsControlledRequest } from "@/lib/features/auth"
-import { useAppSelector } from "@/lib/hooks";
+import { userDetailsThunk } from "@/lib/features/auth";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { useEffect } from "react"
+
+import { useEffect } from "react";
 
 const useUserPanel = () => {
     const store = useAppSelector((state: RootState) => state.auth);
-
-    console.log("store", store);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        userDetailsControlledRequest.dispatchRequest()
-    },[])
+        dispatch(userDetailsThunk());
+    }, []);
 
     const formatDate = (date: string) => {
         const dateFormat = new Date(date);

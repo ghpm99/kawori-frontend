@@ -1,14 +1,16 @@
-import { signinControlledRequest } from "@/services/auth"
-import TokenService, { IToken } from '@/services/auth/authToken'
-import { createControlledGetRequest } from "@/services/request"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { apiDjango } from "@/services";
+import { signinThunk } from "@/services/auth";
+
+import TokenService, { IToken } from "@/services/auth/authToken";
+
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAuthState {
     user: IUser;
     status: "authenticated" | "unauthenticated";
 }
 
-interface IUser {
+export interface IUser {
     id: number;
     name: string;
     username: string;
@@ -40,14 +42,10 @@ const initialState: IAuthState = {
     status: "unauthenticated",
 };
 
-
-
-export const userDetailsControlledRequest = createControlledGetRequest<void, IUser>(
-    "profile/userDetails",
-    "/profile/",
-    {},
-    true,
-);
+export const userDetailsThunk = createAsyncThunk("profile/userDetails", async () => {
+    const response = await apiDjango.get("/profile/");
+    return response.data;
+});
 
 export const authSlice = createSlice({
     name: "auth",
@@ -60,35 +58,36 @@ export const authSlice = createSlice({
                     refresh: action.payload.tokens.refresh,
                 },
                 remember: action.payload.remember,
-            })
-            state.status = "authenticated"
+            });
+            state.status = "authenticated";
         },
-        signout : (state) => {
-            state.status = 'unauthenticated'
-            state.user = initialState.user
-        }
+        signout: (state) => {
+            state.status = "unauthenticated";
+            state.user = initialState.user;
+        },
     },
     extraReducers: (builder) => {
-        builder.addCase(signinControlledRequest.asyncThunk.pending, (state) => {
-            state.status = "unauthenticated";
-        })
-        .addCase(signinControlledRequest.asyncThunk.fulfilled, (state, action) => {
-            TokenService.setUser({
-                tokens: {
-                    access: action.payload.data.tokens.access,
-                    refresh: action.payload.data.tokens.refresh,
-                },
-                remember: action.payload.args.remember,
+        builder
+            .addCase(signinThunk.pending, (state) => {
+                state.status = "unauthenticated";
             })
-            state.status = "authenticated"
-        })
-        .addCase(userDetailsControlledRequest.asyncThunk.fulfilled, (state, action) => {
-            console.log(action.payload)
-            state.user = action.payload.data
-        })
-    }
+            .addCase(signinThunk.fulfilled, (state, action) => {
+                TokenService.setUser({
+                    tokens: {
+                        access: action.payload.response.data.tokens.access,
+                        refresh: action.payload.response.data.tokens.refresh,
+                    },
+                    remember: action.payload.args.remember,
+                });
+                state.status = "authenticated";
+            })
+            .addCase(userDetailsThunk.fulfilled, (state, action) => {
+                console.log("userDetailsThunk", action.payload);
+                state.user = action.payload;
+            });
+    },
 });
 
-export const { setToken,signout } = authSlice.actions;
+export const { setToken, signout } = authSlice.actions;
 
 export default authSlice.reducer;
