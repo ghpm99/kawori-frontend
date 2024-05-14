@@ -1,3 +1,4 @@
+"use client"
 import { RootState, store } from "@/lib/store";
 import { createAsyncThunk, isPending } from "@reduxjs/toolkit";
 import { Axios, AxiosError, AxiosRequestConfig } from "axios";

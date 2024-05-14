@@ -1,4 +1,4 @@
-"use client";
+
 import { Breadcrumb, DatePicker, Layout, Select, Table, Typography } from "antd";
 import dayjs from "dayjs";
 

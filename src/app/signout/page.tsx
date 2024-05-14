@@ -1,4 +1,4 @@
-"use client";
+
 
 import { signout } from '@/lib/features/auth'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'

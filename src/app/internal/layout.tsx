@@ -1,4 +1,4 @@
-"use client";
+
 
 import LoginHeader from "@/components/loginHeader/Index"
 import MenuAdmin from "@/components/menuAdmin/Index"

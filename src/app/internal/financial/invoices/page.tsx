@@ -1,4 +1,4 @@
-"use client";
+
 import { SearchOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Layout, Table, Tag, Typography } from "antd";
 

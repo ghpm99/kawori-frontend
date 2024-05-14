@@ -1,4 +1,4 @@
-"use server";
+"use client"
 
 import MenuHeader from "@/components/menuHeader";
 import { Divider } from "antd";
@@ -14,7 +14,7 @@ import UserPanel from "@/components/landing/userPanel";
 import Welcome from "@/components/landing/welcome";
 import { Footer } from "antd/lib/layout/layout";
 
-export default async function Home() {
+export default function Home() {
     return (
         <>
             <div className={styles["container"]}>

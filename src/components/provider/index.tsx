@@ -1,4 +1,4 @@
-"use client";
+
 
 import React, { useEffect, useState } from "react"
 
@@ -12,7 +12,7 @@ import { isFulfilled } from "@reduxjs/toolkit"
 import { useRouter } from "next/navigation"
 import { setToken, userDetailsControlledRequest } from '@/lib/features/auth'
 
-const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
+export default function AuthProvider({ children }: { children: React.ReactNode }) {
     const navigate = useRouter();
     const dispatch = useAppDispatch();
 
@@ -60,5 +60,3 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
     }, []);
     return children;
 };
-
-export default AuthProvider;

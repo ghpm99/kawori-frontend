@@ -1,4 +1,4 @@
-"use client";
+
 import { Breadcrumb, Layout, message, Table, Typography } from "antd";
 
 import Link from "next/link";
