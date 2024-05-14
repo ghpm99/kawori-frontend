@@ -1,3 +1,4 @@
+"use client";
 import { Breadcrumb, Layout, message } from "antd";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
