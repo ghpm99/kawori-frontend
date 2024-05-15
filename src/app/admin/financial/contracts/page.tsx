@@ -8,8 +8,7 @@ import { useSelector } from "react-redux";
 import ModalNew, { INewContractForm } from "@/components/contracts/modalNew";
 import OpenModalNewContract from "@/components/financial/contracts/openModalNewContract";
 import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
+import { setSelectedMenu } from "@/lib/features/auth";
 import { changeVisibleContractsModal, fetchAllContract } from "@/lib/features/financial/contract";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
@@ -26,6 +25,9 @@ function FinancialPage() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        document.title = "Kawori Contratos";
+        dispatch(setSelectedMenu(["financial", "contracts"]));
+
         dispatch(
             fetchAllContract({
                 page: 1,
@@ -104,47 +106,39 @@ function FinancialPage() {
     ];
 
     return (
-        <Layout className={styles.container}>
-            <MenuAdmin selected={["contracts"]} />
+        <>
+            <Breadcrumb className={styles.breadcrumb}>
+                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
+                <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
+            </Breadcrumb>
             <Layout>
-                <Header className={styles.header}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-                        <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Layout>
-                        <div className={styles.header_command}>
-                            <Title level={3} className={styles.title}>
-                                Valores em aberto
-                            </Title>
-                            <OpenModalNewContract />
-                        </div>
-                        <Table
-                            pagination={{
-                                showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
-                                current: financialStore.pagination.currentPage,
-                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
-                                onChange: onChangePagination,
-                            }}
-                            columns={headerTableFinancial}
-                            dataSource={financialStore.data}
-                            loading={financialStore.loading}
-                            summary={(contractData) => <TableSummary contractData={contractData} />}
-                        />
-                        <ModalNew
-                            visible={financialStore.modal.newPayment.visible}
-                            onCancel={() => closeModal("newPayment")}
-                            onFinish={onFinish}
-                        />
-                    </Layout>
-                </Content>
+                <div className={styles.header_command}>
+                    <Title level={3} className={styles.title}>
+                        Valores em aberto
+                    </Title>
+                    <OpenModalNewContract />
+                </div>
+                <Table
+                    pagination={{
+                        showSizeChanger: true,
+                        defaultPageSize: financialStore.filters.page_size,
+                        current: financialStore.pagination.currentPage,
+                        total: financialStore.pagination.totalPages * financialStore.filters.page_size,
+                        onChange: onChangePagination,
+                    }}
+                    columns={headerTableFinancial}
+                    dataSource={financialStore.data}
+                    loading={financialStore.loading}
+                    summary={(contractData) => <TableSummary contractData={contractData} />}
+                />
+                <ModalNew
+                    visible={financialStore.modal.newPayment.visible}
+                    onCancel={() => closeModal("newPayment")}
+                    onFinish={onFinish}
+                />
             </Layout>
-        </Layout>
+        </>
     );
 }
 

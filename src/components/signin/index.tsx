@@ -4,10 +4,10 @@ import { useState } from "react";
 
 import { isFulfilled } from "@reduxjs/toolkit";
 
-import styles from "./Signin.module.scss";
-import { useRouter } from "next/navigation";
+import { useAppThunkDispatch } from "@/lib/hooks";
 import { signinThunk } from "@/services/auth";
-import { useAppDispatch, useAppThunkDispatch } from "@/lib/hooks";
+import { useRouter } from "next/navigation";
+import styles from "./Signin.module.scss";
 
 export default function LoginPage() {
     const [error, setError] = useState(false);
@@ -23,7 +23,6 @@ export default function LoginPage() {
             }),
         )
             .then((action) => {
-                console.log(action);
                 if (isFulfilled(action)) {
                     navigate.push("/internal/user");
                 } else {

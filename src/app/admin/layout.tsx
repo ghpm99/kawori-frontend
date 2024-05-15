@@ -14,7 +14,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const authStore = useAppSelector((state) => state.auth);
     const navigate = useRouter();
 
-    if (authStore.loading === false && authStore.status === "unauthenticated") {
+    if (
+        authStore.loading === false &&
+        authStore.status === "unauthenticated" &&
+        authStore.user.is_superuser === false
+    ) {
         navigate.push("/signout");
     }
 

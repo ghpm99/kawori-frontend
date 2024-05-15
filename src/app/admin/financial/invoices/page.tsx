@@ -7,15 +7,12 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
 import { fetchAllInvoice } from "@/lib/features/financial/invoice";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { formatMoney, formatterDate } from "@/util/index";
 import styles from "./Invoices.module.scss";
-
-const { Header, Content } = Layout;
+import { setSelectedMenu } from "@/lib/features/auth";
 
 const { Title } = Typography;
 
@@ -24,6 +21,9 @@ function FinancialPage() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        document.title = "Kawori Notas";
+        dispatch(setSelectedMenu(["financial", "invoices"]));
+
         dispatch(
             fetchAllInvoice({
                 page: 1,
@@ -107,44 +107,36 @@ function FinancialPage() {
     ];
 
     return (
-        <Layout className={styles.container}>
-            <MenuAdmin selected={["invoices"]} />
+        <>
+            <Breadcrumb className={styles.breadcrumb}>
+                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
+                <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
+            </Breadcrumb>
             <Layout>
-                <Header className={styles.header}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-                        <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Layout>
-                        <div className={styles.header_command}>
-                            <Title level={3} className={styles.title}>
-                                Valores em aberto
-                            </Title>
-                            <div>
-                                <Button icon={<SearchOutlined />}>Filtrar</Button>
-                            </div>
-                        </div>
-                        <Table
-                            pagination={{
-                                showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
-                                current: financialStore.pagination.currentPage,
-                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
-                                onChange: onChangePagination,
-                            }}
-                            columns={headerTableFinancial}
-                            dataSource={financialStore.data}
-                            loading={financialStore.loading}
-                            summary={(invoiceData) => <TableSummary invoiceData={invoiceData} />}
-                        />
-                    </Layout>
-                </Content>
+                <div className={styles.header_command}>
+                    <Title level={3} className={styles.title}>
+                        Valores em aberto
+                    </Title>
+                    <div>
+                        <Button icon={<SearchOutlined />}>Filtrar</Button>
+                    </div>
+                </div>
+                <Table
+                    pagination={{
+                        showSizeChanger: true,
+                        defaultPageSize: financialStore.filters.page_size,
+                        current: financialStore.pagination.currentPage,
+                        total: financialStore.pagination.totalPages * financialStore.filters.page_size,
+                        onChange: onChangePagination,
+                    }}
+                    columns={headerTableFinancial}
+                    dataSource={financialStore.data}
+                    loading={financialStore.loading}
+                    summary={(invoiceData) => <TableSummary invoiceData={invoiceData} />}
+                />
             </Layout>
-        </Layout>
+        </>
     );
 }
 

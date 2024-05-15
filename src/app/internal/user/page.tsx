@@ -7,11 +7,20 @@ import { RootState } from "@/lib/store";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import styles from "./User.module.scss";
+import { useEffect } from "react";
+import { useAppDispatch } from "@/lib/hooks";
+import { setSelectedMenu } from "@/lib/features/auth";
 
 const { Title, Paragraph } = Typography;
 
 const User = () => {
     const { user } = useSelector((state: RootState) => state.auth);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        document.title = "Kawori Profile";
+        dispatch(setSelectedMenu(["user"]));
+    }, []);
 
     const getBorderColor = () => {
         if (!user) {
@@ -37,14 +46,10 @@ const User = () => {
 
     return (
         <>
-            <Head>
-                <title>Kawori Profile</title>
-                <meta name="Kawori" content="Kawori é uma plataforma de facetexture e rank de classe." />
-            </Head>
-            <Breadcrumb className={styles["breadcrumb"]}>
-                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                <Breadcrumb.Item>Usuário</Breadcrumb.Item>
-            </Breadcrumb>
+            <Breadcrumb
+                className={styles["breadcrumb"]}
+                items={[{ href: "/", title: "Home" }, { title: "Kawori" }, { title: "Usuário" }]}
+            />
             <div className={styles["user-detail-container"]}>
                 <Avatar
                     shape="square"

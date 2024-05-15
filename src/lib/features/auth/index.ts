@@ -1,3 +1,4 @@
+import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
 import { signinThunk } from "@/services/auth";
 
@@ -5,10 +6,13 @@ import TokenService, { IToken } from "@/services/auth/authToken";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type authStatus = "authenticated" | "unauthenticated";
+
 interface IAuthState {
     user: IUser;
-    status: "authenticated" | "unauthenticated";
+    status: authStatus;
     loading: boolean;
+    selectedMenu: MenuItemKey[];
 }
 
 export interface IUser {
@@ -42,6 +46,7 @@ const initialState: IAuthState = {
     },
     status: "unauthenticated",
     loading: true,
+    selectedMenu: ["home"],
 };
 
 export const userDetailsThunk = createAsyncThunk("profile/userDetails", async () => {
@@ -70,6 +75,9 @@ export const authSlice = createSlice({
         setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
+        setSelectedMenu: (state: IAuthState, action: PayloadAction<MenuItemKey[]>) => {
+            state.selectedMenu = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -87,12 +95,11 @@ export const authSlice = createSlice({
                 state.status = "authenticated";
             })
             .addCase(userDetailsThunk.fulfilled, (state, action) => {
-                console.log("userDetailsThunk", action.payload);
                 state.user = action.payload;
             });
     },
 });
 
-export const { setToken, signout, setLoading } = authSlice.actions;
+export const { setToken, signout, setLoading, setSelectedMenu } = authSlice.actions;
 
 export default authSlice.reducer;

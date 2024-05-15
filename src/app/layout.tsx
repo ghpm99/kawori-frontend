@@ -1,4 +1,5 @@
 "use client";
+import "../../styles/globals.scss";
 import AuthProvider from "@/components/provider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import StoreProvider from "./storeProvider";

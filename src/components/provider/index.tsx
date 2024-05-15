@@ -47,7 +47,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
     useEffect(() => {
         const user = TokenService.getToken();
-        console.log("user", user);
+
         if (user) {
             verifyToken(user);
         } else {
