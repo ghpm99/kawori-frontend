@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { setSelectedMenu } from "@/lib/features/auth";
 
 const { Header, Content } = Layout;
-export const RANK_MESSAGE_REF = "rank-message-ref";
+const RANK_MESSAGE_REF = "rank-message-ref";
 
 function Rank() {
     const dispatch = useAppDispatch();

@@ -14,9 +14,9 @@ import { RootState } from "@/lib/store";
 import { IFacetextureCharacterApi } from "@/services/facetexture";
 import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
+import { FACETEXTURE_MESSAGE_REF } from "@/util";
 
 const { Header, Content } = Layout;
-export const FACETEXTURE_MESSAGE_REF = "facetexture-message-ref";
 
 function FaceTexture() {
     const dispatch = useAppDispatch();

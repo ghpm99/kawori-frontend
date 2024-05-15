@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 
+export const FACETEXTURE_MESSAGE_REF = "facetexture-message-ref";
+
 export const formatMoney = (
     amount: number,
     decimalCount = 2,

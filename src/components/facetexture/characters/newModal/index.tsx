@@ -15,7 +15,7 @@ import { RcFile } from "antd/lib/upload";
 import Dragger from "antd/lib/upload/Dragger";
 import { useSelector } from "react-redux";
 import styles from "./newModal.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "@/app/internal/facetexture/page";
+import { FACETEXTURE_MESSAGE_REF } from "@/util";
 
 const { Title } = Typography;
 
