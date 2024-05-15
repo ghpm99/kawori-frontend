@@ -1,7 +1,6 @@
+"use client";
 import FilterDropdown from "@/components/common/filterDropdown/Index";
 import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
 import ModalPayoff, { ITableDataSource } from "@/components/payments/modalPayoff";
 import {
     changeDataSourcePayoffPayments,
@@ -22,11 +21,10 @@ import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import { setSelectedMenu } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
 import { formatMoney, formatterDate } from "@/util/index";
 import styles from "./Payments.module.scss";
-
-const { Header, Content } = Layout;
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -40,6 +38,9 @@ function FinancialPage() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        document.title = "Kawori Pagamentos";
+        dispatch(setSelectedMenu(["financial", "payments"]));
+
         dispatch(
             fetchAllPayment({
                 page: 1,
@@ -359,70 +360,62 @@ function FinancialPage() {
     ];
 
     return (
-        <Layout className={styles.container}>
-            <MenuAdmin selected={["payments"]} />
+        <>
+            <Breadcrumb className={styles.breadcrumb}>
+                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
+                <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
+            </Breadcrumb>
             <Layout>
-                <Header className={styles.header}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-                        <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Layout>
-                        <div className={styles.header_command}>
-                            <Title level={3} className={styles.title}>
-                                Valores em aberto
-                            </Title>
-                            <div>
-                                <Button
-                                    icon={<ToTopOutlined />}
-                                    onClick={openPayoffModal}
-                                    disabled={selectedRowKeys.length === 0}
-                                >
-                                    Baixar pagamentos
-                                </Button>
-                                <Button icon={<ClearOutlined />} onClick={cleanFilter}>
-                                    Limpar filtros
-                                </Button>
-                            </div>
-                        </div>
-                        <Table
-                            pagination={{
-                                showSizeChanger: true,
-                                defaultPageSize: financialStore.filters.page_size,
-                                current: financialStore.pagination.currentPage,
-                                total: financialStore.pagination.totalPages * financialStore.filters.page_size,
-                                onChange: onChangePagination,
-                            }}
-                            columns={headerTableFinancial}
-                            rowSelection={{
-                                type: "checkbox",
-                                selectedRowKeys,
-                                onChange: (selectedRowKeys, selectedRows) => {
-                                    setSelectedRowKeys(selectedRowKeys);
-                                },
-                                selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT, Table.SELECTION_NONE],
-                                getCheckboxProps: (record) => ({
-                                    disabled: record.status === 1,
-                                }),
-                            }}
-                            dataSource={financialStore.data}
-                            loading={financialStore.loading}
-                            summary={(paymentData) => <TableSummary paymentData={paymentData} />}
-                        />
-                        <ModalPayoff
-                            visible={financialStore.modal.payoff.visible}
-                            onCancel={togglePayoffModalVisible}
-                            onPayoff={processPayOff}
-                            data={financialStore.modal.payoff.data}
-                        />
-                    </Layout>
-                </Content>
+                <div className={styles.header_command}>
+                    <Title level={3} className={styles.title}>
+                        Valores em aberto
+                    </Title>
+                    <div>
+                        <Button
+                            icon={<ToTopOutlined />}
+                            onClick={openPayoffModal}
+                            disabled={selectedRowKeys.length === 0}
+                        >
+                            Baixar pagamentos
+                        </Button>
+                        <Button icon={<ClearOutlined />} onClick={cleanFilter}>
+                            Limpar filtros
+                        </Button>
+                    </div>
+                </div>
+                <Table
+                    pagination={{
+                        showSizeChanger: true,
+                        defaultPageSize: financialStore.filters.page_size,
+                        current: financialStore.pagination.currentPage,
+                        total: financialStore.pagination.totalPages * financialStore.filters.page_size,
+                        onChange: onChangePagination,
+                    }}
+                    columns={headerTableFinancial}
+                    rowSelection={{
+                        type: "checkbox",
+                        selectedRowKeys,
+                        onChange: (selectedRowKeys, selectedRows) => {
+                            setSelectedRowKeys(selectedRowKeys);
+                        },
+                        selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT, Table.SELECTION_NONE],
+                        getCheckboxProps: (record) => ({
+                            disabled: record.status === 1,
+                        }),
+                    }}
+                    dataSource={financialStore.data}
+                    loading={financialStore.loading}
+                    summary={(paymentData) => <TableSummary paymentData={paymentData} />}
+                />
+                <ModalPayoff
+                    visible={financialStore.modal.payoff.visible}
+                    onCancel={togglePayoffModalVisible}
+                    onPayoff={processPayOff}
+                    data={financialStore.modal.payoff.data}
+                />
             </Layout>
-        </Layout>
+        </>
     );
 }
 

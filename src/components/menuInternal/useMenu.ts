@@ -2,7 +2,7 @@ import { useAppSelector } from "@/lib/hooks";
 import { useState } from "react";
 
 const useMenu = () => {
-    const { status, user } = useAppSelector((state) => state.auth);
+    const { status, user, selectedMenu } = useAppSelector((state) => state.auth);
 
     const [collapsed, setCollapsed] = useState<boolean>(false);
 
@@ -15,6 +15,7 @@ const useMenu = () => {
         user,
         collapsed,
         toggleCollapsed,
+        selectedMenu,
     };
 };
 

@@ -14,14 +14,14 @@ import UserPanel from "@/components/landing/userPanel";
 import Welcome from "@/components/landing/welcome";
 import { Footer } from "antd/lib/layout/layout";
 import Head from "next/head";
+import { useEffect } from "react";
 
 export default function Home() {
+    useEffect(() => {
+        document.title = "Kawori";
+    }, []);
     return (
         <>
-            <Head>
-                <title>Kawori</title>
-                <meta name="Kawori" content="Kawori é uma plataforma de facetexture e rank de classe." />
-            </Head>
             <div className={styles["container"]}>
                 <MenuHeader />
                 <div className={styles["body"]}>

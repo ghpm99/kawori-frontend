@@ -7,8 +7,7 @@ import Background from "@/components/facetexture/background";
 import Characters from "@/components/facetexture/characters";
 import Loading from "@/components/facetexture/loading";
 import Preview from "@/components/facetexture/preview";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
+import { setSelectedMenu } from "@/lib/features/auth";
 import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "@/lib/features/facetexture";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
@@ -24,6 +23,8 @@ function FaceTexture() {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
 
     useEffect(() => {
+        document.title = "Kawori Facetexture";
+        dispatch(setSelectedMenu(["facetexture"]));
         updateBackground();
         dispatch(fetchFacetexture()).then((action) => {
             const payload = action.payload as {
@@ -92,35 +93,27 @@ function FaceTexture() {
     }
 
     return (
-        <Layout className={Styles["container"]}>
-            <MenuAdmin selected={["facetexture"]} />
-            <Layout>
-                <Header className={Styles["header"]}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={Styles["breadcrumb"]}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Facetexture</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <div className={Styles["help-text"]}>
-                        Perdido? Precisa de ajuda? Assista agora o{" "}
-                        <a target="_blank" href="https://youtu.be/_el6fCfvzXQ">
-                            <strong>guia em video</strong>
-                        </a>{" "}
-                        ou entre em{" "}
-                        <a target="_blank" href="https://discord.gg/fykNkXyn2r">
-                            <strong>nosso discord.</strong>
-                        </a>
-                    </div>
-                    <div className={Styles["container-toolkit"]}>
-                        <Characters />
-                        <Background />
-                        <Preview />
-                    </div>
-                </Content>
-            </Layout>
-        </Layout>
+        <>
+            <Breadcrumb
+                className={Styles["breadcrumb"]}
+                items={[{ href: "/", title: "Home" }, { title: "Kawori" }, { title: "Facetexture" }]}
+            />
+            <div className={Styles["help-text"]}>
+                Perdido? Precisa de ajuda? Assista agora o{" "}
+                <a className={Styles["hiper-link"]} target="_blank" href="https://youtu.be/_el6fCfvzXQ">
+                    <strong>guia em video</strong>
+                </a>{" "}
+                ou entre em{" "}
+                <a className={Styles["hiper-link"]} target="_blank" href="https://discord.gg/fykNkXyn2r">
+                    <strong>nosso discord.</strong>
+                </a>
+            </div>
+            <div className={Styles["container-toolkit"]}>
+                <Characters />
+                <Background />
+                <Preview />
+            </div>
+        </>
     );
 }
 

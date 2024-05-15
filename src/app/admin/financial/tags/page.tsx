@@ -1,20 +1,18 @@
+"use client";
 import { PlusOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Layout, message, Table, Tag, Typography } from "antd";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
 import ModalNewTag, { IFormModalNewTag } from "@/components/tags/modalNew";
 import { includeNewTagService } from "@/services/financial";
 
+import { setSelectedMenu } from "@/lib/features/auth";
 import { changeVisibleModalTag, fetchTags } from "@/lib/features/financial/tag";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import styles from "./tags.module.scss";
-
-const { Header, Content } = Layout;
 
 const { Title } = Typography;
 
@@ -23,6 +21,8 @@ function TagPage() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        document.title = "Kawori Tags";
+        dispatch(setSelectedMenu(["financial", "tags"]));
         dispatch(fetchTags());
     }, []);
 
@@ -62,47 +62,39 @@ function TagPage() {
     ];
 
     return (
-        <Layout className={styles.container}>
-            <MenuAdmin selected={["tags"]} />
+        <>
+            <Breadcrumb className={styles.breadcrumb}>
+                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
+                <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
+            </Breadcrumb>
             <Layout>
-                <Header className={styles.header}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-                        <Breadcrumb.Item>Em aberto</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Layout>
-                        <div className={styles.header_command}>
-                            <Title level={3} className={styles.title}>
-                                Valores em aberto
-                            </Title>
-                            <div>
-                                <Button icon={<PlusOutlined />} onClick={() => openModal("newTag")}>
-                                    Novo
-                                </Button>
-                            </div>
-                        </div>
-                        <Table
-                            pagination={{
-                                showSizeChanger: true,
-                                defaultPageSize: 20,
-                            }}
-                            columns={headerTableFinancial}
-                            dataSource={financialStore.data}
-                            loading={financialStore.loading}
-                        />
-                        <ModalNewTag
-                            visible={financialStore.modal.newTag.visible}
-                            onCancel={() => closeModal("newTag")}
-                            onFinish={onFinish}
-                        />
-                    </Layout>
-                </Content>
+                <div className={styles.header_command}>
+                    <Title level={3} className={styles.title}>
+                        Valores em aberto
+                    </Title>
+                    <div>
+                        <Button icon={<PlusOutlined />} onClick={() => openModal("newTag")}>
+                            Novo
+                        </Button>
+                    </div>
+                </div>
+                <Table
+                    pagination={{
+                        showSizeChanger: true,
+                        defaultPageSize: 20,
+                    }}
+                    columns={headerTableFinancial}
+                    dataSource={financialStore.data}
+                    loading={financialStore.loading}
+                />
+                <ModalNewTag
+                    visible={financialStore.modal.newTag.visible}
+                    onCancel={() => closeModal("newTag")}
+                    onFinish={onFinish}
+                />
             </Layout>
-        </Layout>
+        </>
     );
 }
 

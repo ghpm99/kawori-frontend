@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import MenuAdmin from "@/components/menuAdmin/Index";
-import useMenu from "@/components/menuAdmin/useMenu";
+import useMenu from "@/components/menuInternal/useMenu";
 
 jest.mock("@/components/menuAdmin/useMenu");
 

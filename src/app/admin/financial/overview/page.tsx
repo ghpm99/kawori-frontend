@@ -1,6 +1,5 @@
 "use client";
 import { Breadcrumb, Flex, Layout, Table, Tag, Typography } from "antd";
-import { Content, Header } from "antd/lib/layout/layout";
 import {
     ArcElement,
     BarElement,
@@ -18,8 +17,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
+
 import Cards from "@/components/overview/cards";
 import InvoiceByTag from "@/components/overview/invoiceByTag";
 import PaymentFixed from "@/components/overview/paymentFixed";
@@ -39,6 +37,7 @@ import {
 } from "@/services/financial/overview";
 import { formatMoney } from "@/util/index";
 import styles from "./Overview.module.scss";
+import { setSelectedMenu } from "@/lib/features/auth";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -91,6 +90,9 @@ function Overview() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        document.title = "Kawori Overview";
+        dispatch(setSelectedMenu(["financial", "overview"]));
+
         dispatch(fetchMonthPayments());
         dispatch(fetchPaymentReportThunk());
         dispatch(fetchCountPaymentReportThunk());
@@ -135,24 +137,16 @@ function Overview() {
     }
 
     return (
-        <Layout className={styles.container}>
-            <MenuAdmin selected={["overview"]} />
+        <>
+            <Breadcrumb className={styles.breadcrumb}>
+                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
+                <Breadcrumb.Item>Overview</Breadcrumb.Item>
+            </Breadcrumb>
             <Layout>
-                <Header className={styles.header}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Financeiro</Breadcrumb.Item>
-                        <Breadcrumb.Item>Overview</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Layout>
-                        <OverviewReport />
-                    </Layout>
-                </Content>
+                <OverviewReport />
             </Layout>
-        </Layout>
+        </>
     );
 }
 
