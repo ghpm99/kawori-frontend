@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 
-import { FACETEXTURE_MESSAGE_REF } from "@/app/internal/facetexture/page";
+import { FACETEXTURE_MESSAGE_REF } from "@/util";
 import { setSelectedFacetextureReducer } from "@/lib/features/facetexture";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";

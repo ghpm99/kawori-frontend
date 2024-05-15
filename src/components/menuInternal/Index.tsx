@@ -101,28 +101,6 @@ const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
                 ],
             },
             {
-                label: "Remoto",
-                key: "controller",
-                icon: <DesktopOutlined />,
-                children: [
-                    {
-                        label: <Link href={"/admin/controller/command"}>Comando</Link>,
-                        key: "command",
-                        icon: <DesktopOutlined />,
-                    },
-                    {
-                        label: <Link href={"/admin/controller/remote"}>Remoto</Link>,
-                        key: "remote",
-                        icon: <DesktopOutlined />,
-                    },
-                    {
-                        label: <Link href={"/admin/controller/status"}>Status</Link>,
-                        key: "status",
-                        icon: <HddOutlined />,
-                    },
-                ],
-            },
-            {
                 label: <Link href={"/admin/server"}>Servidor</Link>,
                 key: "server",
                 icon: <SettingOutlined />,

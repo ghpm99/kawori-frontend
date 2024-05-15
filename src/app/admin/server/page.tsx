@@ -1,14 +1,21 @@
+"use client";
 import { Breadcrumb, Button, Layout, message } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import LoginHeader from "@/components/loginHeader/Index";
-import MenuAdmin from "@/components/menuAdmin/Index";
 import { updateAllContractsValue } from "@/services/financial";
 import styles from "./Server.module.scss";
-
-const { Header, Content } = Layout;
+import { useEffect } from "react";
+import { useAppDispatch } from "@/lib/hooks";
+import { setSelectedMenu } from "@/lib/features/auth";
 
 function ServerPage() {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        document.title = "Kawori Server";
+        dispatch(setSelectedMenu(["server"]));
+    }, []);
+
     const updateContractsValue = () => {
         message.loading({
             content: "Calculando contratos",
@@ -23,27 +30,19 @@ function ServerPage() {
     };
 
     return (
-        <Layout className={styles.container}>
-            <MenuAdmin selected={["server"]} />
+        <>
+            <Breadcrumb className={styles.breadcrumb}>
+                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item>Servidor</Breadcrumb.Item>
+            </Breadcrumb>
             <Layout>
-                <Header className={styles.header}>
-                    <LoginHeader />
-                </Header>
-                <Content>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                        <Breadcrumb.Item>Servidor</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Layout>
-                        <div className={styles["button-container"]}>
-                            <Button type="primary" onClick={updateContractsValue}>
-                                Calcular valores contratos
-                            </Button>
-                        </div>
-                    </Layout>
-                </Content>
+                <div className={styles["button-container"]}>
+                    <Button type="primary" onClick={updateContractsValue}>
+                        Calcular valores contratos
+                    </Button>
+                </div>
             </Layout>
-        </Layout>
+        </>
     );
 }
 

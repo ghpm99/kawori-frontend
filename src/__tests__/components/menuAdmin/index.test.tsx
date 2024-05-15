@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import MenuAdmin from "@/components/menuAdmin/Index";
 import useMenu from "@/components/menuInternal/useMenu";
+import MenuInternal from "@/components/menuInternal/Index";
 
 jest.mock("@/components/menuAdmin/useMenu");
 
@@ -13,7 +13,7 @@ describe("Test Characters container", () => {
             toggleCollapsed: jest.fn(),
         });
 
-        const { getByText, queryByText } = render(<MenuAdmin selected={["home"]} />);
+        const { getByText, queryByText } = render(<MenuInternal />);
 
         expect(getByText("Inicio")).toBeInTheDocument();
         expect(queryByText("Conta")).not.toBeInTheDocument();
@@ -42,7 +42,7 @@ describe("Test Characters container", () => {
             data: { user: { isSuperuser: false } },
         });
 
-        const { getByText, queryByText } = render(<MenuAdmin selected={["home"]} />);
+        const { getByText, queryByText } = render(<MenuInternal />);
 
         expect(getByText("Inicio")).toBeInTheDocument();
 
@@ -72,7 +72,7 @@ describe("Test Characters container", () => {
             data: { user: { isSuperuser: true } },
         });
 
-        const { getByText, queryByText } = render(<MenuAdmin selected={["home"]} />);
+        const { getByText, queryByText } = render(<MenuInternal />);
 
         expect(getByText("Inicio")).toBeInTheDocument();
 
