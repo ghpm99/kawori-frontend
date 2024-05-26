@@ -69,6 +69,7 @@ export const authSlice = createSlice({
             state.status = "authenticated";
         },
         signout: (state) => {
+            TokenService.removeUser();
             state.status = "unauthenticated";
             state.user = initialState.user;
         },
@@ -87,8 +88,8 @@ export const authSlice = createSlice({
             .addCase(signinThunk.fulfilled, (state, action) => {
                 TokenService.setUser({
                     tokens: {
-                        access: action.payload.response.data.tokens.access,
-                        refresh: action.payload.response.data.tokens.refresh,
+                        access: action.payload.response.tokens.access,
+                        refresh: action.payload.response.tokens.refresh,
                     },
                     remember: action.payload.args.remember,
                 });

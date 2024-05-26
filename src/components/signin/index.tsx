@@ -2,10 +2,11 @@ import { Button, Checkbox, Form, Input } from "antd";
 
 import { useState } from "react";
 
-import { isFulfilled } from "@reduxjs/toolkit";
+import { isFulfilled, isRejected } from "@reduxjs/toolkit";
 
 import { useAppThunkDispatch } from "@/lib/hooks";
 import { signinThunk } from "@/services/auth";
+import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
 import styles from "./Signin.module.scss";
 
@@ -25,17 +26,20 @@ export default function LoginPage() {
             .then((action) => {
                 if (isFulfilled(action)) {
                     navigate.push("/internal/user");
-                } else {
+                } else if (isRejected(action)) {
+                    Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
                     setError(true);
                 }
             })
             .catch((err) => {
+                Sentry.captureException(err);
                 console.error("error", err);
                 setError(true);
             });
     };
 
     const onFinishFailed = (errorInfo: any) => {
+        Sentry.captureException(errorInfo);
         console.error("Failed:", errorInfo);
     };
 

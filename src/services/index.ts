@@ -1,5 +1,6 @@
 import axios from "axios";
 import TokenService from "./auth/authToken";
+import * as Sentry from "@sentry/nextjs";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
@@ -39,6 +40,7 @@ apiDjango.interceptors.response.use(
             tried++;
             return sleepRequest(retryDelay, originalRequest);
         } else {
+            Sentry.captureException(error);
             return Promise.reject(error);
         }
     },
