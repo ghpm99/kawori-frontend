@@ -68,6 +68,7 @@ const UserPanel = () => {
                         dataSource={[
                             { text: "Perfil", link: "/internal/user" },
                             { text: "Facetexture", link: "/internal/facetexture" },
+                            { text: "Rank de Classes", link: "/internal/rank" },
                         ]}
                         renderItem={(item) => (
                             <List.Item>
