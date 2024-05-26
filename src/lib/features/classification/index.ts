@@ -1,9 +1,10 @@
 import { getAllAnswers, getAllQuestions } from "@/services/classification";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface QuestionData {
-    questionText: string;
-    pubDate: string;
+export interface QuestionData {
+    id: number;
+    question_text: string;
+    pub_date: string;
 }
 
 interface AnswerData {
@@ -29,7 +30,7 @@ export const classificationSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAllQuestions.fulfilled, (state, action) => {
-                state.questions = action.payload;
+                state.questions = action.payload.data;
             })
             .addCase(getAllAnswers.fulfilled, (state, action) => {
                 state.answers = action.payload;
