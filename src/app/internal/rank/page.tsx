@@ -4,13 +4,12 @@ import { Breadcrumb, Layout, Table } from "antd";
 import Loading from "@/components/facetexture/loading";
 import Styles from "./rank.module.scss";
 
+import { setSelectedMenu } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
 import { getAllAnswers } from "@/services/classification";
 import Link from "next/link";
 import { useEffect } from "react";
-import { setSelectedMenu } from "@/lib/features/auth";
 
-const { Header, Content } = Layout;
 const RANK_MESSAGE_REF = "rank-message-ref";
 
 function Rank() {
@@ -32,7 +31,7 @@ function Rank() {
                 <Layout>
                     <div className={Styles["help-text"]}>
                         Deseja votar em alguma classe?
-                        <Link href="/admin/rank/vote">
+                        <Link href="/internal/rank/vote">
                             <strong>Clique aqui</strong>
                         </Link>
                     </div>
