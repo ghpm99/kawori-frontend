@@ -31,7 +31,7 @@ function Rank() {
                 <Layout>
                     <div className={Styles["help-text"]}>
                         Deseja votar em alguma classe?
-                        <Link href="/internal/rank/vote">
+                        <Link className={Styles["hiper-link"]} href="/internal/rank/vote">
                             <strong>Clique aqui</strong>
                         </Link>
                     </div>
