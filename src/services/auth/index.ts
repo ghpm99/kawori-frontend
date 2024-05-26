@@ -11,7 +11,7 @@ export const signinThunk = createAsyncThunk(
     async (args: { username: string; password: string; remember: boolean }) => {
         const response = await apiLogin.post<{ tokens: { access: string; refresh: string } }>("/token/", args);
         return {
-            response,
+            response: response.data,
             args,
         };
     },

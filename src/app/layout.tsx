@@ -1,9 +1,8 @@
 "use client";
-import "../../styles/globals.scss";
 import AuthProvider from "@/components/provider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import "../../styles/globals.scss";
 import StoreProvider from "./storeProvider";
-import Head from "next/head";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

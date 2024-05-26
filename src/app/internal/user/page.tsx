@@ -1,15 +1,15 @@
 "use client";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Button, Layout, Typography } from "antd";
+import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
+import { setSelectedMenu } from "@/lib/features/auth";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import Head from "next/head";
+import * as Sentry from "@sentry/nextjs";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styles from "./User.module.scss";
-import { useEffect } from "react";
-import { useAppDispatch } from "@/lib/hooks";
-import { setSelectedMenu } from "@/lib/features/auth";
 
 const { Title, Paragraph } = Typography;
 

@@ -3,7 +3,8 @@ import { Button, Form, Input, message } from "antd";
 
 import { useAppThunkDispatch } from "@/lib/hooks";
 import { INewUser, signinThunk, signupService } from "@/services/auth";
-import { isFulfilled } from "@reduxjs/toolkit";
+import { isFulfilled, isRejected } from "@reduxjs/toolkit";
+import * as Sentry from "@sentry/nextjs";
 import Router from "next/router";
 
 const SingupForm = () => {
@@ -21,11 +22,13 @@ const SingupForm = () => {
             .then((action) => {
                 if (isFulfilled(action)) {
                     Router.push("/admin/user");
-                } else {
+                } else if (isRejected(action)) {
+                    Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
                     message.error("Falhou em logar");
                 }
             })
             .catch((err) => {
+                Sentry.captureException(err);
                 console.error("error", err);
             });
     };
@@ -38,11 +41,13 @@ const SingupForm = () => {
                 signin(values.username, values.password);
             })
             .catch((error) => {
+                Sentry.captureException(error);
                 message.error(error?.response?.data?.msg ?? "Falhou em criar usuário");
             });
     };
 
     const onFinishFailed = (errorInfo: any) => {
+        Sentry.captureException(errorInfo);
         console.error("Failed:", errorInfo);
     };
 

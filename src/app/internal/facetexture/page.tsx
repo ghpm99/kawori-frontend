@@ -1,5 +1,5 @@
 "use client";
-import { Breadcrumb, Layout, message } from "antd";
+import { Breadcrumb, message } from "antd";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -12,11 +12,9 @@ import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer 
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { IFacetextureCharacterApi } from "@/services/facetexture";
+import { FACETEXTURE_MESSAGE_REF } from "@/util";
 import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "@/util";
-
-const { Header, Content } = Layout;
 
 function FaceTexture() {
     const dispatch = useAppDispatch();
