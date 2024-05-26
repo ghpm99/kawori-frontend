@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import Intro from "@/components/rank/intro";
 import styles from "./vote.module.scss";
 
-export const RANK_MESSAGE_REF: string = "rank-message-ref";
+const RANK_MESSAGE_REF: string = "rank-message-ref";
 
 const desc = ["Horrivel", "Mal", "Normal", "Bom", "Perfeito"];
 
