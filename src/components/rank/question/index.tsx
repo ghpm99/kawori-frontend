@@ -1,4 +1,3 @@
-import { RANK_MESSAGE_REF } from "@/app/internal/rank/vote/page";
 import { QuestionData, setQuestionVote } from "@/lib/features/classification";
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, message, Rate } from "antd";
@@ -11,6 +10,8 @@ interface IQuestionProps {
     nextQuestion: () => void;
     previousQuestion: () => void;
 }
+
+const RANK_MESSAGE_REF: string = "rank-message-ref";
 
 const Question = ({ question, text, hasNext, hasPrevious, nextQuestion, previousQuestion }: IQuestionProps) => {
     const dispatch = useAppDispatch();

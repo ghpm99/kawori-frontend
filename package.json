@@ -24,7 +24,7 @@
     "@prismicio/next": "^1.5.0",
     "@prismicio/react": "^2.7.4",
     "@reduxjs/toolkit": "^2.2.4",
-    "@sentry/nextjs": "^7.114.0",
+    "@sentry/nextjs": "^8.4.0",
     "@vercel/analytics": "^1.2.2",
     "antd": "^5.17.0",
     "antd-img-crop": "^4.22.0",
@@ -42,7 +42,8 @@
     "react-dom": "18.3.1",
     "react-intersection-observer": "^9.10.2",
     "react-pusher": "^0.2.0",
-    "react-redux": "^9.1.2"
+    "react-redux": "^9.1.2",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@slicemachine/adapter-next": "^0.3.38",
