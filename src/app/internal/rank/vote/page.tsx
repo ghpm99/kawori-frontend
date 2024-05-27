@@ -10,6 +10,7 @@ import { getAllQuestions } from "@/services/classification";
 import { useEffect, useState } from "react";
 import Intro from "@/components/rank/intro";
 import styles from "./vote.module.scss";
+import Finished from "@/components/rank/finished";
 
 const RANK_MESSAGE_REF: string = "rank-message-ref";
 
@@ -28,9 +29,6 @@ function Vote() {
     }, []);
 
     const nextQuestion = () => {
-        if (activePanel === questionsStore.length) {
-            return;
-        }
         setActivePanel((prev) => ++prev);
     };
 
@@ -41,7 +39,7 @@ function Vote() {
         setActivePanel((prev) => --prev);
     };
 
-    const hasNext = activePanel < questionsStore.length;
+    const finished = activePanel > questionsStore.length;
     const hasPrevious = activePanel > 0;
 
     return (
@@ -53,25 +51,31 @@ function Vote() {
             <div className={Styles["vote-page"]}>
                 <div className={Styles["panel"]}>
                     {activePanel === 0 && (
-                        <div>
+                        <div className={styles["question"]}>
                             <Intro nextQuestion={nextQuestion} />
                         </div>
                     )}
 
-                    {questionsStore.map((question, index) => (
-                        <div key={question.id}>
-                            {activePanel === index + 1 && (
-                                <Question
-                                    question={question}
-                                    text={desc}
-                                    hasNext={hasNext}
-                                    hasPrevious={hasPrevious}
-                                    nextQuestion={nextQuestion}
-                                    previousQuestion={previousQuestion}
-                                />
-                            )}
+                    {questionsStore.map(
+                        (question, index) =>
+                            activePanel === index + 1 && (
+                                <div key={question.id} className={styles["question"]}>
+                                    <Question
+                                        question={question}
+                                        text={desc}
+                                        hasPrevious={hasPrevious}
+                                        extra={`${index + 1}/${questionsStore.length}`}
+                                        nextQuestion={nextQuestion}
+                                        previousQuestion={previousQuestion}
+                                    />
+                                </div>
+                            ),
+                    )}
+                    {finished && (
+                        <div className={styles["question"]}>
+                            <Finished />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
         </>

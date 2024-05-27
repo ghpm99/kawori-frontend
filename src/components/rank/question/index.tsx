@@ -2,19 +2,20 @@ import { QuestionData, setQuestionVote } from "@/lib/features/classification";
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, message, Rate } from "antd";
 import styles from "./question.module.scss";
+import { CaretLeftOutlined, CaretRightOutlined, FastForwardOutlined } from "@ant-design/icons";
 
 interface IQuestionProps {
     question: QuestionData;
     text: string[];
-    hasNext: boolean;
     hasPrevious: boolean;
+    extra: string;
     nextQuestion: () => void;
     previousQuestion: () => void;
 }
 
 const RANK_MESSAGE_REF: string = "rank-message-ref";
 
-const Question = ({ question, text, hasNext, hasPrevious, nextQuestion, previousQuestion }: IQuestionProps) => {
+const Question = ({ question, text, hasPrevious, extra, nextQuestion, previousQuestion }: IQuestionProps) => {
     const dispatch = useAppDispatch();
 
     const setVote = (value: number) => {
@@ -43,26 +44,41 @@ const Question = ({ question, text, hasNext, hasPrevious, nextQuestion, previous
     };
 
     return (
-        <div className={styles["question"]}>
-            <Card title={<h2>{question.question_text}</h2>}>
-                <div>{question.question_details}</div>
+        <>
+            <Card
+                title={<h2 className={styles["question-title"]}>{question.question_text}</h2>}
+                actions={[
+                    <>
+                        <Button disabled={!hasPrevious} onClick={previousQuestion}>
+                            <CaretLeftOutlined />
+                            Anterior
+                        </Button>
+                    </>,
+                    <>
+                        <Button onClick={skipQuestion}>
+                            Pular
+                            <FastForwardOutlined />
+                        </Button>
+                    </>,
+                    <>
+                        <Button type="primary" onClick={voteQuestion}>
+                            Proximo
+                            <CaretRightOutlined />
+                        </Button>
+                    </>,
+                ]}
+                extra={extra}
+            >
+                <div
+                    className={styles["question-details"]}
+                    dangerouslySetInnerHTML={{
+                        __html: question.question_details,
+                    }}
+                ></div>
                 <Rate tooltips={text} onChange={setVote} value={question.vote} />
-                {question.vote ? <span>{text[question.vote - 1]}</span> : null}
+                {question.vote ? <div>{text[question.vote - 1]}</div> : null}
             </Card>
-            <div className={styles["button-container"]}>
-                <Button disabled={!hasPrevious} onClick={previousQuestion}>
-                    Anterior
-                </Button>
-                <div className={styles["next-buttons"]}>
-                    <Button disabled={!hasNext} onClick={skipQuestion}>
-                        Pular
-                    </Button>
-                    <Button type="primary" onClick={voteQuestion} disabled={!hasNext}>
-                        Proximo
-                    </Button>
-                </div>
-            </div>
-        </div>
+        </>
     );
 };
 

@@ -4,6 +4,16 @@
     row-gap: 16px;
 }
 
+.question-title{
+    white-space: wrap;
+    text-wrap: pretty;
+}
+
+.question-details{
+    margin-bottom: 16px;
+
+}
+
 .button-container{
     display: flex;
     justify-content: space-between;
@@ -11,4 +21,5 @@
 
 .next-buttons{
     display: flex;
+    column-gap: 8px;
 }
