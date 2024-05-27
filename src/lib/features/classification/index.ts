@@ -1,4 +1,4 @@
-import { getAllAnswers, getAllQuestions } from "@/services/classification";
+import { getAllAnswers, getAllBdoClass, getAllQuestions } from "@/services/classification";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface QuestionData {
@@ -6,7 +6,7 @@ export interface QuestionData {
     question_text: string;
     question_details: string;
     pub_date: string;
-    vote: number;
+    vote: number | undefined;
 }
 
 interface AnswerData {
@@ -18,11 +18,15 @@ interface AnswerData {
 interface ClassificationState {
     questions: QuestionData[];
     answers: AnswerData[];
+    class: IClass[];
+    selectedBdoClass: IClass | undefined;
 }
 
 const initialState: ClassificationState = {
     questions: [],
     answers: [],
+    class: [],
+    selectedBdoClass: undefined,
 };
 
 export const classificationSlice = createSlice({
@@ -33,6 +37,14 @@ export const classificationSlice = createSlice({
             const questionSource = state.questions.findIndex((question) => question.id === action.payload.id);
             state.questions[questionSource].vote = action.payload.vote;
         },
+        setSelectedBdoClass: (state: ClassificationState, action: PayloadAction<number>) => {
+            const targetBdoClass = state.class.find((bdoClass) => bdoClass.id === action.payload);
+            state.selectedBdoClass = targetBdoClass;
+            state.questions = state.questions.map((question) => ({
+                ...question,
+                vote: undefined,
+            }));
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -41,10 +53,13 @@ export const classificationSlice = createSlice({
             })
             .addCase(getAllAnswers.fulfilled, (state, action) => {
                 state.answers = action.payload;
+            })
+            .addCase(getAllBdoClass.fulfilled, (state, action) => {
+                state.class = action.payload.class;
             });
     },
 });
 
-export const { setQuestionVote } = classificationSlice.actions;
+export const { setQuestionVote, setSelectedBdoClass } = classificationSlice.actions;
 
 export default classificationSlice.reducer;

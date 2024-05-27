@@ -6,7 +6,7 @@ import Styles from "./vote.module.scss";
 import Question from "@/components/rank/question";
 import { setSelectedMenu } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { getAllQuestions } from "@/services/classification";
+import { getAllBdoClass, getAllQuestions } from "@/services/classification";
 import { useEffect, useState } from "react";
 import Intro from "@/components/rank/intro";
 import styles from "./vote.module.scss";
@@ -18,7 +18,7 @@ const desc = ["Horrivel", "Mal", "Normal", "Bom", "Perfeito"];
 
 function Vote() {
     const dispatch = useAppDispatch();
-    const questionsStore = useAppSelector((state) => state.classification.questions);
+    const classificationStore = useAppSelector((state) => state.classification);
 
     const [activePanel, setActivePanel] = useState(0);
 
@@ -26,6 +26,7 @@ function Vote() {
         document.title = "Kawori Rank - Votar";
         dispatch(setSelectedMenu(["rank"]));
         dispatch(getAllQuestions());
+        dispatch(getAllBdoClass());
     }, []);
 
     const nextQuestion = () => {
@@ -39,7 +40,7 @@ function Vote() {
         setActivePanel((prev) => --prev);
     };
 
-    const finished = activePanel > questionsStore.length;
+    const finished = activePanel > classificationStore.questions.length;
     const hasPrevious = activePanel > 0;
 
     return (
@@ -47,16 +48,24 @@ function Vote() {
             <Breadcrumb className={Styles["breadcrumb"]}>
                 <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                 <Breadcrumb.Item>Rank de classes</Breadcrumb.Item>
+                <Breadcrumb.Item>Votar</Breadcrumb.Item>
+                {classificationStore.selectedBdoClass && (
+                    <Breadcrumb.Item>{classificationStore.selectedBdoClass.abbreviation}</Breadcrumb.Item>
+                )}
             </Breadcrumb>
             <div className={Styles["vote-page"]}>
                 <div className={Styles["panel"]}>
                     {activePanel === 0 && (
                         <div className={styles["question"]}>
-                            <Intro nextQuestion={nextQuestion} />
+                            <Intro
+                                nextQuestion={nextQuestion}
+                                bdoClass={classificationStore.class}
+                                selectedBdoClass={classificationStore.selectedBdoClass}
+                            />
                         </div>
                     )}
 
-                    {questionsStore.map(
+                    {classificationStore.questions.map(
                         (question, index) =>
                             activePanel === index + 1 && (
                                 <div key={question.id} className={styles["question"]}>
@@ -64,7 +73,7 @@ function Vote() {
                                         question={question}
                                         text={desc}
                                         hasPrevious={hasPrevious}
-                                        extra={`${index + 1}/${questionsStore.length}`}
+                                        extra={`${index + 1}/${classificationStore.questions.length}`}
                                         nextQuestion={nextQuestion}
                                         previousQuestion={previousQuestion}
                                     />
