@@ -3,7 +3,7 @@ import styles from "./intro.module.scss";
 
 const Intro = ({ nextQuestion }: { nextQuestion: () => void }) => {
     return (
-        <div className={styles["intro"]}>
+        <>
             <Card title={<h2>Votação de classe</h2>}>
                 <div className={styles["text"]}>
                     <Steps
@@ -31,7 +31,7 @@ const Intro = ({ nextQuestion }: { nextQuestion: () => void }) => {
             <Button type="primary" onClick={nextQuestion}>
                 Começar
             </Button>
-        </div>
+        </>
     );
 };
 
