@@ -1,6 +1,11 @@
+.vote-page{
+    width: 100%;
+    min-height: calc(100% - 22px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .panel{
-    display: none;
-    .visible{
-        display: block;
-    }
+    max-width: 530px;
 }

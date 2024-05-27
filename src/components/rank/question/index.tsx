@@ -1,6 +1,7 @@
 import { QuestionData, setQuestionVote } from "@/lib/features/classification";
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, message, Rate } from "antd";
+import styles from "./question.module.scss";
 
 interface IQuestionProps {
     question: QuestionData;
@@ -42,22 +43,26 @@ const Question = ({ question, text, hasNext, hasPrevious, nextQuestion, previous
     };
 
     return (
-        <>
-            <Card title={question.question_text}>
+        <div className={styles["question"]}>
+            <Card title={<h2>{question.question_text}</h2>}>
                 <div>{question.question_details}</div>
                 <Rate tooltips={text} onChange={setVote} value={question.vote} />
                 {question.vote ? <span>{text[question.vote - 1]}</span> : null}
             </Card>
-            <Button disabled={!hasPrevious} onClick={previousQuestion}>
-                Anterior
-            </Button>
-            <Button disabled={!hasNext} onClick={skipQuestion}>
-                Pular
-            </Button>
-            <Button type="primary" onClick={voteQuestion} disabled={!hasNext}>
-                Proximo
-            </Button>
-        </>
+            <div className={styles["button-container"]}>
+                <Button disabled={!hasPrevious} onClick={previousQuestion}>
+                    Anterior
+                </Button>
+                <div className={styles["next-buttons"]}>
+                    <Button disabled={!hasNext} onClick={skipQuestion}>
+                        Pular
+                    </Button>
+                    <Button type="primary" onClick={voteQuestion} disabled={!hasNext}>
+                        Proximo
+                    </Button>
+                </div>
+            </div>
+        </div>
     );
 };
 
