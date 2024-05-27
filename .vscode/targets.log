@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May 26 13:58:10 2024
+# Make data base, printed on Sun May 26 20:52:42 2024
 
 # Variables
 
@@ -128,7 +128,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = dde8b3d6-5451-4793-9290-0dd0490c471a
+WT_SESSION = 28cd25fa-838e-4784-9cc1-5e466d4a7e41
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -148,7 +148,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/41329_interop
+WSL_INTEROP = /run/WSL/3136_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -176,7 +176,7 @@ _ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-e195b323-f363-498d-b379-10380eb58c0e.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-a804a75a-f1e2-4a80-8671-8508b9dcf796.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -208,9 +208,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2080, inode 25952368): 36 files, no impossibilities.
+# . (device 2080, inode 25952368): 38 files, no impossibilities.
 
-# 36 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -255,13 +255,13 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 42 / storage = 527 B / avg = 12 B
-# current buf: size = 8162 B / used = 527 B / count = 42 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 44 / storage = 565 B / avg = 12 B
+# current buf: size = 8162 B / used = 565 B / count = 44 / avg = 12 B
 
-# strcache performance: lookups = 47 / hit rate = 10%
+# strcache performance: lookups = 49 / hit rate = 10%
 # hash-table stats:
-# Load=42/8192=1%, Rehash=0, Collisions=0/47=0%
-# Finished Make data base on Sun May 26 13:58:10 2024
+# Load=44/8192=1%, Rehash=0, Collisions=0/49=0%
+# Finished Make data base on Sun May 26 20:52:42 2024
 
  
 make: *** No rule to make target 'all'.  Stop.

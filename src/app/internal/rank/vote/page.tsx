@@ -50,8 +50,8 @@ function Vote() {
                 <Breadcrumb.Item>Kawori</Breadcrumb.Item>
                 <Breadcrumb.Item>Rank de classes</Breadcrumb.Item>
             </Breadcrumb>
-            <div className={Styles["container-toolkit"]}>
-                <Layout>
+            <div className={Styles["vote-page"]}>
+                <div className={Styles["panel"]}>
                     {activePanel === 0 && (
                         <div>
                             <Intro nextQuestion={nextQuestion} />
@@ -72,7 +72,7 @@ function Vote() {
                             )}
                         </div>
                     ))}
-                </Layout>
+                </div>
             </div>
         </>
     );

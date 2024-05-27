@@ -1,19 +1,37 @@
-import { Button, Card } from "antd";
+import { Button, Card, Steps } from "antd";
+import styles from "./intro.module.scss";
 
 const Intro = ({ nextQuestion }: { nextQuestion: () => void }) => {
     return (
-        <>
-            <Card title="Votação de classe">
-                <div>Para votar primeiro selecione a classe que voce deseja votar.</div>
-                <div>Após isso será exibido questões para avaliação da classe, vote clicando nas estrelas.</div>
-                <div>Quanto maior o numero de estrelas, melhor a classe é naquela questao.</div>
-                <div>Caso nao deseja votar naquela questão basta clicar em pular.</div>
-                <div>Não existe limite de tempo!</div>
+        <div className={styles["intro"]}>
+            <Card title={<h2>Votação de classe</h2>}>
+                <div className={styles["text"]}>
+                    <Steps
+                        direction="vertical"
+                        current={0}
+                        items={[
+                            {
+                                title: "Selecione a classe!",
+                                description: "Selecione a classe para votar",
+                            },
+                            {
+                                title: "Leia a pergunta!",
+                                description: "Vote clicando nas estrelas, quanto melhor naquele cenario mais estrelas",
+                            },
+                            {
+                                title: "Vote!",
+                                description:
+                                    "Clique em proximo para salvar o voto ou pular para nao votar aquela pergunta",
+                            },
+                        ]}
+                    />
+                    <div>Não existe limite de tempo!</div>
+                </div>
             </Card>
             <Button type="primary" onClick={nextQuestion}>
                 Começar
             </Button>
-        </>
+        </div>
     );
 };
 
