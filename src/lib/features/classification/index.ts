@@ -52,7 +52,7 @@ export const classificationSlice = createSlice({
                 state.questions = action.payload.data;
             })
             .addCase(getAllAnswers.fulfilled, (state, action) => {
-                state.answers = action.payload;
+                state.answers = action.payload.data;
             })
             .addCase(getAllBdoClass.fulfilled, (state, action) => {
                 state.class = action.payload.class;

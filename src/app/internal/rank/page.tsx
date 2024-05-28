@@ -1,19 +1,21 @@
 "use client";
-import { Breadcrumb, Layout, Table } from "antd";
+import { Breadcrumb, Layout, Rate, Table } from "antd";
 
 import Loading from "@/components/facetexture/loading";
 import Styles from "./rank.module.scss";
 
 import { setSelectedMenu } from "@/lib/features/auth";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllAnswers } from "@/services/classification";
 import Link from "next/link";
 import { useEffect } from "react";
+import { formatterDetailedDate } from "@/util";
 
 const RANK_MESSAGE_REF = "rank-message-ref";
 
 function Rank() {
     const dispatch = useAppDispatch();
+    const classificationStore = useAppSelector((state) => state.classification);
 
     useEffect(() => {
         document.title = "Kawori Rank";
@@ -44,6 +46,14 @@ function Rank() {
                                 key: "question",
                             },
                             {
+                                title: "Voto",
+                                dataIndex: "vote",
+                                key: "vote",
+                                render: (vote) => {
+                                    return <Rate disabled value={vote} />;
+                                },
+                            },
+                            {
                                 title: "Classe",
                                 dataIndex: "bdo_class",
                                 key: "bdo_class",
@@ -52,9 +62,12 @@ function Rank() {
                                 title: "Dia do voto",
                                 dataIndex: "created_at",
                                 key: "created_at",
+                                render: (value) => {
+                                    return <div>{formatterDetailedDate(value)}</div>;
+                                },
                             },
                         ]}
-                        dataSource={[]}
+                        dataSource={classificationStore.answers}
                     />
                 </Layout>
             </div>

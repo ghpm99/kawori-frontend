@@ -74,6 +74,7 @@ function Vote() {
                                         text={desc}
                                         hasPrevious={hasPrevious}
                                         extra={`${index + 1}/${classificationStore.questions.length}`}
+                                        selectedBdoClass={classificationStore.selectedBdoClass}
                                         nextQuestion={nextQuestion}
                                         previousQuestion={previousQuestion}
                                     />

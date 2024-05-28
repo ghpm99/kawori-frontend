@@ -3,19 +3,30 @@ import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, message, Rate } from "antd";
 import styles from "./question.module.scss";
 import { CaretLeftOutlined, CaretRightOutlined, FastForwardOutlined } from "@ant-design/icons";
+import { registerAnswer } from "@/services/classification";
+import { isFulfilled, isRejected } from "@reduxjs/toolkit";
 
 interface IQuestionProps {
     question: QuestionData;
     text: string[];
     hasPrevious: boolean;
     extra: string;
+    selectedBdoClass: IClass;
     nextQuestion: () => void;
     previousQuestion: () => void;
 }
 
 const RANK_MESSAGE_REF: string = "rank-message-ref";
 
-const Question = ({ question, text, hasPrevious, extra, nextQuestion, previousQuestion }: IQuestionProps) => {
+const Question = ({
+    question,
+    text,
+    hasPrevious,
+    extra,
+    selectedBdoClass,
+    nextQuestion,
+    previousQuestion,
+}: IQuestionProps) => {
     const dispatch = useAppDispatch();
 
     const setVote = (value: number) => {
@@ -36,11 +47,28 @@ const Question = ({ question, text, hasPrevious, extra, nextQuestion, previousQu
     };
 
     const voteQuestion = () => {
-        message.success({
-            content: "Voto registrado com sucesso!",
-            key: RANK_MESSAGE_REF,
+        dispatch(
+            registerAnswer({
+                answerData: {
+                    bdo_class_id: selectedBdoClass.id,
+                    question_id: question.id,
+                    vote: question.vote,
+                },
+            }),
+        ).then((action) => {
+            if (isFulfilled(action)) {
+                message.success({
+                    content: action.payload.msg,
+                    key: RANK_MESSAGE_REF,
+                });
+                nextQuestion();
+            } else if (isRejected(action)) {
+                message.error({
+                    content: action.payload as string,
+                    key: RANK_MESSAGE_REF,
+                });
+            }
         });
-        nextQuestion();
     };
 
     return (
