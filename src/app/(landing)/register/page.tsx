@@ -2,7 +2,7 @@
 import { Card, Layout } from "antd";
 
 import SingupForm from "@/components/signup";
-import MenuHeader from "../../components/menuHeader";
+import MenuHeader from "../../../components/menuHeader";
 
 const { Content } = Layout;
 
