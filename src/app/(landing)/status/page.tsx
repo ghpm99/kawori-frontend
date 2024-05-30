@@ -1,7 +1,7 @@
-import MenuHeader from "../../components/menuHeader";
-import styles from "./Commands.module.scss";
+import MenuHeader from "@/components/menuHeader";
+import styles from "./Status.module.scss";
 
-const Commands = () => {
+export default function Status() {
     return (
         <div className={styles["container"]}>
             <div className={styles["body"]}>
@@ -9,6 +9,4 @@ const Commands = () => {
             </div>
         </div>
     );
-};
-
-export default Commands;
+}

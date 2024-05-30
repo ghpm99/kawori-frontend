@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import MenuHeader from "../../components/menuHeader";
+import MenuHeader from "@/components/menuHeader";
 import styles from "./Facetexture.module.scss";
 import Image from "next/image";
 

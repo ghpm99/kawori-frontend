@@ -2,7 +2,7 @@ import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 
 import { cleanup } from "@testing-library/react";
 import { renderWithProviders } from "../util/test-utils";
-import Home from "@/app/page";
+import Home from "@/app/(landing)/page";
 
 jest.mock("@/components/menuHeader/useMenuHeader");
 

@@ -24,6 +24,10 @@ export default function MenuHeader() {
                     label: <Link href={"/facetexture"}>Facetexture</Link>,
                     key: "facetexture",
                 },
+                {
+                    label: <Link href={"/rank"}>Rank de Classes</Link>,
+                    key: "rank",
+                },
             ],
         },
         status === "authenticated"
