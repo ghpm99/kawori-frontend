@@ -6,12 +6,9 @@ import Head from "next/head";
 
 import { components } from "@/slices/index";
 
-import styles from "@/app/Home.module.scss";
-import MenuHeader from "@/components/menuHeader";
 import { createClient } from "@/prismicio";
 import { formatterDate } from "@/util/index";
 import { Breadcrumb } from "antd";
-import { Footer } from "antd/lib/layout/layout";
 import ListNews from "./listNews";
 import stylesNews from "./news.module.scss";
 
@@ -47,38 +44,25 @@ export default async function Page({ params }: { params: Params }) {
                     <meta name="description" content={page.data.meta_description} />
                 ) : null}
             </Head>
-            <div className={styles["container"]}>
-                <MenuHeader />
-                <div className={styles["body"]}>
-                    <div className={styles["internal-page"]}>
-                        <div className={styles["section"]}>
-                            <div className={stylesNews["content-box"]}>
-                                <div className={stylesNews["header"]}>
-                                    <Breadcrumb
-                                        items={[
-                                            { href: "/", title: "Home" },
-                                            { title: "Notícias" },
-                                            { title: page.data.meta_title },
-                                        ]}
-                                    />
-                                    <div>Publicado em: {formatterDate(page.first_publication_date)}</div>
-                                </div>
-                                <SliceZone slices={page.data.slices} components={components} />
-                            </div>
-                            <div className={stylesNews["box-floating"]}>
-                                <ListNews items={pageList} />
-                            </div>
-                        </div>
+
+            <div className={stylesNews["section"]}>
+                <div className={stylesNews["content-box"]}>
+                    <div className={stylesNews["header"]}>
+                        <Breadcrumb
+                            items={[
+                                { href: "/", title: "Home" },
+                                { title: "Notícias" },
+                                { title: page.data.meta_title },
+                            ]}
+                        />
+                        <div>Publicado em: {formatterDate(page.first_publication_date)}</div>
                     </div>
+                    <SliceZone slices={page.data.slices} components={components} />
+                </div>
+                <div className={stylesNews["box-floating"]}>
+                    <ListNews items={pageList} />
                 </div>
             </div>
-            <Footer style={{ textAlign: "center" }}>
-                Sinta-se a vontade para entrar para
-                <a target="_blank" href="https://discord.gg/fykNkXyn2r">
-                    &nbsp;nossa comunidade&nbsp;
-                </a>
-                caso tenha alguma duvida ou sugestão!
-            </Footer>
         </>
     );
 }

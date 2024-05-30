@@ -1,8 +1,5 @@
-
 const Rank = () => {
-    return (<div>
-        Rank
-    </div>)
-}
+    return <div>Rank</div>;
+};
 
-export default Rank
+export default Rank;
