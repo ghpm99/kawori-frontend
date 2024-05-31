@@ -46,8 +46,8 @@ function Vote() {
     return (
         <>
             <Breadcrumb className={Styles["breadcrumb"]}>
-                <Breadcrumb.Item>Kawori</Breadcrumb.Item>
-                <Breadcrumb.Item>Rank de classes</Breadcrumb.Item>
+                <Breadcrumb.Item href="/">Kawori</Breadcrumb.Item>
+                <Breadcrumb.Item href="/internal/rank">Rank de classes</Breadcrumb.Item>
                 <Breadcrumb.Item>Votar</Breadcrumb.Item>
                 {classificationStore.selectedBdoClass && (
                     <Breadcrumb.Item>{classificationStore.selectedBdoClass.abbreviation}</Breadcrumb.Item>
