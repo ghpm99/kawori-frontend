@@ -123,7 +123,6 @@ function Overview() {
                 />
                 <PaymentWithFixed data={overviewStore.data.payments} />
                 <InvoiceByTag data={overviewStore.data.invoiceByTag} />
-
                 <AccumulatedValue
                     payments={overviewStore.data.payments}
                     amountForecastValue={overviewStore.data.amountForecastValue}
