@@ -11,6 +11,7 @@ import paymentReducer from "./features/financial/payment";
 import paymentDetailsReducer from "./features/financial/payment/detail";
 import tagReducer from "./features/financial/tag";
 import loadingReducer, { LoadingMiddleware } from "./features/loading";
+import configurationReducer from "./features/configuration";
 import statusReducer from "./features/status/Index";
 
 const financialStore = combineReducers({
@@ -28,6 +29,7 @@ export const store = () =>
     configureStore({
         reducer: {
             loading: loadingReducer,
+            configuration: configurationReducer,
             status: statusReducer,
             auth: authReducer,
             financial: financialStore,
