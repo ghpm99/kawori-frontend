@@ -18,6 +18,8 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { Pie } from "react-chartjs-2";
 import styles from "./rank.module.scss";
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -56,27 +58,34 @@ const Rank = () => {
         datasets: dataset,
     };
 
+    const { ref, inView, entry } = useInView({
+        /* Optional options */
+        threshold: 0,
+    });
+
+    console.log(inView);
     return (
         <div>
             <Statistic title="Total de votos" value={112893} />
-            <div>
+            <div className={styles["votes-pie"]}>
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
             </div>
-            <div className={styles["bdo-class-list"]}>
-                {configurationStore.class.map((bdoClass) => (
-                    <div key={bdoClass.id} className={styles["bdo-class "]}>
-                        <div>{bdoClass.abbreviation}</div>
-                        <Image
-                            alt={bdoClass.name}
-                            src={bdoClass.class_image}
-                            className={styles["bdo-class-image"]}
-                            sizes={"calc(100% /5)"}
-                            fill
-                            quality={100}
-                        />
-                    </div>
+            <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : ""}`} ref={ref}>
+                {configurationStore.class.map((bdoClass, index) => (
+                    <li
+                        key={bdoClass.id}
+                        className={styles["bdo-class"]}
+                        style={{
+                            transitionDelay: `${index * 0.08}s`,
+                        }}
+                    >
+                        <Link href={`/rank/${bdoClass.name}`} className={styles["class-wrap"]}>
+                            <div className={styles["bdo-class-name"]}>{bdoClass.abbreviation}</div>
+                            <div className={`${styles["bdo-class-image"]} ${styles[`character-${bdoClass.id}`]}`} />
+                        </Link>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
     );
 };

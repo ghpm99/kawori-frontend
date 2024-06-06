@@ -1,12 +1,141 @@
-.bdo-class-list{
+.votes-pie {
+    width: 400px;
+    height: 400px;
+}
+
+.bdo-class-list {
     display: flex;
     flex-wrap: wrap;
+    width: 1278px;
+
+    &.on {
+        & .bdo-class {
+            opacity: 1;
+        }
+    }
 }
 
-.bdo-class{
-    width: calc(100% /5);
-}
-
-.bdo-class-image{
+.bdo-class {
     position: relative;
+    width: calc(100% / 5);
+    height: 330px;
+    padding: 0 9px 18px;
+    transition:
+        opacity 0.8s ease-in,
+        transform 0.8s;
+    opacity: 0;
+}
+
+.class-wrap{
+
+}
+
+.bdo-class-name {
+    position: absolute;
+    z-index: 2;
+    width: calc(100% - 18px);
+    text-align: center;
+    bottom: 26px;
+    color: white;
+    font-size: 18px;
+    box-shadow: 0 1px 5px #00000099;
+    background-color: #00000099;
+    border-radius: 8px;
+}
+
+.bdo-class-image {
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 100%;
+    background: url(../../../../public/assets/classes_spr.jpg) no-repeat;
+    background-size: 1000% auto;
+    -webkit-transform: translate3d(0, 0, 1px);
+    transform: translate3d(0, 0, 1px);
+
+    &.character-1 {
+        background-position: calc((100% / 9) * 6) calc((100% / 2) * 1);
+    }
+
+    &.character-2 {
+        background-position: calc((100% / 9) * 3) 0;
+    }
+    &.character-3 {
+        background-position: calc((100% / 9) * 2) calc((100% / 2) * 2);
+    }
+    &.character-4 {
+        background-position: calc((100% / 9) * 2) calc((100% / 2) * 1);
+    }
+    &.character-5 {
+        background-position: calc((100% / 9) * 3) calc((100% / 2) * 2);
+    }
+    &.character-6 {
+        background-position: calc((100% / 9) * 8) calc((100% / 2) * 1);
+    }
+    &.character-7 {
+        background-position: calc((100% / 9) * 9) calc((100% / 2) * 1);
+    }
+    &.character-8 {
+        background-position: calc((100% / 9) * 8) 0;
+    }
+    &.character-9 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-10 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-11 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-12 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-13 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-14 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-15 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-16 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-17 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-18 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-19 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+
+    &.character-20 {
+        background-position: calc((100% / 9) * 5) 0;
+    }
+
+    &.character-21 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-22 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-23 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-24 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-25 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-26 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
+    &.character-27 {
+        background-position: calc((100% / 9) * 2) 0;
+    }
 }
