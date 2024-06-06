@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun  1 22:00:41 2024
+# Make data base, printed on Thu Jun  6 14:16:55 2024
 
 # Variables
 
@@ -124,7 +122,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/ghpm99/.vscode-server/bin/dc96b837cf6bb4af9cd736aa3af08cf8279f7685/bin/remote-cli:/home/ghpm99/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/ghpm9/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/go/bin
+PATH = /home/ghpm99/.vscode-server/bin/dc96b837cf6bb4af9cd736aa3af08cf8279f7685/bin/remote-cli:/home/ghpm99/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/Users/ghpm9/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/go/bin
 # environment
 SPACESHIP_ROOT = /home/ghpm99/.oh-my-zsh/custom/themes/spaceship-prompt
 # default
@@ -132,7 +130,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = 2d859657-bcba-4d0e-8bd2-d45d4274c4f6
+WT_SESSION = 90fce006-ed4b-4db4-bcf9-286b0e9d3d52
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -152,7 +150,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/3550_interop
+WSL_INTEROP = /run/WSL/126506_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -180,7 +178,7 @@ _ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-52d2a820-81a7-4c92-83bd-609779683e04.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-103e0da7-8a8a-4f75-9677-ee4948b6e53e.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -234,7 +232,7 @@ check:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-05-27 11:47:50.362692456
+#  Last modified 2024-06-06 11:22:38.804701158
 #  File has been updated.
 #  Successfully updated.
 
@@ -265,6 +263,8 @@ all:
 # strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
 # Load=43/8192=1%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Sat Jun  1 22:00:41 2024
+# Finished Make data base on Thu Jun  6 14:16:55 2024
 
  
+make: *** No rule to make target 'all'.  Stop.
+
