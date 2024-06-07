@@ -4,13 +4,17 @@
 }
 
 .bdo-class-list {
+    padding: 0;
+    width: 1278px;
     display: flex;
     flex-wrap: wrap;
-    width: 1278px;
+    justify-content: center;
+    list-style: none;
 
     &.on {
         & .bdo-class {
             opacity: 1;
+            transform: translate3d(0, 0, 1px);
         }
     }
 }
@@ -18,16 +22,35 @@
 .bdo-class {
     position: relative;
     width: calc(100% / 5);
-    height: 330px;
+    height: 346px;
     padding: 0 9px 18px;
+    transform: translate3d(0, 20%, 0);
     transition:
         opacity 0.8s ease-in,
         transform 0.8s;
     opacity: 0;
+    &:hover{
+        padding: 0 6px 16px;
+        & .bdo-class-name{
+            color: #e7bc5c;
+        }
+    }
 }
 
-.class-wrap{
-
+.class-wrap {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 0;
+    padding-bottom: 138.55%;
+    box-shadow: 0 1px 5px #00000099;
+    border-radius: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    transform: rotate3d(0, 10px, 10px);
+    transition: filter .2s ease, transform .3s ease-out, box-shadow 0.3s ease-out;
+    outline: none;
+    will-change: transform;
 }
 
 .bdo-class-name {
@@ -38,9 +61,6 @@
     bottom: 26px;
     color: white;
     font-size: 18px;
-    box-shadow: 0 1px 5px #00000099;
-    background-color: #00000099;
-    border-radius: 8px;
 }
 
 .bdo-class-image {
@@ -51,7 +71,6 @@
     height: 100%;
     background: url(../../../../public/assets/classes_spr.jpg) no-repeat;
     background-size: 1000% auto;
-    -webkit-transform: translate3d(0, 0, 1px);
     transform: translate3d(0, 0, 1px);
 
     &.character-1 {
@@ -61,81 +80,104 @@
     &.character-2 {
         background-position: calc((100% / 9) * 3) 0;
     }
+
     &.character-3 {
         background-position: calc((100% / 9) * 2) calc((100% / 2) * 2);
     }
+
     &.character-4 {
         background-position: calc((100% / 9) * 2) calc((100% / 2) * 1);
     }
+
     &.character-5 {
         background-position: calc((100% / 9) * 3) calc((100% / 2) * 2);
     }
+
     &.character-6 {
         background-position: calc((100% / 9) * 8) calc((100% / 2) * 1);
     }
+
     &.character-7 {
         background-position: calc((100% / 9) * 9) calc((100% / 2) * 1);
     }
+
     &.character-8 {
         background-position: calc((100% / 9) * 8) 0;
     }
+
     &.character-9 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 5) calc((100% / 2)* 1);
     }
+
     &.character-10 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 6) 0;
     }
+
     &.character-11 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 5) 0;
     }
+
     &.character-12 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 4) calc((100% / 2)* 1);
     }
+
     &.character-13 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 9) 0;
     }
+
     &.character-14 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 0) calc((100% / 2)* 2);
     }
+
     &.character-15 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 1) 0;
     }
+
     &.character-16 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 1) calc((100% / 2)* 2);
     }
+
     &.character-17 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 7) calc((100% / 2)* 1);
     }
+
     &.character-18 {
         background-position: calc((100% / 9) * 2) 0;
     }
+
     &.character-19 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 3) calc((100% / 2)* 1);
     }
 
     &.character-20 {
-        background-position: calc((100% / 9) * 5) 0;
+        background-position: calc((100% / 9)* 4) 0;
     }
 
     &.character-21 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 7) 0;
     }
+
     &.character-22 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: 0 0;
     }
+
     &.character-23 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9) * 1) calc((100% / 2) * 1);
     }
+
     &.character-24 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 0) calc((100% / 2)* 1);
     }
+
     &.character-25 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 4) calc((100% / 2)* 2);
     }
+
     &.character-26 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 5) calc((100% / 2)* 2);
     }
+
     &.character-27 {
-        background-position: calc((100% / 9) * 2) 0;
+        background-position: calc((100% / 9)* 6) calc((100% / 2)* 2);
     }
 }
