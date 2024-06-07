@@ -14,12 +14,11 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-import styles from "./rank.module.scss";
 import { useInView } from "react-intersection-observer";
-import Link from "next/link";
+import styles from "./rank.module.scss";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -61,16 +60,17 @@ const Rank = () => {
     const { ref, inView, entry } = useInView({
         /* Optional options */
         threshold: 0,
+        delay: 2,
     });
 
-    console.log(inView);
+    console.log(inView, entry);
     return (
         <div>
             <Statistic title="Total de votos" value={112893} />
             <div className={styles["votes-pie"]}>
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
             </div>
-            <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : ""}`} ref={ref}>
+            <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : undefined}`} ref={ref}>
                 {configurationStore.class.map((bdoClass, index) => (
                     <li
                         key={bdoClass.id}

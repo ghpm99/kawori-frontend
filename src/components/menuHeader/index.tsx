@@ -44,6 +44,10 @@ export default function MenuHeader() {
                           key: "user-facetexture",
                       },
                       {
+                          label: <Link href={"/internal/rank"}>Rank de Classes</Link>,
+                          key: "user-facetexture",
+                      },
+                      {
                           label: <div>Sair</div>,
                           key: "user-logout",
                           danger: true,
