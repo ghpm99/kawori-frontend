@@ -23,6 +23,17 @@ function Rank() {
         dispatch(getAllAnswers());
     }, []);
 
+    const combatStyleText = (combatStyle: number) => {
+        switch (combatStyle) {
+            case 1:
+                return "Despertar";
+            case 2:
+                return "Sucessão";
+            default:
+                return "Desconhecido";
+        }
+    };
+
     return (
         <>
             <Breadcrumb className={Styles["breadcrumb"]}>
@@ -57,6 +68,13 @@ function Rank() {
                                 title: "Classe",
                                 dataIndex: "bdo_class",
                                 key: "bdo_class",
+                                render: (bdo_class, object) => {
+                                    return (
+                                        <div>
+                                            {bdo_class} - {combatStyleText(object.combat_style)}
+                                        </div>
+                                    );
+                                },
                             },
                             {
                                 title: "Dia do voto",
