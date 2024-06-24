@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 interface AnswerData {
     question_id: number;
     bdo_class_id: number;
+    combat_style: number;
     vote: number;
 }
 

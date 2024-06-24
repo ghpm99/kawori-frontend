@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun  7 10:09:42 2024
+# Make data base, printed on Sun Jun 23 12:48:42 2024
 
 # Variables
 
@@ -72,7 +70,7 @@ VSCEXT_EXHORT_GO_PATH = go
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
-VSCODE_L10N_BUNDLE_LOCATION = vscode-local:/c%3A/Users/ghpm9/.vscode/extensions/ms-ceintl.vscode-language-pack-pt-br-1.89.2024050109/translations/extensions/vscode.css-language-features.i18n.json
+VSCODE_L10N_BUNDLE_LOCATION = vscode-local:/c%3A/Users/ghpm9/.vscode/extensions/ms-ceintl.vscode-language-pack-pt-br-1.90.2024061209/translations/extensions/vscode.css-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -110,7 +108,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"locale":"pt-br","osLocale":"pt-br","availableLanguages":{"*":"pt-br"},"_languagePackId":"94c6136efa10e62debd8fd1ac2620f9a.pt-br","_translationsConfigFile":"/home/ghpm99/.vscode-server/data/clp/94c6136efa10e62debd8fd1ac2620f9a.pt-br/tcf.json","_cacheRoot":"/home/ghpm99/.vscode-server/data/clp/94c6136efa10e62debd8fd1ac2620f9a.pt-br","_resolvedLanguagePackCoreLocation":"/home/ghpm99/.vscode-server/data/clp/94c6136efa10e62debd8fd1ac2620f9a.pt-br/89de5a8d4d6205e5b11647eb6a74844ca23d2573","_corruptedFile":"/home/ghpm99/.vscode-server/data/clp/94c6136efa10e62debd8fd1ac2620f9a.pt-br/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"pt-br","osLocale":"pt-br","availableLanguages":{"*":"pt-br"},"_languagePackId":"3cd8c6a3a55834412dd0936e0eba935e.pt-br","_translationsConfigFile":"/home/ghpm99/.vscode-server/data/clp/3cd8c6a3a55834412dd0936e0eba935e.pt-br/tcf.json","_cacheRoot":"/home/ghpm99/.vscode-server/data/clp/3cd8c6a3a55834412dd0936e0eba935e.pt-br","_resolvedLanguagePackCoreLocation":"/home/ghpm99/.vscode-server/data/clp/3cd8c6a3a55834412dd0936e0eba935e.pt-br/611f9bfce64f25108829dd295f54a6894e87339d","_corruptedFile":"/home/ghpm99/.vscode-server/data/clp/3cd8c6a3a55834412dd0936e0eba935e.pt-br/corrupted.info","_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile
@@ -124,7 +122,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/ghpm99/.vscode-server/bin/89de5a8d4d6205e5b11647eb6a74844ca23d2573/bin/remote-cli:/home/ghpm99/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/Users/ghpm9/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/go/bin
+PATH = /home/ghpm99/.vscode-server/bin/611f9bfce64f25108829dd295f54a6894e87339d/bin/remote-cli:/home/ghpm99/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/Users/ghpm9/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/go/bin
 # environment
 SPACESHIP_ROOT = /home/ghpm99/.oh-my-zsh/custom/themes/spaceship-prompt
 # default
@@ -132,7 +130,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = adf13c2c-2888-48ab-bcee-3bda32822057
+WT_SESSION = 45187737-0d5d-4051-8381-c492dfe835f5
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -152,7 +150,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/7200_interop
+WSL_INTEROP = /run/WSL/38540_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -180,7 +178,7 @@ _ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-5f27fea5-7c28-486f-9757-0508956f4041.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-d4cc0883-738b-42a1-8069-be6255e094c7.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -234,7 +232,7 @@ check:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-06-06 11:22:38.804701158
+#  Last modified 2024-06-09 10:54:03.934375694
 #  File has been updated.
 #  Successfully updated.
 
@@ -265,6 +263,8 @@ all:
 # strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
 # Load=43/8192=1%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Fri Jun  7 10:09:42 2024
+# Finished Make data base on Sun Jun 23 12:48:42 2024
 
  
+make: *** No rule to make target 'all'.  Stop.
+

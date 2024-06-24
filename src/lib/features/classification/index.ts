@@ -10,16 +10,31 @@ export interface QuestionData {
 }
 
 interface AnswerData {
-    questionId: number;
-    bdoClassId: number;
+    id: number;
+    question: string;
     vote: number;
+    bdo_class: string;
+    combat_style: number;
+    created_at: string;
 }
+
+export type ClassProfile = 1 | 2;
+
+export type SelectedClass = {
+    class: IClass;
+    profile: ClassProfile;
+};
+
+type SelectedClassAction = {
+    class: number;
+    profile: ClassProfile;
+};
 
 interface ClassificationState {
     questions: QuestionData[];
     answers: AnswerData[];
     class: IClass[];
-    selectedBdoClass: IClass | undefined;
+    selectedBdoClass: SelectedClass | undefined;
 }
 
 const initialState: ClassificationState = {
@@ -37,9 +52,14 @@ export const classificationSlice = createSlice({
             const questionSource = state.questions.findIndex((question) => question.id === action.payload.id);
             state.questions[questionSource].vote = action.payload.vote;
         },
-        setSelectedBdoClass: (state: ClassificationState, action: PayloadAction<number>) => {
-            const targetBdoClass = state.class.find((bdoClass) => bdoClass.id === action.payload);
-            state.selectedBdoClass = targetBdoClass;
+        setSelectedBdoClass: (state: ClassificationState, action: PayloadAction<SelectedClassAction>) => {
+            const targetBdoClass = state.class.find((bdoClass) => bdoClass.id === action.payload.class);
+            const selectedClass: SelectedClass = {
+                class: targetBdoClass,
+                profile: action.payload.profile,
+            };
+            state.selectedBdoClass = selectedClass;
+
             state.questions = state.questions.map((question) => ({
                 ...question,
                 vote: undefined,

@@ -1,4 +1,4 @@
-import { QuestionData, setQuestionVote } from "@/lib/features/classification";
+import { QuestionData, SelectedClass, setQuestionVote } from "@/lib/features/classification";
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, message, Rate } from "antd";
 import styles from "./question.module.scss";
@@ -11,7 +11,7 @@ interface IQuestionProps {
     text: string[];
     hasPrevious: boolean;
     extra: string;
-    selectedBdoClass: IClass;
+    selectedBdoClass: SelectedClass;
     nextQuestion: () => void;
     previousQuestion: () => void;
 }
@@ -50,7 +50,8 @@ const Question = ({
         dispatch(
             registerAnswer({
                 answerData: {
-                    bdo_class_id: selectedBdoClass.id,
+                    bdo_class_id: selectedBdoClass.class.id,
+                    combat_style: selectedBdoClass.profile,
                     question_id: question.id,
                     vote: question.vote,
                 },

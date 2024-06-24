@@ -50,18 +50,14 @@ function Vote() {
                 <Breadcrumb.Item href="/internal/rank">Rank de classes</Breadcrumb.Item>
                 <Breadcrumb.Item>Votar</Breadcrumb.Item>
                 {classificationStore.selectedBdoClass && (
-                    <Breadcrumb.Item>{classificationStore.selectedBdoClass.abbreviation}</Breadcrumb.Item>
+                    <Breadcrumb.Item>{classificationStore.selectedBdoClass.class.abbreviation}</Breadcrumb.Item>
                 )}
             </Breadcrumb>
             <div className={Styles["vote-page"]}>
                 <div className={Styles["panel"]}>
                     {activePanel === 0 && (
                         <div className={styles["question"]}>
-                            <Intro
-                                nextQuestion={nextQuestion}
-                                bdoClass={classificationStore.class}
-                                selectedBdoClass={classificationStore.selectedBdoClass}
-                            />
+                            <Intro nextQuestion={nextQuestion} bdoClass={classificationStore.class} />
                         </div>
                     )}
 

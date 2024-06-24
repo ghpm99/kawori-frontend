@@ -1,21 +1,21 @@
-import { setSelectedBdoClass } from "@/lib/features/classification";
+import { ClassProfile, setSelectedBdoClass } from "@/lib/features/classification";
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, Divider, Select, Steps } from "antd";
 import styles from "./intro.module.scss";
+import { useState } from "react";
 
-const Intro = ({
-    nextQuestion,
-    bdoClass,
-    selectedBdoClass,
-}: {
-    nextQuestion: () => void;
-    bdoClass: IClass[];
-    selectedBdoClass: IClass | undefined;
-}) => {
+const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass: IClass[] }) => {
     const dispatch = useAppDispatch();
 
+    const [selectedClass, setSelectedClass] = useState<number | undefined>(undefined);
+    const [selectedProfile, setSelectedProfile] = useState<ClassProfile | undefined>(undefined);
+
     const handlerChangeBdoClass = (value: number) => {
-        dispatch(setSelectedBdoClass(value));
+        setSelectedClass(value);
+    };
+
+    const handlerChangeProfile = (value: ClassProfile) => {
+        setSelectedProfile(value);
     };
 
     const selectItens = bdoClass.map((item) => ({
@@ -23,7 +23,12 @@ const Intro = ({
         label: item.abbreviation,
     }));
 
-    const currentStep = selectedBdoClass === undefined ? 0 : 1;
+    const currentStep = selectedClass === undefined || selectedProfile === undefined ? 0 : 1;
+
+    const startQuestion = () => {
+        dispatch(setSelectedBdoClass({ class: selectedClass, profile: selectedProfile }));
+        nextQuestion();
+    };
 
     return (
         <>
@@ -54,14 +59,25 @@ const Intro = ({
                         <Select
                             placeholder="Selecione a classe"
                             style={{ width: "100%" }}
-                            value={selectedBdoClass?.id}
+                            value={selectedClass}
                             options={selectItens}
                             onChange={handlerChangeBdoClass}
+                        />
+                        <div>Selecione o perfil:</div>
+                        <Select
+                            placeholder="Selecione o perfil"
+                            style={{ width: "100%" }}
+                            value={selectedProfile}
+                            options={[
+                                { value: 1, label: "Despertar" },
+                                { value: 2, label: "Sucessão" },
+                            ]}
+                            onChange={handlerChangeProfile}
                         />
                     </div>
                 </div>
             </Card>
-            <Button type="primary" onClick={nextQuestion} disabled={!selectedBdoClass}>
+            <Button type="primary" onClick={startQuestion} disabled={currentStep === 0}>
                 Começar
             </Button>
         </>
