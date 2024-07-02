@@ -23,7 +23,7 @@ const Characters = () => {
         );
     };
 
-    const disableNewButton = facetextureStore.facetexture.length >= 32;
+    const disableNewButton = facetextureStore.facetexture.length >= 35;
 
     return (
         <div className={Styles["characters"]}>
