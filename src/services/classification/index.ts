@@ -36,3 +36,13 @@ export const getAllBdoClass = createAsyncThunk("classification/getAllBdoClass", 
     const response = await apiDjango.get("/classification/get-class/");
     return response.data;
 });
+
+export const getTotalVotes = createAsyncThunk("classification/totalVotes", async () => {
+    const response = await apiDjango.get("/classification/total-votes/");
+    return response.data;
+})
+
+export const getAnswerByClass = createAsyncThunk("classification/answerByClass", async () => {
+    const response = await apiDjango.get(`/classification/answer-by-class/`);
+    return response.data;
+})

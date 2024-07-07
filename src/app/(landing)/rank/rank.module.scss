@@ -3,6 +3,19 @@
     height: 400px;
 }
 
+.bdo-class-title{
+    margin-block: 36px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.subtitle{
+    font-weight: normal;
+    margin: 0;
+}
+
 .bdo-class-list {
     padding: 0;
     width: 1278px;

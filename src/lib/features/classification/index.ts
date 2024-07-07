@@ -1,4 +1,4 @@
-import { getAllAnswers, getAllBdoClass, getAllQuestions } from "@/services/classification";
+import { getAllAnswers, getAllBdoClass, getAllQuestions, getAnswerByClass, getTotalVotes } from "@/services/classification";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface QuestionData {
@@ -30,11 +30,20 @@ type SelectedClassAction = {
     profile: ClassProfile;
 };
 
+type IVotesByClass = {
+    label: string;
+    data: number;
+    backgroundColor: string;
+};
+
+
 interface ClassificationState {
     questions: QuestionData[];
     answers: AnswerData[];
     class: IClass[];
     selectedBdoClass: SelectedClass | undefined;
+    totalVotes: number;
+    votesByClass: IVotesByClass[];
 }
 
 const initialState: ClassificationState = {
@@ -42,6 +51,8 @@ const initialState: ClassificationState = {
     answers: [],
     class: [],
     selectedBdoClass: undefined,
+    totalVotes: 0,
+    votesByClass: [],
 };
 
 export const classificationSlice = createSlice({
@@ -76,7 +87,19 @@ export const classificationSlice = createSlice({
             })
             .addCase(getAllBdoClass.fulfilled, (state, action) => {
                 state.class = action.payload.class;
-            });
+            })
+            .addCase(getTotalVotes.fulfilled, (state, action) => {
+                state.totalVotes = action.payload.total_votes;
+            })
+            .addCase(getAnswerByClass.fulfilled, (state, action) => {
+                const payload = action.payload.data;
+                state.votesByClass = payload.map((item) => ({
+                    label: item.class,
+                    data: [item.answers_count],
+                    backgroundColor: ["#FF6384"],
+
+                }));
+            })
     },
 });
 
