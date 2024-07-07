@@ -1,6 +1,6 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { getAllBdoClass } from "@/services/classification";
+import { getAllBdoClass, getAnswerByClass, getTotalVotes } from "@/services/classification";
 import { Statistic } from "antd";
 import {
     ArcElement,
@@ -25,17 +25,20 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineEleme
 const Rank = () => {
     const dispatch = useAppDispatch();
     const configurationStore = useAppSelector((state) => state.configuration);
+    const classificationStore = useAppSelector((state) => state.classification);
 
     useEffect(() => {
         document.title = "Kawori Rank";
         dispatch(getAllBdoClass());
+        dispatch(getTotalVotes());
+        dispatch(getAnswerByClass());
     }, []);
 
     const dataset = [
         {
-            label: "# Valor total por tag",
-            data: [17],
-            backgroundColor: ["#821c1c"],
+            label: "Votos",
+            data: classificationStore.votesByClass.map((item) => item.data),
+            backgroundColor: classificationStore.votesByClass.map((item) => item.backgroundColor),
         },
     ];
 
@@ -53,7 +56,7 @@ const Rank = () => {
     };
 
     const dataSource = {
-        labels: ["bruxa"],
+        labels: classificationStore.votesByClass.filter((item) => item.data > 0).map((item) => item.label),
         datasets: dataset,
     };
 
@@ -66,9 +69,13 @@ const Rank = () => {
     console.log(inView, entry);
     return (
         <div>
-            <Statistic title="Total de votos" value={112893} />
+            <Statistic title="Total de votos" value={classificationStore.totalVotes} />
             <div className={styles["votes-pie"]}>
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
+            </div>
+            <div className={styles['bdo-class-title']}>
+                <h2>Escolher Classe</h2>
+                <h4 className={styles['subtitle']}>Escolha a classe para visualizar resultados dos votos</h4>
             </div>
             <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : undefined}`} ref={ref}>
                 {configurationStore.class.map((bdoClass, index) => (
