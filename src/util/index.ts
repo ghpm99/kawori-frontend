@@ -57,11 +57,13 @@ export const formatterMonthYearDate = (dateString: string) => {
     return dayjs(dateString).format("MM/YYYY");
 };
 
-type AssetsClassData = {
+export type AssetsClassData = {
     id: number;
     name: string;
     abbreviation: string;
     color: string;
+    awakeningImage?: string;
+    successionImage?: string;
 };
 
 const assetsClassData: AssetsClassData[] = [
@@ -236,5 +238,12 @@ const assetsClassData: AssetsClassData[] = [
 ];
 
 export const assetsClass = (classId: number): AssetsClassData => {
-    return assetsClassData.find((item) => item.id === classId);
+    const basicAsset = assetsClassData.find((item) => item.id === classId);
+    if (!basicAsset){
+        return null
+    }
+
+    basicAsset.awakeningImage = `/assets/class/awakening_${basicAsset.name.toLowerCase()}.jpg`;
+    basicAsset.successionImage = `/assets/class/succession_${basicAsset.name.toLowerCase()}.jpg`;
+    return basicAsset;
 };
