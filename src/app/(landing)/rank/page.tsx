@@ -15,17 +15,26 @@ import {
     Tooltip,
 } from "chart.js";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { assetsClass, AssetsClassData } from "@/util";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 const Rank = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     const dispatch = useAppDispatch();
     const configurationStore = useAppSelector((state) => state.configuration);
     const classificationStore = useAppSelector((state) => state.classification);
+    const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
+
+    const classIdParams = searchParams.get("classId");
 
     useEffect(() => {
         document.title = "Kawori Rank";
@@ -33,6 +42,24 @@ const Rank = () => {
         dispatch(getTotalVotes());
         dispatch(getAnswerByClass());
     }, []);
+
+    useEffect(() => {
+        const classId = parseInt(classIdParams);
+        if (Number.isNaN(classId)) {
+            return;
+        }
+        setSelectedClassId(classId);
+    }, [classIdParams]);
+
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set(name, value);
+
+            return params.toString();
+        },
+        [searchParams],
+    );
 
     const dataset = [
         {
@@ -66,6 +93,8 @@ const Rank = () => {
         delay: 2,
     });
 
+    const selectedClass = configurationStore.class.find((bdoClass) => bdoClass.id === selectedClassId);
+
     console.log(inView, entry);
     return (
         <div>
@@ -73,9 +102,10 @@ const Rank = () => {
             <div className={styles["votes-pie"]}>
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
             </div>
-            <div className={styles['bdo-class-title']}>
+            {selectedClass && <div className={styles["selected-class"]}></div>}
+            <div className={styles["bdo-class-title"]}>
                 <h2>Escolher Classe</h2>
-                <h4 className={styles['subtitle']}>Escolha a classe para visualizar resultados dos votos</h4>
+                <h4 className={styles["subtitle"]}>Escolha a classe para visualizar resultados dos votos</h4>
             </div>
             <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : undefined}`} ref={ref}>
                 {configurationStore.class.map((bdoClass, index) => (
@@ -86,10 +116,15 @@ const Rank = () => {
                             transitionDelay: `${index * 0.08}s`,
                         }}
                     >
-                        <Link href={`/rank/${bdoClass.name}`} className={styles["class-wrap"]}>
+                        <div
+                            onClick={() => {
+                                router.push(pathname + "?" + createQueryString("classId", bdoClass.id.toString()));
+                            }}
+                            className={styles["class-wrap"]}
+                        >
                             <div className={styles["bdo-class-name"]}>{bdoClass.abbreviation}</div>
                             <div className={`${styles["bdo-class-image"]} ${styles[`character-${bdoClass.id}`]}`} />
-                        </Link>
+                        </div>
                     </li>
                 ))}
             </ul>

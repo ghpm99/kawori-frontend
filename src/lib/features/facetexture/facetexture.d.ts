@@ -14,6 +14,7 @@ interface IClass {
     name: string;
     abbreviation: string;
     class_image: string;
+    color?: string
 }
 
 interface IFacetexture {
