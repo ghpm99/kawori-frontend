@@ -45,7 +45,7 @@ export default function MenuHeader() {
                       },
                       {
                           label: <Link href={"/internal/rank"}>Rank de Classes</Link>,
-                          key: "user-facetexture",
+                          key: "user-classification",
                       },
                       {
                           label: <div>Sair</div>,

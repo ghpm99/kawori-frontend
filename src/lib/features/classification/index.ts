@@ -1,4 +1,10 @@
-import { getAllAnswers, getAllBdoClass, getAllQuestions, getAnswerByClass, getTotalVotes } from "@/services/classification";
+import {
+    getAllAnswers,
+    getAllBdoClass,
+    getAllQuestions,
+    getAnswerByClass,
+    getTotalVotes,
+} from "@/services/classification";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface QuestionData {
@@ -33,9 +39,8 @@ type SelectedClassAction = {
 type IVotesByClass = {
     label: string;
     data: number;
-    backgroundColor: string;
+    color: string;
 };
-
 
 interface ClassificationState {
     questions: QuestionData[];
@@ -95,11 +100,10 @@ export const classificationSlice = createSlice({
                 const payload = action.payload.data;
                 state.votesByClass = payload.map((item) => ({
                     label: item.class,
-                    data: [item.answers_count],
-                    backgroundColor: ["#FF6384"],
-
+                    data: item.answers_count,
+                    color: item.color,
                 }));
-            })
+            });
     },
 });
 

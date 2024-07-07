@@ -61,11 +61,13 @@ const Rank = () => {
         [searchParams],
     );
 
+    const classWithVotesList = classificationStore.votesByClass.filter((item) => item.data > 0);
+
     const dataset = [
         {
-            label: "Votos",
-            data: classificationStore.votesByClass.map((item) => item.data),
-            backgroundColor: classificationStore.votesByClass.map((item) => item.backgroundColor),
+            label: "# Total de voto por classe",
+            data: classWithVotesList.map((item) => item.data),
+            backgroundColor: classWithVotesList.map((item) => item.color),
         },
     ];
 
@@ -83,7 +85,7 @@ const Rank = () => {
     };
 
     const dataSource = {
-        labels: classificationStore.votesByClass.filter((item) => item.data > 0).map((item) => item.label),
+        labels: classWithVotesList.map((item) => item.label),
         datasets: dataset,
     };
 
@@ -95,14 +97,24 @@ const Rank = () => {
 
     const selectedClass = configurationStore.class.find((bdoClass) => bdoClass.id === selectedClassId);
 
-    console.log(inView, entry);
     return (
         <div>
             <Statistic title="Total de votos" value={classificationStore.totalVotes} />
             <div className={styles["votes-pie"]}>
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
             </div>
-            {selectedClass && <div className={styles["selected-class"]}></div>}
+            {selectedClass && (
+                <div className={styles["selected-class"]}>
+                    <h2>{selectedClass.abbreviation}</h2>
+
+                    <div className={styles["awakening"]}>
+                        <h3>SUCESSÃO</h3>
+                    </div>
+                    <div className={styles["succession"]}>
+                        <h3>DESPERTAR</h3>
+                    </div>
+                </div>
+            )}
             <div className={styles["bdo-class-title"]}>
                 <h2>Escolher Classe</h2>
                 <h4 className={styles["subtitle"]}>Escolha a classe para visualizar resultados dos votos</h4>
