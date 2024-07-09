@@ -21,6 +21,7 @@ import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { assetsClass, AssetsClassData } from "@/util";
+import Image from "next/image";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -97,6 +98,8 @@ const Rank = () => {
 
     const selectedClass = configurationStore.class.find((bdoClass) => bdoClass.id === selectedClassId);
 
+    const classImages = assetsClass(selectedClass?.name || "");
+
     return (
         <div>
             <Statistic title="Total de votos" value={classificationStore.totalVotes} />
@@ -106,12 +109,13 @@ const Rank = () => {
             {selectedClass && (
                 <div className={styles["selected-class"]}>
                     <h2>{selectedClass.abbreviation}</h2>
-
                     <div className={styles["awakening"]}>
-                        <h3>SUCESSÃO</h3>
+                        <h3>DESPERTAR</h3>
+                        <Image src={classImages.awakeningImage} alt="awakening" height={920} width={2000} />
                     </div>
                     <div className={styles["succession"]}>
-                        <h3>DESPERTAR</h3>
+                        <h3>SUCESSÃO</h3>
+                        <Image src={classImages.successionImage} alt="succession" height={920} width={2000} />
                     </div>
                 </div>
             )}
