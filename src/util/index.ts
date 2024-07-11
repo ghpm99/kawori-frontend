@@ -63,13 +63,10 @@ export type AssetsClassData = {
 };
 
 export const assetsClass = (className: string): AssetsClassData => {
-    const normalizedName = className
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
+    const normalizedName = className.replace(" ", "_").toLowerCase();
 
-    const awakeningImage = `public/assets/awakening_${normalizedName}.jpg`;
-    const successionImage = `public/assets/succession_${normalizedName}.jpg`;
+    const awakeningImage = `https://storage.googleapis.com/kawori.appspot.com/awakening_${normalizedName}.jpg`;
+    const successionImage = `https://storage.googleapis.com/kawori.appspot.com/succession_${normalizedName}.jpg`;
     return {
         awakeningImage,
         successionImage,
