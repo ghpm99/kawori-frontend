@@ -111,11 +111,23 @@ const Rank = () => {
                     <h2>{selectedClass.abbreviation}</h2>
                     <div className={styles["awakening"]}>
                         <h3>DESPERTAR</h3>
-                        <Image src={classImages.awakeningImage} alt="awakening" height={920} width={2000} />
+                        <Image
+                            src={classImages.awakeningImage}
+                            alt="awakening"
+                            height={920}
+                            width={2000}
+                            className={styles["awakening-image"]}
+                        />
                     </div>
                     <div className={styles["succession"]}>
                         <h3>SUCESSÃO</h3>
-                        <Image src={classImages.successionImage} alt="succession" height={920} width={2000} />
+                        <Image
+                            src={classImages.successionImage}
+                            alt="succession"
+                            height={920}
+                            width={2000}
+                            className={styles["succession-image"]}
+                        />
                     </div>
                 </div>
             )}

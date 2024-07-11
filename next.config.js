@@ -13,7 +13,17 @@ const nextConfig = {
     'rc-tooltip' ,
     'rc-tree',
     'rc-table',
-  ]
+  ],
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'storage.cloud.google.com',
+      },
+      {
+        hostname: 'storage.googleapis.com'
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig
