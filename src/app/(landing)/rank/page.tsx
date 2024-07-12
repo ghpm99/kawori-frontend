@@ -1,6 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllBdoClass, getAnswerByClass, getTotalVotes } from "@/services/classification";
+import { normalizeString } from "@/util";
 import { Statistic } from "antd";
 import {
     ArcElement,
@@ -8,20 +9,17 @@ import {
     CategoryScale,
     Chart as ChartJS,
     Legend,
-    LineElement,
     LinearScale,
+    LineElement,
     PointElement,
     Title,
     Tooltip,
 } from "chart.js";
-import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { assetsClass, AssetsClassData } from "@/util";
-import Image from "next/image";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -98,7 +96,7 @@ const Rank = () => {
 
     const selectedClass = configurationStore.class.find((bdoClass) => bdoClass.id === selectedClassId);
 
-    const classImages = assetsClass(selectedClass?.name || "");
+    const normalizedName = normalizeString(selectedClass?.name || "");
 
     return (
         <div>
@@ -109,25 +107,11 @@ const Rank = () => {
             {selectedClass && (
                 <div className={styles["selected-class"]}>
                     <h2>{selectedClass.abbreviation}</h2>
-                    <div className={styles["awakening"]}>
+                    <div className={`${styles["awakening"]}  ${styles[normalizedName]}`}>
                         <h3>DESPERTAR</h3>
-                        <Image
-                            src={classImages.awakeningImage}
-                            alt="awakening"
-                            height={920}
-                            width={2000}
-                            className={styles["awakening-image"]}
-                        />
                     </div>
-                    <div className={styles["succession"]}>
+                    <div className={`${styles["succession"]}  ${styles[normalizedName]}`}>
                         <h3>SUCESSÃO</h3>
-                        <Image
-                            src={classImages.successionImage}
-                            alt="succession"
-                            height={920}
-                            width={2000}
-                            className={styles["succession-image"]}
-                        />
                     </div>
                 </div>
             )}
@@ -151,7 +135,7 @@ const Rank = () => {
                             className={styles["class-wrap"]}
                         >
                             <div className={styles["bdo-class-name"]}>{bdoClass.abbreviation}</div>
-                            <div className={`${styles["bdo-class-image"]} ${styles[`character-${bdoClass.id}`]}`} />
+                            <div className={`${styles["bdo-class-image"]} ${styles[normalizeString(bdoClass.name)]}`} />
                         </div>
                     </li>
                 ))}
