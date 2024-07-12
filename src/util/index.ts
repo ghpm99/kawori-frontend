@@ -62,13 +62,6 @@ export type AssetsClassData = {
     successionImage?: string;
 };
 
-export const assetsClass = (className: string): AssetsClassData => {
-    const normalizedName = className.replace(" ", "_").toLowerCase();
-
-    const awakeningImage = `https://storage.googleapis.com/kawori.appspot.com/awakening_${normalizedName}.jpg`;
-    const successionImage = `https://storage.googleapis.com/kawori.appspot.com/succession_${normalizedName}.jpg`;
-    return {
-        awakeningImage,
-        successionImage,
-    };
+export const normalizeString = (className: string): string => {
+    return className.replace(" ", "_").toLowerCase();
 };

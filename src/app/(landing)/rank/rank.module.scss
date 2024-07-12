@@ -87,131 +87,356 @@
     background-size: 1000% auto;
     transform: translate3d(0, 0, 1px);
 
-    &.character-1 {
+    &.archer {
         background-position: calc((100% / 9) * 6) calc((100% / 2) * 1);
     }
 
-    &.character-2 {
+    &.berserker {
         background-position: calc((100% / 9) * 3) 0;
     }
 
-    &.character-3 {
+    &.corsair {
         background-position: calc((100% / 9) * 2) calc((100% / 2) * 2);
     }
 
-    &.character-4 {
+    &.dark-knight {
         background-position: calc((100% / 9) * 2) calc((100% / 2) * 1);
     }
 
-    &.character-5 {
+    &.drakania {
         background-position: calc((100% / 9) * 3) calc((100% / 2) * 2);
     }
 
-    &.character-6 {
+    &.guardian {
         background-position: calc((100% / 9) * 8) calc((100% / 2) * 1);
     }
 
-    &.character-7 {
+    &.hashashin {
         background-position: calc((100% / 9) * 9) calc((100% / 2) * 1);
     }
 
-    &.character-8 {
+    &.kunoichi {
         background-position: calc((100% / 9) * 8) 0;
     }
 
-    &.character-9 {
+    &.lahn {
         background-position: calc((100% / 9)* 5) calc((100% / 2)* 1);
     }
 
-    &.character-10 {
+    &.maehwa {
         background-position: calc((100% / 9)* 6) 0;
     }
 
-    &.character-11 {
+    &.musa {
         background-position: calc((100% / 9)* 5) 0;
     }
 
-    &.character-12 {
+    &.mystic {
         background-position: calc((100% / 9)* 4) calc((100% / 2)* 1);
     }
 
-    &.character-13 {
+    &.ninja {
         background-position: calc((100% / 9)* 9) 0;
     }
 
-    &.character-14 {
+    &.nova {
         background-position: calc((100% / 9)* 0) calc((100% / 2)* 2);
     }
 
-    &.character-15 {
+    &.ranger {
         background-position: calc((100% / 9)* 1) 0;
     }
 
-    &.character-16 {
+    &.sage {
         background-position: calc((100% / 9)* 1) calc((100% / 2)* 2);
     }
 
-    &.character-17 {
+    &.shai {
         background-position: calc((100% / 9)* 7) calc((100% / 2)* 1);
     }
 
-    &.character-18 {
+    &.sorceress {
         background-position: calc((100% / 9) * 2) 0;
     }
 
-    &.character-19 {
+    &.striker {
         background-position: calc((100% / 9)* 3) calc((100% / 2)* 1);
     }
 
-    &.character-20 {
+    &.tamer {
         background-position: calc((100% / 9)* 4) 0;
     }
 
-    &.character-21 {
+    &.valkyrie {
         background-position: calc((100% / 9)* 7) 0;
     }
 
-    &.character-22 {
+    &.warrior {
         background-position: 0 0;
     }
 
-    &.character-23 {
+    &.witch {
         background-position: calc((100% / 9) * 1) calc((100% / 2) * 1);
     }
 
-    &.character-24 {
+    &.wizard {
         background-position: calc((100% / 9)* 0) calc((100% / 2)* 1);
     }
 
-    &.character-25 {
+    &.woosa {
         background-position: calc((100% / 9)* 4) calc((100% / 2)* 2);
     }
 
-    &.character-26 {
+    &.maegu {
         background-position: calc((100% / 9)* 5) calc((100% / 2)* 2);
     }
 
-    &.character-27 {
+    &.scholar {
         background-position: calc((100% / 9)* 6) calc((100% / 2)* 2);
     }
 
-    &.character-28 {
+    &.dosa {
         background-position: calc((100% / 9)* 7) calc((100% / 2)* 2);
     }
 }
 
 .awakening{
     min-height: 920px;
+    background-size: cover;
+
+    &.archer {
+        background: url(../../../../public/assets/awakening_archer.jpg) no-repeat;
+    }
+
+    &.berserker {
+        background: url(../../../../public/assets/awakening_berserker.jpg) no-repeat;
+
+    }
+
+    &.corsair {
+        background: url(../../../../public/assets/awakening_corsair.jpg) no-repeat;
+    }
+
+    &.dark-knight {
+        background: url(../../../../public/assets/awakening_dark_knight.jpg) no-repeat;
+    }
+
+    &.drakania {
+        background: url(../../../../public/assets/awakening_drakania.jpg) no-repeat;
+    }
+
+    &.guardian {
+        background: url(../../../../public/assets/awakening_guardian.jpg) no-repeat;
+    }
+
+    &.hashashin {
+        background: url(../../../../public/assets/awakening_hashashin.jpg) no-repeat;
+    }
+
+    &.kunoichi {
+        background: url(../../../../public/assets/awakening_kunoichi.jpg) no-repeat;
+    }
+
+    &.lahn {
+        background: url(../../../../public/assets/awakening_lahn.jpg) no-repeat;
+    }
+
+    &.maehwa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.musa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.mystic {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.ninja {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.nova {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.ranger {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.sage {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.shai {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.sorceress {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.striker {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.tamer {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.valkyrie {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.warrior {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.witch {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+
+    }
+
+    &.wizard {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.woosa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.maegu {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.scholar {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.dosa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+
 }
-.awakening-image{
-    max-width: 100%;
-    height: auto;
-}
+
 
 .succession{
     min-height: 920px;
+    background-size: cover;
+    &.archer {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.berserker {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+
+    }
+
+    &.corsair {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.dark-knight {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.drakania {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.guardian {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.hashashin {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.kunoichi {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.lahn {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.maehwa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.musa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.mystic {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.ninja {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.nova {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.ranger {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.sage {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.shai {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.sorceress {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.striker {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.tamer {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.valkyrie {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.warrior {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.witch {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+
+    }
+
+    &.wizard {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.woosa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.maegu {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.scholar {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
+
+    &.dosa {
+        background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
+    }
 }
-.succession-image{
-    max-width: 100%;
-    height: auto;
-}
+
