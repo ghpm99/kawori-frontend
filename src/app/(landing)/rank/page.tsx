@@ -1,6 +1,6 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { getAllBdoClass, getAnswerByClass, getTotalVotes } from "@/services/classification";
+import { getAllBdoClass, getAnswerByClass, getAnswerSummary, getTotalVotes } from "@/services/classification";
 import { normalizeString } from "@/util";
 import { Statistic } from "antd";
 import {
@@ -20,6 +20,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
+import { AnswerSummaryData } from "@/lib/features/classification";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -33,6 +34,8 @@ const Rank = () => {
     const classificationStore = useAppSelector((state) => state.classification);
     const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
 
+    const [answerSummary, setAnswerSummary] = useState<AnswerSummaryData | undefined>(undefined);
+
     const classIdParams = searchParams.get("classId");
 
     useEffect(() => {
@@ -40,6 +43,7 @@ const Rank = () => {
         dispatch(getAllBdoClass());
         dispatch(getTotalVotes());
         dispatch(getAnswerByClass());
+        dispatch(getAnswerSummary());
     }, []);
 
     useEffect(() => {
@@ -98,6 +102,31 @@ const Rank = () => {
 
     const normalizedName = normalizeString(selectedClass?.name || "");
 
+    useEffect(() => {
+        if (selectedClass) {
+            setAnswerSummary(classificationStore.answerSummary.find((item) => item.bdo_class === selectedClass.id));
+        } else {
+            setAnswerSummary(undefined);
+        }
+    }, [selectedClass]);
+
+
+    const awakeningAnswerSummary = (() => {
+        if(!answerSummary || !answerSummary.resume["1"]) {
+            return;
+        }
+        const resume = answerSummary.resume["1"];
+        console.log(resume);
+        return <div>Resume 1</div>;
+    })()
+
+    const successionAnswerSummary = (() => {
+        if(!answerSummary || !answerSummary.resume["2"]) {
+            return;
+        }
+        return  <div>Resume 2</div>
+    })()
+
     return (
         <div>
             <Statistic title="Total de votos" value={classificationStore.totalVotes} />
@@ -106,12 +135,45 @@ const Rank = () => {
             </div>
             {selectedClass && (
                 <div className={styles["selected-class"]}>
-                    <h2>{selectedClass.abbreviation}</h2>
+                    <h2
+                        className={styles["title"]}
+                        style={{
+                            color: selectedClass.color,
+                        }}
+                    >
+                        {selectedClass.abbreviation}
+                    </h2>
                     <div className={`${styles["awakening"]}  ${styles[normalizedName]}`}>
-                        <h3>DESPERTAR</h3>
+                        <div className={styles["grid-container"]}>
+                            <div className={styles["left-container"]}></div>
+                            <div className={styles["rigth-container"]}>
+                                <h3
+                                    className={styles["title"]}
+                                    style={{
+                                        color: selectedClass.color,
+                                    }}
+                                >
+                                    DESPERTAR
+                                </h3>
+                                {awakeningAnswerSummary && awakeningAnswerSummary}
+                            </div>
+                        </div>
                     </div>
                     <div className={`${styles["succession"]}  ${styles[normalizedName]}`}>
-                        <h3>SUCESSÃO</h3>
+                        <div className={styles["grid-container"]}>
+                            <div className={styles["left-container"]}>
+                                <h3
+                                    className={styles["title"]}
+                                    style={{
+                                        color: selectedClass.color,
+                                    }}
+                                >
+                                    SUCESSÃO
+                                </h3>
+                                {successionAnswerSummary && successionAnswerSummary}
+                            </div>
+                            <div className={styles["rigth-container"]}></div>
+                        </div>
                     </div>
                 </div>
             )}

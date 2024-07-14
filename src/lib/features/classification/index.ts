@@ -3,9 +3,10 @@ import {
     getAllBdoClass,
     getAllQuestions,
     getAnswerByClass,
+    getAnswerSummary,
     getTotalVotes,
-} from "@/services/classification";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+} from "@/services/classification"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface QuestionData {
     id: number;
@@ -42,6 +43,13 @@ type IVotesByClass = {
     color: string;
 };
 
+export type AnswerSummaryData = {
+    id: number
+    bdo_class: number
+    updated_at: string
+    resume: any
+}
+
 interface ClassificationState {
     questions: QuestionData[];
     answers: AnswerData[];
@@ -49,6 +57,7 @@ interface ClassificationState {
     selectedBdoClass: SelectedClass | undefined;
     totalVotes: number;
     votesByClass: IVotesByClass[];
+    answerSummary: AnswerSummaryData[];
 }
 
 const initialState: ClassificationState = {
@@ -58,6 +67,7 @@ const initialState: ClassificationState = {
     selectedBdoClass: undefined,
     totalVotes: 0,
     votesByClass: [],
+    answerSummary: []
 };
 
 export const classificationSlice = createSlice({
@@ -103,7 +113,10 @@ export const classificationSlice = createSlice({
                     data: item.answers_count,
                     color: item.color,
                 }));
-            });
+            })
+            .addCase(getAnswerSummary.fulfilled, (state, action) => {
+                state.answerSummary = action.payload.data
+            })
     },
 });
 
