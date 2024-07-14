@@ -46,3 +46,8 @@ export const getAnswerByClass = createAsyncThunk("classification/answerByClass",
     const response = await apiDjango.get(`/classification/answer-by-class/`);
     return response.data;
 });
+
+export const getAnswerSummary = createAsyncThunk("classification/answerSummary", async () => {
+    const response = await apiDjango.get(`/classification/get-answer-summary/`);
+    return response.data;
+})
