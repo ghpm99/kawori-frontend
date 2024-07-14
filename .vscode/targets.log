@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jul 13 16:29:14 2024
+# Make data base, printed on Sun Jul 14 10:25:07 2024
 
 # Variables
 
@@ -71,8 +69,6 @@ CURDIR := /mnt/wsl/PHYSICALDRIVE4/Projects/kawori-frontend
 VSCEXT_EXHORT_GO_PATH = go
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = vscode-local:/c%3A/Users/ghpm9/.vscode/extensions/ms-ceintl.vscode-language-pack-pt-br-1.91.2024071009/translations/extensions/vscode.css-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -132,7 +128,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = 31b4739c-c844-42bc-9fb8-d5bd23a25109
+WT_SESSION = 3730a815-02db-4624-8b4c-d2aec5eeb92b
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -152,7 +148,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/9798_interop
+WSL_INTEROP = /run/WSL/3095_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -180,7 +176,7 @@ _ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-8d7dbcf7-3dac-42b0-8de0-0e74ef72c4c4.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-12656a6a-707a-409c-806b-aae1c472e4d3.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -204,7 +200,7 @@ WSL_DISTRO_NAME = Ubuntu
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # variable set hash-table stats:
-# Load=94/1024=9%, Rehash=0, Collisions=4/124=3%
+# Load=93/1024=9%, Rehash=0, Collisions=3/123=2%
 
 # Pattern-specific Variable Values
 
@@ -265,6 +261,8 @@ all:
 # strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
 # Load=43/8192=1%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Sat Jul 13 16:29:14 2024
+# Finished Make data base on Sun Jul 14 10:25:07 2024
 
  
+make: *** No rule to make target 'all'.  Stop.
+
