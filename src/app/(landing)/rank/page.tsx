@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllBdoClass, getAnswerByClass, getAnswerSummary, getTotalVotes } from "@/services/classification";
 import { normalizeString } from "@/util";
-import { Statistic } from "antd";
+import { Rate, Statistic, Tooltip } from "antd";
 import {
     ArcElement,
     BarElement,
@@ -13,7 +13,7 @@ import {
     LineElement,
     PointElement,
     Title,
-    Tooltip,
+    Tooltip as ChartTooltip,
 } from "chart.js";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -22,7 +22,17 @@ import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
 import { AnswerSummaryData } from "@/lib/features/classification";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    PointElement,
+    LineElement,
+    ArcElement,
+    Title,
+    ChartTooltip,
+    Legend,
+);
 
 const Rank = () => {
     const router = useRouter();
@@ -110,22 +120,35 @@ const Rank = () => {
         }
     }, [selectedClass]);
 
-
     const awakeningAnswerSummary = (() => {
-        if(!answerSummary || !answerSummary.resume["1"]) {
+        if (!answerSummary || !answerSummary.resume["1"]) {
             return;
         }
         const resume = answerSummary.resume["1"];
-        console.log(resume);
-        return <div>Resume 1</div>;
-    })()
+        return resume.map((item, index) => (
+            <Tooltip key={index} title={item.details}>
+                <div className={styles["answer-container"]}>
+                    <div>{item.text}</div>
+                    <Rate disabled value={item.avg_votes} tooltips={[String(item.avg_votes)]} allowHalf />
+                </div>
+            </Tooltip>
+        ));
+    })();
 
     const successionAnswerSummary = (() => {
-        if(!answerSummary || !answerSummary.resume["2"]) {
+        if (!answerSummary || !answerSummary.resume["2"]) {
             return;
         }
-        return  <div>Resume 2</div>
-    })()
+        const resume = answerSummary.resume["2"];
+        return resume.map((item, index) => (
+            <Tooltip key={index} title={item.details}>
+                <div className={styles["answer-container"]}>
+                    <div>{item.text}</div>
+                    <Rate disabled value={item.avg_votes} />
+                </div>
+            </Tooltip>
+        ));
+    })();
 
     return (
         <div>
@@ -155,7 +178,7 @@ const Rank = () => {
                                 >
                                     DESPERTAR
                                 </h3>
-                                {awakeningAnswerSummary && awakeningAnswerSummary}
+                                {awakeningAnswerSummary && <div>{awakeningAnswerSummary}</div>}
                             </div>
                         </div>
                     </div>
@@ -170,7 +193,7 @@ const Rank = () => {
                                 >
                                     SUCESSÃO
                                 </h3>
-                                {successionAnswerSummary && successionAnswerSummary}
+                                {successionAnswerSummary && <div>{successionAnswerSummary}</div>}
                             </div>
                             <div className={styles["rigth-container"]}></div>
                         </div>
