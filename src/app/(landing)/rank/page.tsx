@@ -208,7 +208,7 @@ const Rank = () => {
                 </div>
             )}
             <div className={styles["bdo-class-title"]}>
-                <h2>Escolher Classe</h2>
+                <h2 className={styles["title"]}>Escolher Classe</h2>
                 <h4 className={styles["subtitle"]}>Escolha a classe para visualizar resultados dos votos</h4>
             </div>
             <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : undefined}`} ref={ref}>

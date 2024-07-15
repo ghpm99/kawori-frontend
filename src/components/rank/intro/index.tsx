@@ -2,13 +2,43 @@ import { ClassProfile, setSelectedBdoClass } from "@/lib/features/classification
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, Divider, Select, Steps } from "antd";
 import styles from "./intro.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass: IClass[] }) => {
     const dispatch = useAppDispatch();
 
     const [selectedClass, setSelectedClass] = useState<number | undefined>(undefined);
     const [selectedProfile, setSelectedProfile] = useState<ClassProfile | undefined>(undefined);
+    const [enableCombatStyleSelect, setEnableCombatStyleSelect] = useState(true);
+
+    useEffect(() => {
+        switch (selectedClass) {
+            case 1: {
+                setEnableCombatStyleSelect(false);
+                setSelectedProfile(1);
+                break;
+            }
+            case 17: {
+                setEnableCombatStyleSelect(false);
+                setSelectedProfile(1);
+                break;
+            }
+            case 27: {
+                setEnableCombatStyleSelect(false);
+                setSelectedProfile(1);
+                break;
+            }
+            case 28: {
+                setEnableCombatStyleSelect(false);
+                setSelectedProfile(2);
+                break;
+            }
+            default: {
+                setEnableCombatStyleSelect(true);
+                break;
+            }
+        }
+    }, [selectedClass]);
 
     const handlerChangeBdoClass = (value: number) => {
         setSelectedClass(value);
@@ -63,9 +93,9 @@ const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass:
                             options={selectItens}
                             onChange={handlerChangeBdoClass}
                         />
-                        <div>Selecione o perfil:</div>
+                        <div>Selecione o estilo de combate:</div>
                         <Select
-                            placeholder="Selecione o perfil"
+                            placeholder="Selecione o estilo de combate"
                             style={{ width: "100%" }}
                             value={selectedProfile}
                             options={[
@@ -73,6 +103,7 @@ const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass:
                                 { value: 2, label: "Sucessão" },
                             ]}
                             onChange={handlerChangeProfile}
+                            disabled={!enableCombatStyleSelect}
                         />
                     </div>
                 </div>
