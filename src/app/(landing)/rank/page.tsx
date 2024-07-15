@@ -34,6 +34,8 @@ ChartJS.register(
     Legend,
 );
 
+const NoData = () => <div className={styles["no-data"]}>Sem dados</div>;
+
 const Rank = () => {
     const router = useRouter();
     const pathname = usePathname();
@@ -108,6 +110,11 @@ const Rank = () => {
         delay: 2,
     });
 
+    const { ref: selectedClassRef, inView: selectedClassInView } = useInView({
+        threshold: 0,
+        delay: 2,
+    });
+
     const selectedClass = configurationStore.class.find((bdoClass) => bdoClass.id === selectedClassId);
 
     const normalizedName = normalizeString(selectedClass?.name || "");
@@ -118,35 +125,32 @@ const Rank = () => {
         } else {
             setAnswerSummary(undefined);
         }
-    }, [selectedClass]);
+    }, [selectedClass?.id, classificationStore?.answerSummary?.length]);
 
     const awakeningAnswerSummary = (() => {
+        console.log(answerSummary);
         if (!answerSummary || !answerSummary.resume["1"]) {
-            return;
+            return <NoData />;
         }
         const resume = answerSummary.resume["1"];
         return resume.map((item, index) => (
-            <Tooltip key={index} title={item.details}>
-                <div className={styles["answer-container"]}>
-                    <div>{item.text}</div>
-                    <Rate disabled value={item.avg_votes} tooltips={[String(item.avg_votes)]} allowHalf />
-                </div>
-            </Tooltip>
+            <div key={index} className={`${styles["answer-container"]} ${styles["awakening-container"]}`}>
+                <div>{item.text}</div>
+                <Rate disabled value={item.avg_votes} tooltips={[String(item.avg_votes)]} allowHalf />
+            </div>
         ));
     })();
 
     const successionAnswerSummary = (() => {
         if (!answerSummary || !answerSummary.resume["2"]) {
-            return;
+            return <NoData />;
         }
         const resume = answerSummary.resume["2"];
         return resume.map((item, index) => (
-            <Tooltip key={index} title={item.details}>
-                <div className={styles["answer-container"]}>
-                    <div>{item.text}</div>
-                    <Rate disabled value={item.avg_votes} />
-                </div>
-            </Tooltip>
+            <div key={index} className={`${styles["answer-container"]} ${styles["succession-container"]}`}>
+                <div>{item.text}</div>
+                <Rate disabled value={item.avg_votes} />
+            </div>
         ));
     })();
 
@@ -157,7 +161,10 @@ const Rank = () => {
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
             </div>
             {selectedClass && (
-                <div className={styles["selected-class"]}>
+                <div
+                    className={`${styles["selected-class"]} ${selectedClassInView ? styles["on-class"] : undefined}`}
+                    ref={selectedClassRef}
+                >
                     <h2
                         className={styles["title"]}
                         style={{
@@ -178,7 +185,7 @@ const Rank = () => {
                                 >
                                     DESPERTAR
                                 </h3>
-                                {awakeningAnswerSummary && <div>{awakeningAnswerSummary}</div>}
+                                <div className={styles["awakening-summary"]}>{awakeningAnswerSummary}</div>
                             </div>
                         </div>
                     </div>
@@ -193,7 +200,7 @@ const Rank = () => {
                                 >
                                     SUCESSÃO
                                 </h3>
-                                {successionAnswerSummary && <div>{successionAnswerSummary}</div>}
+                                <div className={styles["succession-summary"]}>{successionAnswerSummary}</div>
                             </div>
                             <div className={styles["rigth-container"]}></div>
                         </div>

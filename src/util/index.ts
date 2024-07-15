@@ -63,5 +63,5 @@ export type AssetsClassData = {
 };
 
 export const normalizeString = (className: string): string => {
-    return className.replace(" ", "_").toLowerCase();
+    return className.replace(" ", "-").toLowerCase();
 };
