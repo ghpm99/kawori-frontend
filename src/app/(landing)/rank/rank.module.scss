@@ -203,10 +203,27 @@
     }
 }
 
+.selected-class{
+    &.on-class {
+        & .awakening{
+            opacity: 1;
+            transform: translate3d(0, 0, 1px);
+        }
+        & .succession{
+            opacity: 1;
+            transform: translate3d(0, 0, 1px);
+        }
+    }
+}
+
 .awakening {
     width: 100%;
-    min-height: 588px;
-
+    margin-bottom: 8px;
+    transform: translate3d(20%, 0, 0);
+    transition:
+        opacity 0.8s ease-in,
+        transform 0.8s;
+    opacity: 0;
 
     &.archer {
         background: url(../../../../public/assets/awakening_archer.jpg) no-repeat;
@@ -216,6 +233,7 @@
     &.berserker {
         background: url(../../../../public/assets/awakening_berserker.jpg) no-repeat;
         background-size: cover;
+
     }
 
     &.corsair {
@@ -321,6 +339,7 @@
     &.witch {
         background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
         background-size: cover;
+
     }
 
     &.wizard {
@@ -351,7 +370,11 @@
 
 .succession {
     width: 100%;
-    min-height: 588px;
+    transform: translate3d(-20%, 0, 0);
+    transition:
+        opacity 0.8s ease-in,
+        transform 0.8s;
+    opacity: 0;
 
     &.archer {
         display: none;
@@ -493,7 +516,7 @@
 
 .grid-container{
     width: 100%;
-    height: 100%;
+    min-height: 588px;
     display: inline-grid;
     gap: 250px;
     color:white;
@@ -515,6 +538,15 @@
 
 .answer-container{
     display: flex;
+    gap: 8px;
+
+    &.awakening-container{
+        justify-content: flex-start;
+    }
+
+    &.succession-container{
+        justify-content: flex-end;
+    }
 }
 
 .summary-container{
@@ -523,4 +555,22 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+}
+
+.awakening-summary{
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.succession-summary{
+    display: flex;
+    height: 80%;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.no-data{
+    text-align: center;
 }
