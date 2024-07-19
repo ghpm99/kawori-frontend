@@ -1,5 +1,5 @@
 "use client";
-import { Breadcrumb, Layout, Rate, Table } from "antd";
+import { Breadcrumb, Card, Layout, Rate, Table, Typography } from "antd";
 
 import Loading from "@/components/facetexture/loading";
 import Styles from "./rank.module.scss";
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { formatterDetailedDate } from "@/util";
 
 const RANK_MESSAGE_REF = "rank-message-ref";
+const { Title, Text } = Typography;
 
 function Rank() {
     const dispatch = useAppDispatch();
@@ -47,6 +48,22 @@ function Rank() {
                         <Link className={Styles["hiper-link"]} href="/internal/rank/vote">
                             <strong>Clique aqui</strong>
                         </Link>
+                    </div>
+                    <div>
+                        <Title>Rank de Classes</Title>
+                        <Text>
+                            Bem vindo a pagina de rank de classes, nessa pagina voce é capaz de dar sua opniao sobre sua
+                            classe e compartilhar sua visão de jogo.
+                        </Text><br/>
+                        <Text>
+                            Para votar basta{" "}
+                            <Link className={Styles["hiper-link"]} href="/internal/rank/vote">
+                                <strong>clicar aqui!</strong>
+                            </Link>
+                        </Text><br/>
+                        <Text>
+                            Após enviar seu voto ele será analisado e processado, esse processo pode levar algum tempo.
+                        </Text>
                     </div>
                     <Table
                         title={() => "Meus ultimos votos"}
