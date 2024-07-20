@@ -49,20 +49,27 @@ function Rank() {
                             <strong>Clique aqui</strong>
                         </Link>
                     </div>
-                    <div>
+                    <div className={Styles["text"]}>
                         <Title>Rank de Classes</Title>
                         <Text>
-                            Bem vindo a pagina de rank de classes, nessa pagina voce é capaz de dar sua opniao sobre sua
-                            classe e compartilhar sua visão de jogo.
-                        </Text><br/>
+                            Bem-vindo(a) à página de ranking de classes! Nesta página, você pode dar sua opinião sobre
+                            sua classe e compartilhar sua visão de jogo.
+                        </Text>
+                        <br />
                         <Text>
-                            Para votar basta{" "}
+                            Para votar, basta{" "}
                             <Link className={Styles["hiper-link"]} href="/internal/rank/vote">
                                 <strong>clicar aqui!</strong>
                             </Link>
-                        </Text><br/>
+                        </Text>
+                        <br />
                         <Text>
-                            Após enviar seu voto ele será analisado e processado, esse processo pode levar algum tempo.
+                            Após enviar seu voto, ele será analisado e processado, o que pode levar algum tempo.
+                        </Text>
+                        <br />
+                        <Text>
+                            Caso vote novamente na mesma classe e no mesmo estilo de combate de um voto já realizado, o
+                            voto antigo será editado.
                         </Text>
                     </div>
                     <Table

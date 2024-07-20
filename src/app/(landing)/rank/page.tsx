@@ -128,7 +128,6 @@ const Rank = () => {
     }, [selectedClass?.id, classificationStore?.answerSummary?.length]);
 
     const awakeningAnswerSummary = (() => {
-        console.log(answerSummary);
         if (!answerSummary || !answerSummary.resume["1"]) {
             return <NoData />;
         }
