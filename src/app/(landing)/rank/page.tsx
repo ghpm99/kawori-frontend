@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllBdoClass, getAnswerByClass, getAnswerSummary, getTotalVotes } from "@/services/classification";
 import { normalizeString } from "@/util";
-import { Rate, Statistic, Tooltip } from "antd";
+import { Rate, Statistic, Tooltip, Typography } from "antd";
 import {
     ArcElement,
     BarElement,
@@ -36,6 +36,8 @@ ChartJS.register(
 
 const NoData = () => <div className={styles["no-data"]}>Sem dados</div>;
 
+const { Text, Title: AntdTitle } = Typography;
+
 const Rank = () => {
     const router = useRouter();
     const pathname = usePathname();
@@ -51,9 +53,9 @@ const Rank = () => {
     const classIdParams = searchParams.get("classId");
 
     useEffect(() => {
-        document.title = "Kawori Rank";
+        document.title = "Ranking de Classes - Resultados de Votação";
         dispatch(getAllBdoClass());
-        dispatch(getTotalVotes());
+        // dispatch(getTotalVotes());
         dispatch(getAnswerByClass());
         dispatch(getAnswerSummary());
     }, []);
@@ -94,7 +96,7 @@ const Rank = () => {
             },
             title: {
                 display: true,
-                text: "Votos por classe",
+                text: "Distribuição de Votos por Classe",
             },
         },
     };
@@ -155,7 +157,12 @@ const Rank = () => {
 
     return (
         <div>
-            <Statistic title="Total de votos" value={classificationStore.totalVotes} />
+            <AntdTitle>Ranking de Classes</AntdTitle>
+            <Text>
+                Bem-vindo à página de resultados de votação de classes! Aqui você pode ver a distribuição dos votos e
+                escolher a sua classe favorita para visualizar os detalhes.
+            </Text>
+            {/* <Statistic title="Total de votos" value={classificationStore.totalVotes} /> */}
             <div className={styles["votes-pie"]}>
                 <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
             </div>
@@ -175,7 +182,7 @@ const Rank = () => {
                     <div className={`${styles["awakening"]}  ${styles[normalizedName]}`}>
                         <div className={styles["grid-container"]}>
                             <div className={styles["left-container"]}></div>
-                            <div className={styles["rigth-container"]}>
+                            <div className={styles["right-container"]}>
                                 <h3
                                     className={styles["title"]}
                                     style={{
@@ -201,14 +208,16 @@ const Rank = () => {
                                 </h3>
                                 <div className={styles["succession-summary"]}>{successionAnswerSummary}</div>
                             </div>
-                            <div className={styles["rigth-container"]}></div>
+                            <div className={styles["right-container"]}></div>
                         </div>
                     </div>
                 </div>
             )}
             <div className={styles["bdo-class-title"]}>
                 <h2 className={styles["title"]}>Escolher Classe</h2>
-                <h4 className={styles["subtitle"]}>Escolha a classe para visualizar resultados dos votos</h4>
+                <h4 className={styles["subtitle"]}>
+                    Escolha a classe abaixo para visualizar os resultados detalhados dos votos.
+                </h4>
             </div>
             <ul className={`${styles["bdo-class-list"]} ${inView ? styles["on"] : undefined}`} ref={ref}>
                 {configurationStore.class.map((bdoClass, index) => (
@@ -231,6 +240,12 @@ const Rank = () => {
                     </li>
                 ))}
             </ul>
+            <Text>
+                Obrigado por participar da votação! Sua opinião é muito importante para nós e ajuda outras pessoas a
+                saberem como está a sua classe.
+            </Text>
+            <br />
+            <Text>Continue votando e ajudando a comunidade.</Text>
         </div>
     );
 };
