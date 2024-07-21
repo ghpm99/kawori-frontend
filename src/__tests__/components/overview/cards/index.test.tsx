@@ -32,7 +32,7 @@ describe("Overview Card", () => {
         );
         const countPaymentText = getByTestId("countPayment").textContent;
         expect(countPaymentText).not.toBeNull();
-        expect(parseInt(countPaymentText)).toBe(countPayment);
+        expect(parseInt(countPaymentText ?? "")).toBe(countPayment);
 
         const amountPaymentText = getByTestId("amountPayment").textContent;
         expect(amountPaymentText).not.toBeNull();

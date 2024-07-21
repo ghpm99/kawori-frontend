@@ -1,20 +1,43 @@
 import axios from "axios";
 
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
 const apiLogin = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/auth",
 });
 
-export async function signinService(username: string, password: string) {
-    const response = await apiLogin.post("/signin", {
-        credentials: {
-            username,
-            password,
+export const signinThunk = createAsyncThunk(
+    "auth/signin",
+    async (args: { username: string; password: string; remember: boolean }) => {
+        const response = await apiLogin.post<{ tokens: { access: string; refresh: string } }>("/token/", args);
+        return {
+            response: response.data,
+            args,
+        };
+    },
+);
+
+export const verifyTokenService = (token: { token: string }) => {
+    const response = apiLogin.post("/token/verify/", token, {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
         },
     });
     return response;
-}
+};
 
-interface INewUser {
+export const refreshTokenService = (refresh: { refresh: string }) => {
+    const response = apiLogin.post<{ access: string }>("/token/refresh/", refresh, {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+        },
+    });
+    return response;
+};
+
+export interface INewUser {
     username: string;
     password: string;
     email: string;
@@ -22,18 +45,7 @@ interface INewUser {
     last_name: string;
 }
 
-export async function signupService(user: INewUser) {
-    const response = await apiLogin.post("/signup", user);
-    return {
-        data: response.data,
-        status: response.status,
-        statusText: response.statusText,
-    };
-}
-
-export async function fetchUserDetails(token: string) {
-    const response = await apiLogin.get("/user", {
-        headers: { Authorization: "Basic " + token },
-    });
+export const signupService = (user: INewUser) => {
+    const response = apiLogin.post<{ msg: string }>("/signup", user);
     return response;
-}
+};

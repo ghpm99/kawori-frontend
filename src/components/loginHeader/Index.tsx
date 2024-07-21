@@ -1,17 +1,20 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Popover } from "antd";
-import { signOut, useSession } from "next-auth/react";
+
 import Link from "next/link";
 
 import S from "./Login.module.scss";
 
 export default function LoginHeader() {
-    const { data, status } = useSession();
+    const { data, status } = {
+        data: { user: { name: "test" } },
+        status: "authenticated",
+    };
 
     const content = (
         <div>
             <div>{data?.user?.name}</div>
-            <Button onClick={() => signOut()}>Deslogar</Button>
+            <Button href="/signout">Deslogar</Button>
         </div>
     );
 
