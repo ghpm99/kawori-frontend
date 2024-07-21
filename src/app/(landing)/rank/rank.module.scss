@@ -31,11 +31,15 @@
             transform: translate3d(0, 0, 1px);
         }
     }
+    @media screen and (max-width: 1278px) {
+        width: 100%;
+    }
 }
 
 .bdo-class {
     position: relative;
     width: calc(100% / 5);
+    min-width: 255px;
     height: 346px;
     padding: 0 9px 18px;
     transform: translate3d(0, 20%, 0);
@@ -48,6 +52,9 @@
         & .bdo-class-name {
             color: #e7bc5c;
         }
+    }
+    @media screen and (max-width: 1279px){
+        width: auto;
     }
 }
 
@@ -86,7 +93,7 @@
     position: absolute;
     top: 0;
     left: -1px;
-    width: calc(100% + 2px);
+    width: 240px;
     height: 100%;
     background: url(../../../../public/assets/classes_spr.jpg) no-repeat;
     background-size: 1000% auto;
@@ -226,6 +233,18 @@
         opacity 0.8s ease-in,
         transform 0.8s;
     opacity: 0;
+
+    @media screen and (max-width: 1300px) {
+        .grid-container {
+
+            .left-container{
+                display: none;
+            }
+            .right-container{
+                grid-column-start: 1;
+            }
+        }
+    }
 
     &.archer {
         background: url(../../../../public/assets/awakening_archer.jpg) no-repeat;
@@ -377,6 +396,13 @@
         opacity 0.8s ease-in,
         transform 0.8s;
     opacity: 0;
+    background-position: right !important;
+
+    @media screen and (max-width: 1300px) {
+        .grid-container .right-container{
+            display: none;
+        }
+    }
 
     &.archer {
         display: none;
@@ -519,6 +545,7 @@
 .grid-container{
     width: 100%;
     min-height: 588px;
+    padding: 16px;
     display: inline-grid;
     gap: 250px;
     color:white;
@@ -528,7 +555,7 @@
     grid-column-start: 1;
 }
 
-.rigth-container{
+.right-container{
     grid-column-start: 2;
 }
 
