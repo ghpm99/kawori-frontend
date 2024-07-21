@@ -1,3 +1,11 @@
+import {
+    updateFacetextureClassModalReducer,
+    updateFacetextureImageNameModalReducer,
+    updateFacetextureVisibleClassModalReducer,
+} from "@/lib/features/facetexture";
+import { useAppDispatch } from "@/lib/hooks";
+import { RootState } from "@/lib/store";
+import { newCharacterThunk } from "@/services/facetexture";
 import { PlusOutlined } from "@ant-design/icons";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,15 +14,8 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { RcFile } from "antd/lib/upload";
 import Dragger from "antd/lib/upload/Dragger";
 import { useSelector } from "react-redux";
-import { newCharacterThunk } from "@/services/facetexture";
-import {
-    updateFacetextureClassModalReducer,
-    updateFacetextureImageNameModalReducer,
-    updateFacetextureVisibleClassModalReducer,
-} from "@/store/features/facetexture";
-import { RootState, useAppDispatch } from "@/store/store";
 import styles from "./newModal.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "@/pages/admin/facetexture";
+import { FACETEXTURE_MESSAGE_REF } from "@/util";
 
 const { Title } = Typography;
 

@@ -1,11 +1,12 @@
-import { useSession } from "next-auth/react";
+import { RootState } from "@/lib/store";
+import { useSelector } from "react-redux";
 
 const useMenuHeader = () => {
-    const { data, status } = useSession();
+    const { status, user } = useSelector((state: RootState) => state.auth);
 
     return {
-        status,
-        data,
+        status: status,
+        data: user,
     };
 };
 

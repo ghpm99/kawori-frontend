@@ -1,30 +1,27 @@
-import { List } from "antd";
-import Link from "next/link";
+import { createClient } from "@/prismicio";
 import styles from "./news.module.scss";
-import { formatterDate } from "@/util/index";
+import NewsList from "./newsList";
+import { fetchProjectDetailData } from "@/app/api/lib/news";
+import { useEffect, useState } from "react";
 
-interface NewsProps {
+export interface NewsProps {
     first_publication_date: string;
     url: string;
     title: string;
 }
 
-const News = ({ data }) => {
+const News = () => {
+    const [data, setData] = useState<NewsProps[]>([]);
+
+    useEffect(() => {
+        fetchProjectDetailData().then((response) => {
+            setData(response);
+        });
+    }, []);
+
     return (
         <div className={styles["news-list"]}>
-            <List
-                header={<strong>Novidades</strong>}
-                bordered
-                dataSource={data}
-                renderItem={(item: NewsProps) => (
-                    <List.Item>
-                        <Link href={item.url}>
-                            [{formatterDate(item.first_publication_date)}]{" - "}
-                            {item.title}
-                        </Link>
-                    </List.Item>
-                )}
-            />
+            <NewsList data={data} />
         </div>
     );
 };

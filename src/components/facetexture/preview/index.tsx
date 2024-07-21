@@ -6,9 +6,11 @@ import { useState } from "react";
 import { downloadFacetextureService, previewFacetextureService } from "@/services/facetexture";
 import { db } from "@/util/db";
 import Styles from "./Preview.module.scss";
-import { FACETEXTURE_MESSAGE_REF } from "@/pages/admin/facetexture";
+
+import { RootState } from "@/lib/store";
+import { FACETEXTURE_MESSAGE_REF } from "@/util";
+import * as Sentry from "@sentry/nextjs";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 
 const Preview = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
@@ -42,6 +44,7 @@ const Preview = () => {
                     key: FACETEXTURE_MESSAGE_REF,
                 });
                 console.error(reason);
+                Sentry.captureException(reason);
             })
             .finally(() => {
                 setLoading(false);
@@ -70,6 +73,7 @@ const Preview = () => {
                     key: FACETEXTURE_MESSAGE_REF,
                 });
                 console.error(reason);
+                Sentry.captureException(reason);
             })
             .finally(() => {
                 setDownloading(false);

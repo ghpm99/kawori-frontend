@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 
+export const FACETEXTURE_MESSAGE_REF = "facetexture-message-ref";
+
 export const formatMoney = (
     amount: number,
     decimalCount = 2,
@@ -53,4 +55,13 @@ export const formatterDetailedDate = (dateString: string) => {
 
 export const formatterMonthYearDate = (dateString: string) => {
     return dayjs(dateString).format("MM/YYYY");
+};
+
+export type AssetsClassData = {
+    awakeningImage?: string;
+    successionImage?: string;
+};
+
+export const normalizeString = (className: string): string => {
+    return className.replace(" ", "-").toLowerCase();
 };

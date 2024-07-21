@@ -1,8 +1,9 @@
 import axios from "axios";
-import { getSession } from "next-auth/react";
+import TokenService from "./auth/authToken";
+import * as Sentry from "@sentry/nextjs";
 
 export const apiDjango = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL + "/admin-api",
+    baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
 });
 
 let tried = 0;
@@ -16,8 +17,7 @@ const sleepRequest = (milliseconds: number, originalRequest: any) => {
 };
 
 apiDjango.interceptors.request.use(async (request) => {
-    const session = await getSession();
-    const token = session?.accessToken;
+    const token = TokenService.getLocalAccessToken();
     if (token) {
         request.headers!.Authorization = `Bearer ${token}`;
     }
@@ -40,6 +40,7 @@ apiDjango.interceptors.response.use(
             tried++;
             return sleepRequest(retryDelay, originalRequest);
         } else {
+            Sentry.captureException(error);
             return Promise.reject(error);
         }
     },
