@@ -16,7 +16,7 @@ import {
     Tooltip as ChartTooltip,
 } from "chart.js";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
@@ -250,4 +250,10 @@ const Rank = () => {
     );
 };
 
-export default Rank;
+const ComponentWrapper = () => (
+    <Suspense>
+        <Rank />
+    </Suspense>
+);
+
+export default ComponentWrapper;
