@@ -1,6 +1,6 @@
-import { renderWithProviders } from "@/__tests__/util/test-utils";
+import { renderWithProviders } from "@/util/test-utils";
 import "@testing-library/jest-dom";
-import Loading from "../../../../components/facetexture/loading";
+import Loading from ".";
 
 Object.defineProperty(window, "matchMedia", {
     writable: true,
