@@ -1,4 +1,4 @@
-import { renderWithProviders } from "@/__tests__/util/test-utils";
+import { renderWithProviders } from "@/util/test-utils";
 import LoginHeader from "@/components/loginHeader/Index";
 
 Object.defineProperty(window, "matchMedia", {

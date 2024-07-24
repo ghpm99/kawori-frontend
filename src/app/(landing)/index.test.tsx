@@ -1,7 +1,7 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 
 import { cleanup } from "@testing-library/react";
-import { renderWithProviders } from "../util/test-utils";
+import { renderWithProviders } from "../../util/test-utils";
 import Home from "@/app/(landing)/page";
 
 jest.mock("@/components/menuHeader/useMenuHeader");
@@ -76,7 +76,7 @@ describe("Home", () => {
 
     it("should render the footer text correctly", () => {
         const { getByText } = renderWithProviders(<Home />);
-        const footerText = getByText(/Sinta-se a vontade para entrar para/is);
+        const footerText = getByText(/Sinta-se a vontade para entrar para/i);
         expect(footerText).toBeInTheDocument();
     });
 

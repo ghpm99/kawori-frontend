@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import OpenModalNewContract from "@/components/financial/contracts/openModalNewContract";
-import { renderWithProviders } from "@/__tests__/util/test-utils";
+import { renderWithProviders } from "@/util/test-utils";
 import { store } from "@/lib/store";
 
 describe("Open Modal New Contract", () => {

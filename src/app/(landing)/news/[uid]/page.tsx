@@ -18,6 +18,7 @@ type Params = { uid: string };
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
     const client = createClient();
+    console.log(params.uid);
     const page = await client.getByUID("platform_news", params.uid);
 
     return {
