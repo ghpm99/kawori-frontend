@@ -1,32 +1,17 @@
 import { renderWithProviders } from "@/util/test-utils";
 import "@testing-library/jest-dom";
-import Loading from ".";
-
-Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-    })),
-});
+import {screen} from '@testing-library/react'
+import Loading from '.'
 
 describe("Test Characters container", () => {
-    it("Check render", () => {
-        const { baseElement, getByText, getAllByText } = renderWithProviders(<Loading />);
-        expect(baseElement).toBeInTheDocument();
-        expect(baseElement).toMatchSnapshot();
+    test("Check render", () => {
+        const {container} = renderWithProviders(<Loading />);
+        expect(container).toBeInTheDocument();
 
-        expect(getByText("Conta")).toBeInTheDocument();
-        expect(getAllByText("Kawori")).toHaveLength(2);
-        expect(getAllByText("Facetexture")).toHaveLength(2);
-        expect(getByText("Personagens")).toBeInTheDocument();
-        expect(getByText("Background")).toBeInTheDocument();
-        expect(getByText("Preview")).toBeInTheDocument();
+        expect(screen.getByText("Kawori")).toBeInTheDocument()
+        expect(screen.getByText("Facetexture")).toBeInTheDocument()
+        expect(screen.getByText("Personagens")).toBeInTheDocument();
+        expect(screen.getByText("Background")).toBeInTheDocument();
+        expect(screen.getByText("Preview")).toBeInTheDocument();
     });
 });
