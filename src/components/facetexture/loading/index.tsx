@@ -22,7 +22,7 @@ const Loading = () => {
                 <div className={Styles["background-container"]}>
                     <h1>Background</h1>
                     <div>
-                        <SkeletonImage />
+                        <SkeletonImage/>
                     </div>
                 </div>
                 <div className={Styles["preview-container"]}>
