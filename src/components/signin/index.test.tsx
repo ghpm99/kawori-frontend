@@ -12,7 +12,6 @@ jest.mock("@/services/auth", () => ({
     signinService: jest.fn(() => Promise.resolve({ status: 200 })),
 }));
 
-
 describe("LoginPage", () => {
     it("should render the login form", () => {
         const { getByLabelText, getByText } = render(<LoginPage />);

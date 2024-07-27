@@ -14,8 +14,6 @@ jest.mock("@/services/auth", () => ({
     signupService: jest.fn(),
 }));
 
-
-
 beforeAll(() => {
     cleanup();
 });
