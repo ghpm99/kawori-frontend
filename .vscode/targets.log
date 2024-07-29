@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 26 21:42:47 2024
+# Make data base, printed on Sun Jul 28 21:33:30 2024
 
 # Variables
 
@@ -128,7 +128,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = 1365c512-25cf-49e6-a1ca-ea278ef44a7b
+WT_SESSION = bd5ac336-2196-49d1-9c1e-51df1d80244b
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -148,7 +148,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/2605_interop
+WSL_INTEROP = /run/WSL/4319_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -172,11 +172,11 @@ VSCEXT_UTM_SOURCE = vscode
 # environment
 PAGER = less
 # environment
-_ = /home/ghpm99/projects/toolkit/kawori_front.sh
+_ = /mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-8d8980ac-ebce-4d3f-bbdf-2b0d98e26a9d.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-9e54ce5a-97eb-4861-a7a8-32bc2783a77f.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -261,7 +261,7 @@ all:
 # strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
 # Load=43/8192=1%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Fri Jul 26 21:42:47 2024
+# Finished Make data base on Sun Jul 28 21:33:30 2024
 
  
 make: *** No rule to make target 'all'.  Stop.

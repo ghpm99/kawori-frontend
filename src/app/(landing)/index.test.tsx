@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 describe("Home", () => {
-    it("should render the title correctly", () => {
+    test("should render the title correctly", () => {
         (useMenuHeader as jest.Mock).mockReturnValue({
             status: "authenticated",
             data: {
@@ -32,19 +32,19 @@ describe("Home", () => {
         expect(title).toBeInTheDocument();
     });
 
-    it("should render the signup text correctly", () => {
+    test("should render the signup text correctly", () => {
         const { getByText } = renderWithProviders(<Home />);
         const signupText = getByText("O cadastro é gratuito, simples e rapido.");
         expect(signupText).toBeInTheDocument();
     });
 
-    it("should render the form title correctly", () => {
+    test("should render the form title correctly", () => {
         const { getByText } = renderWithProviders(<Home />);
         const formTitle = getByText("Cadastro");
         expect(formTitle).toBeInTheDocument();
     });
 
-    it("should render the SingupForm component", () => {
+    test("should render the SingupForm component", () => {
         const { getByLabelText } = renderWithProviders(<Home />);
         const nameInput = getByLabelText("Nome");
         const lastNameInput = getByLabelText("Sobrenome");
@@ -60,13 +60,13 @@ describe("Home", () => {
         expect(passwordConfirmationInput).toBeInTheDocument();
     });
 
-    it("should render the footer text correctly", () => {
+    test("should render the footer text correctly", () => {
         const { getByText } = renderWithProviders(<Home />);
         const footerText = getByText(/Sinta-se a vontade para entrar para/i);
         expect(footerText).toBeInTheDocument();
     });
 
-    it("should render the discord link correctly", () => {
+    test("should render the discord link correctly", () => {
         const { getByText } = renderWithProviders(<Home />);
         const discordLink = getByText("nossa comunidade");
         expect(discordLink).toBeInTheDocument();
