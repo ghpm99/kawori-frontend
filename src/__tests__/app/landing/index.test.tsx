@@ -1,10 +1,12 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 
 import { cleanup } from "@testing-library/react";
-import { renderWithProviders } from "../../util/test-utils";
-import Home from "@/app/(landing)/page";
+import { renderWithProviders } from "@/util/test-utils";
+import Home from "@/app/(landing)/page.tsx";
 
 jest.mock("@/components/menuHeader/useMenuHeader");
+jest.mock("@/components/landing/news");
+jest.mock("@prismicio");
 
 beforeAll(() => {
     cleanup();
@@ -15,7 +17,12 @@ afterEach(() => {
     cleanup();
 });
 
-describe("Home", () => {
+describe("Home Page", () => {
+    test("should render the page", () => {
+        const { container } = renderWithProviders(<Home />);
+        expect(container).toBeDefined();
+    });
+
     test("should render the title correctly", () => {
         (useMenuHeader as jest.Mock).mockReturnValue({
             status: "authenticated",

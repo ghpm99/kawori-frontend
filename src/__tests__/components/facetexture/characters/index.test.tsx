@@ -1,5 +1,5 @@
 import { renderWithProviders } from "@/util/test-utils";
-import Characters from "./index";
+import Characters from "@/components/facetexture/characters/index";
 
 describe("Test Characters container", () => {
     it("Check render", () => {
