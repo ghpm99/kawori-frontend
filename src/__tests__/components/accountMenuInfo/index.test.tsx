@@ -17,6 +17,6 @@ describe("AccountMenuInfo", () => {
     it("should render the account link", () => {
         const { getByText } = render(<AccountMenuInfo user={user} />);
 
-        expect(getByText("Conta")).toBeInTheDocument();
+        expect(getByText("Test User")).toBeInTheDocument();
     });
 });

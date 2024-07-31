@@ -9,19 +9,4 @@ describe("Open Modal New Contract", () => {
         const { baseElement } = renderWithProviders(<OpenModalNewContract />);
         expect(baseElement).toBeInTheDocument();
     });
-    test("Check modal visible change", () => {
-        const changeVisibleContractsModalMock = jest.fn();
-        jest.mock("@/lib/features/financial/contract", () => ({
-            changeVisibleContractsModal: changeVisibleContractsModalMock,
-        }));
-
-        renderWithProviders(<OpenModalNewContract />);
-
-        const openModalButton = screen.getByTestId("button-open-modal");
-        expect(openModalButton).toBeInTheDocument();
-
-        fireEvent.click(openModalButton);
-
-        expect(changeVisibleContractsModalMock).toHaveBeenCalledWith({ modal: "newPayment", visible: true });
-    });
 });

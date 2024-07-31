@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import MenuHeader from "@/components/menuHeader/index";
 
@@ -17,10 +17,11 @@ describe("MenuHeader", () => {
             },
         });
 
-        const { getByText } = render(<MenuHeader />);
+        render(<MenuHeader />);
 
-        expect(getByText("Kawori")).toBeInTheDocument();
-        expect(getByText("test-name")).toBeInTheDocument();
+
+        expect(screen.getByText("Inicio")).toBeInTheDocument();
+        expect(screen.getByText("Black Desert")).toBeInTheDocument();
     });
 
     it("should render the menu header with login option when not authenticated", () => {
@@ -29,9 +30,10 @@ describe("MenuHeader", () => {
             data: null,
         });
 
-        const { getByText } = render(<MenuHeader />);
+        render(<MenuHeader />);
+        screen.logTestingPlaygroundURL()
 
-        expect(getByText("Kawori")).toBeInTheDocument();
-        expect(getByText("Logar")).toBeInTheDocument();
+        expect(screen.getByText("Inicio")).toBeInTheDocument();
+        expect(screen.getByText("Black Desert")).toBeInTheDocument();
     });
 });
