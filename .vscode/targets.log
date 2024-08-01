@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jul 29 19:38:12 2024
+# Make data base, printed on Wed Jul 31 20:38:53 2024
 
 # Variables
 
@@ -71,8 +71,6 @@ CURDIR := /mnt/wsl/PHYSICALDRIVE4/Projects/kawori-frontend
 VSCEXT_EXHORT_GO_PATH = go
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = vscode-local:/c%3A/Users/ghpm9/.vscode/extensions/ms-ceintl.vscode-language-pack-pt-br-1.91.2024071009/translations/extensions/vscode.json-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -132,7 +130,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = f3dd1b70-b2d6-4470-aa4c-e401f6e431c4
+WT_SESSION = 04230a8e-faca-4dc0-ab03-c7f61ea68008
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -152,7 +150,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/3937_interop
+WSL_INTEROP = /run/WSL/85099_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -180,7 +178,7 @@ _ = /mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-d007fcf2-8b0d-41b9-9333-232e9a8b53c7.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-bb5facb2-f5c5-4841-9f8c-c3b0f80385a7.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -204,7 +202,7 @@ WSL_DISTRO_NAME = Ubuntu
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # variable set hash-table stats:
-# Load=94/1024=9%, Rehash=0, Collisions=4/124=3%
+# Load=93/1024=9%, Rehash=0, Collisions=3/123=2%
 
 # Pattern-specific Variable Values
 
@@ -265,6 +263,6 @@ all:
 # strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
 # Load=43/8192=1%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Mon Jul 29 19:38:12 2024
+# Finished Make data base on Wed Jul 31 20:38:53 2024
 
  
