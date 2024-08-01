@@ -12,6 +12,7 @@
     "compile": "tsc",
     "test": "jest",
     "test:ci": "jest --ci",
+    "coverage": "jest --coverage",
     "slicemachine": "start-slicemachine"
   },
   "dependencies": {
