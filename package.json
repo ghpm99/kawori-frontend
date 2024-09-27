@@ -24,7 +24,7 @@
     "@prismicio/next": "^1.5.0",
     "@prismicio/react": "^2.7.4",
     "@reduxjs/toolkit": "^2.2.4",
-    "@sentry/nextjs": "^8.4.0",
+    "@sentry/nextjs": "^8.32.0",
     "@vercel/analytics": "^1.2.2",
     "antd": "^5.17.0",
     "antd-img-crop": "^4.22.0",
