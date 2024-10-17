@@ -1,3 +1,4 @@
+import axios from "axios";
 import { defaultFallbackInView } from 'react-intersection-observer'
 
 global.IntersectionObserver = jest.fn()
@@ -16,3 +17,12 @@ Object.defineProperty(window, "matchMedia", {
         dispatchEvent: jest.fn(),
     })),
 });
+
+jest.mock("axios", () => ({
+    create: jest.fn(() => axios),
+    interceptors: {
+        request: { use: jest.fn(), eject: jest.fn() },
+        response: { use: jest.fn(), eject: jest.fn() },
+    },
+    post: jest.fn(() => Promise.resolve({ data: {} })),
+}));

@@ -28,6 +28,7 @@ export default function LoginPage() {
                     navigate.push("/internal/user");
                 } else if (isRejected(action)) {
                     Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
+                    console.error("error", action);
                     setError(true);
                 }
             })
