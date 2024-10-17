@@ -1,12 +1,18 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 
-import { cleanup } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import { renderWithProviders } from "@/util/test-utils";
 import Home from "@/app/(landing)/page.tsx";
 
+import { cache } from "react";
+
 jest.mock("@/components/menuHeader/useMenuHeader");
 jest.mock("@/components/landing/news");
-jest.mock("@prismicio");
+jest.mock("@/prismicio");
+jest.mock("react", () => ({
+    ...jest.requireActual("react"),
+    cache: jest.fn(),
+}));
 
 beforeAll(() => {
     cleanup();
@@ -34,8 +40,8 @@ describe("Home Page", () => {
                 },
             },
         });
-        const { getByText } = renderWithProviders(<Home />);
-        const title = getByText("Você está a apenas um passo de um novo nivel de personalização do seu jogo!");
+        renderWithProviders(<Home />);
+        const title = screen.getByRole('heading', { name: /kawori é uma plataforma de personalização de tela de seleção de personagens para black desert online\./i })
         expect(title).toBeInTheDocument();
     });
 

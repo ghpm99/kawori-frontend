@@ -1,28 +1,32 @@
+import axios from "axios";
 import LoginPage from "@/components/signin";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderWithProviders } from "@/util/test-utils";
+import { useRouter } from "next/navigation";
 
-import Router from "next/router";
-
-jest.mock("next/router", () => ({
-    push: jest.fn(),
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn(() => ({
+        push: jest.fn(),
+    })),
 }));
 
-jest.mock("@/services/auth", () => ({
-    signinService: jest.fn(() => Promise.resolve({ status: 200 })),
+jest.mock("@sentry/nextjs", () => ({
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
 }));
 
 describe("LoginPage", () => {
-    it("should render the login form", () => {
-        const { getByLabelText, getByText } = render(<LoginPage />);
+    test("should render the login form", () => {
+        const { getByLabelText, getByText } = renderWithProviders(<LoginPage />);
 
         expect(getByLabelText("Usuario")).toBeInTheDocument();
         expect(getByLabelText("Senha")).toBeInTheDocument();
         expect(getByText("Logar")).toBeInTheDocument();
     });
 
-    it("should show an error message when login fails", async () => {
-        const { getByLabelText, getByText } = render(<LoginPage />);
+    test("should show an error message when login fails", async () => {
+        const { getByLabelText, getByText } = renderWithProviders(<LoginPage />);
         const usernameInput = getByLabelText("Usuario");
         const passwordInput = getByLabelText("Senha");
         const loginButton = getByText("Logar");
@@ -36,8 +40,13 @@ describe("LoginPage", () => {
         });
     });
 
-    it("should redirect to /admin/user when login is successful", async () => {
-        const { getByLabelText, getByText } = render(<LoginPage />);
+    test("should redirect to /admin/user when login is successful", async () => {
+        const push = jest.fn();
+        (useRouter as jest.Mock).mockReturnValue({ push });
+
+        axios.post.mockResolvedValue({ data: { tokens: { access: "", refresh: "" } } });
+
+        const { getByLabelText, getByText } = renderWithProviders(<LoginPage />);
         const usernameInput = getByLabelText("Usuario");
         const passwordInput = getByLabelText("Senha");
         const loginButton = getByText("Logar");
@@ -47,7 +56,7 @@ describe("LoginPage", () => {
         userEvent.click(loginButton);
 
         await waitFor(() => {
-            expect(Router.push).toHaveBeenCalledWith("/admin/user");
+            expect(push).toHaveBeenCalledWith("/internal/user");
         });
     });
 });

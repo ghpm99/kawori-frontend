@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jul 31 21:40:58 2024
+# Make data base, printed on Fri Aug  9 21:45:37 2024
 
 # Variables
 
@@ -120,7 +120,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"locale":"pt-br","osLocale":"pt-br","availableLanguages":{"*":"pt-br"},"_languagePackId":"b8af8d4fc136af7ea13b1e22f242591a.pt-br","_translationsConfigFile":"/home/ghpm99/.vscode-server/data/clp/b8af8d4fc136af7ea13b1e22f242591a.pt-br/tcf.json","_cacheRoot":"/home/ghpm99/.vscode-server/data/clp/b8af8d4fc136af7ea13b1e22f242591a.pt-br","_resolvedLanguagePackCoreLocation":"/home/ghpm99/.vscode-server/data/clp/b8af8d4fc136af7ea13b1e22f242591a.pt-br/f1e16e1e6214d7c44d078b1f0607b2388f29d729","_corruptedFile":"/home/ghpm99/.vscode-server/data/clp/b8af8d4fc136af7ea13b1e22f242591a.pt-br/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"userLocale":"pt-br","osLocale":"pt-br","resolvedLanguage":"en","defaultMessagesFile":"/home/ghpm99/.vscode-server/bin/eaa41d57266683296de7d118f574d0c2652e1fc4/out/nls.messages.json","locale":"en","availableLanguages":{}}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile
@@ -134,7 +134,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/ghpm99/.vscode-server/bin/f1e16e1e6214d7c44d078b1f0607b2388f29d729/bin/remote-cli:/home/ghpm99/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/Users/ghpm9/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/go/bin
+PATH = /home/ghpm99/.vscode-server/bin/eaa41d57266683296de7d118f574d0c2652e1fc4/bin/remote-cli:/home/ghpm99/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/Users/ghpm9/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/go/bin
 # environment
 SPACESHIP_ROOT = /home/ghpm99/.oh-my-zsh/custom/themes/spaceship-prompt
 # default
@@ -144,7 +144,7 @@ MAKEFILES :=
 # environment
 VSCEXT_USE_PIP_DEP_TREE = false
 # environment
-WT_SESSION = 04230a8e-faca-4dc0-ab03-c7f61ea68008
+WT_SESSION = 186c1995-6662-4932-b8ca-2f23ed0f9a3a
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -166,7 +166,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/115905_interop
+WSL_INTEROP = /run/WSL/2491_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -194,11 +194,11 @@ VSCEXT_UTM_SOURCE = vscode
 # environment
 PAGER = less
 # environment
-_ = /mnt/c/Users/ghpm9/AppData/Local/Programs/Microsoft VS Code/bin/code
+_ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-7e7ca90a-3245-493b-8337-102feb936dd7.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-8235d449-4f06-4a92-bf7c-9c5ace86829a.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -282,12 +282,12 @@ all:
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 1 (0) / strings = 45 / storage = 563 B / avg = 12 B
- 
 # current buf: size = 8162 B / used = 563 B / count = 45 / avg = 12 B
+ 
 
 # strcache performance: lookups = 50 / hit rate = 10%
 # hash-table stats:
 # Load=45/8192=1%, Rehash=0, Collisions=0/50=0%
-# Finished Make data base on Wed Jul 31 21:40:58 2024
+# Finished Make data base on Fri Aug  9 21:45:37 2024
 
  
