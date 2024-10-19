@@ -5,12 +5,14 @@ import { useAppThunkDispatch } from "@/lib/hooks";
 import { INewUser, signinThunk, signupService } from "@/services/auth";
 import { isFulfilled, isRejected } from "@reduxjs/toolkit";
 import * as Sentry from "@sentry/nextjs";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 
 const SingupForm = () => {
     const [form] = Form.useForm();
+    const navigate = useRouter();
     const dispatch = useAppThunkDispatch();
 
+    console.log(navigate.push)
     const signin = (username: string, password: string) => {
         dispatch(
             signinThunk({
@@ -20,8 +22,9 @@ const SingupForm = () => {
             }),
         )
             .then((action) => {
+                console.log(action)
                 if (isFulfilled(action)) {
-                    Router.push("/admin/user");
+                    navigate.push("/internal/user");
                 } else if (isRejected(action)) {
                     Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
                     message.error("Falhou em logar");
@@ -34,8 +37,10 @@ const SingupForm = () => {
     };
 
     const onFinish = (values: INewUser) => {
+        console.log('values', values)
         signupService(values)
             .then((response) => {
+                console.log('response', response)
                 message.success(response.data.msg);
                 form.resetFields();
                 signin(values.username, values.password);
