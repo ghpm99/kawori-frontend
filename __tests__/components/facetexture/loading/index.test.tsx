@@ -1,7 +1,7 @@
 import { renderWithProviders } from "@/util/test-utils";
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
-import Loading from "../../../../src/components/facetexture/loading";
+import Loading from "@/components/facetexture/loading";
 
 describe("Test Characters container", () => {
     test("Check render", () => {
