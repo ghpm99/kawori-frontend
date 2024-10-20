@@ -1,20 +1,19 @@
-import SingupForm from "@/components/signup/index"
+import SingupForm from "@/components/signup/index";
 
-import { renderWithProviders } from "@/util/test-utils"
+import { renderWithProviders } from "@/util/test-utils";
 
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { fireEvent, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import axios from "axios"
-import { useRouter } from "next/navigation"
-
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 jest.mock("next/navigation");
 
 describe("SignupForm", () => {
     afterEach(() => {
         jest.clearAllMocks();
-    })
+    });
     test("should render SignupForm correctly", () => {
         renderWithProviders(<SingupForm />);
         expect(screen.getByTestId("form-name")).toBeInTheDocument();
@@ -41,29 +40,28 @@ describe("SignupForm", () => {
         test("should show an error message when name is more than 100 characters", async () => {
             renderWithProviders(<SingupForm />);
             const usernameInput = screen.getByTestId("form-name");
-            userEvent.type(usernameInput, "a".repeat(101));
-
+            await userEvent.type(usernameInput, "a".repeat(101));
             await waitFor(() => {
-                expect(screen.getByText(/o nome deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
-            });
+            expect(screen.getByText(/o nome deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
+            })
         });
         test("should show an error message when last_name is more than 100 characters", async () => {
             renderWithProviders(<SingupForm />);
             const usernameInput = screen.getByTestId("form-last-name");
-            userEvent.type(usernameInput, "a".repeat(101));
-
+            await userEvent.type(usernameInput, "a".repeat(101));
             await waitFor(() => {
+
                 expect(screen.getByText(/o sobrenome deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
-            });
+            })
         });
         test("should show an error message when username is more than 100 characters", async () => {
             renderWithProviders(<SingupForm />);
             const usernameInput = screen.getByTestId("form-username");
-            userEvent.type(usernameInput, "a".repeat(101));
-
+            await userEvent.type(usernameInput, "a".repeat(101));
             await waitFor(() => {
+
                 expect(screen.getByText(/o usuário deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
-            });
+            })
         });
         test("should show an error message when email is invalid", async () => {
             renderWithProviders(<SingupForm />);
@@ -80,11 +78,11 @@ describe("SignupForm", () => {
         test("should show an error message when password is less than 8 characters", async () => {
             renderWithProviders(<SingupForm />);
             const passwordInput = screen.getByTestId("form-password");
-            userEvent.type(passwordInput, "test");
+            await userEvent.type(passwordInput, "test");
+await waitFor(() => {
 
-            await waitFor(() => {
-                expect(screen.getByText(/a senha deve ter no mínimo 8 caracteres!/i)).toBeInTheDocument();
-            });
+    expect(screen.getByText(/a senha deve ter no mínimo 8 caracteres!/i)).toBeInTheDocument();
+})
         });
         test("should show an error message when password and password confirmation do not match", async () => {
             renderWithProviders(<SingupForm />);
@@ -121,7 +119,7 @@ describe("SignupForm", () => {
         userEvent.click(signupButton);
 
         await waitFor(() => {
-            expect(axios.post).toHaveBeenCalledWith('/signup',{
+            expect(axios.post).toHaveBeenCalledWith("/signup", {
                 name: "test",
                 last_name: "test",
                 username: "test",
@@ -131,7 +129,11 @@ describe("SignupForm", () => {
             });
         });
         await waitFor(() => {
-            expect(axios.post).toHaveBeenCalledWith('/token/',{ username: "test", password: "test@123", remember: true });
+            expect(axios.post).toHaveBeenCalledWith("/token/", {
+                username: "test",
+                password: "test@123",
+                remember: true,
+            });
         });
 
         await waitFor(() => {
