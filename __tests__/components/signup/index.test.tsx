@@ -1,25 +1,20 @@
-import SingupForm from "@/components/signup/index";
-import { signupService } from "@/services/auth";
+import SingupForm from "@/components/signup/index"
 
-import { renderWithProviders } from "@/util/test-utils";
+import { renderWithProviders } from "@/util/test-utils"
 
-import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
-import Router from "next/router";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
-jest.mock("axios");
 
 jest.mock("next/navigation");
 
-jest.mock("@sentry/nextjs", () => ({
-    captureMessage: jest.fn(),
-    captureException: jest.fn(),
-}));
-
 describe("SignupForm", () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    })
     test("should render SignupForm correctly", () => {
         renderWithProviders(<SingupForm />);
         expect(screen.getByTestId("form-name")).toBeInTheDocument();
@@ -107,25 +102,6 @@ describe("SignupForm", () => {
         const push = jest.fn();
         (useRouter as jest.Mock).mockReturnValue({ push });
 
-        let signupData: any = null;
-        let signinData: any = null;
-
-        (axios.post as jest.Mock).mockImplementation((url, data) => {
-            if (url === "/signup") {
-                signupData = data;
-                return Promise.resolve({
-                    data: { msg: "Usuário criado com sucesso" },
-                });
-            } else if (url === "/token/") {
-                signinData = data;
-                return Promise.resolve({
-                    data: { tokens: { access: "access_token", refresh: "refresh_token" } },
-                });
-            } else {
-                return Promise.reject(new Error("URL não suportada"));
-            }
-        });
-
         renderWithProviders(<SingupForm />);
 
         const nameInput = screen.getByLabelText("Nome");
@@ -145,7 +121,7 @@ describe("SignupForm", () => {
         userEvent.click(signupButton);
 
         await waitFor(() => {
-            expect(signupData).toStrictEqual({
+            expect(axios.post).toHaveBeenCalledWith('/signup',{
                 name: "test",
                 last_name: "test",
                 username: "test",
@@ -155,7 +131,7 @@ describe("SignupForm", () => {
             });
         });
         await waitFor(() => {
-            expect(signinData).toStrictEqual({ username: "test", password: "test@123", remember: true });
+            expect(axios.post).toHaveBeenCalledWith('/token/',{ username: "test", password: "test@123", remember: true });
         });
 
         await waitFor(() => {
