@@ -19,7 +19,6 @@ jest.mock("@sentry/nextjs", () => ({
     captureException: jest.fn(),
 }));
 
-
 beforeAll(() => {
     cleanup();
 });
@@ -30,6 +29,53 @@ afterEach(() => {
 });
 
 describe("SignupForm", () => {
+    test("should render SignupForm correctly", () => {
+        renderWithProviders(<SingupForm />);
+        const nameInput = screen.getByTestId("form-name");
+        const lastNameInput = screen.getByTestId("form-last-name");
+        const usernameInput = screen.getByTestId("form-username");
+        const emailInput = screen.getByTestId("form-email");
+        const passwordInput = screen.getByTestId("form-password");
+        const passwordConfirmationInput = screen.getByTestId("form-confirm");
+        const signupButton = screen.getByText("Cadastrar");
+
+        expect(nameInput).toBeInTheDocument();
+        expect(lastNameInput).toBeInTheDocument();
+        expect(usernameInput).toBeInTheDocument();
+        expect(emailInput).toBeInTheDocument();
+        expect(passwordInput).toBeInTheDocument();
+        expect(passwordConfirmationInput).toBeInTheDocument();
+        expect(signupButton).toBeInTheDocument();
+    });
+    test("should show an error message when form submission is invalid", async () => {
+        renderWithProviders(<SingupForm />);
+        const signupButton = screen.getByText("Cadastrar");
+        userEvent.click(signupButton);
+
+        const nameErrorMessage = await screen.findByText("Por favor insira seu nome!");
+        const lastNameErrorMessage = await screen.findByText("Por favor insira seu sobrenome!");
+        const usernameErrorMessage = await screen.findByText("Por favor insira seu usuário!");
+        const emailErrorMessage = await screen.findByText("Por favor insira seu e-mail!");
+        const passwordErrorMessage = await screen.findByText("Por favor insira sua senha!");
+        const passwordConfirmationErrorMessage = await screen.findByText("Por favor confirme sua senha!");
+
+        expect(nameErrorMessage).toBeInTheDocument();
+        expect(lastNameErrorMessage).toBeInTheDocument();
+        expect(usernameErrorMessage).toBeInTheDocument();
+        expect(emailErrorMessage).toBeInTheDocument();
+        expect(passwordErrorMessage).toBeInTheDocument();
+        expect(passwordConfirmationErrorMessage).toBeInTheDocument();
+    });
+    test("should show an error message when password and password confirmation do not match", async () => {
+        renderWithProviders(<SingupForm />);
+
+        const passwordInput = screen.getByTestId("form-password");
+        const passwordConfirmationInput = screen.getByTestId("form-confirm");
+        userEvent.type(passwordInput, "test@123");
+        userEvent.type(passwordConfirmationInput, "test@1234");
+
+        expect(await screen.findByText("As duas senhas que você digitou não correspondem!")).toBeInTheDocument();
+    });
     test("should call signupService and signIn when form submission is successful", async () => {
         const push = jest.fn();
         (useRouter as jest.Mock).mockReturnValue({ push });
@@ -80,7 +126,7 @@ describe("SignupForm", () => {
                 confirm: "test@123",
             });
 
-            expect(signinData).toStrictEqual({ username: 'test', password: 'test@123', remember: true });
+            expect(signinData).toStrictEqual({ username: "test", password: "test@123", remember: true });
         });
 
         await waitFor(() => {

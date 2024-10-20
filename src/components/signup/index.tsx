@@ -63,15 +63,15 @@ const SingupForm = () => {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
-            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Por favor insira sua senha!" }]}>
-                <Input />
+            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Por favor insira seu nome!" }]}>
+                <Input data-testid='form-name'/>
             </Form.Item>
             <Form.Item
                 label="Sobrenome"
                 name="last_name"
-                rules={[{ required: true, message: "Por favor insira sua senha!" }]}
+                rules={[{ required: true, message: "Por favor insira seu sobrenome!" }]}
             >
-                <Input />
+                <Input data-testid='form-last-name'/>
             </Form.Item>
             <Form.Item
                 label="Usuario"
@@ -84,7 +84,7 @@ const SingupForm = () => {
                     { type: "string", max: 150 },
                 ]}
             >
-                <Input />
+                <Input data-testid='form-username'/>
             </Form.Item>
             <Form.Item
                 label="E-mail"
@@ -97,7 +97,7 @@ const SingupForm = () => {
                     },
                 ]}
             >
-                <Input />
+                <Input data-testid='form-email'/>
             </Form.Item>
             <Form.Item
                 label="Senha"
@@ -108,7 +108,7 @@ const SingupForm = () => {
                 ]}
                 hasFeedback
             >
-                <Input.Password />
+                <Input.Password data-testid='form-password'/>
             </Form.Item>
             <Form.Item
                 label="Confirme senha"
@@ -130,7 +130,7 @@ const SingupForm = () => {
                     }),
                 ]}
             >
-                <Input.Password />
+                <Input.Password data-testid='form-confirm'/>
             </Form.Item>
             <Button
                 style={{
