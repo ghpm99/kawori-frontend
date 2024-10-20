@@ -10,6 +10,11 @@ import { cache } from "react";
 jest.mock("@/components/menuHeader/useMenuHeader");
 jest.mock("@/components/landing/news");
 jest.mock("@/prismicio");
+jest.mock("next/navigation", () => ({
+    useRouter: () => ({
+        push: jest.fn(),
+    }),
+}));
 jest.mock("react", () => ({
     ...jest.requireActual("react"),
     cache: jest.fn(),

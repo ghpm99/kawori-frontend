@@ -19,8 +19,6 @@ jest.mock("@sentry/nextjs", () => ({
     captureException: jest.fn(),
 }));
 
-jest.mock("@/services/auth")
-
 
 beforeAll(() => {
     cleanup();
@@ -40,7 +38,6 @@ describe("SignupForm", () => {
         let signinData: any = null;
 
         (axios.post as jest.Mock).mockImplementation((url, data) => {
-            console.log("mock", url, data);
             if (url === "/signup") {
                 signupData = data;
                 return Promise.resolve({
@@ -92,7 +89,7 @@ describe("SignupForm", () => {
     });
 
     test("should show an error message when signupService fails", async () => {
-        (signupService as jest.Mock).mockRejectedValue({
+        (axios.post as jest.Mock).mockRejectedValue({
             response: { status: 400, data: { msg: "Falhou em criar usuário" } },
         });
 
