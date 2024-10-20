@@ -12,7 +12,6 @@ const SingupForm = () => {
     const navigate = useRouter();
     const dispatch = useAppThunkDispatch();
 
-    console.log(navigate.push)
     const signin = (username: string, password: string) => {
         dispatch(
             signinThunk({
@@ -22,7 +21,6 @@ const SingupForm = () => {
             }),
         )
             .then((action) => {
-                console.log(action)
                 if (isFulfilled(action)) {
                     navigate.push("/internal/user");
                 } else if (isRejected(action)) {
@@ -37,10 +35,8 @@ const SingupForm = () => {
     };
 
     const onFinish = (values: INewUser) => {
-        console.log('values', values)
         signupService(values)
             .then((response) => {
-                console.log('response', response)
                 message.success(response.data.msg);
                 form.resetFields();
                 signin(values.username, values.password);
