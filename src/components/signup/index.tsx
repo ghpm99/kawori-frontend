@@ -63,15 +63,25 @@ const SingupForm = () => {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
-            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Por favor insira seu nome!" }]}>
-                <Input data-testid='form-name'/>
+            <Form.Item
+                label="Nome"
+                name="name"
+                rules={[
+                    { required: true, message: "Por favor insira seu nome!" },
+                    { type: "string", max: 100, message: "O nome deve ter no máximo 100 caracteres!" },
+                ]}
+            >
+                <Input data-testid="form-name" />
             </Form.Item>
             <Form.Item
                 label="Sobrenome"
                 name="last_name"
-                rules={[{ required: true, message: "Por favor insira seu sobrenome!" }]}
+                rules={[
+                    { required: true, message: "Por favor insira seu sobrenome!" },
+                    { type: "string", max: 100, message: "O sobrenome deve ter no máximo 100 caracteres!" },
+                ]}
             >
-                <Input data-testid='form-last-name'/>
+                <Input data-testid="form-last-name" />
             </Form.Item>
             <Form.Item
                 label="Usuario"
@@ -81,10 +91,10 @@ const SingupForm = () => {
                         required: true,
                         message: "Por favor insira seu usuário!",
                     },
-                    { type: "string", max: 150 },
+                    { type: "string", max: 100, message: "O usuário deve ter no máximo 100 caracteres!" },
                 ]}
             >
-                <Input data-testid='form-username'/>
+                <Input data-testid="form-username" />
             </Form.Item>
             <Form.Item
                 label="E-mail"
@@ -97,18 +107,18 @@ const SingupForm = () => {
                     },
                 ]}
             >
-                <Input data-testid='form-email'/>
+                <Input data-testid="form-email" />
             </Form.Item>
             <Form.Item
                 label="Senha"
                 name="password"
                 rules={[
                     { required: true, message: "Por favor insira sua senha!" },
-                    { type: "string", min: 8 },
+                    { type: "string", min: 8, message: "A senha deve ter no mínimo 8 caracteres!" },
                 ]}
                 hasFeedback
             >
-                <Input.Password data-testid='form-password'/>
+                <Input.Password data-testid="form-password" />
             </Form.Item>
             <Form.Item
                 label="Confirme senha"
@@ -130,7 +140,7 @@ const SingupForm = () => {
                     }),
                 ]}
             >
-                <Input.Password data-testid='form-confirm'/>
+                <Input.Password data-testid="form-confirm" />
             </Form.Item>
             <Button
                 style={{
