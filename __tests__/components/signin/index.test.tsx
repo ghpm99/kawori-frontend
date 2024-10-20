@@ -1,9 +1,10 @@
 import axios from "axios";
 import LoginPage from "@/components/signin";
-import { fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "@/util/test-utils";
 import { useRouter } from "next/navigation";
+
 
 jest.mock("next/navigation", () => ({
     useRouter: jest.fn(() => ({
@@ -11,32 +12,30 @@ jest.mock("next/navigation", () => ({
     })),
 }));
 
-jest.mock("@sentry/nextjs", () => ({
-    captureMessage: jest.fn(),
-    captureException: jest.fn(),
-}));
-
 describe("LoginPage", () => {
     test("should render the login form", () => {
-        const { getByLabelText, getByText } = renderWithProviders(<LoginPage />);
+        renderWithProviders(<LoginPage />);
 
-        expect(getByLabelText("Usuario")).toBeInTheDocument();
-        expect(getByLabelText("Senha")).toBeInTheDocument();
-        expect(getByText("Logar")).toBeInTheDocument();
+        expect(screen.getByLabelText("Usuario")).toBeInTheDocument();
+        expect(screen.getByLabelText("Senha")).toBeInTheDocument();
+        expect(screen.getByText("Logar")).toBeInTheDocument();
     });
 
     test("should show an error message when login fails", async () => {
-        const { getByLabelText, getByText } = renderWithProviders(<LoginPage />);
-        const usernameInput = getByLabelText("Usuario");
-        const passwordInput = getByLabelText("Senha");
-        const loginButton = getByText("Logar");
+        (axios.post as jest.Mock).mockRejectedValue({
+            response: { status: 400, data: { msg: "mensagem de erro" } },
+        });
+        renderWithProviders(<LoginPage />);
+        const usernameInput = screen.getByLabelText("Usuario");
+        const passwordInput = screen.getByLabelText("Senha");
+        const loginButton = screen.getByText("Logar");
 
         fireEvent.change(usernameInput, { target: { value: "test" } });
         fireEvent.change(passwordInput, { target: { value: "test" } });
         fireEvent.click(loginButton);
 
         await waitFor(() => {
-            expect(getByText("Usuario ou senha incorretos")).toBeInTheDocument();
+            expect(screen.getByText(/usuario ou senha incorretos/i)).toBeInTheDocument();
         });
     });
 
@@ -46,10 +45,10 @@ describe("LoginPage", () => {
 
         axios.post.mockResolvedValue({ data: { tokens: { access: "", refresh: "" } } });
 
-        const { getByLabelText, getByText } = renderWithProviders(<LoginPage />);
-        const usernameInput = getByLabelText("Usuario");
-        const passwordInput = getByLabelText("Senha");
-        const loginButton = getByText("Logar");
+        renderWithProviders(<LoginPage />);
+        const usernameInput = screen.getByLabelText("Usuario");
+        const passwordInput = screen.getByLabelText("Senha");
+        const loginButton = screen.getByText("Logar");
 
         fireEvent.change(usernameInput, { target: { value: "test" } });
         fireEvent.change(passwordInput, { target: { value: "test" } });

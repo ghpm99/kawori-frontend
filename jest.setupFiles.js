@@ -18,11 +18,7 @@ Object.defineProperty(window, "matchMedia", {
     })),
 });
 
-jest.mock("axios", () => ({
-    create: jest.fn(() => axios),
-    interceptors: {
-        request: { use: jest.fn(), eject: jest.fn() },
-        response: { use: jest.fn(), eject: jest.fn() },
-    },
-    post: jest.fn(() => Promise.resolve({ data: {} })),
+jest.mock("@sentry/nextjs", () => ({
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
 }));
