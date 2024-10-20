@@ -12,7 +12,9 @@ const tabItens: TabsProps["items"] = [
         label: "Cadastro",
         children: (
             <div className={styles["form-container"]}>
-                <div className={styles["form-title"]} data-testid='cadastro-form'>Cadastro</div>
+                <div className={styles["form-title"]} data-testid="cadastro-form">
+                    Cadastro
+                </div>
                 <SingupForm />
             </div>
         ),

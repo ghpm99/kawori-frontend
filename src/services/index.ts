@@ -32,7 +32,7 @@ apiDjango.interceptors.response.use(
     (error) => {
         const { config, response } = error;
         const originalRequest = config;
-        console.log('erro', response)
+        console.log("erro", response);
 
         if (
             (!error.response || response.status === 408 || response.status === 504 || response.status === 500) &&
