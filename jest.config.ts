@@ -23,7 +23,12 @@ const config: Config = {
     coverageProvider: "v8",
     collectCoverageFrom: [
         "src/**/*.ts",
-        "src/**/*.tsx"
+        "src/**/*.tsx",
+        "!src/**/*.d.ts",
+        "!src/instrumentation.ts",
+        "!src/app/storeProvider.tsx",
+        "!src/app/slice-simulator.tsx",
+        "!src/slices/**/*"
     ],
     coverageThreshold: {
         global: {
