@@ -9,7 +9,7 @@ const axios = {
             return Promise.reject(new Error("URL não suportada"));
         }
     }),
-    post: jest.fn((url, data) => {
+    post: jest.fn((url: string, data) => {
         if (url === "/signup") {
             return Promise.resolve({
                 data: { msg: "Usuário criado com sucesso" },

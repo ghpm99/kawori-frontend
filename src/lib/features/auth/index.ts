@@ -86,7 +86,6 @@ export const authSlice = createSlice({
                 state.status = "unauthenticated";
             })
             .addCase(signinThunk.fulfilled, (state, action) => {
-                console.log(action);
                 TokenService.setUser({
                     tokens: {
                         access: action.payload.response.tokens.access,
