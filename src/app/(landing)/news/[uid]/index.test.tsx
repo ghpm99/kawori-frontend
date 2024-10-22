@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import Page from "@/app/(landing)/news/[uid]/page";
 import { createClient } from "@/prismicio"; // substitua pelo caminho correto do seu cliente
@@ -9,9 +9,9 @@ jest.mock("@/prismicio", () => ({
 }));
 
 const renderPageComponent = async () => {
-	const ComponentResolved = await Page({params: {uid: 'uid-test'}});
-	const Component = () => ComponentResolved;
-	return render(<Component />);
+    const ComponentResolved = await Page({ params: { uid: "uid-test" } });
+    const Component = () => ComponentResolved;
+    return render(<Component />);
 };
 
 describe("Page Component", () => {
@@ -78,7 +78,7 @@ describe("Page Component", () => {
         await renderPageComponent();
 
         await waitFor(() => {
-            expect(screen.getByText('[01/01/2023] - Test Title')).toBeInTheDocument();
+            expect(screen.getByText("[01/01/2023] - Test Title")).toBeInTheDocument();
         });
     });
 });
