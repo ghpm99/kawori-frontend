@@ -19,7 +19,6 @@ describe("MenuHeader", () => {
 
         render(<MenuHeader />);
 
-
         expect(screen.getByText("Inicio")).toBeInTheDocument();
         expect(screen.getByText("Black Desert")).toBeInTheDocument();
     });

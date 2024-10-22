@@ -42,26 +42,24 @@ describe("SignupForm", () => {
             const usernameInput = screen.getByTestId("form-name");
             await userEvent.type(usernameInput, "a".repeat(101));
             await waitFor(() => {
-            expect(screen.getByText(/o nome deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
-            })
+                expect(screen.getByText(/o nome deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
+            });
         });
         test("should show an error message when last_name is more than 100 characters", async () => {
             renderWithProviders(<SingupForm />);
             const usernameInput = screen.getByTestId("form-last-name");
             await userEvent.type(usernameInput, "a".repeat(101));
             await waitFor(() => {
-
                 expect(screen.getByText(/o sobrenome deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
-            })
+            });
         });
         test("should show an error message when username is more than 100 characters", async () => {
             renderWithProviders(<SingupForm />);
             const usernameInput = screen.getByTestId("form-username");
             await userEvent.type(usernameInput, "a".repeat(101));
             await waitFor(() => {
-
                 expect(screen.getByText(/o usuário deve ter no máximo 100 caracteres!/i)).toBeInTheDocument();
-            })
+            });
         });
         test("should show an error message when email is invalid", async () => {
             renderWithProviders(<SingupForm />);
@@ -79,10 +77,9 @@ describe("SignupForm", () => {
             renderWithProviders(<SingupForm />);
             const passwordInput = screen.getByTestId("form-password");
             await userEvent.type(passwordInput, "test");
-await waitFor(() => {
-
-    expect(screen.getByText(/a senha deve ter no mínimo 8 caracteres!/i)).toBeInTheDocument();
-})
+            await waitFor(() => {
+                expect(screen.getByText(/a senha deve ter no mínimo 8 caracteres!/i)).toBeInTheDocument();
+            });
         });
         test("should show an error message when password and password confirmation do not match", async () => {
             renderWithProviders(<SingupForm />);

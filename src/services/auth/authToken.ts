@@ -43,4 +43,5 @@ class TokenService {
     }
 }
 
-export default new TokenService("kawori");
+const tokenServiceInstance = new TokenService("kawori");
+export default tokenServiceInstance;
