@@ -23,7 +23,7 @@ describe("classification service", () => {
         jest.clearAllMocks();
     });
 
-    it("should fetch all questions", async () => {
+    test("should fetch all questions", async () => {
         const mockData = [{ id: 1, question: "Sample question?" }];
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -37,7 +37,7 @@ describe("classification service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("should fetch all answers", async () => {
+    test("should fetch all answers", async () => {
         const mockData = [{ id: 1, answer: "Sample answer" }];
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -51,7 +51,7 @@ describe("classification service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("should register an answer", async () => {
+    test("should register an answer", async () => {
         const answerData = { question_id: 1, bdo_class_id: 1, combat_style: 1, vote: 1 };
         const mockData = { success: true };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -65,7 +65,7 @@ describe("classification service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("should handle error when registering an answer", async () => {
+    test("should handle error when registering an answer", async () => {
         const answerData = { question_id: 1, bdo_class_id: 1, combat_style: 1, vote: 1 };
         const mockError = { response: { data: { msg: "Error message" } } };
         (apiDjango.post as jest.Mock).mockRejectedValue(mockError);
@@ -77,7 +77,7 @@ describe("classification service", () => {
         expect(rejectWithValue).toHaveBeenCalledWith("Error message");
     });
 
-    it("should fetch all BDO classes", async () => {
+    test("should fetch all BDO classes", async () => {
         const mockData = [{ id: 1, class: "Warrior" }];
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -91,7 +91,7 @@ describe("classification service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("should fetch total votes", async () => {
+    test("should fetch total votes", async () => {
         const mockData = { total: 100 };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -105,7 +105,7 @@ describe("classification service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("should fetch answers by class", async () => {
+    test("should fetch answers by class", async () => {
         const mockData = [{ class_id: 1, answers: [] }];
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -119,7 +119,7 @@ describe("classification service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("should fetch answer summary", async () => {
+    test("should fetch answer summary", async () => {
         const mockData = { summary: "Sample summary" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 

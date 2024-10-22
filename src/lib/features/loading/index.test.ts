@@ -15,7 +15,7 @@ describe("loadingSlice", () => {
         });
     });
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         const initialState: LoadingState = {
             global: false,
             slices: {},
@@ -25,7 +25,7 @@ describe("loadingSlice", () => {
         expect(store.getState().loading).toEqual(initialState);
     });
 
-    it("should handle setLoading action", () => {
+    test("should handle setLoading action", () => {
         const newState: LoadingState = {
             global: true,
             slices: { slice1: "starting" },
@@ -36,7 +36,7 @@ describe("loadingSlice", () => {
         expect(store.getState().loading).toEqual(newState);
     });
 
-    it("should handle setupLoading thunk", async () => {
+    test("should handle setupLoading thunk", async () => {
         const services = {
             service1: { typePrefix: "slice1/effect1" },
             service2: { typePrefix: "slice2/effect2" },

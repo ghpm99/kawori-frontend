@@ -22,7 +22,7 @@ describe("Remote Services", () => {
         jest.clearAllMocks();
     });
 
-    it("should send a command", async () => {
+    test("should send a command", async () => {
         const mockResponse = { data: "command sent" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -31,7 +31,7 @@ describe("Remote Services", () => {
         expect(response).toBe("command sent");
     });
 
-    it("should get screen size", async () => {
+    test("should get screen size", async () => {
         const mockResponse = { data: { width: 1920, height: 1080 } };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -40,7 +40,7 @@ describe("Remote Services", () => {
         expect(response).toEqual({ width: 1920, height: 1080 });
     });
 
-    it("should send a hotkey", async () => {
+    test("should send a hotkey", async () => {
         const mockResponse = { data: "hotkey sent" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -49,7 +49,7 @@ describe("Remote Services", () => {
         expect(response).toBe("hotkey sent");
     });
 
-    it("should move the mouse", async () => {
+    test("should move the mouse", async () => {
         const mockResponse = { data: "mouse moved" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -58,7 +58,7 @@ describe("Remote Services", () => {
         expect(response).toBe("mouse moved");
     });
 
-    it("should press keys", async () => {
+    test("should press keys", async () => {
         const mockResponse = { data: "keys pressed" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -67,7 +67,7 @@ describe("Remote Services", () => {
         expect(response).toBe("keys pressed");
     });
 
-    it("should press a mouse button", async () => {
+    test("should press a mouse button", async () => {
         const mockResponse = { data: "button pressed" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -76,7 +76,7 @@ describe("Remote Services", () => {
         expect(response).toBe("button pressed");
     });
 
-    it("should scroll the mouse", async () => {
+    test("should scroll the mouse", async () => {
         const mockResponse = { data: "mouse scrolled" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 
@@ -85,7 +85,7 @@ describe("Remote Services", () => {
         expect(response).toBe("mouse scrolled");
     });
 
-    it("should move the mouse and press a button", async () => {
+    test("should move the mouse and press a button", async () => {
         const mockResponse = { data: "mouse moved and button pressed" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockResponse);
 

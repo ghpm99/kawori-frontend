@@ -57,7 +57,7 @@ describe("Info Component", () => {
         store = mockStore(initialState);
     });
 
-    it("should render character properties", () => {
+    test("should render character properties", () => {
         render(
             <Provider store={store}>
                 <Info />
@@ -74,7 +74,7 @@ describe("Info Component", () => {
         expect(screen.getByText("Deletar personagem")).toBeInTheDocument();
     });
 
-    it("should dispatch changeClassCharacterThunk on class change", () => {
+    test("should dispatch changeClassCharacterThunk on class change", () => {
         render(
             <Provider store={store}>
                 <Info />
@@ -86,7 +86,7 @@ describe("Info Component", () => {
         expect(changeClassCharacterThunk).toHaveBeenCalledWith({ id: 1, classId: 2 });
     });
 
-    it("should dispatch changeShowClassThunk on checkbox change", () => {
+    test("should dispatch changeShowClassThunk on checkbox change", () => {
         render(
             <Provider store={store}>
                 <Info />
@@ -98,7 +98,7 @@ describe("Info Component", () => {
         expect(changeShowClassThunk).toHaveBeenCalledWith({ id: 1, visible: false });
     });
 
-    it("should dispatch deleteCharacterThunk on delete button click", () => {
+    test("should dispatch deleteCharacterThunk on delete button click", () => {
         render(
             <Provider store={store}>
                 <Info />
@@ -110,7 +110,7 @@ describe("Info Component", () => {
         expect(deleteCharacterThunk).toHaveBeenCalledWith(1);
     });
 
-    it("should show loading message on class change", () => {
+    test("should show loading message on class change", () => {
         render(
             <Provider store={store}>
                 <Info />
@@ -125,7 +125,7 @@ describe("Info Component", () => {
         });
     });
 
-    it("should show loading message on delete character", () => {
+    test("should show loading message on delete character", () => {
         render(
             <Provider store={store}>
                 <Info />

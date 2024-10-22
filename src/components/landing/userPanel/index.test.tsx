@@ -22,7 +22,7 @@ describe("UserPanel Component", () => {
         });
     });
 
-    it("renders login and signup tabs when unauthenticated", () => {
+    test("renders login and signup tabs when unauthenticated", () => {
         mockUseUserPanel.mockReturnValueOnce({
             user: null,
             status: "unauthenticated",
@@ -35,7 +35,7 @@ describe("UserPanel Component", () => {
         expect(screen.getByText("Login")).toBeInTheDocument();
     });
 
-    it("renders user information when authenticated", () => {
+    test("renders user information when authenticated", () => {
         render(<UserPanel />);
 
         expect(screen.getByText("Usuario logado")).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe("UserPanel Component", () => {
         expect(screen.getByText("Ativo")).toBeInTheDocument();
     });
 
-    it("renders quick access links", () => {
+    test("renders quick access links", () => {
         render(<UserPanel />);
 
         expect(screen.getByText("Perfil")).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("UserPanel Component", () => {
         expect(screen.getByText("Rank de Classes")).toBeInTheDocument();
     });
 
-    it("renders logout button", () => {
+    test("renders logout button", () => {
         render(<UserPanel />);
 
         const logoutButton = screen.getByText("Deslogar");
@@ -61,7 +61,7 @@ describe("UserPanel Component", () => {
         expect(logoutButton).toHaveAttribute("href", "/signout");
     });
 
-    it("handles user status correctly", () => {
+    test("handles user status correctly", () => {
         mockUseUserPanel.mockReturnValueOnce({
             user: {
                 name: "Test User",

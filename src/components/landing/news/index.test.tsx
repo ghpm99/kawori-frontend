@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
+
 import News from "./index";
 import { fetchProjectDetailData } from "@/app/api/lib/news";
 
@@ -27,12 +27,12 @@ describe("News Component", () => {
         (fetchProjectDetailData as jest.Mock).mockResolvedValue(mockData);
     });
 
-    it("renders without crashing", () => {
+    test("renders without crashing", () => {
         render(<News />);
         expect(screen.getByText(/loading/i)).toBeInTheDocument();
     });
 
-    it("fetches and displays news data", async () => {
+    test("fetches and displays news data", async () => {
         render(<News />);
 
         await waitFor(() => {

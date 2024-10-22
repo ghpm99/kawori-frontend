@@ -38,7 +38,7 @@ describe("Financial Services", () => {
         jest.clearAllMocks();
     });
 
-    it("should fetch all payments", async () => {
+    test("should fetch all payments", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -49,7 +49,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should save a new payment", async () => {
+    test("should save a new payment", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -60,7 +60,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch payment details", async () => {
+    test("should fetch payment details", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -71,7 +71,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should save payment details", async () => {
+    test("should save payment details", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -83,7 +83,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should payoff a payment", async () => {
+    test("should payoff a payment", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -94,7 +94,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch payment report", async () => {
+    test("should fetch payment report", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -104,7 +104,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch count payment report", async () => {
+    test("should fetch count payment report", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -114,7 +114,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch amount payment report", async () => {
+    test("should fetch amount payment report", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -124,7 +124,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch amount payment open report", async () => {
+    test("should fetch amount payment open report", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -134,7 +134,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch amount payment closed report", async () => {
+    test("should fetch amount payment closed report", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -144,7 +144,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch amount invoice by tag report", async () => {
+    test("should fetch amount invoice by tag report", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -154,7 +154,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch all contracts", async () => {
+    test("should fetch all contracts", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -165,7 +165,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch all invoices", async () => {
+    test("should fetch all invoices", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -176,7 +176,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should save a new contract", async () => {
+    test("should save a new contract", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -187,7 +187,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch contract details", async () => {
+    test("should fetch contract details", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -198,7 +198,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch contract invoices", async () => {
+    test("should fetch contract invoices", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -210,7 +210,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should include a new invoice", async () => {
+    test("should include a new invoice", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -221,7 +221,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch invoice details", async () => {
+    test("should fetch invoice details", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -232,7 +232,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch invoice payments", async () => {
+    test("should fetch invoice payments", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -244,7 +244,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should merge contracts", async () => {
+    test("should merge contracts", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -255,7 +255,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should fetch tags", async () => {
+    test("should fetch tags", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
 
@@ -265,7 +265,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should include a new tag", async () => {
+    test("should include a new tag", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -276,7 +276,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData.data);
     });
 
-    it("should save invoice tags", async () => {
+    test("should save invoice tags", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 
@@ -288,7 +288,7 @@ describe("Financial Services", () => {
         expect(result).toBe(mockData);
     });
 
-    it("should update all contracts value", async () => {
+    test("should update all contracts value", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
 

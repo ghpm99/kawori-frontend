@@ -9,7 +9,7 @@ describe("_registerEffect", () => {
         requests: {},
     };
 
-    it("should initialize state correctly when slice, effect, and requests are not present", () => {
+    test("should initialize state correctly when slice, effect, and requests are not present", () => {
         const args = {
             initialState,
             slice: "testSlice",
@@ -26,7 +26,7 @@ describe("_registerEffect", () => {
         expect(result.global).toBe(true);
     });
 
-    it("should update state correctly when lifecycle is pending", () => {
+    test("should update state correctly when lifecycle is pending", () => {
         const args = {
             initialState: {
                 ...initialState,
@@ -48,7 +48,7 @@ describe("_registerEffect", () => {
         expect(result.global).toBe(true);
     });
 
-    it("should update state correctly when lifecycle is fulfilled", () => {
+    test("should update state correctly when lifecycle is fulfilled", () => {
         const args = {
             initialState: {
                 ...initialState,
@@ -70,7 +70,7 @@ describe("_registerEffect", () => {
         expect(result.global).toBe(false);
     });
 
-    it("should update state correctly when lifecycle is rejected", () => {
+    test("should update state correctly when lifecycle is rejected", () => {
         const args = {
             initialState: {
                 ...initialState,
@@ -92,7 +92,7 @@ describe("_registerEffect", () => {
         expect(result.global).toBe(false);
     });
 
-    it("should handle multiple requests correctly", () => {
+    test("should handle multiple requests correctly", () => {
         const args = {
             initialState: {
                 ...initialState,

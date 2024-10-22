@@ -1,10 +1,9 @@
-import authReducer, { signout, IAuthState } from "./index";
 import TokenService from "@/services/auth/authToken";
 import authReducer, { signout, setToken, setLoading, setSelectedMenu, IAuthState, IUser } from "./index";
 
 describe("authSlice", () => {
     describe("signout", () => {
-        it("should set status to unauthenticated and reset user state", () => {
+        test("should set status to unauthenticated and reset user state", () => {
             const initialState: IAuthState = {
                 user: {
                     id: 1,
@@ -53,7 +52,7 @@ describe("authSlice", () => {
     });
 
     describe("setToken", () => {
-        it("should set the token and update the status to authenticated", () => {
+        test("should set the token and update the status to authenticated", () => {
             const initialState: IAuthState = {
                 user: {
                     id: 0,
@@ -96,7 +95,7 @@ describe("authSlice", () => {
     });
 
     describe("setLoading", () => {
-        it("should set the loading state", () => {
+        test("should set the loading state", () => {
             const initialState: IAuthState = {
                 user: {
                     id: 0,
@@ -124,7 +123,7 @@ describe("authSlice", () => {
     });
 
     describe("setSelectedMenu", () => {
-        it("should set the selected menu", () => {
+        test("should set the selected menu", () => {
             const initialState: IAuthState = {
                 user: {
                     id: 0,

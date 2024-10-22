@@ -22,7 +22,7 @@ describe("financialSlice", () => {
         store = mockStore();
     });
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         const state = store.getState().financial;
         expect(state).toEqual({
             data: {
@@ -56,13 +56,13 @@ describe("financialSlice", () => {
         });
     });
 
-    it("should handle fetchInvoiceDetails.pending", () => {
+    test("should handle fetchInvoiceDetails.pending", () => {
         store.dispatch(fetchInvoiceDetails.pending("", 1) as AnyAction);
         const state = store.getState().financial;
         expect(state.loading).toBe(true);
     });
 
-    it("should handle fetchInvoiceDetails.fulfilled", async () => {
+    test("should handle fetchInvoiceDetails.fulfilled", async () => {
         const mockResponse = {
             data: {
                 id: 1,
@@ -86,7 +86,7 @@ describe("financialSlice", () => {
         expect(state.loading).toBe(false);
     });
 
-    it("should handle fetchInvoicePaymentsDetails.pending", () => {
+    test("should handle fetchInvoicePaymentsDetails.pending", () => {
         store.dispatch(
             fetchInvoicePaymentsDetails.pending("", { id: 1, filters: { page: 1, page_size: 20 } }) as AnyAction,
         );
@@ -94,7 +94,7 @@ describe("financialSlice", () => {
         expect(state.payments.loading).toBe(true);
     });
 
-    it("should handle fetchInvoicePaymentsDetails.fulfilled", async () => {
+    test("should handle fetchInvoicePaymentsDetails.fulfilled", async () => {
         const mockResponse = {
             data: {
                 data: [{ id: 1, amount: 100 }],
@@ -120,7 +120,7 @@ describe("financialSlice", () => {
         expect(state.payments.loading).toBe(false);
     });
 
-    it("should handle fetchInvoicePaymentsDetails.rejected", () => {
+    test("should handle fetchInvoicePaymentsDetails.rejected", () => {
         store.dispatch(
             fetchInvoicePaymentsDetails.rejected(null, "", { id: 1, filters: { page: 1, page_size: 20 } }) as AnyAction,
         );

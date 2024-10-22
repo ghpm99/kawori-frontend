@@ -39,11 +39,11 @@ describe("contractSlice", () => {
         });
     });
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         expect(store.getState().contract).toEqual(initialState);
     });
 
-    it("should handle changeVisibleContractsModal", () => {
+    test("should handle changeVisibleContractsModal", () => {
         store.dispatch(
             changeVisibleContractsModal({
                 modal: "newPayment",
@@ -53,12 +53,12 @@ describe("contractSlice", () => {
         expect(store.getState().contract.modal.newPayment.visible).toBe(true);
     });
 
-    it("should handle fetchAllContract pending", () => {
+    test("should handle fetchAllContract pending", () => {
         store.dispatch(fetchAllContract.pending("", {} as IContractFilters));
         expect(store.getState().contract.loading).toBe(true);
     });
 
-    it("should handle fetchAllContract fulfilled", async () => {
+    test("should handle fetchAllContract fulfilled", async () => {
         const mockResponse = {
             data: {
                 data: [{ id: 1, name: "Contract 1" }],

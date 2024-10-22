@@ -19,7 +19,7 @@ describe("useMenuHeader", () => {
         store = mockStore(initialState);
     });
 
-    it("should return status and user data from the state", () => {
+    test("should return status and user data from the state", () => {
         const { result } = renderHook(() => useMenuHeader(), {
             wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
         });

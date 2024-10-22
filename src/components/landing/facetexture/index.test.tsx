@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Facetexture from "./index";
 
 describe("Facetexture Component", () => {
-    it("should render all images with correct alt text", () => {
+    test("should render all images with correct alt text", () => {
         render(<Facetexture />);
 
         const images = [
@@ -19,7 +19,7 @@ describe("Facetexture Component", () => {
         });
     });
 
-    it("should render all text content correctly", () => {
+    test("should render all text content correctly", () => {
         render(<Facetexture />);
 
         const texts = [

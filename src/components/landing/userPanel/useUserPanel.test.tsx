@@ -20,7 +20,7 @@ describe("useUserPanel", () => {
         });
     });
 
-    it("should dispatch userDetailsThunk on mount", () => {
+    test("should dispatch userDetailsThunk on mount", () => {
         renderHook(() => useUserPanel(), {
             wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
         });
@@ -29,7 +29,7 @@ describe("useUserPanel", () => {
         expect(actions).toContainEqual(userDetailsThunk());
     });
 
-    it("should return the correct status and user from the store", () => {
+    test("should return the correct status and user from the store", () => {
         store = mockStore({
             auth: {
                 status: "loading",
@@ -45,7 +45,7 @@ describe("useUserPanel", () => {
         expect(result.current.user).toEqual({ id: 1, name: "John Doe" });
     });
 
-    it("should format date correctly", () => {
+    test("should format date correctly", () => {
         const { result } = renderHook(() => useUserPanel(), {
             wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
         });

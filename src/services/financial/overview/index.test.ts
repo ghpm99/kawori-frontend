@@ -38,7 +38,7 @@ describe("Financial Overview Thunks", () => {
         jest.clearAllMocks();
     });
 
-    it("fetchPaymentReportThunk should return data", async () => {
+    test("fetchPaymentReportThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -48,7 +48,7 @@ describe("Financial Overview Thunks", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("fetchCountPaymentReportThunk should return data", async () => {
+    test("fetchCountPaymentReportThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -58,7 +58,7 @@ describe("Financial Overview Thunks", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("fetchAmountPaymentReportThunk should return data", async () => {
+    test("fetchAmountPaymentReportThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -68,7 +68,7 @@ describe("Financial Overview Thunks", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("fetchAmountPaymentOpenReportThunk should return data", async () => {
+    test("fetchAmountPaymentOpenReportThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -78,7 +78,7 @@ describe("Financial Overview Thunks", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("fetchAmountPaymentClosedReportThunk should return data", async () => {
+    test("fetchAmountPaymentClosedReportThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -88,7 +88,7 @@ describe("Financial Overview Thunks", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("fetchAmountInvoiceByTagReportThunk should return data", async () => {
+    test("fetchAmountInvoiceByTagReportThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -98,7 +98,7 @@ describe("Financial Overview Thunks", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("fetchAmountForecastValueThunk should return data", async () => {
+    test("fetchAmountForecastValueThunk should return data", async () => {
         const mockData = { data: "mockData" };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 

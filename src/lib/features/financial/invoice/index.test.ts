@@ -38,11 +38,11 @@ describe("financialSlice", () => {
         });
     });
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         expect(store.getState().financial).toEqual(initialState);
     });
 
-    it("should handle changeVisibleInvoiceModal", () => {
+    test("should handle changeVisibleInvoiceModal", () => {
         const payload: PayloadChangeVisibleModalInvoiceAction = {
             modal: "newPayment",
             visible: true,
@@ -51,12 +51,12 @@ describe("financialSlice", () => {
         expect(store.getState().financial.modal.newPayment.visible).toBe(true);
     });
 
-    it("should handle fetchAllInvoice pending", () => {
+    test("should handle fetchAllInvoice pending", () => {
         store.dispatch(fetchAllInvoice.pending("", {} as IInvoiceFilters));
         expect(store.getState().financial.loading).toBe(true);
     });
 
-    it("should handle fetchAllInvoice fulfilled", async () => {
+    test("should handle fetchAllInvoice fulfilled", async () => {
         const mockResponse = {
             data: {
                 data: [{ id: 1, name: "Invoice 1" }],

@@ -17,7 +17,7 @@ const defaultProps: IModalNewInvoiceProps = {
 };
 
 describe("ModalNewInvoice", () => {
-    it("renders correctly", () => {
+    test("renders correctly", () => {
         render(<ModalNewInvoice {...defaultProps} />);
         expect(screen.getByText("Nova entrada")).toBeInTheDocument();
         expect(screen.getByLabelText("Tipo")).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe("ModalNewInvoice", () => {
         expect(screen.getByLabelText("Entrada mensal")).toBeInTheDocument();
     });
 
-    it("calls onFinish when form is submitted", () => {
+    test("calls onFinish when form is submitted", () => {
         render(<ModalNewInvoice {...defaultProps} />);
         fireEvent.change(screen.getByPlaceholderText("Digite o nome"), { target: { value: "Test Name" } });
         fireEvent.change(screen.getByPlaceholderText("Selecione o tipo de entrada"), { target: { value: 0 } });
@@ -39,13 +39,13 @@ describe("ModalNewInvoice", () => {
         expect(defaultProps.onFinish).toHaveBeenCalled();
     });
 
-    it("calls onCancel when cancel button is clicked", () => {
+    test("calls onCancel when cancel button is clicked", () => {
         render(<ModalNewInvoice {...defaultProps} />);
         fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
         expect(defaultProps.onCancel).toHaveBeenCalled();
     });
 
-    it("renders tags correctly", () => {
+    test("renders tags correctly", () => {
         render(<ModalNewInvoice {...defaultProps} />);
         fireEvent.mouseDown(screen.getByPlaceholderText("Tags"));
         expect(screen.getByText("Tag1")).toBeInTheDocument();

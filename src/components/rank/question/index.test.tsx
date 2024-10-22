@@ -39,7 +39,7 @@ describe("Question Component", () => {
         store.clearActions();
     });
 
-    it("renders the question text", () => {
+    test("renders the question text", () => {
         render(
             <Provider store={store}>
                 <Question
@@ -57,7 +57,7 @@ describe("Question Component", () => {
         expect(screen.getByText("Sample Question?")).toBeInTheDocument();
     });
 
-    it("calls setVote when a rating is selected", () => {
+    test("calls setVote when a rating is selected", () => {
         render(
             <Provider store={store}>
                 <Question
@@ -78,7 +78,7 @@ describe("Question Component", () => {
         expect(actions).toContainEqual(setQuestionVote({ id: 1, vote: 3 }));
     });
 
-    it("displays a message and calls nextQuestion when skip button is clicked", () => {
+    test("displays a message and calls nextQuestion when skip button is clicked", () => {
         const nextQuestionMock = jest.fn();
 
         render(
@@ -104,7 +104,7 @@ describe("Question Component", () => {
         expect(nextQuestionMock).toHaveBeenCalled();
     });
 
-    it("dispatches registerAnswer and handles success message", async () => {
+    test("dispatches registerAnswer and handles success message", async () => {
         const nextQuestionMock = jest.fn();
         (registerAnswer as jest.Mock).mockResolvedValue({
             type: "registerAnswer/fulfilled",
@@ -144,7 +144,7 @@ describe("Question Component", () => {
         expect(nextQuestionMock).toHaveBeenCalled();
     });
 
-    it("dispatches registerAnswer and handles error message", async () => {
+    test("dispatches registerAnswer and handles error message", async () => {
         const nextQuestionMock = jest.fn();
         (registerAnswer as jest.Mock).mockResolvedValue({
             type: "registerAnswer/rejected",

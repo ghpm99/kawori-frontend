@@ -24,7 +24,7 @@ describe("useMenu", () => {
         jest.clearAllMocks();
     });
 
-    it("should return initial state correctly", () => {
+    test("should return initial state correctly", () => {
         const { result } = renderHook(() => useMenu());
 
         expect(result.current.status).toBe("authenticated");
@@ -33,7 +33,7 @@ describe("useMenu", () => {
         expect(result.current.collapsed).toBe(false);
     });
 
-    it("should toggle collapsed state", () => {
+    test("should toggle collapsed state", () => {
         const { result } = renderHook(() => useMenu());
 
         act(() => {
