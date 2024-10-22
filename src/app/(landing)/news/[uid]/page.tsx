@@ -26,7 +26,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     };
 }
 
-
 export default async function Page({ params }: { params: Params }) {
     const client = createClient();
     const page = await client.getByUID("platform_news", params.uid);
