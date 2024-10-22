@@ -30,7 +30,6 @@ jest.mock('@/services/classification', () => ({
 }));
 
 jest.mock('chart.js', () => ({
-
         ...jest.requireActual('chart.js'),
         Chart: jest.fn().mockImplementation(() => ({
             register: jest.fn(),
@@ -45,7 +44,22 @@ jest.mock('chart.js', () => ({
             },
         })),
         registerables: [],
+}));
 
+jest.mock('react-chartjs-2', () => ({
+    __esModule: true,
+    Bar: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    Line: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    Pie: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    Doughnut: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    PolarArea: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    Radar: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    Bubble: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    Scatter: jest.fn().mockImplementation(({ children }) => <div>{children}</div>),
+    defaults: {},
+    Chart: {
+        register: jest.fn(),
+    },
 }));
 
 const mockStore = configureStore({
