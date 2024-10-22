@@ -5,7 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "@/util/test-utils";
 import { useRouter } from "next/navigation";
 
-
 jest.mock("next/navigation", () => ({
     useRouter: jest.fn(() => ({
         push: jest.fn(),

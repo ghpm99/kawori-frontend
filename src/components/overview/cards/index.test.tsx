@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 
 describe("Overview Card", () => {
-    it("Render overview card", () => {
+    test("Render overview card", () => {
         const { baseElement } = render(
             <Cards
                 loading={false}
@@ -16,7 +16,7 @@ describe("Overview Card", () => {
         );
         expect(baseElement).toBeInTheDocument();
     });
-    it("Verify render values", () => {
+    test("Verify render values", () => {
         const amountPayment = 1508.52;
         const amountPaymentClosed = 2718.72;
         const amountPaymentOpen = 3481.75;
