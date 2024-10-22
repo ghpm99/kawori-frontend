@@ -16,7 +16,7 @@ describe("apiDjango", () => {
         mock.restore();
     });
 
-    it("should include Authorization header if token exists", async () => {
+    test("should include Authorization header if token exists", async () => {
         const token = "test-token";
         jest.spyOn(TokenService, "getLocalAccessToken").mockReturnValue(token);
 
@@ -27,7 +27,7 @@ describe("apiDjango", () => {
         expect(mock.history.get[0].headers!.Authorization).toBe(`Bearer ${token}`);
     });
 
-    it("should retry the request if it fails with status 500", async () => {
+    test("should retry the request if it fails with status 500", async () => {
         const token = "test-token";
         jest.spyOn(TokenService, "getLocalAccessToken").mockReturnValue(token);
         jest.spyOn(global, "setTimeout");
@@ -40,7 +40,7 @@ describe("apiDjango", () => {
         expect(mock.history.get.length).toBe(2);
     });
 
-    it("should capture exception with Sentry if request fails after retries", async () => {
+    test("should capture exception with Sentry if request fails after retries", async () => {
         const token = "test-token";
         jest.spyOn(TokenService, "getLocalAccessToken").mockReturnValue(token);
         jest.spyOn(Sentry, "captureException");

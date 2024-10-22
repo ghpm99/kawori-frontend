@@ -16,7 +16,7 @@ describe("financialSlice", () => {
         });
     });
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         const state = store.getState().financial;
         expect(state).toEqual({
             data: [],
@@ -31,19 +31,19 @@ describe("financialSlice", () => {
         });
     });
 
-    it("should handle changeVisibleModalTag", () => {
+    test("should handle changeVisibleModalTag", () => {
         store.dispatch(changeVisibleModalTag({ modal: "newTag", visible: true }));
         const state = store.getState().financial;
         expect(state.modal.newTag.visible).toBe(true);
     });
 
-    it("should handle fetchTags pending", () => {
+    test("should handle fetchTags pending", () => {
         store.dispatch(fetchTags.pending("", undefined));
         const state = store.getState().financial;
         expect(state.loading).toBe(true);
     });
 
-    it("should handle fetchTags fulfilled", async () => {
+    test("should handle fetchTags fulfilled", async () => {
         const mockTags = { data: [{ id: 1, name: "Tag1" }] };
         (fetchTagsService as jest.Mock).mockResolvedValueOnce(mockTags);
 

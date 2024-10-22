@@ -27,7 +27,7 @@ describe("DragAndDropCharacters", () => {
         store.dispatch = jest.fn();
     });
 
-    it("renders characters correctly", () => {
+    test("renders characters correctly", () => {
         const { getByAltText } = render(
             <Provider store={store}>
                 <DragAndDropCharacters />
@@ -38,7 +38,7 @@ describe("DragAndDropCharacters", () => {
         expect(getByAltText("Character 2")).toBeInTheDocument();
     });
 
-    it("dispatches reorderCharacterThunk on drag end", () => {
+    test("dispatches reorderCharacterThunk on drag end", () => {
         const { container } = render(
             <Provider store={store}>
                 <DragAndDropCharacters />
@@ -61,7 +61,7 @@ describe("DragAndDropCharacters", () => {
         );
     });
 
-    it("dispatches setSelectedFacetextureReducer on character click", () => {
+    test("dispatches setSelectedFacetextureReducer on character click", () => {
         const { getByAltText } = render(
             <Provider store={store}>
                 <DragAndDropCharacters />

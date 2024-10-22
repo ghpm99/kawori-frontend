@@ -1,6 +1,6 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
+
 import AuthProvider from "./index";
 import TokenService from "@/services/auth/authToken";
 import { setLoading, setToken, userDetailsThunk } from "@/lib/features/auth";
@@ -24,7 +24,7 @@ describe("AuthProvider", () => {
         (useRouter as jest.Mock).mockReturnValue(mockNavigate);
     });
 
-    it("should dispatch setLoading(false) if no user token is found", async () => {
+    test("should dispatch setLoading(false) if no user token is found", async () => {
         (TokenService.getToken as jest.Mock).mockReturnValue(null);
 
         render(
@@ -38,7 +38,7 @@ describe("AuthProvider", () => {
         });
     });
 
-    it("should verify token if user token is found", async () => {
+    test("should verify token if user token is found", async () => {
         const mockToken = { tokens: { access: "access-token", refresh: "refresh-token" } };
         (TokenService.getToken as jest.Mock).mockReturnValue(mockToken);
         (verifyTokenService as jest.Mock).mockResolvedValue({});
@@ -57,7 +57,7 @@ describe("AuthProvider", () => {
         });
     });
 
-    it("should refresh token if access token verification fails", async () => {
+    test("should refresh token if access token verification fails", async () => {
         const mockToken = { tokens: { access: "access-token", refresh: "refresh-token" } };
         (TokenService.getToken as jest.Mock).mockReturnValue(mockToken);
         (verifyTokenService as jest.Mock).mockRejectedValue({});
@@ -86,7 +86,7 @@ describe("AuthProvider", () => {
         });
     });
 
-    it("should navigate to /signout if token refresh fails", async () => {
+    test("should navigate to /signout if token refresh fails", async () => {
         const mockToken = { tokens: { access: "access-token", refresh: "refresh-token" } };
         (TokenService.getToken as jest.Mock).mockReturnValue(mockToken);
         (verifyTokenService as jest.Mock).mockRejectedValue({});

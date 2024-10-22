@@ -24,7 +24,7 @@ describe("Facetexture Service", () => {
         jest.clearAllMocks();
     });
 
-    it("fetchFacetextureService should fetch facetexture data", async () => {
+    test("fetchFacetextureService should fetch facetexture data", async () => {
         const mockData = { characters: [] };
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -33,7 +33,7 @@ describe("Facetexture Service", () => {
         expect(result).toEqual(mockData);
     });
 
-    it("fetchFaceTextureClassService should fetch facetexture class data", async () => {
+    test("fetchFaceTextureClassService should fetch facetexture class data", async () => {
         const mockData = {};
         (apiDjango.get as jest.Mock).mockResolvedValue({ data: mockData });
 
@@ -42,7 +42,7 @@ describe("Facetexture Service", () => {
         expect(result).toEqual(mockData);
     });
 
-    it("previewFacetextureService should preview facetexture", async () => {
+    test("previewFacetextureService should preview facetexture", async () => {
         const mockData = new Blob();
         const args = { some: "data" };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -57,7 +57,7 @@ describe("Facetexture Service", () => {
         expect(result).toEqual(mockData);
     });
 
-    it("downloadFacetextureService should download facetexture", async () => {
+    test("downloadFacetextureService should download facetexture", async () => {
         const mockData = new Blob();
         const args = { some: "data" };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -72,7 +72,7 @@ describe("Facetexture Service", () => {
         expect(result).toEqual(mockData);
     });
 
-    it("newCharacterThunk should create a new character", async () => {
+    test("newCharacterThunk should create a new character", async () => {
         const mockData = { id: 1 };
         const facetexture = { name: "New Character" };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -82,7 +82,7 @@ describe("Facetexture Service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("reorderCharacterThunk should reorder a character", async () => {
+    test("reorderCharacterThunk should reorder a character", async () => {
         const mockData = { success: true };
         const args = { id: 1, indexDestination: 2 };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -94,7 +94,7 @@ describe("Facetexture Service", () => {
         expect(result.payload).toEqual(mockData);
     });
 
-    it("changeClassCharacterThunk should change character class", async () => {
+    test("changeClassCharacterThunk should change character class", async () => {
         const mockData = { success: true };
         const args = { id: 1, classId: 2 };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -104,7 +104,7 @@ describe("Facetexture Service", () => {
         expect(result.payload).toEqual({ data: mockData, id: args.id });
     });
 
-    it("changeCharacterNameThunk should change character name", async () => {
+    test("changeCharacterNameThunk should change character name", async () => {
         const mockData = { success: true };
         const args = { id: 1, name: "New Name" };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -114,7 +114,7 @@ describe("Facetexture Service", () => {
         expect(result.payload).toEqual({ data: mockData, id: args.id });
     });
 
-    it("changeShowClassThunk should change character visibility", async () => {
+    test("changeShowClassThunk should change character visibility", async () => {
         const mockData = { success: true };
         const args = { id: 1, visible: true };
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });
@@ -124,7 +124,7 @@ describe("Facetexture Service", () => {
         expect(result.payload).toEqual({ data: mockData, id: args.id, visible: args.visible });
     });
 
-    it("deleteCharacterThunk should delete a character", async () => {
+    test("deleteCharacterThunk should delete a character", async () => {
         const mockData = { success: true };
         const id = 1;
         (apiDjango.post as jest.Mock).mockResolvedValue({ data: mockData });

@@ -45,51 +45,51 @@ describe("financialSlice", () => {
         });
     });
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         expect(store.getState().financial).toEqual(initialState);
     });
 
-    it("should handle changeStatusPaymentDetails", () => {
+    test("should handle changeStatusPaymentDetails", () => {
         store.dispatch(changeStatusPaymentDetails(1));
         expect(store.getState().financial.data.status).toEqual(1);
     });
 
-    it("should handle changeNamePaymentDetails", () => {
+    test("should handle changeNamePaymentDetails", () => {
         store.dispatch(changeNamePaymentDetails("Test Name"));
         expect(store.getState().financial.data.name).toEqual("Test Name");
     });
 
-    it("should handle changeTypePaymentDetails", () => {
+    test("should handle changeTypePaymentDetails", () => {
         store.dispatch(changeTypePaymentDetails(2));
         expect(store.getState().financial.data.type).toEqual(2);
     });
 
-    it("should handle changeFixedPaymentDetails", () => {
+    test("should handle changeFixedPaymentDetails", () => {
         store.dispatch(changeFixedPaymentDetails(true));
         expect(store.getState().financial.data.fixed).toEqual(true);
     });
 
-    it("should handle changeActivePaymentDetails", () => {
+    test("should handle changeActivePaymentDetails", () => {
         store.dispatch(changeActivePaymentDetails(true));
         expect(store.getState().financial.data.active).toEqual(true);
     });
 
-    it("should handle changePaymentDatePaymentDetails", () => {
+    test("should handle changePaymentDatePaymentDetails", () => {
         store.dispatch(changePaymentDatePaymentDetails("2023-10-01"));
         expect(store.getState().financial.data.payment_date).toEqual("2023-10-01");
     });
 
-    it("should handle changeValuePaymentDetails", () => {
+    test("should handle changeValuePaymentDetails", () => {
         store.dispatch(changeValuePaymentDetails(1000));
         expect(store.getState().financial.data.value).toEqual(1000);
     });
 
-    it("should handle fetchPaymentDetails pending", () => {
+    test("should handle fetchPaymentDetails pending", () => {
         store.dispatch(fetchPaymentDetails.pending);
         expect(store.getState().financial.loading).toEqual(true);
     });
 
-    it("should handle fetchPaymentDetails fulfilled", async () => {
+    test("should handle fetchPaymentDetails fulfilled", async () => {
         const mockResponse = {
             data: {
                 id: 1,

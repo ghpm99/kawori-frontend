@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import FAQ from "./index";
 
 describe("FAQ Component", () => {
-    it("renders the FAQ component with correct items", () => {
+    test("renders the FAQ component with correct items", () => {
         render(<FAQ />);
 
         // Check if all FAQ items are rendered
@@ -12,7 +12,7 @@ describe("FAQ Component", () => {
         expect(screen.getByText("Como faço para entrar em contato com o suporte?")).toBeInTheDocument();
     });
 
-    it("renders the correct content for each FAQ item", () => {
+    test("renders the correct content for each FAQ item", () => {
         render(<FAQ />);
 
         // Check the content of each FAQ item

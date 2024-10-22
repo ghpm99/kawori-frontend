@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ModalPayoff, { ITableDataSource } from "./index";
-import "@testing-library/jest-dom/extend-expect";
+
 
 describe("ModalPayoff Component", () => {
     const mockOnCancel = jest.fn();
@@ -13,7 +13,7 @@ describe("ModalPayoff Component", () => {
         { status: 3, id: 4, description: "Payment 4" },
     ];
 
-    it("should render the modal with correct title and buttons", () => {
+    test("should render the modal with correct title and buttons", () => {
         render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
 
         expect(screen.getByText("Baixar pagamentos")).toBeInTheDocument();
@@ -21,21 +21,21 @@ describe("ModalPayoff Component", () => {
         expect(screen.getByText("Processar")).toBeInTheDocument();
     });
 
-    it("should call onCancel when the 'Voltar' button is clicked", () => {
+    test("should call onCancel when the 'Voltar' button is clicked", () => {
         render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
 
         fireEvent.click(screen.getByText("Voltar"));
         expect(mockOnCancel).toHaveBeenCalled();
     });
 
-    it("should call onPayoff when the 'Processar' button is clicked", () => {
+    test("should call onPayoff when the 'Processar' button is clicked", () => {
         render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
 
         fireEvent.click(screen.getByText("Processar"));
         expect(mockOnPayoff).toHaveBeenCalled();
     });
 
-    it("should render the correct icons based on status", () => {
+    test("should render the correct icons based on status", () => {
         render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
 
         const rows = screen.getAllByRole("row");

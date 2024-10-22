@@ -7,7 +7,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe("Auth Services", () => {
     describe("signinThunk", () => {
-        it("should handle successful signin", async () => {
+        test("should handle successful signin", async () => {
             const mockResponse = { data: { tokens: { access: "access_token", refresh: "refresh_token" } } };
             mockedAxios.post.mockResolvedValueOnce(mockResponse);
 
@@ -26,7 +26,7 @@ describe("Auth Services", () => {
     });
 
     describe("verifyTokenService", () => {
-        it("should verify token successfully", async () => {
+        test("should verify token successfully", async () => {
             const mockResponse = { data: {} };
             mockedAxios.post.mockResolvedValueOnce(mockResponse);
 
@@ -44,7 +44,7 @@ describe("Auth Services", () => {
     });
 
     describe("refreshTokenService", () => {
-        it("should refresh token successfully", async () => {
+        test("should refresh token successfully", async () => {
             const mockResponse = { data: { access: "new_access_token" } };
             mockedAxios.post.mockResolvedValueOnce(mockResponse);
 
@@ -62,7 +62,7 @@ describe("Auth Services", () => {
     });
 
     describe("signupService", () => {
-        it("should signup successfully", async () => {
+        test("should signup successfully", async () => {
             const mockResponse = { data: { msg: "User created successfully" } };
             mockedAxios.post.mockResolvedValueOnce(mockResponse);
 

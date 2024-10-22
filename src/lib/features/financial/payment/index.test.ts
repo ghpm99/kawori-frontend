@@ -12,7 +12,7 @@ describe("financial slice", () => {
         });
     });
 
-    it("should set filter payments", () => {
+    test("should set filter payments", () => {
         const initialState: IPaymentStore = {
             data: [],
             pagination: {
@@ -47,7 +47,7 @@ describe("financial slice", () => {
         expect(state.filters).toEqual(expectedState.filters);
     });
 
-    it("should clean filter payments", () => {
+    test("should clean filter payments", () => {
         const initialState: IPaymentStore = {
             data: [],
             pagination: {

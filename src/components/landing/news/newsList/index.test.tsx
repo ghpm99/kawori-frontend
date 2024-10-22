@@ -27,12 +27,12 @@ const mockData: NewsProps[] = [
 ];
 
 describe("NewsList Component", () => {
-    it("renders the list header", () => {
+    test("renders the list header", () => {
         render(<NewsList data={mockData} />);
         expect(screen.getByText("Novidades")).toBeInTheDocument();
     });
 
-    it("renders the news items", () => {
+    test("renders the news items", () => {
         render(<NewsList data={mockData} />);
         mockData.forEach((item) => {
             expect(
@@ -41,7 +41,7 @@ describe("NewsList Component", () => {
         });
     });
 
-    it("renders the correct links", () => {
+    test("renders the correct links", () => {
         render(<NewsList data={mockData} />);
         mockData.forEach((item) => {
             const linkElement = screen

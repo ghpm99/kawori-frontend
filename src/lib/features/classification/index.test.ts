@@ -18,13 +18,13 @@ describe("classification slice", () => {
         });
     });
 
-    it("deve atualizar o voto para uma pergunta específica", () => {
+    test("deve atualizar o voto para uma pergunta específica", () => {
         store.dispatch(setQuestionVote({ questionId: "1", vote: 5 }));
         const state = store.getState().classification;
         expect(state.votesByQuestion["1"]).toBe(5);
     });
 
-    it("deve definir a classe BDO selecionada e redefinir os votos", () => {
+    test("deve definir a classe BDO selecionada e redefinir os votos", () => {
         store.dispatch(setQuestionVote({ questionId: "1", vote: 5 }));
         store.dispatch(setSelectedBdoClass("Warrior"));
         const state = store.getState().classification;
@@ -32,14 +32,14 @@ describe("classification slice", () => {
         expect(state.votesByQuestion["1"]).toBeUndefined();
     });
 
-    it("deve redefinir todos os votos", () => {
+    test("deve redefinir todos os votos", () => {
         store.dispatch(setQuestionVote({ questionId: "1", vote: 5 }));
         store.dispatch(resetVotes());
         const state = store.getState().classification;
         expect(state.votesByQuestion["1"]).toBeUndefined();
     });
 
-    it("deve definir o resumo das respostas corretamente", () => {
+    test("deve definir o resumo das respostas corretamente", () => {
         const answerSummary = [
             {
                 bdo_class: 1,
@@ -54,7 +54,7 @@ describe("classification slice", () => {
         expect(state.answerSummary).toEqual(answerSummary);
     });
 
-    it("deve definir os votos por classe corretamente", () => {
+    test("deve definir os votos por classe corretamente", () => {
         const votesByClass = [
             { data: 10, color: "#000", label: "Warrior" },
             { data: 20, color: "#0f0", label: "Ranger" },

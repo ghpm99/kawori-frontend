@@ -35,13 +35,13 @@ describe("financialOverviewSlice", () => {
         },
     });
 
-    it("should handle fetchPaymentReportThunk.pending", () => {
+    test("should handle fetchPaymentReportThunk.pending", () => {
         store.dispatch(fetchPaymentReportThunk.pending);
         const state = store.getState().overview;
         expect(state.loading).toBe(true);
     });
 
-    it("should handle fetchPaymentReportThunk.fulfilled", () => {
+    test("should handle fetchPaymentReportThunk.fulfilled", () => {
         const payload = {
             data: {
                 payments: [{ id: 1, amount: 100 }],
@@ -57,49 +57,49 @@ describe("financialOverviewSlice", () => {
         expect(state.loading).toBe(false);
     });
 
-    it("should handle fetchCountPaymentReportThunk.fulfilled", () => {
+    test("should handle fetchCountPaymentReportThunk.fulfilled", () => {
         const payload = { data: 10 };
         store.dispatch(fetchCountPaymentReportThunk.fulfilled(payload, ""));
         const state = store.getState().overview;
         expect(state.data.countPayment).toBe(payload.data);
     });
 
-    it("should handle fetchAmountPaymentReportThunk.fulfilled", () => {
+    test("should handle fetchAmountPaymentReportThunk.fulfilled", () => {
         const payload = { data: 200 };
         store.dispatch(fetchAmountPaymentReportThunk.fulfilled(payload, ""));
         const state = store.getState().overview;
         expect(state.data.amountPayment).toBe(payload.data);
     });
 
-    it("should handle fetchAmountPaymentOpenReportThunk.fulfilled", () => {
+    test("should handle fetchAmountPaymentOpenReportThunk.fulfilled", () => {
         const payload = { data: 300 };
         store.dispatch(fetchAmountPaymentOpenReportThunk.fulfilled(payload, ""));
         const state = store.getState().overview;
         expect(state.data.amountPaymentOpen).toBe(payload.data);
     });
 
-    it("should handle fetchAmountPaymentClosedReportThunk.fulfilled", () => {
+    test("should handle fetchAmountPaymentClosedReportThunk.fulfilled", () => {
         const payload = { data: 400 };
         store.dispatch(fetchAmountPaymentClosedReportThunk.fulfilled(payload, ""));
         const state = store.getState().overview;
         expect(state.data.amountPaymentClosed).toBe(payload.data);
     });
 
-    it("should handle fetchAmountInvoiceByTagReportThunk.fulfilled", () => {
+    test("should handle fetchAmountInvoiceByTagReportThunk.fulfilled", () => {
         const payload = { data: [{ tag: "food", amount: 100 }] };
         store.dispatch(fetchAmountInvoiceByTagReportThunk.fulfilled(payload, ""));
         const state = store.getState().overview;
         expect(state.data.invoiceByTag).toEqual(payload.data);
     });
 
-    it("should handle fetchAmountForecastValueThunk.fulfilled", () => {
+    test("should handle fetchAmountForecastValueThunk.fulfilled", () => {
         const payload = { data: 500 };
         store.dispatch(fetchAmountForecastValueThunk.fulfilled(payload, ""));
         const state = store.getState().overview;
         expect(state.data.amountForecastValue).toBe(payload.data);
     });
 
-    it("should handle fetchMonthPayments.fulfilled", () => {
+    test("should handle fetchMonthPayments.fulfilled", () => {
         const payload = { data: [{ month: "January", payments: [] }] };
         store.dispatch(fetchMonthPayments.fulfilled(payload, ""));
         const state = store.getState().overview;

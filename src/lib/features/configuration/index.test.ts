@@ -3,12 +3,12 @@ import configurationReducer, { configurationSlice } from "./index";
 import { getAllBdoClass } from "@/services/classification";
 
 describe("configurationSlice", () => {
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         const initialState = configurationSlice.getInitialState();
         expect(initialState).toEqual({ class: [] });
     });
 
-    it("should handle getAllBdoClass.fulfilled", () => {
+    test("should handle getAllBdoClass.fulfilled", () => {
         const store = configureStore({
             reducer: {
                 configuration: configurationReducer,

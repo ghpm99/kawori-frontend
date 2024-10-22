@@ -6,11 +6,11 @@ describe("statusSlice reducer", () => {
         memory: 0,
     };
 
-    it("should handle initial state", () => {
+    test("should handle initial state", () => {
         expect(statusReducer(undefined, { type: "unknown" })).toEqual(initialState);
     });
 
-    it("should handle setCpuAndMemoryValue", () => {
+    test("should handle setCpuAndMemoryValue", () => {
         const actual = statusReducer(initialState, setCpuAndMemoryValue({ cpu: 50, memory: 1024 }));
         expect(actual.cpu).toEqual(50);
         expect(actual.memory).toEqual(1024);
