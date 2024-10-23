@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 
 import News from "./index";
 import { fetchProjectDetailData } from "@/app/api/lib/news";
+import { formatterDate } from "@/util";
 
 // Mock the fetchProjectDetailData function
 jest.mock("@/app/api/lib/news", () => ({
@@ -26,10 +27,24 @@ describe("News Component", () => {
     beforeEach(() => {
         (fetchProjectDetailData as jest.Mock).mockResolvedValue(mockData);
     });
+    afterEach(() => {
+        jest.clearAllMocks();
+    })
 
     test("renders without crashing", () => {
         render(<News />);
         expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    });
+
+    test("displays 'No news available' when there is no news data", async () => {
+        (fetchProjectDetailData as jest.Mock).mockResolvedValueOnce([]);
+        render(<News />);
+
+        await waitFor(() => {
+            expect(fetchProjectDetailData).toHaveBeenCalledTimes(1);
+        });
+
+        expect(screen.getByText(/no news available/i)).toBeInTheDocument();
     });
 
     test("fetches and displays news data", async () => {
@@ -40,7 +55,10 @@ describe("News Component", () => {
         });
 
         mockData.forEach((news) => {
-            expect(screen.getByText(news.title)).toBeInTheDocument();
+            const date = formatterDate(news.first_publication_date);
+            expect(screen.getByText(`[${date}] - ${news.title}`)).toBeInTheDocument();
         });
     });
+
+
 });
