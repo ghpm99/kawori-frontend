@@ -1,7 +1,7 @@
-import { fetchProjectDetailData } from "@/app/api/lib/news"
-import { useEffect, useState } from "react"
-import styles from "./news.module.scss"
-import NewsList from "./newsList"
+import { fetchProjectDetailData } from "@/app/api/lib/news";
+import { useEffect, useState } from "react";
+import styles from "./news.module.scss";
+import NewsList from "./newsList";
 
 export interface NewsProps {
     first_publication_date: string;

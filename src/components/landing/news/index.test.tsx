@@ -29,7 +29,7 @@ describe("News Component", () => {
     });
     afterEach(() => {
         jest.clearAllMocks();
-    })
+    });
 
     test("renders without crashing", () => {
         render(<News />);
@@ -59,6 +59,4 @@ describe("News Component", () => {
             expect(screen.getByText(`[${date}] - ${news.title}`)).toBeInTheDocument();
         });
     });
-
-
 });
