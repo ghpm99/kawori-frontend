@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ModalPayoff, { ITableDataSource } from "./index";
 
-
 describe("ModalPayoff Component", () => {
     const mockOnCancel = jest.fn();
     const mockOnPayoff = jest.fn();
