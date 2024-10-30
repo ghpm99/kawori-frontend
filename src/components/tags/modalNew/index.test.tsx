@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ModalNewTag, { IFormModalNewTag } from "./index";
 
@@ -31,12 +31,15 @@ describe("ModalNewTag Component", () => {
         expect(defaultProps.onCancel).toHaveBeenCalled();
     });
 
-    test("calls onFinish when form is submitted", () => {
-        setup();
-        fireEvent.change(screen.getByPlaceholderText("Digite o nome"), { target: { value: "Test Tag" } });
-        fireEvent.change(screen.getByLabelText("Cor"), { target: { value: "#ff0000" } });
-        fireEvent.click(screen.getByText("OK"));
-        expect(defaultProps.onFinish).toHaveBeenCalledWith({ name: "Test Tag", color: "#ff0000" });
+    test("calls onFinish when form is submitted", async () => {
+        const onFinish = jest.fn();
+        setup({ ...defaultProps, onFinish });
+        fireEvent.change(screen.getByTestId("tag-name"), { target: { value: "Test Tag" } });
+        fireEvent.change(screen.getByTestId("tag-color"), { target: { value: "#ff0000" } });
+        fireEvent.click(screen.getByRole("button", { name: /ok/i }));
+        await waitFor(() => {
+            expect(onFinish).toHaveBeenCalledWith({ name: "Test Tag", color: "#ff0000" });
+        });
     });
 
     test("shows validation error when name is not provided", async () => {

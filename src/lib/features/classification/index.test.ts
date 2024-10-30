@@ -1,7 +1,7 @@
-import { getAllBdoClass, getAllQuestions } from "@/services/classification";
-import { configureStore } from "@reduxjs/toolkit";
-import axios from "axios";
-import classificationReducer, { QuestionData, setQuestionVote, setSelectedBdoClass } from "./index";
+import { getAllBdoClass, getAllQuestions } from "@/services/classification"
+import { configureStore } from "@reduxjs/toolkit"
+import axios from "axios"
+import classificationReducer, { QuestionData, setQuestionVote, setSelectedBdoClass } from "./index"
 
 jest.mock("axios");
 
