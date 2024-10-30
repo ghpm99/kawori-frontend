@@ -1,26 +1,20 @@
 import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
 import TokenService from "./auth/authToken";
 import * as Sentry from "@sentry/nextjs";
 import { apiDjango } from "./index";
 
 describe("apiDjango", () => {
-    let mock: MockAdapter;
-
-    beforeEach(() => {
-        mock = new MockAdapter(axios);
-        jest.clearAllMocks();
-    });
+    jest.mock("axios");
 
     afterEach(() => {
-        mock.restore();
+        jest.clearAllMocks();
     });
 
     test("should include Authorization header if token exists", async () => {
         const token = "test-token";
         jest.spyOn(TokenService, "getLocalAccessToken").mockReturnValue(token);
 
-        mock.onGet("/test").reply(200);
+        (axios.get as jest.Mock).mockResolvedValue({ data: [] });
 
         await apiDjango.get("/test");
 
