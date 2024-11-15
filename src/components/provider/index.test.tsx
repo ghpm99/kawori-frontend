@@ -14,6 +14,25 @@ jest.mock("@/lib/hooks");
 jest.mock("@/services/auth");
 jest.mock("next/navigation");
 
+const defaultMockToken = { tokens: { access: "access-token", refresh: "refresh-token" } };
+const defaultVerifyTokenServiceMock = {};
+const defaultRefreshTokenServiceMock = { data: { access: "new-access-token" } };
+
+const renderComponent = (
+    mockToken = defaultMockToken,
+    verifyToken = defaultVerifyTokenServiceMock,
+    refreshToken = defaultRefreshTokenServiceMock,
+) => {
+    (TokenService.getToken as jest.Mock).mockReturnValue(mockToken);
+    (verifyTokenService as jest.Mock).mockRejectedValue(verifyToken);
+    (refreshTokenService as jest.Mock).mockResolvedValue(refreshToken);
+    render(
+        <AuthProvider>
+            <div>Test</div>
+        </AuthProvider>,
+    );
+};
+
 describe("AuthProvider", () => {
     const mockDispatch = jest.fn();
     const mockNavigate = { push: jest.fn() };
@@ -25,13 +44,8 @@ describe("AuthProvider", () => {
     });
 
     test("should dispatch setLoading(false) if no user token is found", async () => {
-        (TokenService.getToken as jest.Mock).mockReturnValue(null);
 
-        render(
-            <AuthProvider>
-                <div>Test</div>
-            </AuthProvider>,
-        );
+        renderComponent(null)
 
         await waitFor(() => {
             expect(mockDispatch).toHaveBeenCalledWith(setLoading(false));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import TokenService, { IToken } from "@/services/auth/authToken";
+import TokenServiceInstance, { IToken } from "@/services/auth/authToken";
 
 import { setLoading, setToken, userDetailsThunk } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
     const navigate = useRouter();
     const dispatch = useAppDispatch();
+    const localAccessToken = TokenServiceInstance.getLocalAccessToken();
 
     const updateValidatedToken = (token: IToken) => {
         dispatch(setToken(token));
@@ -46,7 +47,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     };
 
     useEffect(() => {
-        const user = TokenService.getToken();
+        const user = TokenServiceInstance.getToken();
 
         if (user) {
             verifyToken(user);
@@ -54,6 +55,11 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
             dispatch(setLoading(false));
         }
     }, []);
+
+    useEffect(() => {
+        console.log(localAccessToken)
+    }, [localAccessToken])
+
 
     return children;
 }

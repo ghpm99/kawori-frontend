@@ -9,9 +9,15 @@ const apiLogin = axios.create({
 export const signinThunk = createAsyncThunk(
     "auth/signin",
     async (args: { username: string; password: string; remember: boolean }) => {
-        const response = await apiLogin.post<{ tokens: { access: string; refresh: string } }>("/token/", args);
+        const tokenResponse = await apiLogin.post<{ tokens: { access: string; refresh: string } }>("/token/", args);
+        const userDetailResponse = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/profile/", {
+            headers: {
+                Authorization: `Bearer ${tokenResponse.data.tokens.access}`,
+            },
+        })
         return {
-            response: response.data,
+            token: tokenResponse.data,
+            user: userDetailResponse.data,
             args,
         };
     },
