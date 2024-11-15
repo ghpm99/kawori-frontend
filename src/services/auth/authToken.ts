@@ -8,20 +8,24 @@ export interface IToken {
 
 class TokenService {
     userItemName: string;
+    user: IToken | undefined;
 
     constructor(itemName: string) {
         this.userItemName = itemName;
     }
 
     getToken(): IToken | undefined {
+        if(this.user) {
+            return this.user;
+        }
         const localStorageToken = localStorage.getItem(this.userItemName);
         const sessionStorageToken = sessionStorage.getItem(this.userItemName);
         const token = localStorageToken ?? sessionStorageToken ?? undefined;
         if (!token) {
             return undefined;
         }
-        const user: IToken = JSON.parse(token);
-        return user;
+        this.user = JSON.parse(token);
+        return this.user;
     }
 
     getLocalAccessToken() {
@@ -29,11 +33,25 @@ class TokenService {
         return user?.tokens.access;
     }
 
+    getLocalRefreshToken() {
+        const user = this.getToken();
+        return user?.tokens.refresh;
+    }
+
     setUser(token: IToken) {
+        this.user = token;
         if (token.remember) {
-            localStorage.setItem(this.userItemName, JSON.stringify(token));
+            localStorage.setItem(this.userItemName, JSON.stringify(this.user));
         } else {
-            sessionStorage.setItem(this.userItemName, JSON.stringify(token));
+            sessionStorage.setItem(this.userItemName, JSON.stringify(this.user));
+        }
+    }
+
+    updateLocalAccessToken(token: string) {
+        const user = this.getToken();
+        if (user) {
+            user.tokens.access = token;
+            this.setUser(user);
         }
     }
 
@@ -43,5 +61,15 @@ class TokenService {
     }
 }
 
-const tokenServiceInstance = new TokenService("kawori");
-export default tokenServiceInstance;
+let tokenServiceInstance = null;
+
+const getTokenServiceInstance = (itemName: string = 'kawori') : TokenService => {
+    if (!tokenServiceInstance) {
+        tokenServiceInstance = new TokenService(itemName);
+    }
+    return tokenServiceInstance;
+};
+
+const TokenServiceInstance = getTokenServiceInstance()
+
+export default TokenServiceInstance;
