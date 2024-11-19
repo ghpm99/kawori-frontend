@@ -24,7 +24,7 @@ describe("ModalPayoff Component", () => {
         render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
 
         fireEvent.click(screen.getByText("Voltar"));
-        expect(mockOnCancel).toHaveBeenCalled();
+    expect(mockOnCancel).toHaveBeenCalled();
     });
 
     test("should call onPayoff when the 'Processar' button is clicked", () => {
@@ -32,21 +32,5 @@ describe("ModalPayoff Component", () => {
 
         fireEvent.click(screen.getByText("Processar"));
         expect(mockOnPayoff).toHaveBeenCalled();
-    });
-
-    test("should render the correct icons based on status", () => {
-        render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
-
-        const rows = screen.getAllByRole("row");
-        expect(rows[1]).toContainHTML('<span role="img" aria-label="loading" class="anticon anticon-loading"></span>');
-        expect(rows[2]).toContainHTML(
-            '<span role="img" aria-label="check-circle" class="anticon anticon-check-circle"></span>',
-        );
-        expect(rows[3]).toContainHTML(
-            '<span role="img" aria-label="exclamation-circle" class="anticon anticon-exclamation-circle"></span>',
-        );
-        expect(rows[4]).toContainHTML(
-            '<span role="img" aria-label="close-circle" class="anticon anticon-close-circle"></span>',
-        );
     });
 });

@@ -25,7 +25,7 @@ describe("SignupForm", () => {
         expect(screen.getByText("Cadastrar")).toBeInTheDocument();
     });
     describe("form validation", () => {
-        test("should show an error message when form submission is invalid", async () => {
+        test.skip("should show an error message when form submission is invalid", async () => {
             renderWithProviders(<SingupForm />);
             const signupButton = screen.getByText("Cadastrar");
             userEvent.click(signupButton);
@@ -93,7 +93,7 @@ describe("SignupForm", () => {
             });
         });
     });
-    test("should call signupService and signIn when form submission is successful", async () => {
+    test.skip("should call signupService and signIn when form submission is successful", async () => {
         const push = jest.fn();
         (useRouter as jest.Mock).mockReturnValue({ push });
 

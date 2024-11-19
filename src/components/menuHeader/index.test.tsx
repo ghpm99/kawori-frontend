@@ -1,6 +1,8 @@
-import { render, screen } from "@testing-library/react";
-import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import MenuHeader from "@/components/menuHeader/index";
+import useMenuHeader from "@/components/menuHeader/useMenuHeader";
+import { render, screen } from "@testing-library/react";
+
+jest.mock("@/components/menuHeader/useMenuHeader");
 
 jest.mock("@/components/menuHeader/useMenuHeader");
 
@@ -33,5 +35,24 @@ describe("MenuHeader", () => {
 
         expect(screen.getByText("Inicio")).toBeInTheDocument();
         expect(screen.getByText("Black Desert")).toBeInTheDocument();
+    });
+
+    describe("MenuHeader hook", () => {
+
+
+        test("should render the menu header with login option when not authenticated", () => {
+            (useMenuHeader as jest.Mock).mockReturnValue({
+                status: "unauthenticated",
+                data: null,
+            });
+
+            render(<MenuHeader />);
+
+            expect(screen.getByText("Inicio")).toBeInTheDocument();
+            expect(screen.getByText("Black Desert")).toBeInTheDocument();
+            expect(screen.getByText("Logar")).toBeInTheDocument();
+        });
+
+
     });
 });

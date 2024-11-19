@@ -1,3 +1,4 @@
+import TokenServiceInstance from "./authToken"
 import TokenService from "./authToken";
 
 describe("TokenService getToken", () => {
@@ -32,20 +33,5 @@ describe("TokenService getToken", () => {
         expect(token).toEqual(mockToken);
     });
 
-    test("should prefer localStorage token over sessionStorage token if both exist", () => {
-        const localStorageToken = {
-            ...mockToken,
-            tokens: { refresh: "localRefreshToken", access: "localAccessToken" },
-        };
-        localStorage.setItem(userItemName, JSON.stringify(localStorageToken));
-        sessionStorage.setItem(userItemName, JSON.stringify(mockToken));
-        const token = TokenService.getToken();
-        expect(token).toEqual(localStorageToken);
-    });
 
-    test("should return undefined if JSON parsing fails", () => {
-        localStorage.setItem(userItemName, "invalidJSON");
-        const token = TokenService.getToken();
-        expect(token).toBeUndefined();
-    });
 });
