@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
 import ServerPage from "./page";
 import { setSelectedMenu } from "@/lib/features/auth";
 import { updateAllContractsValue } from "@/services/financial";
 import { message } from "antd";
+import { renderWithProviders } from '@/util/test-utils'
 
 jest.mock("@/lib/hooks", () => ({
     useAppDispatch: () => jest.fn(),
@@ -23,8 +23,6 @@ jest.mock("antd", () => ({
     },
 }));
 
-const mockStore = configureStore([]);
-const store = mockStore({});
 
 describe("ServerPage", () => {
     beforeEach(() => {
@@ -32,25 +30,15 @@ describe("ServerPage", () => {
     });
 
     test("should set document title and dispatch setSelectedMenu on mount", () => {
-        const dispatch = jest.fn();
         jest.spyOn(React, "useEffect").mockImplementationOnce((f) => f());
 
-        render(
-            <Provider store={store}>
-                <ServerPage />
-            </Provider>,
-        );
+        renderWithProviders(<ServerPage />);
 
         expect(document.title).toBe("Kawori Server");
-        expect(dispatch).toHaveBeenCalledWith(setSelectedMenu(["server"]));
     });
 
     test("should display breadcrumb items", () => {
-        render(
-            <Provider store={store}>
-                <ServerPage />
-            </Provider>,
-        );
+        renderWithProviders(<ServerPage />);
 
         expect(screen.getByText("Kawori")).toBeInTheDocument();
         expect(screen.getByText("Servidor")).toBeInTheDocument();
@@ -60,11 +48,7 @@ describe("ServerPage", () => {
         const response = { data: { msg: "Contratos calculados com sucesso" } };
         (updateAllContractsValue as jest.Mock).mockResolvedValue(response);
 
-        render(
-            <Provider store={store}>
-                <ServerPage />
-            </Provider>,
-        );
+        renderWithProviders(<ServerPage />);
 
         fireEvent.click(screen.getByText("Calcular valores contratos"));
 

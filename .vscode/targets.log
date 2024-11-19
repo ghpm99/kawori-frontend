@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Nov 15 13:50:21 2024
+# Make data base, printed on Mon Nov 18 22:12:51 2024
 
 # Variables
 
@@ -113,7 +115,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"userLocale":"pt-br","osLocale":"pt-br","resolvedLanguage":"en","defaultMessagesFile":"/home/ghpm99/.vscode-server/bin/f1a4fb101478ce6ec82fe9627c43efbf9e98c813/out/nls.messages.json","locale":"pt-br","availableLanguages":{}}
+VSCODE_NLS_CONFIG = {"userLocale":"pt-br","osLocale":"pt-br","resolvedLanguage":"pt-br","defaultMessagesFile":"/home/ghpm99/.vscode-server/bin/f1a4fb101478ce6ec82fe9627c43efbf9e98c813/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br/tcf.json","messagesFile":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br/f1a4fb101478ce6ec82fe9627c43efbf9e98c813/nls.messages.json","corruptMarkerFile":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br/corrupted.info"},"locale":"pt-br","availableLanguages":{"*":"pt-br"},"_languagePackId":"a4a811ec51032905ad4eb5d6d0470afa.pt-br","_languagePackSupport":true,"_translationsConfigFile":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br/tcf.json","_cacheRoot":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br","_resolvedLanguagePackCoreLocation":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br/f1a4fb101478ce6ec82fe9627c43efbf9e98c813","_corruptedFile":"/home/ghpm99/.vscode-server/data/clp/a4a811ec51032905ad4eb5d6d0470afa.pt-br/corrupted.info"}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile
@@ -137,7 +139,7 @@ MAKEFILES :=
 # environment
 VSCEXT_USE_PIP_DEP_TREE = false
 # environment
-WT_SESSION = 28ecc25e-a725-4d6e-add0-9d930a46fa8f
+WT_SESSION = aedad4e1-d57d-4115-aa3c-4857803167c0
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -159,7 +161,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/3208_interop
+WSL_INTEROP = /run/WSL/3205_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -191,7 +193,7 @@ _ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-26c148b9-1c84-454b-836a-fed0eaa113ca.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-367d7574-4704-475c-9735-a037cfea08bd.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -276,13 +278,11 @@ all:
 
 # strcache buffers: 1 (0) / strings = 45 / storage = 563 B / avg = 12 B
 # current buf: size = 8162 B / used = 563 B / count = 45 / avg = 12 B
- 
-make: *** No rule to make target 'all'.  Stop.
-
 
 # strcache performance: lookups = 50 / hit rate = 10%
 # hash-table stats:
+ 
 # Load=45/8192=1%, Rehash=0, Collisions=0/50=0%
-# Finished Make data base on Fri Nov 15 13:50:21 2024
+# Finished Make data base on Mon Nov 18 22:12:52 2024
 
  

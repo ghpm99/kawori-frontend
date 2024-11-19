@@ -15,11 +15,11 @@ class TokenService {
     }
 
     getToken(): IToken | undefined {
-        if(this.user) {
+        if (this.user) {
             return this.user;
         }
-        const localStorageToken = localStorage.getItem(this.userItemName);
-        const sessionStorageToken = sessionStorage.getItem(this.userItemName);
+        const localStorageToken = localStorage ? localStorage.getItem(this.userItemName) : undefined;
+        const sessionStorageToken = sessionStorage ? sessionStorage.getItem(this.userItemName) : undefined;
         const token = localStorageToken ?? sessionStorageToken ?? undefined;
         if (!token) {
             return undefined;
@@ -63,13 +63,13 @@ class TokenService {
 
 let tokenServiceInstance = null;
 
-const getTokenServiceInstance = (itemName: string = 'kawori') : TokenService => {
+const getTokenServiceInstance = (itemName: string = "kawori"): TokenService => {
     if (!tokenServiceInstance) {
         tokenServiceInstance = new TokenService(itemName);
     }
     return tokenServiceInstance;
 };
 
-const TokenServiceInstance = getTokenServiceInstance()
+const TokenServiceInstance = getTokenServiceInstance();
 
 export default TokenServiceInstance;

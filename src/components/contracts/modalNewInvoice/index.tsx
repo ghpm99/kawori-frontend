@@ -2,7 +2,7 @@ import { DatePicker, Form, Input, InputNumber, Modal, ModalProps, Select, Switch
 
 import styles from "./ModalNew.module.scss";
 
-interface IModalNewInvoiceProps extends ModalProps {
+export interface IModalNewInvoiceProps extends ModalProps {
     onFinish: ((values: any) => void) | undefined;
     tags: ITags[];
 }

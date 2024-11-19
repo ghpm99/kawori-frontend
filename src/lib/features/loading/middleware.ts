@@ -49,7 +49,7 @@ interface EffectArgs {
     requestId: string;
 }
 
-function _registerEffect(args: EffectArgs): LoadingState {
+export function _registerEffect(args: EffectArgs): LoadingState {
     const state = {
         global: args.initialState.global,
         slices: { ...args.initialState.slices },

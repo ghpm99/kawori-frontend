@@ -1,5 +1,4 @@
 import { _registerEffect } from "./middleware";
-import { LoadingState, LoadingType } from "@/types/commonTypes";
 
 describe("_registerEffect", () => {
     const initialState: LoadingState = {

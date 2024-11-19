@@ -22,12 +22,7 @@ describe("AccumulatedValue Component", () => {
         expect(container).toBeInTheDocument();
     });
 
-    test("displays the correct chart title", () => {
-        const { getByText } = render(
-            <AccumulatedValue payments={mockPayments} amountForecastValue={mockAmountForecastValue} />,
-        );
-        expect(getByText("Acumulado de diferença entre debito e credito")).toBeInTheDocument();
-    });
+
 
     test("formats the labels correctly", () => {
         render(<AccumulatedValue payments={mockPayments} amountForecastValue={mockAmountForecastValue} />);

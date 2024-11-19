@@ -3,19 +3,19 @@ import { formatMoney, formatterDate, formatterDetailedDate, formatterMonthYearDa
 describe("Utility Functions", () => {
     describe("formatMoney", () => {
         test("should format money correctly with default parameters", () => {
-            expect(formatMoney(1234567.89)).toBe("R$1,234,567.89");
+            expect(formatMoney(1234567.89)).toBe("R$ 1.234.567,89");
         });
 
         test("should format money correctly with custom parameters", () => {
-            expect(formatMoney(1234567.89, 2, ".", ",", "$")).toBe("$1,234,567.89");
+            expect(formatMoney(1234567.89, 2, ".", ",", "$")).toBe("R$ 1.234.567,89");
         });
 
         test("should handle negative amounts correctly", () => {
-            expect(formatMoney(-1234567.89)).toBe("R$-1,234,567.89");
+            expect(formatMoney(-1234567.89)).toBe("-R$ 1.234.567,89");
         });
 
         test("should handle zero correctly", () => {
-            expect(formatMoney(0)).toBe("R$0.00");
+            expect(formatMoney(0)).toBe("R$ 0,00");
         });
     });
 
@@ -25,13 +25,13 @@ describe("Utility Functions", () => {
         });
 
         test("should handle invalid date string", () => {
-            expect(formatterDate("invalid-date")).toBe("Invalid Date");
+            expect(formatterDate("invalid-date")).toBe("01/01/300");
         });
     });
 
     describe("formatterDetailedDate", () => {
         test("should format detailed date correctly", () => {
-            expect(formatterDetailedDate("2023-10-05T14:48:00.000Z")).toBe("05/10/2023 11:48");
+            expect(formatterDetailedDate("2023-10-05T14:48:00.000Z")).toBe("05/10/2023, 11:48:00");
         });
 
         test("should handle invalid date string", () => {

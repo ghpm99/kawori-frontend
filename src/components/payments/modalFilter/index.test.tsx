@@ -1,7 +1,8 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ModalFilter from "./index";
+import userEvent from '@testing-library/user-event'
 
 describe("ModalFilter Component", () => {
     const mockOnCancel = jest.fn();
@@ -14,7 +15,7 @@ describe("ModalFilter Component", () => {
     };
 
     const setup = (props = defaultProps) => {
-        return render(<ModalFilter {...props} />);
+        render(<ModalFilter {...props} />);
     };
 
     test("should render the modal with correct title", () => {
@@ -28,10 +29,13 @@ describe("ModalFilter Component", () => {
         expect(mockOnCancel).toHaveBeenCalled();
     });
 
-    test("should call setFilters when form is submitted", () => {
+    test("should call setFilters when form is submitted", async() => {
         setup();
         fireEvent.click(screen.getByText("OK"));
-        expect(mockSetFilters).toHaveBeenCalled();
+        await waitFor(() => {
+            expect(mockSetFilters).toHaveBeenCalled();
+
+        })
     });
 
     test("should render all form fields", () => {
@@ -49,7 +53,7 @@ describe("ModalFilter Component", () => {
 
     test("should render the correct options for status select", () => {
         setup();
-        fireEvent.mouseDown(screen.getByLabelText("Status").firstChild);
+        fireEvent.mouseDown(screen.getByLabelText("Status"));
         expect(screen.getByText("Todos")).toBeInTheDocument();
         expect(screen.getByText("Em aberto")).toBeInTheDocument();
         expect(screen.getByText("Baixado")).toBeInTheDocument();
@@ -57,7 +61,7 @@ describe("ModalFilter Component", () => {
 
     test("should render the correct options for type select", () => {
         setup();
-        fireEvent.mouseDown(screen.getByLabelText("Tipo").firstChild);
+        fireEvent.mouseDown(screen.getByLabelText("Tipo"));
         expect(screen.getByText("Todos")).toBeInTheDocument();
         expect(screen.getByText("Credito")).toBeInTheDocument();
         expect(screen.getByText("Debito")).toBeInTheDocument();
@@ -65,7 +69,7 @@ describe("ModalFilter Component", () => {
 
     test("should render the correct options for fixed select", () => {
         setup();
-        fireEvent.mouseDown(screen.getByLabelText("Entrada mensal").firstChild);
+        fireEvent.mouseDown(screen.getByLabelText("Entrada mensal"));
         expect(screen.getByText("Todos")).toBeInTheDocument();
         expect(screen.getByText("Sim")).toBeInTheDocument();
         expect(screen.getByText("Não")).toBeInTheDocument();
@@ -73,7 +77,7 @@ describe("ModalFilter Component", () => {
 
     test("should render the correct options for active select", () => {
         setup();
-        fireEvent.mouseDown(screen.getByLabelText("Ativo").firstChild);
+        fireEvent.mouseDown(screen.getByLabelText("Ativo"));
         expect(screen.getByText("Todos")).toBeInTheDocument();
         expect(screen.getByText("Sim")).toBeInTheDocument();
         expect(screen.getByText("Não")).toBeInTheDocument();
