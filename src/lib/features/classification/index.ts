@@ -5,8 +5,8 @@ import {
     getAnswerByClass,
     getAnswerSummary,
     getTotalVotes,
-} from "@/services/classification";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+} from "@/services/classification"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface QuestionData {
     id: number;
@@ -84,6 +84,7 @@ export const classificationSlice = createSlice({
     reducers: {
         setQuestionVote: (state: ClassificationState, action: PayloadAction<{ id: number; vote: number }>) => {
             const questionSource = state.questions.findIndex((question) => question.id === action.payload.id);
+            if (questionSource === -1) return;
             state.questions[questionSource].vote = action.payload.vote;
         },
         setSelectedBdoClass: (state: ClassificationState, action: PayloadAction<SelectedClassAction>) => {

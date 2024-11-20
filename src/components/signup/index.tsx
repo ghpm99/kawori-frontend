@@ -5,10 +5,11 @@ import { useAppThunkDispatch } from "@/lib/hooks";
 import { INewUser, signinThunk, signupService } from "@/services/auth";
 import { isFulfilled, isRejected } from "@reduxjs/toolkit";
 import * as Sentry from "@sentry/nextjs";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 
 const SingupForm = () => {
     const [form] = Form.useForm();
+    const navigate = useRouter();
     const dispatch = useAppThunkDispatch();
 
     const signin = (username: string, password: string) => {
@@ -21,7 +22,7 @@ const SingupForm = () => {
         )
             .then((action) => {
                 if (isFulfilled(action)) {
-                    Router.push("/admin/user");
+                    navigate.push("/internal/user");
                 } else if (isRejected(action)) {
                     Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
                     message.error("Falhou em logar");
@@ -62,15 +63,25 @@ const SingupForm = () => {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
-            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Por favor insira sua senha!" }]}>
-                <Input />
+            <Form.Item
+                label="Nome"
+                name="name"
+                rules={[
+                    { required: true, message: "Por favor insira seu nome!" },
+                    { type: "string", max: 100, message: "O nome deve ter no máximo 100 caracteres!" },
+                ]}
+            >
+                <Input data-testid="form-name" />
             </Form.Item>
             <Form.Item
                 label="Sobrenome"
                 name="last_name"
-                rules={[{ required: true, message: "Por favor insira sua senha!" }]}
+                rules={[
+                    { required: true, message: "Por favor insira seu sobrenome!" },
+                    { type: "string", max: 100, message: "O sobrenome deve ter no máximo 100 caracteres!" },
+                ]}
             >
-                <Input />
+                <Input data-testid="form-last-name" />
             </Form.Item>
             <Form.Item
                 label="Usuario"
@@ -80,10 +91,10 @@ const SingupForm = () => {
                         required: true,
                         message: "Por favor insira seu usuário!",
                     },
-                    { type: "string", max: 150 },
+                    { type: "string", max: 100, message: "O usuário deve ter no máximo 100 caracteres!" },
                 ]}
             >
-                <Input />
+                <Input data-testid="form-username" />
             </Form.Item>
             <Form.Item
                 label="E-mail"
@@ -96,18 +107,18 @@ const SingupForm = () => {
                     },
                 ]}
             >
-                <Input />
+                <Input data-testid="form-email" />
             </Form.Item>
             <Form.Item
                 label="Senha"
                 name="password"
                 rules={[
                     { required: true, message: "Por favor insira sua senha!" },
-                    { type: "string", min: 8 },
+                    { type: "string", min: 8, message: "A senha deve ter no mínimo 8 caracteres!" },
                 ]}
                 hasFeedback
             >
-                <Input.Password />
+                <Input.Password data-testid="form-password" />
             </Form.Item>
             <Form.Item
                 label="Confirme senha"
@@ -129,7 +140,7 @@ const SingupForm = () => {
                     }),
                 ]}
             >
-                <Input.Password />
+                <Input.Password data-testid="form-confirm" />
             </Form.Item>
             <Button
                 style={{

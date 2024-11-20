@@ -88,12 +88,13 @@ export const authSlice = createSlice({
             .addCase(signinThunk.fulfilled, (state, action) => {
                 TokenService.setUser({
                     tokens: {
-                        access: action.payload.response.tokens.access,
-                        refresh: action.payload.response.tokens.refresh,
+                        access: action.payload.token.tokens.access,
+                        refresh: action.payload.token.tokens.refresh,
                     },
                     remember: action.payload.args.remember,
                 });
                 state.status = "authenticated";
+                state.user = action.payload.user;
             })
             .addCase(userDetailsThunk.fulfilled, (state, action) => {
                 state.user = action.payload;

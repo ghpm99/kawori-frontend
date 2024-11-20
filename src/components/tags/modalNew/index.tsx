@@ -48,10 +48,10 @@ export default function ModalNewTag(props: IModalNewTagProps) {
                 preserve={false}
             >
                 <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Entre com o nome da tag" }]}>
-                    <Input placeholder="Digite o nome" />
+                    <Input placeholder="Digite o nome" data-testid='tag-name'/>
                 </Form.Item>
                 <Form.Item label="Cor" name="color">
-                    <input type="color" />
+                    <input type="color" data-testid='tag-color'/>
                 </Form.Item>
             </Form>
         </Modal>

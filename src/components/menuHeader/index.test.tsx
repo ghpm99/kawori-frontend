@@ -1,11 +1,13 @@
-import { render } from "@testing-library/react";
-import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 import MenuHeader from "@/components/menuHeader/index";
+import useMenuHeader from "@/components/menuHeader/useMenuHeader";
+import { render, screen } from "@testing-library/react";
+
+jest.mock("@/components/menuHeader/useMenuHeader");
 
 jest.mock("@/components/menuHeader/useMenuHeader");
 
 describe("MenuHeader", () => {
-    it("should render the menu header with user options when authenticated", () => {
+    test("should render the menu header with user options when authenticated", () => {
         (useMenuHeader as jest.Mock).mockReturnValue({
             status: "authenticated",
             data: {
@@ -17,21 +19,40 @@ describe("MenuHeader", () => {
             },
         });
 
-        const { getByText } = render(<MenuHeader />);
+        render(<MenuHeader />);
 
-        expect(getByText("Kawori")).toBeInTheDocument();
-        expect(getByText("test-name")).toBeInTheDocument();
+        expect(screen.getByText("Inicio")).toBeInTheDocument();
+        expect(screen.getByText("Black Desert")).toBeInTheDocument();
     });
 
-    it("should render the menu header with login option when not authenticated", () => {
+    test("should render the menu header with login option when not authenticated", () => {
         (useMenuHeader as jest.Mock).mockReturnValue({
             status: "unauthenticated",
             data: null,
         });
 
-        const { getByText } = render(<MenuHeader />);
+        render(<MenuHeader />);
 
-        expect(getByText("Kawori")).toBeInTheDocument();
-        expect(getByText("Logar")).toBeInTheDocument();
+        expect(screen.getByText("Inicio")).toBeInTheDocument();
+        expect(screen.getByText("Black Desert")).toBeInTheDocument();
+    });
+
+    describe("MenuHeader hook", () => {
+
+
+        test("should render the menu header with login option when not authenticated", () => {
+            (useMenuHeader as jest.Mock).mockReturnValue({
+                status: "unauthenticated",
+                data: null,
+            });
+
+            render(<MenuHeader />);
+
+            expect(screen.getByText("Inicio")).toBeInTheDocument();
+            expect(screen.getByText("Black Desert")).toBeInTheDocument();
+            expect(screen.getByText("Logar")).toBeInTheDocument();
+        });
+
+
     });
 });

@@ -53,6 +53,8 @@ const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass:
         label: item.abbreviation,
     }));
 
+    console.log(selectItens, bdoClass);
+
     const currentStep = selectedClass === undefined || selectedProfile === undefined ? 0 : 1;
 
     const startQuestion = () => {
@@ -92,6 +94,7 @@ const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass:
                             value={selectedClass}
                             options={selectItens}
                             onChange={handlerChangeBdoClass}
+                            aria-label='select-class-input'
                         />
                         <div>Selecione o estilo de combate:</div>
                         <Select
