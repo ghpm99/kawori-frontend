@@ -5,7 +5,7 @@ import ServerPage from "./page";
 import { setSelectedMenu } from "@/lib/features/auth";
 import { updateAllContractsValue } from "@/services/financial";
 import { message } from "antd";
-import { renderWithProviders } from '@/util/test-utils'
+import { renderWithProviders } from "@/util/test-utils";
 
 jest.mock("@/lib/hooks", () => ({
     useAppDispatch: () => jest.fn(),
@@ -22,7 +22,6 @@ jest.mock("antd", () => ({
         success: jest.fn(),
     },
 }));
-
 
 describe("ServerPage", () => {
     beforeEach(() => {

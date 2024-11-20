@@ -94,7 +94,7 @@ const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass:
                             value={selectedClass}
                             options={selectItens}
                             onChange={handlerChangeBdoClass}
-                            aria-label='select-class-input'
+                            aria-label="select-class-input"
                         />
                         <div>Selecione o estilo de combate:</div>
                         <Select

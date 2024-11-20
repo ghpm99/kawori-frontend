@@ -1,4 +1,4 @@
-import TokenServiceInstance from "./authToken"
+import TokenServiceInstance from "./authToken";
 import TokenService from "./authToken";
 
 describe("TokenService getToken", () => {
@@ -32,6 +32,4 @@ describe("TokenService getToken", () => {
         const token = TokenService.getToken();
         expect(token).toEqual(mockToken);
     });
-
-
 });

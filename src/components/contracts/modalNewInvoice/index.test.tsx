@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ModalNewInvoice,{ IModalNewInvoiceProps }  from "./index";
+import ModalNewInvoice, { IModalNewInvoiceProps } from "./index";
 
 const mockTags: ITags[] = [
-    { id: 1, name: "Tag1",color: '' },
-    { id: 2, name: "Tag2", color: '' },
+    { id: 1, name: "Tag1", color: "" },
+    { id: 2, name: "Tag2", color: "" },
 ];
 
 const defaultProps: IModalNewInvoiceProps = {
@@ -17,7 +17,7 @@ const defaultProps: IModalNewInvoiceProps = {
 
 describe("ModalNewInvoice", () => {
     test("renders correctly", () => {
-        render(<ModalNewInvoice  {...defaultProps} />);
+        render(<ModalNewInvoice {...defaultProps} />);
         expect(screen.getByText("Nova entrada")).toBeInTheDocument();
         expect(screen.getByLabelText("Tipo")).toBeInTheDocument();
         expect(screen.getByLabelText("Nome")).toBeInTheDocument();

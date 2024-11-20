@@ -38,8 +38,6 @@ describe("MenuHeader", () => {
     });
 
     describe("MenuHeader hook", () => {
-
-
         test("should render the menu header with login option when not authenticated", () => {
             (useMenuHeader as jest.Mock).mockReturnValue({
                 status: "unauthenticated",
@@ -52,7 +50,5 @@ describe("MenuHeader", () => {
             expect(screen.getByText("Black Desert")).toBeInTheDocument();
             expect(screen.getByText("Logar")).toBeInTheDocument();
         });
-
-
     });
 });

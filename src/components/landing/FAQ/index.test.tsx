@@ -11,6 +11,4 @@ describe("FAQ Component", () => {
         expect(screen.getByText("Utilizar o site é seguro?")).toBeInTheDocument();
         expect(screen.getByText("Como faço para entrar em contato com o suporte?")).toBeInTheDocument();
     });
-
-
 });

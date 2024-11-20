@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ModalFilter from "./index";
-import userEvent from '@testing-library/user-event'
+import userEvent from "@testing-library/user-event";
 
 describe("ModalFilter Component", () => {
     const mockOnCancel = jest.fn();
@@ -29,13 +29,12 @@ describe("ModalFilter Component", () => {
         expect(mockOnCancel).toHaveBeenCalled();
     });
 
-    test("should call setFilters when form is submitted", async() => {
+    test("should call setFilters when form is submitted", async () => {
         setup();
         fireEvent.click(screen.getByText("OK"));
         await waitFor(() => {
             expect(mockSetFilters).toHaveBeenCalled();
-
-        })
+        });
     });
 
     test("should render all form fields", () => {

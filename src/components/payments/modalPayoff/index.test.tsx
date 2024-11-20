@@ -24,7 +24,7 @@ describe("ModalPayoff Component", () => {
         render(<ModalPayoff visible={true} onCancel={mockOnCancel} onPayoff={mockOnPayoff} data={mockData} />);
 
         fireEvent.click(screen.getByText("Voltar"));
-    expect(mockOnCancel).toHaveBeenCalled();
+        expect(mockOnCancel).toHaveBeenCalled();
     });
 
     test("should call onPayoff when the 'Processar' button is clicked", () => {

@@ -45,8 +45,7 @@ describe("apiDjango", () => {
                     env: {},
                     headers: {
                         Accept: "application/json, text/plain, */*",
-                        Authorization:
-                            "Bearer",
+                        Authorization: "Bearer",
                     },
                     baseURL: "http://localhost:8500/",
                     method: "get",

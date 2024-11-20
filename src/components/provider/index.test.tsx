@@ -44,8 +44,7 @@ describe("AuthProvider", () => {
     });
 
     test("should dispatch setLoading(false) if no user token is found", async () => {
-
-        renderComponent(null)
+        renderComponent(null);
 
         await waitFor(() => {
             expect(mockDispatch).toHaveBeenCalledWith(setLoading(false));

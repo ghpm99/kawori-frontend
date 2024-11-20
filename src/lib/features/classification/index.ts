@@ -5,8 +5,8 @@ import {
     getAnswerByClass,
     getAnswerSummary,
     getTotalVotes,
-} from "@/services/classification"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+} from "@/services/classification";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface QuestionData {
     id: number;

@@ -1,14 +1,10 @@
-import { renderWithProviders } from '@/util/test-utils'
-import { fireEvent, screen } from "@testing-library/react"
-import Background from "./index"
-
+import { renderWithProviders } from "@/util/test-utils";
+import { fireEvent, screen } from "@testing-library/react";
+import Background from "./index";
 
 describe("Background Component", () => {
-
-
     test("renders Background component", () => {
         renderWithProviders(<Background />);
-
 
         expect(screen.getByText("Background")).toBeInTheDocument();
         expect(screen.getByAltText("background")).toHaveAttribute("src", "");

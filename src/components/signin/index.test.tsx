@@ -1,7 +1,7 @@
-import LoginPage from "@/components/signin"
-import { renderWithProviders } from "@/util/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import axios from "axios"
+import LoginPage from "@/components/signin";
+import { renderWithProviders } from "@/util/test-utils";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
+import axios from "axios";
 
 jest.mock("next/navigation", () => ({
     useRouter: jest.fn(() => ({
@@ -35,5 +35,4 @@ describe("LoginPage", () => {
             expect(screen.getByText(/usuario ou senha incorretos/i)).toBeInTheDocument();
         });
     });
-
 });

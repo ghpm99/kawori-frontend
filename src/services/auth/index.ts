@@ -14,7 +14,7 @@ export const signinThunk = createAsyncThunk(
             headers: {
                 Authorization: `Bearer ${tokenResponse.data.tokens.access}`,
             },
-        })
+        });
         return {
             token: tokenResponse.data,
             user: userDetailResponse.data,

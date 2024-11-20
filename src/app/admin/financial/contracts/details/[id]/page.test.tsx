@@ -1,6 +1,6 @@
-import { renderWithProviders } from "@/util/test-utils"
-import { fireEvent, screen } from "@testing-library/react"
-import ContractDetails from "./page"
+import { renderWithProviders } from "@/util/test-utils";
+import { fireEvent, screen } from "@testing-library/react";
+import ContractDetails from "./page";
 
 jest.mock("@/lib/features/auth", () => ({
     setSelectedMenu: jest.fn(),

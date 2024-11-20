@@ -15,7 +15,10 @@ describe("Facetexture Component", () => {
         images.forEach((image) => {
             const imgElement = screen.getByAltText(image.alt);
             expect(imgElement).toBeInTheDocument();
-            expect(imgElement).toHaveAttribute("src", expect.stringContaining('/_next/image?url=%2Fimg.jpg&w=1200&q=75'));
+            expect(imgElement).toHaveAttribute(
+                "src",
+                expect.stringContaining("/_next/image?url=%2Fimg.jpg&w=1200&q=75"),
+            );
         });
     });
 

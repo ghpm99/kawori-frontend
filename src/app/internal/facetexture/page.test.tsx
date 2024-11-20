@@ -1,8 +1,8 @@
-import { fetchFacetexture } from "@/lib/features/facetexture"
-import { db } from "@/util/db"
-import { renderWithProviders } from '@/util/test-utils'
-import { screen, waitFor } from "@testing-library/react"
-import FaceTexture from "./page"
+import { fetchFacetexture } from "@/lib/features/facetexture";
+import { db } from "@/util/db";
+import { renderWithProviders } from "@/util/test-utils";
+import { screen, waitFor } from "@testing-library/react";
+import FaceTexture from "./page";
 
 jest.mock("@/lib/features/facetexture", () => ({
     fetchFacetexture: jest.fn(),
@@ -22,9 +22,7 @@ jest.mock("@/util/db", () => ({
     },
 }));
 
-
 describe.skip("FaceTexture", () => {
-
     it("should render loading component when loading", () => {
         renderWithProviders(<FaceTexture />);
 

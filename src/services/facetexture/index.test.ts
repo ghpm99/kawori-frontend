@@ -71,6 +71,4 @@ describe("Facetexture Service", () => {
         });
         expect(result).toEqual(mockData);
     });
-
-
 });
