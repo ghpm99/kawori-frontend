@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
     const navigate = useRouter();
     const dispatch = useAppDispatch();
-    const localAccessToken = TokenServiceInstance.getLocalAccessToken();
 
     const updateValidatedToken = (token: IToken) => {
         dispatch(setToken(token));
@@ -56,11 +55,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
             dispatch(setLoading(false));
         }
     }, []);
-
-    useEffect(() => {
-        console.log(localAccessToken)
-    }, [localAccessToken])
-
 
     return children;
 }

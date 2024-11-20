@@ -3,6 +3,7 @@ import AuthProvider from "@/components/provider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "../../styles/globals.scss";
 import StoreProvider from "./storeProvider";
+import { Analytics } from "@vercel/analytics/react"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -10,7 +11,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body>
                 <StoreProvider>
                     <AntdRegistry>
-                        <AuthProvider>{children}</AuthProvider>
+                        <AuthProvider>
+                            {children}
+                            <Analytics />
+                        </AuthProvider>
                     </AntdRegistry>
                 </StoreProvider>
             </body>
