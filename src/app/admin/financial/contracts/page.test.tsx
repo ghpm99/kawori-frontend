@@ -1,6 +1,6 @@
-import { renderWithProviders } from "@/util/test-utils"
-import { screen } from "@testing-library/react"
-import FinancialPage from "./page"
+import { renderWithProviders } from "@/util/test-utils";
+import { screen } from "@testing-library/react";
+import FinancialPage from "./page";
 
 describe("FinancialPage", () => {
     test("should render FinancialPage correctly", () => {

@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInterceptorManager, AxiosResponse } from "axios
 import TokenService from "./auth/authToken";
 import * as Sentry from "@sentry/nextjs";
 import { refreshTokenService } from "./auth";
-import tokenServiceInstance from "./auth/authToken"
+import tokenServiceInstance from "./auth/authToken";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",

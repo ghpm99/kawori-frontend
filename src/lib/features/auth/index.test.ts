@@ -2,9 +2,6 @@ import TokenService from "@/services/auth/authToken";
 import authReducer, { signout, setToken, setLoading, setSelectedMenu, IAuthState, IUser } from "./index";
 
 describe("authSlice", () => {
-
-
-
     describe("setLoading", () => {
         test("should set the loading state", () => {
             const initialState: IAuthState = {

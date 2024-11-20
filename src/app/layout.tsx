@@ -3,8 +3,8 @@ import AuthProvider from "@/components/provider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "../../styles/globals.scss";
 import StoreProvider from "./storeProvider";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

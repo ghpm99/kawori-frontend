@@ -1,8 +1,8 @@
-import { formatterDate } from "@/util"
-import "@testing-library/jest-dom"
-import { render, screen } from "@testing-library/react"
-import { NewsProps } from ".."
-import NewsList from "./index"
+import { formatterDate } from "@/util";
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { NewsProps } from "..";
+import NewsList from "./index";
 
 jest.mock("next/link", () => {
     return ({ children }) => children;
@@ -39,6 +39,4 @@ describe("NewsList Component", () => {
             ).toBeInTheDocument();
         });
     });
-
-
 });

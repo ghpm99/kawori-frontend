@@ -22,8 +22,6 @@ describe("AccumulatedValue Component", () => {
         expect(container).toBeInTheDocument();
     });
 
-
-
     test("formats the labels correctly", () => {
         render(<AccumulatedValue payments={mockPayments} amountForecastValue={mockAmountForecastValue} />);
         expect(formatterMonthYearDate).toHaveBeenCalledWith("2023-01");

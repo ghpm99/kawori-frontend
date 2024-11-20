@@ -1,8 +1,8 @@
-import { downloadFacetextureService, previewFacetextureService } from "@/services/facetexture"
-import { renderWithProviders } from "@/util/test-utils"
-import "@testing-library/jest-dom"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import Preview from "./index"
+import { downloadFacetextureService, previewFacetextureService } from "@/services/facetexture";
+import { renderWithProviders } from "@/util/test-utils";
+import "@testing-library/jest-dom";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
+import Preview from "./index";
 
 jest.mock("@/util/db");
 jest.mock("@/services/facetexture");
