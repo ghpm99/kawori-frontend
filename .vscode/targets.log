@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Nov 18 22:12:51 2024
+# Make data base, printed on Tue Nov 19 23:04:01 2024
 
 # Variables
 
@@ -139,7 +139,7 @@ MAKEFILES :=
 # environment
 VSCEXT_USE_PIP_DEP_TREE = false
 # environment
-WT_SESSION = aedad4e1-d57d-4115-aa3c-4857803167c0
+WT_SESSION = 9474b398-1375-4bf7-9a19-1ca430581ecf
 # environment
 VSCEXT_TELEMETRY_ID = b3d3275e-d755-45bd-8125-373ac182b297
 # environment
@@ -161,7 +161,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 LESS = -R
 # environment
-WSL_INTEROP = /run/WSL/3205_interop
+WSL_INTEROP = /run/WSL/99906_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -193,7 +193,7 @@ _ = /home/ghpm99/projects/toolkit/kawori_front.sh
 # environment
 XDG_RUNTIME_DIR = /run/user/1000/
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-367d7574-4704-475c-9735-a037cfea08bd.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-b55fce30-466f-4348-ac7a-ff68ead2ad41.sock
 # environment
 VSCEXT_EXHORT_PYTHON3_PATH = python3
 # environment
@@ -283,6 +283,6 @@ all:
 # hash-table stats:
  
 # Load=45/8192=1%, Rehash=0, Collisions=0/50=0%
-# Finished Make data base on Mon Nov 18 22:12:52 2024
+# Finished Make data base on Tue Nov 19 23:04:01 2024
 
  
