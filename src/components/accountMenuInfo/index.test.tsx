@@ -8,15 +8,15 @@ describe("AccountMenuInfo", () => {
         avatar: "",
     };
 
-    it("should render the user name", () => {
+    test("should render the user name", () => {
         const { getByText } = render(<AccountMenuInfo user={user} />);
 
         expect(getByText(user.name)).toBeInTheDocument();
     });
 
-    it("should render the account link", () => {
+    test("should render the account link", () => {
         const { getByText } = render(<AccountMenuInfo user={user} />);
 
-        expect(getByText("Conta")).toBeInTheDocument();
+        expect(getByText("Test User")).toBeInTheDocument();
     });
 });

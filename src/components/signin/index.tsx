@@ -9,6 +9,7 @@ import { signinThunk } from "@/services/auth";
 import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
 import styles from "./Signin.module.scss";
+import { userDetailsThunk } from '@/lib/features/auth'
 
 export default function LoginPage() {
     const [error, setError] = useState(false);
@@ -25,9 +26,10 @@ export default function LoginPage() {
         )
             .then((action) => {
                 if (isFulfilled(action)) {
-                    navigate.push("/internal/user");
+                    dispatch(userDetailsThunk())
                 } else if (isRejected(action)) {
                     Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
+                    console.error("error", action);
                     setError(true);
                 }
             })

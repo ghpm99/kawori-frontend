@@ -9,7 +9,7 @@ const useUserPanel = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(userDetailsThunk());
+        if (store.status === "authenticated") dispatch(userDetailsThunk());
     }, []);
 
     const formatDate = (date: string) => {

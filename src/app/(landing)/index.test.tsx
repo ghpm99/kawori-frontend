@@ -1,24 +1,22 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 
-import { cleanup } from "@testing-library/react";
-import { renderWithProviders } from "../../util/test-utils";
-import Home from "@/app/(landing)/page";
+import LandingLayout from "@/app/(landing)/layout.tsx";
+import Home from "@/app/(landing)/page.tsx";
+import { renderWithProviders } from "@/util/test-utils";
+import { cleanup, render, screen } from "@testing-library/react";
 
 jest.mock("@/components/menuHeader/useMenuHeader");
-
-Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-    })),
-});
+jest.mock("@/components/landing/news");
+jest.mock("@/prismicio");
+jest.mock("next/navigation", () => ({
+    useRouter: () => ({
+        push: jest.fn(),
+    }),
+}));
+jest.mock("react", () => ({
+    ...jest.requireActual("react"),
+    cache: jest.fn(),
+}));
 
 beforeAll(() => {
     cleanup();
@@ -29,8 +27,13 @@ afterEach(() => {
     cleanup();
 });
 
-describe("Home", () => {
-    it("should render the title correctly", () => {
+describe("Home Page", () => {
+    test("should render the page", () => {
+        const { container } = renderWithProviders(<Home />);
+        expect(container).toBeDefined();
+    });
+
+    test("should render the title correctly", () => {
         (useMenuHeader as jest.Mock).mockReturnValue({
             status: "authenticated",
             data: {
@@ -41,24 +44,26 @@ describe("Home", () => {
                 },
             },
         });
-        const { getByText } = renderWithProviders(<Home />);
-        const title = getByText("Você está a apenas um passo de um novo nivel de personalização do seu jogo!");
+        renderWithProviders(<Home />);
+        const title = screen.getByRole("heading", {
+            name: /kawori é uma plataforma de personalização de tela de seleção de personagens para black desert online\./i,
+        });
         expect(title).toBeInTheDocument();
     });
 
-    it("should render the signup text correctly", () => {
+    test("should render the signup text correctly", () => {
         const { getByText } = renderWithProviders(<Home />);
         const signupText = getByText("O cadastro é gratuito, simples e rapido.");
         expect(signupText).toBeInTheDocument();
     });
 
-    it("should render the form title correctly", () => {
-        const { getByText } = renderWithProviders(<Home />);
-        const formTitle = getByText("Cadastro");
+    test("should render the form title correctly", () => {
+        renderWithProviders(<Home />);
+        const formTitle = screen.getByTestId(/cadastro-form/i);
         expect(formTitle).toBeInTheDocument();
     });
 
-    it("should render the SingupForm component", () => {
+    test("should render the SingupForm component", () => {
         const { getByLabelText } = renderWithProviders(<Home />);
         const nameInput = getByLabelText("Nome");
         const lastNameInput = getByLabelText("Sobrenome");
@@ -74,15 +79,27 @@ describe("Home", () => {
         expect(passwordConfirmationInput).toBeInTheDocument();
     });
 
-    it("should render the footer text correctly", () => {
-        const { getByText } = renderWithProviders(<Home />);
-        const footerText = getByText(/Sinta-se a vontade para entrar para/i);
+    test("should render the footer text correctly", () => {
+        render(
+            <LandingLayout>
+                <div>Teste</div>
+            </LandingLayout>,
+        );
+        const footerText = screen.getByText(/Sinta-se a vontade para entrar para/i);
         expect(footerText).toBeInTheDocument();
     });
 
-    it("should render the discord link correctly", () => {
-        const { getByText } = renderWithProviders(<Home />);
-        const discordLink = getByText("nossa comunidade");
+    test("should render the discord link correctly", () => {
+        (useMenuHeader as jest.Mock).mockReturnValue({
+            status: "authenticated",
+            data: "user-test",
+        });
+        render(
+            <LandingLayout>
+                <div>Teste</div>
+            </LandingLayout>,
+        );
+        const discordLink = screen.getByText("nossa comunidade");
         expect(discordLink).toBeInTheDocument();
         expect(discordLink).toHaveAttribute("href", "https://discord.gg/fykNkXyn2r");
     });

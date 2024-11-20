@@ -1,6 +1,5 @@
 import { AppStore, store } from "@/lib/store";
-import { useEffect, useRef } from "react";
-import { setupListeners } from "@reduxjs/toolkit/query";
+import { useRef } from "react";
 import { Provider } from "react-redux";
 
 export default function StoreProvider({ children }: { children: React.ReactNode }) {

@@ -1,8 +1,7 @@
-import { createClient } from "@/prismicio";
-import styles from "./news.module.scss";
-import NewsList from "./newsList";
 import { fetchProjectDetailData } from "@/app/api/lib/news";
 import { useEffect, useState } from "react";
+import styles from "./news.module.scss";
+import NewsList from "./newsList";
 
 export interface NewsProps {
     first_publication_date: string;
@@ -10,18 +9,34 @@ export interface NewsProps {
     title: string;
 }
 
+type Status = "waiting" | "loading" | "success" | "error";
+
 const News = () => {
     const [data, setData] = useState<NewsProps[]>([]);
+    const [status, setStatus] = useState<Status>("waiting");
 
     useEffect(() => {
-        fetchProjectDetailData().then((response) => {
-            setData(response);
-        });
-    }, []);
+        if (status !== "waiting") return;
+        setStatus("loading");
+        fetchProjectDetailData()
+            .then((response) => {
+                setData(response);
+                setStatus("success");
+            })
+            .catch(() => {
+                setStatus("error");
+            });
+    }, [status]);
+
+    const loadingStatus = (() => {
+        return status === "waiting" || status === "loading";
+    })();
 
     return (
         <div className={styles["news-list"]}>
-            <NewsList data={data} />
+            {loadingStatus && <p>Loading...</p>}
+            {!loadingStatus && data.length === 0 && <p>No news available</p>}
+            {!loadingStatus && data.length > 0 && <NewsList data={data} />}
         </div>
     );
 };
