@@ -1,10 +1,11 @@
-import { MenuItemKey } from "@/components/menuInternal/Index";
-import { apiDjango } from "@/services";
-import { signinThunk } from "@/services/auth";
+import { MenuItemKey } from "@/components/menuInternal/Index"
+import { apiDjango } from "@/services"
+import { signinThunk } from "@/services/auth"
+import TokenServiceInstance from "@/services/auth/authToken"
 
-import TokenService, { IToken } from "@/services/auth/authToken";
+import { IToken } from "@/services/auth/authToken"
 
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export type authStatus = "authenticated" | "unauthenticated";
 
@@ -59,7 +60,7 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state: IAuthState, action: PayloadAction<IToken>) => {
-            TokenService.setUser({
+            TokenServiceInstance.setUser({
                 tokens: {
                     access: action.payload.tokens.access,
                     refresh: action.payload.tokens.refresh,
@@ -69,7 +70,7 @@ export const authSlice = createSlice({
             state.status = "authenticated";
         },
         signout: (state) => {
-            TokenService.removeUser();
+            TokenServiceInstance.removeUser();
             state.user = initialState.user;
             state.status = "unauthenticated";
         },
@@ -86,7 +87,7 @@ export const authSlice = createSlice({
                 state.status = "unauthenticated";
             })
             .addCase(signinThunk.fulfilled, (state, action) => {
-                TokenService.setUser({
+                TokenServiceInstance.setUser({
                     tokens: {
                         access: action.payload.token.tokens.access,
                         refresh: action.payload.token.tokens.refresh,
