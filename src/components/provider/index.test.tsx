@@ -52,7 +52,7 @@ describe("AuthProvider", () => {
     });
 
     test("should verify token if user token is found", async () => {
-        const mockToken = { tokens: { access: "access-token", refresh: "refresh-token" } };
+        const mockToken = { tokens: { access: "access-token", refresh: "refresh-token" }, remember: true };
         (TokenService.getToken as jest.Mock).mockReturnValue(mockToken);
         (verifyTokenService as jest.Mock).mockResolvedValue({});
 
