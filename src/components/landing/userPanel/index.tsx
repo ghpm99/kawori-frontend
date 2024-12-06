@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, List, Tabs, TabsProps } from "antd";
 import useUserPanel from "./useUserPanel";
 

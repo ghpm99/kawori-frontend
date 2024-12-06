@@ -61,15 +61,6 @@ class TokenService {
     }
 }
 
-let tokenServiceInstance = null;
-
-const getTokenServiceInstance = (itemName: string = "kawori"): TokenService => {
-    if (!tokenServiceInstance) {
-        tokenServiceInstance = new TokenService(itemName);
-    }
-    return tokenServiceInstance;
-};
-
-const TokenServiceInstance = getTokenServiceInstance();
+const TokenServiceInstance = new TokenService("kawori");
 
 export default TokenServiceInstance;

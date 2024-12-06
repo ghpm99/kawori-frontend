@@ -70,8 +70,8 @@ export const authSlice = createSlice({
         },
         signout: (state) => {
             TokenService.removeUser();
-            state.status = "unauthenticated";
             state.user = initialState.user;
+            state.status = "unauthenticated";
         },
         setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
