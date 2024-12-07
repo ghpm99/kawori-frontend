@@ -8,24 +8,20 @@ export interface IToken {
 
 class TokenService {
     userItemName: string;
-    user: IToken | undefined;
 
     constructor(itemName: string) {
         this.userItemName = itemName;
     }
 
     getToken(): IToken | undefined {
-        if (this.user) {
-            return this.user;
-        }
         const localStorageToken = localStorage ? localStorage.getItem(this.userItemName) : undefined;
         const sessionStorageToken = sessionStorage ? sessionStorage.getItem(this.userItemName) : undefined;
         const token = localStorageToken ?? sessionStorageToken ?? undefined;
         if (!token) {
             return undefined;
         }
-        this.user = JSON.parse(token);
-        return this.user;
+        const user: IToken = JSON.parse(token);
+        return user;
     }
 
     getLocalAccessToken() {
@@ -39,11 +35,10 @@ class TokenService {
     }
 
     setUser(token: IToken) {
-        this.user = token;
         if (token.remember) {
-            localStorage.setItem(this.userItemName, JSON.stringify(this.user));
+            localStorage.setItem(this.userItemName, JSON.stringify(token));
         } else {
-            sessionStorage.setItem(this.userItemName, JSON.stringify(this.user));
+            sessionStorage.setItem(this.userItemName, JSON.stringify(token));
         }
     }
 
