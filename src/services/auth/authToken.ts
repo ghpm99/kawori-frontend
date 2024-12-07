@@ -9,15 +9,18 @@ export interface IToken {
 class TokenService {
     userItemName: string;
 
+    status: string = 'loading'
+
     constructor(itemName: string) {
         this.userItemName = itemName;
+        this.status = 'ok'
     }
 
     getToken(): IToken | undefined {
-        const localStorageToken = localStorage ? localStorage.getItem(this.userItemName) : undefined;
-        const sessionStorageToken = sessionStorage ? sessionStorage.getItem(this.userItemName) : undefined;
+        const localStorageToken = localStorage.getItem(this.userItemName);
+        const sessionStorageToken = sessionStorage.getItem(this.userItemName);
         const token = localStorageToken ?? sessionStorageToken ?? undefined;
-        if (!token) {
+        if (!token || this.status === 'signout') {
             return undefined;
         }
         const user: IToken = JSON.parse(token);
@@ -35,11 +38,13 @@ class TokenService {
     }
 
     setUser(token: IToken) {
+        this.status = 'signin'
         if (token.remember) {
             localStorage.setItem(this.userItemName, JSON.stringify(token));
         } else {
             sessionStorage.setItem(this.userItemName, JSON.stringify(token));
         }
+        this.status = 'ok'
     }
 
     updateLocalAccessToken(token: string) {
@@ -51,6 +56,7 @@ class TokenService {
     }
 
     removeUser() {
+        this.status = 'signout'
         localStorage.removeItem(this.userItemName);
         sessionStorage.removeItem(this.userItemName);
     }
