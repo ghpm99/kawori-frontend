@@ -1,4 +1,4 @@
-import { userDetailsThunk } from "@/lib/features/auth";
+import { signout, userDetailsThunk } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 
@@ -17,10 +17,15 @@ const useUserPanel = () => {
         return dateFormat.toLocaleString();
     };
 
+    const handleSignout = () => {
+        dispatch(signout());
+    }
+
     return {
         status: store.status,
         user: store.user,
         formatDate,
+        handleSignout,
     };
 };
 
