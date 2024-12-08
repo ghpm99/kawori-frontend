@@ -4,17 +4,24 @@ import { Avatar, Button, Popover } from "antd";
 import Link from "next/link";
 
 import S from "./Login.module.scss";
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
+import { signout } from '@/lib/features/auth'
+import { RootState } from '@/lib/store'
 
 export default function LoginHeader() {
-    const { data, status } = {
-        data: { user: { name: "test" } },
-        status: "authenticated",
-    };
+    const { user, status } = useAppSelector((state: RootState) => state.auth);
+
+    const dispatch = useAppDispatch();
+
+    const handleSignout = () => {
+        dispatch(signout());
+    }
+
 
     const content = (
         <div>
-            <div>{data?.user?.name}</div>
-            <Button href="/signout">Deslogar</Button>
+            <div>{user?.name}</div>
+            <Button onClick={handleSignout}>Deslogar</Button>
         </div>
     );
 
@@ -23,7 +30,7 @@ export default function LoginHeader() {
             {status === "authenticated" ? (
                 <Popover content={content} title="Conta" className={S["user"]}>
                     <Avatar size="small" icon={<UserOutlined />} />
-                    {data?.user?.name}
+                    {user?.name}
                 </Popover>
             ) : (
                 <div className={S.buttons}>

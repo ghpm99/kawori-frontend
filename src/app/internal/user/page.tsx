@@ -3,7 +3,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import { setSelectedMenu } from "@/lib/features/auth";
+import { setSelectedMenu, signout } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useEffect } from "react";
@@ -20,6 +20,10 @@ const User = () => {
         document.title = "Kawori Profile";
         dispatch(setSelectedMenu(["user"]));
     }, []);
+
+    const handleSignout = () => {
+        dispatch(signout());
+    }
 
     const getBorderColor = () => {
         if (!user) {
@@ -126,7 +130,7 @@ const User = () => {
                     }}
                     type="primary"
                     danger
-                    href="/signout"
+                    onClick={handleSignout}
                 >
                     Deslogar
                 </Button>

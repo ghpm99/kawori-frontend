@@ -34,7 +34,7 @@ const tabItens: TabsProps["items"] = [
 ];
 
 const UserPanel = () => {
-    const { user, status, formatDate } = useUserPanel();
+    const { user, status, formatDate, handleSignout } = useUserPanel();
 
     if (!status || status === "unauthenticated") {
         return (
@@ -88,7 +88,7 @@ const UserPanel = () => {
                         style={{
                             float: "right",
                         }}
-                        href="/signout"
+                        onClick={handleSignout}
                     >
                         Deslogar
                     </Button>
