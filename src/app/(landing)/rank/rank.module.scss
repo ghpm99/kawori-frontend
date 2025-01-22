@@ -28,7 +28,7 @@
     &.on {
         & .bdo-class {
             opacity: 1;
-            transform: translate3d(0, 0, 1px);
+            transform: translate3d(0, 0, 1px) scale3d(1, 1, 1);
         }
     }
     @media screen and (max-width: 1278px) {
@@ -42,15 +42,19 @@
     min-width: 255px;
     height: 346px;
     padding: 0 9px 18px;
-    transform: translate3d(0, 20%, 0);
+    transform: translate3d(0, 20%, 0)
+     scale3d(1.05, 1.05, 1.05);
     transition:
         opacity 0.8s ease-in,
         transform 0.8s;
     opacity: 0;
     &:hover {
-        padding: 0 6px 16px;
+        z-index: 2;
         & .bdo-class-name {
             color: #e7bc5c;
+        }
+        & .class-wrap{
+            transform: scale3d(1.08, 1.08, 1.08);
         }
     }
     @media screen and (max-width: 1279px){
@@ -95,7 +99,7 @@
     left: -1px;
     width: 240px;
     height: 100%;
-    background: url(../../../../public/assets/classes_spr.jpg) no-repeat;
+    // background: url(../../../../public/assets/classes_spr.jpg) no-repeat;
     background-size: 1000% auto;
     transform: translate3d(0, 0, 1px);
 
