@@ -19,7 +19,7 @@ const useUserPanel = () => {
 
     const handleSignout = () => {
         dispatch(signout());
-    }
+    };
 
     return {
         status: store.status,

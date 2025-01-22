@@ -4,9 +4,9 @@ import { Avatar, Button, Popover } from "antd";
 import Link from "next/link";
 
 import S from "./Login.module.scss";
-import { useAppDispatch, useAppSelector } from '@/lib/hooks'
-import { signout } from '@/lib/features/auth'
-import { RootState } from '@/lib/store'
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { signout } from "@/lib/features/auth";
+import { RootState } from "@/lib/store";
 
 export default function LoginHeader() {
     const { user, status } = useAppSelector((state: RootState) => state.auth);
@@ -15,8 +15,7 @@ export default function LoginHeader() {
 
     const handleSignout = () => {
         dispatch(signout());
-    }
-
+    };
 
     const content = (
         <div>
