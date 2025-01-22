@@ -23,7 +23,7 @@ const User = () => {
 
     const handleSignout = () => {
         dispatch(signout());
-    }
+    };
 
     const getBorderColor = () => {
         if (!user) {

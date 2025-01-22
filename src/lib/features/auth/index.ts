@@ -1,11 +1,11 @@
-import { MenuItemKey } from "@/components/menuInternal/Index"
-import { apiDjango } from "@/services"
-import { signinThunk } from "@/services/auth"
-import TokenServiceInstance from "@/services/auth/authToken"
+import { MenuItemKey } from "@/components/menuInternal/Index";
+import { apiDjango } from "@/services";
+import { signinThunk } from "@/services/auth";
+import TokenServiceInstance from "@/services/auth/authToken";
 
-import { IToken } from "@/services/auth/authToken"
+import { IToken } from "@/services/auth/authToken";
 
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type authStatus = "authenticated" | "unauthenticated";
 

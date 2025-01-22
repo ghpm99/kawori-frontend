@@ -234,9 +234,17 @@ const Rank = () => {
                             }}
                             className={styles["class-wrap"]}
                         >
-                            <div className={styles["bdo-class-name"]}>{bdoClass.abbreviation}</div>
-                            <img src={`http://localhost:8000/facetexture/${bdoClass.id}/get-image-class`}
-                            className={`${styles["bdo-class-image"]}`} />
+                            <div className={styles["bdo-class-name"]}>
+                                <img
+                                    src={`http://localhost:8000/facetexture/${bdoClass.id}/get-symbol-class`}
+                                    className={`${styles["bdo-class-symbol"]}`}
+                                />
+                                {bdoClass.abbreviation}
+                            </div>
+                            <img
+                                src={`http://localhost:8000/facetexture/${bdoClass.id}/get-image-class`}
+                                className={`${styles["bdo-class-image"]}`}
+                            />
                         </div>
                     </li>
                 ))}
