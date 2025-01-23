@@ -21,6 +21,9 @@ const nextConfig = {
       },
       {
         hostname: 'storage.googleapis.com'
+      },
+      {
+        hostname: 'localhost'
       }
     ]
   }

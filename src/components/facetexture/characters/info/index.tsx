@@ -190,6 +190,7 @@ const Info = () => {
                             alt={selectedFacetexture.name}
                             width={125}
                             height={160}
+                            className={Styles["character-image"]}
                         />
                     </div>
                     <div className={Styles["controllers-info"]}>
