@@ -8,10 +8,18 @@ import { RootState } from "@/lib/store";
 import { reorderCharacterThunk } from "@/services/facetexture";
 import { message } from "antd";
 import Styles from "./DnDCharacters.module.scss";
+import { useInView } from "react-intersection-observer";
+import Image from "next/image";
 
 const DragAndDropCharacters = () => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
     const dispatch = useAppDispatch();
+
+    const { ref, inView, entry } = useInView({
+        /* Optional options */
+        threshold: 0,
+        delay: 2,
+    });
 
     const onDragEnd = async (result: DropResult, provided: ResponderProvided) => {
         if (!result.destination) {
@@ -76,44 +84,54 @@ const DragAndDropCharacters = () => {
     const facetextureMatrix = listToMatrix(facetextureStore.facetexture, 7);
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            {facetextureMatrix.map((row, indexRow) => (
-                <Droppable key={indexRow} droppableId={`${indexRow}`} direction="horizontal">
-                    {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            className={Styles["characters-container"]}
-                            {...provided.droppableProps}
-                        >
-                            {row.map((character, index) => (
-                                <Draggable key={character.id} draggableId={`${character.id}`} index={character.order}>
-                                    {(provided, snapshot) => (
-                                        <div
-                                            ref={provided.innerRef}
-                                            {...provided.dragHandleProps}
-                                            {...provided.draggableProps}
-                                            key={`${indexRow}-${index}`}
-                                            className={Styles["character"]}
-                                            onClick={(event) => setSelectedCharacter(character.id)}
-                                        >
-                                            {character.image && (
-                                                <img
-                                                    src={character.image}
-                                                    alt={character.name}
-                                                    width={125}
-                                                    height={160}
-                                                />
-                                            )}
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            ))}
-        </DragDropContext>
+        <div ref={ref}>
+            <DragDropContext onDragEnd={onDragEnd}>
+                {facetextureMatrix.map((row, indexRow) => (
+                    <Droppable key={indexRow} droppableId={`${indexRow}`} direction="horizontal">
+                        {(provided, snapshot) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                className={`${Styles["characters-container"]} ${inView ? Styles["on"] : undefined}`}
+                            >
+                                {row.map((character, index) => (
+                                    <Draggable
+                                        key={character.id}
+                                        draggableId={`${character.id}`}
+                                        index={character.order}
+                                    >
+                                        {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.dragHandleProps}
+                                                {...provided.draggableProps}
+                                                key={`${indexRow}-${index}`}
+                                                className={Styles["character"]}
+                                                onClick={(event) => setSelectedCharacter(character.id)}
+                                            >
+                                                <div className={Styles["character-wrap"]}>
+                                                    {character.image && (
+                                                        <Image
+                                                            src={character.image}
+                                                            alt={character.name}
+                                                            width={125}
+                                                            height={160}
+                                                            className={Styles["character-image"]}
+                                                        />
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                ))}
+            </DragDropContext>
+        </div>
     );
 };
 
