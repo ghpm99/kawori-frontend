@@ -14,6 +14,7 @@ interface IClass {
     name: string;
     abbreviation: string;
     class_image: string;
+    class_symbol: string;
     color?: string;
 }
 
