@@ -2,29 +2,29 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiDjango } from "..";
 
 export async function fetchAllPaymentService(filters: IPaymentFilters) {
-    const response = await apiDjango.get("/financial/", {
+    const response = await apiDjango.get("/financial/payment/", {
         params: filters,
     });
     return response.data;
 }
 
 export async function saveNewPaymentService(data: INewPaymentRequest) {
-    const response = await apiDjango.post("/financial/", data);
+    const response = await apiDjango.post("/financial/payment/new", data);
     return response.data;
 }
 
 export async function fetchDetailPaymentService(id: number) {
-    const response = await apiDjango.get(`/financial/${id}/`);
+    const response = await apiDjango.get(`/financial/payment/${id}/`);
     return response.data;
 }
 
 export async function savePaymentDetailService(id: number, payment: ISavePaymentRequest) {
-    const response = await apiDjango.post(`/financial/${id}/save`, payment);
+    const response = await apiDjango.post(`/financial/payment/${id}/save`, payment);
     return response.data;
 }
 
 export async function payoffPaymentService(id: number) {
-    const response = await apiDjango.post(`/financial/${id}/payoff`);
+    const response = await apiDjango.post(`/financial/payment/${id}/payoff`);
     return response.data;
 }
 

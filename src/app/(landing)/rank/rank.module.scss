@@ -14,7 +14,7 @@
 .subtitle {
     font-weight: normal;
     margin: 0;
-    font-family: 'Chillax', sans-serif;
+    font-family: "Chillax", sans-serif;
 }
 
 .bdo-class-list {
@@ -36,14 +36,27 @@
     }
 }
 
+.bdo-class-name {
+    position: absolute;
+    z-index: 2;
+    width: calc(100% - 18px);
+    text-align: center;
+    bottom: 26px;
+    color: white;
+    font-size: 18px;
+    font-family: "Chillax", sans-serif;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .bdo-class {
     position: relative;
     width: calc(100% / 5);
     min-width: 255px;
     height: 346px;
     padding: 0 9px 18px;
-    transform: translate3d(0, 20%, 0)
-     scale3d(1.05, 1.05, 1.05);
+    transform: translate3d(0, 20%, 0) scale3d(1.05, 1.05, 1.05);
     transition:
         opacity 0.8s ease-in,
         transform 0.8s;
@@ -53,12 +66,15 @@
         & .bdo-class-name {
             color: #e7bc5c;
         }
-        & .class-wrap{
+        & .bdo-class-symbol{
+            filter: none;
+        }
+        & .class-wrap {
             transform: scale3d(1.08, 1.08, 1.08);
             box-shadow: 0 5px 20px 5px #00000044;
         }
     }
-    @media screen and (max-width: 1279px){
+    @media screen and (max-width: 1279px) {
         width: auto;
     }
 }
@@ -83,26 +99,12 @@
     will-change: transform;
 }
 
-.bdo-class-name {
-    position: absolute;
-    z-index: 2;
-    width: calc(100% - 18px);
-    text-align: center;
-    bottom: 26px;
-    color: white;
-    font-size: 18px;
-    font-family: 'Chillax', sans-serif;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
 .bdo-class-symbol {
     width: 50px;
     height: 50px;
-    // background: url(../../../../public/assets/classes_spr.jpg) no-repeat;
     background-size: 1000% auto;
     transform: translate3d(0, 0, 1px);
+    filter:grayscale(1);
 }
 
 .bdo-class-image {
@@ -228,13 +230,13 @@
     }
 }
 
-.selected-class{
+.selected-class {
     &.on-class {
-        & .awakening{
+        & .awakening {
             opacity: 1;
             transform: translate3d(0, 0, 1px);
         }
-        & .succession{
+        & .succession {
             opacity: 1;
             transform: translate3d(0, 0, 1px);
         }
@@ -252,11 +254,10 @@
 
     @media screen and (max-width: 1300px) {
         .grid-container {
-
-            .left-container{
+            .left-container {
                 display: none;
             }
-            .right-container{
+            .right-container {
                 grid-column-start: 1;
             }
         }
@@ -270,7 +271,6 @@
     &.berserker {
         background: url(../../../../public/assets/awakening_berserker.jpg) no-repeat;
         background-size: cover;
-
     }
 
     &.corsair {
@@ -376,7 +376,6 @@
     &.witch {
         background: url(../../../../public/assets/awakening_witch.jpg) no-repeat;
         background-size: cover;
-
     }
 
     &.wizard {
@@ -402,7 +401,6 @@
     &.dosa {
         display: none;
     }
-
 }
 
 .succession {
@@ -415,7 +413,7 @@
     background-position: right !important;
 
     @media screen and (max-width: 1300px) {
-        .grid-container .right-container{
+        .grid-container .right-container {
             display: none;
         }
     }
@@ -558,45 +556,45 @@
     }
 }
 
-.grid-container{
+.grid-container {
     width: 100%;
     min-height: 588px;
     padding: 16px;
     display: inline-grid;
     gap: 250px;
-    color:white;
+    color: white;
 }
 
-.left-container{
+.left-container {
     grid-column-start: 1;
 }
 
-.right-container{
+.right-container {
     grid-column-start: 2;
 }
 
-.title{
+.title {
     width: 100%;
     text-align: center;
     font-weight: normal;
 
-    font-family: 'Satoshi', sans-serif;
+    font-family: "Satoshi", sans-serif;
 }
 
-.answer-container{
+.answer-container {
     display: flex;
     gap: 8px;
 
-    &.awakening-container{
+    &.awakening-container {
         justify-content: flex-start;
     }
 
-    &.succession-container{
+    &.succession-container {
         justify-content: flex-end;
     }
 }
 
-.summary-container{
+.summary-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -604,20 +602,20 @@
     width: 100%;
 }
 
-.awakening-summary{
+.awakening-summary {
     height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 }
 
-.succession-summary{
+.succession-summary {
     display: flex;
     height: 80%;
     flex-direction: column;
     justify-content: space-evenly;
 }
 
-.no-data{
+.no-data {
     text-align: center;
 }

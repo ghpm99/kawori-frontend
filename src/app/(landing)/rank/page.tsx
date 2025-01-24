@@ -21,6 +21,7 @@ import { Pie } from "react-chartjs-2";
 import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
 import { AnswerSummaryData } from "@/lib/features/classification";
+import Image from "next/image";
 
 ChartJS.register(
     CategoryScale,
@@ -235,14 +236,20 @@ const Rank = () => {
                             className={styles["class-wrap"]}
                         >
                             <div className={styles["bdo-class-name"]}>
-                                <img
-                                    src={`http://localhost:8000/facetexture/${bdoClass.id}/get-symbol-class`}
+                                <Image
+                                    width={50}
+                                    height={50}
+                                    alt={`${bdoClass.name}-symbol`}
+                                    src={bdoClass.class_symbol}
                                     className={`${styles["bdo-class-symbol"]}`}
                                 />
                                 {bdoClass.abbreviation}
                             </div>
-                            <img
-                                src={`http://localhost:8000/facetexture/${bdoClass.id}/get-image-class`}
+                            <Image
+                                width={240}
+                                height={330}
+                                alt={`${bdoClass.name}-image`}
+                                src={bdoClass.class_image}
                                 className={`${styles["bdo-class-image"]}`}
                             />
                         </div>
