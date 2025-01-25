@@ -23,7 +23,10 @@ const nextConfig = {
         hostname: 'storage.googleapis.com'
       },
       {
-        hostname: 'localhost'
+        hostname: 'localhost',
+      },
+      {
+        hostname: 'api.kawori.site'
       }
     ]
   }
