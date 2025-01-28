@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Header className={styles["header"]}>
                     <LoginHeader />
                 </Header>
-                <Content className={styles["content"]}>{authStore.loading ? <div>Loading...</div> : children}</Content>
+                <Content className={styles["content"]}>{children}</Content>
             </Layout>
         </Layout>
     );
