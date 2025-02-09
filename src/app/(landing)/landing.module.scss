@@ -3,15 +3,26 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    background: url("../../../public/assets/bg.png");
+    &.light {
+        background: url("../../../public/assets/bg.png");
+    }
+    &.dark {
+        background: var(--color-theme-background);
+    }
 }
 
 .body {
     box-shadow: 0 0 7px 1px rgba(0,0,0,.1);
-    background-color: white;
-    color:black;
     position: relative;
     padding: 8px;
+
+    &.dark {
+        background: var(--color-theme-color-grey0);
+        color:var(--color-theme-color-white);
+    }
+    &.light {
+        background: var(--color-neutral-color-pure-white);
+    }
 }
 
 .internal-page{

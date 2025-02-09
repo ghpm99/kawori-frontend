@@ -1,12 +1,16 @@
 import { Bar } from "react-chartjs-2";
 import styles from "./paymentFixed.module.scss";
+import { Theme } from "@/styles/theme";
 
-interface IPaymentFixedProps {
+export default function PaymentFixed({
+    fixedCredit,
+    fixedDebit,
+    theme,
+}: {
     fixedCredit: number;
     fixedDebit: number;
-}
-
-export default function PaymentFixed(props: IPaymentFixedProps) {
+    theme: Theme;
+}) {
     const labels = ["Ativo"];
 
     const options = {
@@ -27,12 +31,12 @@ export default function PaymentFixed(props: IPaymentFixedProps) {
         datasets: [
             {
                 label: "Credito",
-                data: [props.fixedCredit],
+                data: [fixedCredit],
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
             },
             {
                 label: "Debito",
-                data: [props.fixedDebit],
+                data: [fixedDebit],
                 backgroundColor: "rgba(255, 99, 132, 0.5)",
             },
         ],
@@ -40,7 +44,19 @@ export default function PaymentFixed(props: IPaymentFixedProps) {
 
     return (
         <div className={styles["chart-container"]}>
-            <Bar data={data} options={options} width={400} height={200} style={{ background: "white" }} />
+            <Bar
+                data={data}
+                options={options}
+                width={400}
+                height={200}
+                style={{
+                    background:
+                        theme === "dark" ? "var(--color-theme-color-grey0)" : " var(--color-neutral-color-pure-white)",
+                    paddingInline: "34px",
+                    paddingBlock: "24px",
+                    borderRadius: "20px",
+                }}
+            />
         </div>
     );
 }

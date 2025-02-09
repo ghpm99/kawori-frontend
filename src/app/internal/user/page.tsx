@@ -4,7 +4,7 @@ import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
 import { setSelectedMenu, signout } from "@/lib/features/auth";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -14,6 +14,7 @@ const { Title, Paragraph } = Typography;
 
 const User = () => {
     const { user } = useSelector((state: RootState) => state.auth);
+    const theme = useAppSelector((state) => state.configuration.theme);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -66,7 +67,8 @@ const User = () => {
                         marginLeft: "16px",
                     }}
                 />
-                <div className={styles["info-container"]}>
+                <div className={`${styles["title"]} ${styles["title-div"]}`}>Informações gerais</div>
+                <div className={`${styles["info-container"]} ${styles[theme]}`}>
                     <div className={styles["info"]}>
                         <Title level={3}>Nome</Title>
                         <Paragraph>{user?.name ?? ""}</Paragraph>
@@ -83,7 +85,7 @@ const User = () => {
                         </div>
                     </div>
                 </div>
-                <div className={styles["info-container"]}>
+                <div className={`${styles["info-container"]} ${styles[theme]}`}>
                     <div className={styles["info"]}>
                         <Title level={3}>Primeiro nome</Title>
                         <Paragraph
@@ -109,7 +111,7 @@ const User = () => {
                         <Paragraph>{user?.email ?? ""}</Paragraph>
                     </div>
                 </div>
-                <div className={styles["info-container"]}>
+                <div className={`${styles["info-container"]} ${styles[theme]}`}>
                     <div className={styles["info"]}>
                         <Title level={3}>Ultimo login</Title>
                         <div>{user?.last_login ? formatDate(user.last_login) : ""}</div>

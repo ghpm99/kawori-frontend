@@ -9,9 +9,10 @@ import DragAndDropCharacters from "./dragAndDrop";
 import Info from "./info";
 import NewModal from "./newModal";
 import { useAppDispatch } from "@/lib/hooks";
+import { Theme } from "@/styles/theme";
 
 const { Title } = Typography;
-const Characters = () => {
+const Characters = ({ theme }: { theme: Theme }) => {
     const dispatch = useAppDispatch();
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
 
@@ -27,7 +28,7 @@ const Characters = () => {
     const disableNewButton = facetextureStore.facetexture.length >= 35;
 
     return (
-        <div className={Styles["characters"]}>
+        <div className={`${Styles["characters"]} ${Styles[theme]}`}>
             <div>
                 <Title level={4}>
                     Personagens

@@ -1,21 +1,13 @@
-import {
-    AppstoreOutlined,
-    DesktopOutlined,
-    HddOutlined,
-    HomeOutlined,
-    SettingOutlined,
-    SnippetsOutlined,
-    UserOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 
 import styles from "./Menu.module.scss";
 import useMenu from "./useMenu";
 
+import { authStatus } from "@/lib/features/auth";
 import LogoImage from "assets/logo-white.png";
 import Image from "next/image";
-import { authStatus } from "@/lib/features/auth";
 
 type MenuItem = Required<MenuProps>["items"][number];
 export type MenuItemKey =

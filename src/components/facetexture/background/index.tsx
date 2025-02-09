@@ -9,8 +9,9 @@ import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { db } from "@/util/db";
 import styles from "./Background.module.scss";
+import { Theme } from "@/styles/theme";
 
-const Background = () => {
+const Background = ({ theme }: { theme: Theme }) => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
     const dispatch = useAppDispatch();
 
@@ -24,7 +25,7 @@ const Background = () => {
     };
 
     return (
-        <div className={styles["background-container"]}>
+        <div className={`${styles["background-container"]} ${styles[theme]}`}>
             <h1>Background</h1>
             <div>
                 <img className={styles["background"]} src={facetextureStore.backgroundUrl} alt={"background"} />

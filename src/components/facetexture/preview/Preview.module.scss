@@ -1,7 +1,16 @@
 .preview-container {
     margin: 16px;
-    padding: 8px;
-    background: #fff;
+    width: 100%;
+    padding-inline: 34px;
+    padding-block: 24px;
+    border-radius: 20px;
+    &.dark{
+        background: var(--color-theme-color-grey0);
+
+    }
+    &.light{
+        background: var(--color-neutral-color-pure-white);
+    }
 }
 
 .update-button {

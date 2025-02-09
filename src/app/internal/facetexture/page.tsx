@@ -9,7 +9,7 @@ import Loading from "@/components/facetexture/loading";
 import Preview from "@/components/facetexture/preview";
 import { setSelectedMenu } from "@/lib/features/auth";
 import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "@/lib/features/facetexture";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { IFacetextureCharacterApi } from "@/services/facetexture";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
@@ -19,6 +19,7 @@ import Styles from "./Facetexture.module.scss";
 function FaceTexture() {
     const dispatch = useAppDispatch();
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
+    const theme = useAppSelector((state) => state.configuration.theme);
 
     useEffect(() => {
         document.title = "Kawori Facetexture";
@@ -107,9 +108,9 @@ function FaceTexture() {
                 </a>
             </div>
             <div className={Styles["container-toolkit"]}>
-                <Characters />
-                <Background />
-                <Preview />
+                <Characters theme={theme} />
+                <Background theme={theme} />
+                <Preview theme={theme} />
             </div>
         </>
     );

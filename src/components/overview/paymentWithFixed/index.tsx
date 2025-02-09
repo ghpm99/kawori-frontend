@@ -2,12 +2,9 @@ import { Line } from "react-chartjs-2";
 
 import { formatterMonthYearDate } from "@/util/index";
 import styles from "./paymentWithFixed.module.scss";
+import { Theme } from "@/styles/theme";
 
-interface IPaymentWithFixedProps {
-    data: IPaymentCharts[];
-}
-
-export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
+export default function PaymentWithFixed({ data, theme }: { data: IPaymentCharts[]; theme: Theme }) {
     const options = {
         responsive: true,
         interaction: {
@@ -29,26 +26,26 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
             },
         },
     };
-    const data = {
-        labels: props.data.map((data) => formatterMonthYearDate(data.label)),
+    const chartData = {
+        labels: data.map((data) => formatterMonthYearDate(data.label)),
         datasets: [
             {
                 label: "Credito",
-                data: props.data.map((data) => data.credit),
+                data: data.map((data) => data.credit),
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 lineTension: 0.3,
             },
             {
                 label: "Debito",
-                data: props.data.map((data) => data.debit),
+                data: data.map((data) => data.debit),
                 borderColor: "#820000",
                 backgroundColor: "#8200007f",
                 lineTension: 0.3,
             },
             {
                 label: "Diferença",
-                data: props.data.map((data) => data.difference),
+                data: data.map((data) => data.difference),
                 borderColor: "#048200",
                 backgroundColor: "#04820073",
                 lineTension: 0.3,
@@ -58,7 +55,19 @@ export default function PaymentWithFixed(props: IPaymentWithFixedProps) {
 
     return (
         <div className={styles["chart-container"]}>
-            <Line data={data} options={options} width={400} height={200} style={{ background: "white" }} />
+            <Line
+                data={chartData}
+                options={options}
+                width={400}
+                height={200}
+                style={{
+                    background:
+                        theme === "dark" ? "var(--color-theme-color-grey0)" : " var(--color-neutral-color-pure-white)",
+                    paddingInline: "34px",
+                    paddingBlock: "24px",
+                    borderRadius: "20px",
+                }}
+            />
         </div>
     );
 }
