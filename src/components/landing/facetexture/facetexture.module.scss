@@ -77,7 +77,7 @@
 
 .text {
     margin-top: 16px;
-    color: black;
+    color: var(--color-theme-color-white);
     text-align: center;
     @media screen and (max-width: 1300px) {
         max-width: 600px;
@@ -86,6 +86,6 @@
 
 .title {
     margin-top: 16px;
-    color: black;
+    color: var(--color-theme-color-white);
     text-align: center;
 }

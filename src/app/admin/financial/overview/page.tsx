@@ -24,7 +24,7 @@ import PaymentFixed from "@/components/overview/paymentFixed";
 import PaymentWithFixed from "@/components/overview/paymentWithFixed";
 import AccumulatedValue from "@/components/overview/paymentWithoutFixed";
 import { fetchMonthPayments } from "@/lib/features/financial/payment";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import {
     fetchAmountForecastValueThunk,
@@ -87,6 +87,7 @@ const headerTableFinancial = [
 ];
 function Overview() {
     const overviewStore = useSelector((state: RootState) => state.financial.overview);
+    const theme = useAppSelector((state) => state.configuration.theme);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -120,14 +121,20 @@ function Overview() {
                     loading={overviewStore.loading}
                     summary={(paymentData) => <TableSummary paymentData={paymentData} />}
                     pagination={false}
+                    style={{
+                        borderRadius: "20px",
+                    }}
+                    bordered
                 />
-                <PaymentWithFixed data={overviewStore.data.payments} />
-                <InvoiceByTag data={overviewStore.data.invoiceByTag} />
+                <PaymentWithFixed theme={theme} data={overviewStore.data.payments} />
+                <InvoiceByTag theme={theme} data={overviewStore.data.invoiceByTag} />
                 <AccumulatedValue
+                    theme={theme}
                     payments={overviewStore.data.payments}
                     amountForecastValue={overviewStore.data.amountForecastValue}
                 />
                 <PaymentFixed
+                    theme={theme}
                     fixedCredit={overviewStore.data.fixed_credit}
                     fixedDebit={overviewStore.data.fixed_debit}
                 />

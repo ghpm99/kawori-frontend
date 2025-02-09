@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { Bar, Pie } from "react-chartjs-2";
 
 import styles from "./invoiceByTag.module.scss";
+import { Theme } from "@/styles/theme";
 
 interface IInvoiceByTagProps {
     data: IInvoiceByTag[];
 }
 
-const InvoiceByTag = ({ data }: IInvoiceByTagProps) => {
+const InvoiceByTag = ({ data, theme }: { data: IInvoiceByTag[]; theme: Theme }) => {
     const dataset = [
         {
             label: "# Valor total por tag",
@@ -36,7 +37,19 @@ const InvoiceByTag = ({ data }: IInvoiceByTagProps) => {
 
     return (
         <div className={styles["chart-container"]}>
-            <Pie data={dataSource} options={options} width={400} style={{ background: "white", height: "100%" }} />
+            <Pie
+                data={dataSource}
+                options={options}
+                width={400}
+                style={{
+                    background:
+                        theme === "dark" ? "var(--color-theme-color-grey0)" : " var(--color-neutral-color-pure-white)",
+                    height: "100%",
+                    paddingInline: "34px",
+                    paddingBlock: "24px",
+                    borderRadius: "20px",
+                }}
+            />
         </div>
     );
 };

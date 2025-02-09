@@ -1,13 +1,17 @@
+"use client";
+
 import MenuHeader from "@/components/menuHeader";
-import styles from "./landing.module.scss";
+import { useAppSelector } from "@/lib/hooks";
 import { Footer } from "antd/lib/layout/layout";
+import styles from "./landing.module.scss";
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
+    const theme = useAppSelector((state) => state.configuration.theme);
     return (
         <>
-            <div className={styles["container"]}>
+            <div className={`${styles["container"]} ${styles[theme]}`}>
                 <MenuHeader />
-                <div className={styles["body"]}>
+                <div className={`${styles["body"]} ${styles[theme]}`}>
                     <div className={styles["internal-page"]}>{children}</div>
                 </div>
             </div>

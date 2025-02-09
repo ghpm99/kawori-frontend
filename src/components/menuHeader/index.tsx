@@ -2,14 +2,18 @@
 import Link from "next/link";
 
 import LogoImage from "assets/logo.png";
-import { Menu } from "antd";
+import { Menu, Tooltip } from "antd";
 
 import Image from "next/image";
 import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
+import { Theme } from "@/styles/theme";
+import { ExclamationCircleOutlined, MoonOutlined, SunFilled, SunOutlined } from "@ant-design/icons";
 
 export default function MenuHeader() {
-    const { data, status } = useMenuHeader();
+    const { data, status, theme, toggleTheme } = useMenuHeader();
+
+    const Icon = theme === "light" ? MoonOutlined : SunFilled;
 
     const menuItens = [
         {
@@ -61,21 +65,32 @@ export default function MenuHeader() {
     ];
 
     return (
-        <div className={styles["menu-header"]}>
+        <div className={`${styles["menu-header"]} ${styles[theme]}`}>
             <div className={styles["menu"]}>
                 <Link href="/" className={styles["menu-item"]}>
                     <Image alt="Logo" src={LogoImage} width={100} />
                 </Link>
             </div>
             <div className={styles["user-container"]}>
-                <Menu
-                    style={{
-                        border: "none",
-                    }}
-                    disabledOverflow
-                    mode="horizontal"
-                    items={menuItens}
-                />
+                <div className={styles["theme-mode"]}>
+                    <Tooltip
+                        title={
+                            <div className={styles["tooltip"]}>
+                                <ExclamationCircleOutlined className={styles["tooltip-icon"]} />
+                                Clique para mudar o tema da sua interface
+                            </div>
+                        }
+                        placement="topRight"
+                        trigger={["click", "hover"]}
+                    >
+                        <Icon
+                            alt="theme-icon"
+                            onClick={toggleTheme}
+                            className={`${styles["theme-icon"]} ${styles[theme]}`}
+                        />
+                    </Tooltip>
+                </div>
+                <Menu disabledOverflow mode="horizontal" items={menuItens} />
             </div>
         </div>
     );

@@ -65,3 +65,10 @@ export type AssetsClassData = {
 export const normalizeString = (className: string): string => {
     return className.replace(" ", "-").toLowerCase();
 };
+
+export const addStyle = (styleString: string) => {
+    if (typeof window === "undefined") return;
+    const style = document.createElement("style");
+    style.textContent = styleString;
+    document.head.append(style);
+};

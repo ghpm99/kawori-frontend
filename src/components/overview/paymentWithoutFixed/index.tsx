@@ -2,13 +2,17 @@ import { Line } from "react-chartjs-2";
 
 import { formatterMonthYearDate } from "@/util/index";
 import styles from "./paymentWithoutFixed.module.scss";
+import { Theme } from "@/styles/theme";
 
-interface IAccumulatedValueProps {
+export default function AccumulatedValue({
+    amountForecastValue,
+    payments,
+    theme,
+}: {
     payments: IPaymentCharts[];
     amountForecastValue: number;
-}
-
-export default function AccumulatedValue(props: IAccumulatedValueProps) {
+    theme: Theme;
+}) {
     const options = {
         responsive: true,
         interaction: {
@@ -31,18 +35,18 @@ export default function AccumulatedValue(props: IAccumulatedValueProps) {
         },
     };
 
-    const data = {
-        labels: props.payments?.map((data) => formatterMonthYearDate(data.label)),
+    const chartData = {
+        labels: payments?.map((data) => formatterMonthYearDate(data.label)),
         datasets: [
             {
                 label: "Total",
-                data: props.payments?.map((data) => data.accumulated),
+                data: payments?.map((data) => data.accumulated),
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
             },
             {
                 label: "Valor de reserva",
-                data: props.payments?.map((data) => props.amountForecastValue),
+                data: payments?.map((data) => amountForecastValue),
                 borderColor: "rgb(235, 53, 53)",
                 backgroundColor: "rgba(235, 53, 53, 0.5)",
             },
@@ -51,7 +55,19 @@ export default function AccumulatedValue(props: IAccumulatedValueProps) {
 
     return (
         <div className={styles["chart-container"]}>
-            <Line data={data} options={options} width={400} height={200} style={{ background: "white" }} />
+            <Line
+                data={chartData}
+                options={options}
+                width={400}
+                height={200}
+                style={{
+                    background:
+                        theme === "dark" ? "var(--color-theme-color-grey0)" : " var(--color-neutral-color-pure-white)",
+                    paddingInline: "34px",
+                    paddingBlock: "24px",
+                    borderRadius: "20px",
+                }}
+            />
         </div>
     );
 }

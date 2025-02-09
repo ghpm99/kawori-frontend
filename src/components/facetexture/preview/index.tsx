@@ -11,8 +11,9 @@ import { RootState } from "@/lib/store";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
 import * as Sentry from "@sentry/nextjs";
 import { useSelector } from "react-redux";
+import { Theme } from "@/styles/theme";
 
-const Preview = () => {
+const Preview = ({ theme }: { theme: Theme }) => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
     const [previewBackground, setPreviewBackground] = useState();
     const [loading, setLoading] = useState(false);
@@ -83,7 +84,7 @@ const Preview = () => {
     const disableButtons = facetextureStore.facetexture.length <= 0;
 
     return (
-        <div className={Styles["preview-container"]}>
+        <div className={`${Styles["preview-container"]} ${Styles[theme]}`}>
             <h1>Preview</h1>
             <div>
                 <Button

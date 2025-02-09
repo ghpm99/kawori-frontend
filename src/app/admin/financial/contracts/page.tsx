@@ -1,5 +1,5 @@
 "use client";
-import { Breadcrumb, Layout, message, Table, Typography } from "antd";
+import { Breadcrumb, Button, Layout, message, Table, Typography } from "antd";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ import { setSelectedMenu } from "@/lib/features/auth";
 import { changeVisibleContractsModal, fetchAllContract } from "@/lib/features/financial/contract";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { saveNewContractService } from "@/services/financial";
+import { saveNewContractService, updateAllContractsValue } from "@/services/financial";
 import { formatMoney } from "@/util/index";
 import styles from "./Contracts.module.scss";
 
@@ -117,6 +117,7 @@ function FinancialPage() {
                     <Title level={3} className={styles.title}>
                         Valores em aberto
                     </Title>
+
                     <OpenModalNewContract />
                 </div>
                 <Table

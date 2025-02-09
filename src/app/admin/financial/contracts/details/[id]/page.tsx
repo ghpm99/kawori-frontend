@@ -209,129 +209,122 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
                 <Breadcrumb.Item>Contrato</Breadcrumb.Item>
                 <Breadcrumb.Item>Detalhes</Breadcrumb.Item>
             </Breadcrumb>
-            <Layout className={styles.container_labels}>
-                <Card loading={financialStore.loading}>
-                    <div className={styles["row"]}>
-                        <div className={styles["label-detail"]}>
-                            <div className={styles.label}>ID: {financialStore.data?.id}</div>
-                        </div>
-                        <div className={styles["label-detail"]}>
-                            <div className={styles.label}>Nome:</div>
-                            <Paragraph style={{ margin: "0" }} editable={{ onChange: changeName }}>
-                                {financialStore.data?.name}
-                            </Paragraph>
-                        </div>
-                        <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                            <Dropdown.Button
-                                overlay={menu}
-                                type="primary"
-                                onClick={save}
-                                className={styles.button_save}
-                            >
-                                Salvar
-                            </Dropdown.Button>
+
+            <Card loading={financialStore.loading}>
+                <div className={styles["row"]}>
+                    <div className={styles["label-detail"]}>
+                        <div className={styles.label}>ID: {financialStore.data?.id}</div>
+                    </div>
+                    <div className={styles["label-detail"]}>
+                        <div className={styles.label}>Nome:</div>
+                        <Paragraph style={{ margin: "0" }} editable={{ onChange: changeName }}>
+                            {financialStore.data?.name}
+                        </Paragraph>
+                    </div>
+                    <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
+                        <Dropdown.Button overlay={menu} type="primary" onClick={save} className={styles.button_save}>
+                            Salvar
+                        </Dropdown.Button>
+                    </div>
+                </div>
+                <div className={styles["row"]}>
+                    <div className={styles["label-detail"]}>
+                        <div className={styles.label}>
+                            <>Valor Total: {formatMoney(financialStore.data?.value)}</>
                         </div>
                     </div>
-                    <div className={styles["row"]}>
-                        <div className={styles["label-detail"]}>
-                            <div className={styles.label}>
-                                <>Valor Total: {formatMoney(financialStore.data?.value)}</>
-                            </div>
-                        </div>
-                        <div className={styles["label-detail"]}>
-                            <div className={styles.label}>
-                                <>Valor Baixado: {formatMoney(financialStore.data?.value_closed)}</>
-                            </div>
-                        </div>
-                        <div className={styles["label-detail"]}>
-                            <div className={styles.label}>
-                                <>Valor em Aberto: {formatMoney(financialStore.data?.value_open)}</>
-                            </div>
+                    <div className={styles["label-detail"]}>
+                        <div className={styles.label}>
+                            <>Valor Baixado: {formatMoney(financialStore.data?.value_closed)}</>
                         </div>
                     </div>
-                    <div className={styles["row"]}>
-                        <div className={styles["label-detail"]}>
-                            <div className={styles.label}>Notas:</div>
+                    <div className={styles["label-detail"]}>
+                        <div className={styles.label}>
+                            <>Valor em Aberto: {formatMoney(financialStore.data?.value_open)}</>
                         </div>
                     </div>
-                    <Table
-                        pagination={{
-                            showSizeChanger: true,
-                            defaultPageSize: financialStore.invoices.filters.page_size,
-                            current: financialStore.invoices.pagination.currentPage,
-                            total:
-                                financialStore.invoices.pagination.totalPages *
-                                financialStore.invoices.filters.page_size,
-                            onChange: onChangePagination,
-                        }}
-                        loading={financialStore.invoices.loading}
-                        columns={[
-                            {
-                                title: "Id",
-                                dataIndex: "id",
-                                key: "id",
-                            },
-                            {
-                                title: "Nome",
-                                dataIndex: "name",
-                                key: "name",
-                            },
-                            {
-                                title: "Valor",
-                                dataIndex: "value",
-                                key: "value",
-                                render: (value) => formatMoney(value),
-                            },
-                            {
-                                title: "Baixado",
-                                dataIndex: "value_closed",
-                                key: "value_closed",
-                                render: (value) => formatMoney(value),
-                            },
-                            {
-                                title: "Em aberto",
-                                dataIndex: "value_open",
-                                key: "value_open",
-                                render: (value) => formatMoney(value),
-                            },
-                            {
-                                title: "Parcelas",
-                                dataIndex: "installments",
-                                key: "installments",
-                            },
-                            {
-                                title: "Dia",
-                                dataIndex: "date",
-                                key: "date",
-                                render: (value) => formatterDate(value),
-                            },
-                            {
-                                title: "Tags",
-                                dataIndex: "tags",
-                                key: "tags",
-                                render: (_, { tags }) => (
-                                    <>
-                                        {tags.map((tag: any) => (
-                                            <Tag color={tag.color} key={`contract-tags-${tag.id}`}>
-                                                {tag.name}
-                                            </Tag>
-                                        ))}
-                                    </>
-                                ),
-                            },
-                            {
-                                title: "Ações",
-                                dataIndex: "id",
-                                key: "id",
-                                render: (value) => (
-                                    <Link href={`/admin/financial/invoices/details/${value}`}>Detalhes</Link>
-                                ),
-                            },
-                        ]}
-                        dataSource={financialStore.invoices.data}
-                    />
-                </Card>
-            </Layout>
+                </div>
+                <div className={styles["row"]}>
+                    <div className={styles["label-detail"]}>
+                        <div className={styles.label}>Notas:</div>
+                    </div>
+                </div>
+                <Table
+                    pagination={{
+                        showSizeChanger: true,
+                        defaultPageSize: financialStore.invoices.filters.page_size,
+                        current: financialStore.invoices.pagination.currentPage,
+                        total:
+                            financialStore.invoices.pagination.totalPages * financialStore.invoices.filters.page_size,
+                        onChange: onChangePagination,
+                    }}
+                    loading={financialStore.invoices.loading}
+                    columns={[
+                        {
+                            title: "Id",
+                            dataIndex: "id",
+                            key: "id",
+                        },
+                        {
+                            title: "Nome",
+                            dataIndex: "name",
+                            key: "name",
+                        },
+                        {
+                            title: "Valor",
+                            dataIndex: "value",
+                            key: "value",
+                            render: (value) => formatMoney(value),
+                        },
+                        {
+                            title: "Baixado",
+                            dataIndex: "value_closed",
+                            key: "value_closed",
+                            render: (value) => formatMoney(value),
+                        },
+                        {
+                            title: "Em aberto",
+                            dataIndex: "value_open",
+                            key: "value_open",
+                            render: (value) => formatMoney(value),
+                        },
+                        {
+                            title: "Parcelas",
+                            dataIndex: "installments",
+                            key: "installments",
+                        },
+                        {
+                            title: "Dia",
+                            dataIndex: "date",
+                            key: "date",
+                            render: (value) => formatterDate(value),
+                        },
+                        {
+                            title: "Tags",
+                            dataIndex: "tags",
+                            key: "tags",
+                            render: (_, { tags }) => (
+                                <>
+                                    {tags.map((tag: any) => (
+                                        <Tag color={tag.color} key={`contract-tags-${tag.id}`}>
+                                            {tag.name}
+                                        </Tag>
+                                    ))}
+                                </>
+                            ),
+                        },
+                        {
+                            title: "Ações",
+                            dataIndex: "id",
+                            key: "id",
+                            render: (value) => (
+                                <Link href={`/admin/financial/invoices/details/${value}`}>Detalhes</Link>
+                            ),
+                        },
+                    ]}
+                    dataSource={financialStore.invoices.data}
+                />
+            </Card>
 
             <Modal
                 title="Mesclar contrato"
