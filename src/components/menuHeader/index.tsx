@@ -7,7 +7,6 @@ import { Menu, Tooltip } from "antd";
 import Image from "next/image";
 import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
-import { Theme } from "@/styles/theme";
 import { ExclamationCircleOutlined, MoonOutlined, SunFilled, SunOutlined } from "@ant-design/icons";
 
 export default function MenuHeader() {

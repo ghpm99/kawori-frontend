@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider } from "antd";
-import LogoKawori from "assets/kaori_logo4.png";
+import LogoKawori from "assets/kaori_logo6.png";
 
 import Image from "next/image";
 import styles from "./Home.module.scss";
