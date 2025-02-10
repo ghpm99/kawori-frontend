@@ -108,10 +108,17 @@ function MenuInternal() {
 
     return (
         <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed} theme={theme}>
-            <Link href="/" className={styles["menu-item"]}>
-                <Image className={styles.logo} alt="Logo" src={LogoImage} width={100} />
-            </Link>
-            <Menu theme={theme} selectedKeys={selectedMenu} mode="inline" items={menuItens(status, user.is_superuser)} />
+            <div className={styles["logo-container"]}>
+                <Link href="/" className={styles["logo"]}>
+                    Kawori
+                </Link>
+            </div>
+            <Menu
+                theme={theme}
+                selectedKeys={selectedMenu}
+                mode="vertical"
+                items={menuItens(status, user.is_superuser)}
+            />
         </Sider>
     );
 }
