@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const useMenu = () => {
     const { status, user, selectedMenu } = useAppSelector((state) => state.auth);
+    const theme = useAppSelector((state) => state.configuration.theme);
 
     const [collapsed, setCollapsed] = useState<boolean>(false);
 
@@ -16,6 +17,7 @@ const useMenu = () => {
         collapsed,
         toggleCollapsed,
         selectedMenu,
+        theme,
     };
 };
 

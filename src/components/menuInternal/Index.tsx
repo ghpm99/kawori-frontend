@@ -104,14 +104,14 @@ const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
 };
 
 function MenuInternal() {
-    const { status, toggleCollapsed, user, selectedMenu } = useMenu();
+    const { status, toggleCollapsed, user, selectedMenu, theme } = useMenu();
 
     return (
-        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed}>
+        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed} theme={theme}>
             <Link href="/" className={styles["menu-item"]}>
                 <Image className={styles.logo} alt="Logo" src={LogoImage} width={100} />
             </Link>
-            <Menu theme="dark" selectedKeys={selectedMenu} mode="inline" items={menuItens(status, user.is_superuser)} />
+            <Menu theme={theme} selectedKeys={selectedMenu} mode="inline" items={menuItens(status, user.is_superuser)} />
         </Sider>
     );
 }

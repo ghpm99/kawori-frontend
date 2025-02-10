@@ -1,10 +1,9 @@
 "use client";
 
 import { addStyle } from "@/util";
-import { ThemeConfig } from "antd";
+import { MenuTheme, ThemeConfig } from "antd";
 import { AliasToken } from "antd/lib/theme/internal";
 
-export type Theme = "light" | "dark";
 
 const colors = {
     brandColorPrimarPure: "#644ED0",
@@ -113,7 +112,7 @@ addStyle(`
 
 export default colors;
 
-export const antdThemes: Record<Theme, ThemeConfig> = {
+export const antdThemes: Record<MenuTheme, ThemeConfig> = {
     dark: {
         token: {
             colorPrimary: colors.themeColorPrimaryPure,
@@ -128,11 +127,67 @@ export const antdThemes: Record<Theme, ThemeConfig> = {
                 colorBgBase: colors.themeColorGrey0,
             },
             Menu: {
-                subMenuItemBg: colors.themeColorGrey0,
-                darkSubMenuItemBg: colors.themeColorGrey0,
+                // colorBgLayout: colors.themeColorGrey0,
+                // colorBgSolid: colors.themeColorGrey0,
+                // colorBgBase: colors.themeColorGrey0,
+                // colorBgContainer: colors.themeColorGrey0,
+                // colorPrimaryBg: colors.themeColorGrey0,
+                // darkItemBg: colors.themeColorGrey0,
+                // darkPopupBg: colors.themeColorGrey0,
+                // colorItemBgHover: colors.themeColorGrey0,
+                // colorItemBgSelected: colors.themeColorGrey0,
+                // colorItemTextSelected: colors.themeColorGrey0,
+                // itemBg: colors.themeColorGrey0,
+                // popupBg: colors.themeColorGrey0,
+                // colorInfoBg: colors.themeColorGrey0,
+                // colorBorderBg: colors.themeColorGrey0,
+                // colorSubItemBg: colors.themeColorGrey0,
+                // colorBgContainerDisabled: colors.themeColorGrey0,
+                // colorBgSolidHover: colors.themeColorGrey0,
+                // colorBgBlur: colors.themeColorGrey0,
+                // colorBgElevated: colors.themeColorGrey0,
+                // colorBgMask: colors.themeColorGrey0,
+                // colorBgSolidActive: colors.themeColorGrey0,
+                // colorBgSpotlight: colors.themeColorGrey0,
+                // colorBgTextActive: colors.themeColorGrey0,
+                // colorBgTextHover: colors.themeColorGrey0,
+                // colorInfoBgHover: colors.themeColorGrey0,
+                // itemHoverBg: colors.themeColorGrey0,
+                // colorItemBg: colors.themeColorGrey0,
+                // colorItemBgActive: colors.themeColorGrey0,
+                // colorItemBgSelectedHorizontal: colors.themeColorGrey0,
+                // colorErrorBg: colors.themeColorGrey0,
+                // colorErrorBgActive: colors.themeColorGrey0,
+                // colorErrorBgFilledHover: colors.themeColorGrey0,
+                // colorErrorBgHover: colors.themeColorGrey0,
+                // itemActiveBg: colors.themeColorGrey0,
+                // controlItemBgActive: colors.themeColorGrey0,
+                // controlItemBgActiveDisabled: colors.themeColorGrey0,
+                // controlItemBgActiveHover: colors.themeColorGrey0,
+                // colorSuccessBg: colors.themeColorGrey0,
+                // colorSuccessBgHover: colors.themeColorGrey0,
+                // colorWarningBg: colors.themeColorGrey0,
+                // controlItemBgHover: colors.themeColorGrey0,
+                // colorPrimaryBgHover: colors.themeColorGrey0,
+                // subMenuItemBg: colors.themeColorGrey0,
+                // darkSubMenuItemBg: colors.themeColorGrey0,
+                // colorWarningBgHover: colors.themeColorGrey0,
+                // itemSelectedBg: colors.themeColorGrey0,
+                // darkItemHoverBg: colors.themeColorGrey0,
+                // colorDangerItemBgActive: colors.themeColorGrey0,
+                // colorDangerItemBgSelected: colors.themeColorGrey0,
+                // dangerItemActiveBg: colors.themeColorGrey0,
+                // darkItemSelectedBg: colors.themeColorGrey0,
+                // dangerItemSelectedBg: colors.themeColorGrey0,
+                // horizontalItemHoverBg: colors.themeColorGrey0,
+                // darkDangerItemActiveBg: colors.themeColorGrey0,
+                // darkDangerItemSelectedBg: colors.themeColorGrey0,
+                // horizontalItemSelectedBg: colors.themeColorGrey0,
             },
             Layout: {
                 bodyBg: colors.themeBackground,
+                headerBg: colors.themeColorGrey0,
+                siderBg: colors.themeColorGrey0,
             },
         },
     },

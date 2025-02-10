@@ -1,22 +1,22 @@
 import { getAllBdoClass } from "@/services/classification";
-import { Theme } from "@/styles/theme";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { MenuTheme } from "antd"
 
 interface IConfigurationState {
     class: IClass[];
-    theme: Theme;
+    theme: MenuTheme;
 }
 
 const initialState: IConfigurationState = {
     class: [],
-    theme: "light",
+    theme: "dark",
 };
 
 export const configurationSlice = createSlice({
     name: "configuration",
     initialState,
     reducers: {
-        changeTheme: (state, action: PayloadAction<Theme>) => {
+        changeTheme: (state, action: PayloadAction<MenuTheme>) => {
             state.theme = action.payload;
         },
     },
