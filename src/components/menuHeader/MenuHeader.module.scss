@@ -96,28 +96,3 @@
     background-color: rgb(68, 65, 65);
 }
 
-.theme-mode {
-    margin-right: 5px;
-    width: 28px;
-    height: 42px;
-    margin-block: auto;
-    cursor: pointer;
-}
-
-.theme-icon {
-    width: 28px;
-    height: 28px;
-    &.dark {
-        color: var(--color-neutral-color-grey1);
-    }
-}
-
-.tooltip {
-    display: flex;
-    margin: 8px;
-}
-
-.tooltip-icon {
-    margin-right: 4px;
-    margin-top: 4px;
-}

@@ -6,17 +6,11 @@ import { useSelector } from "react-redux";
 const useMenuHeader = () => {
     const { status, user } = useSelector((state: RootState) => state.auth);
     const theme = useAppSelector((state) => state.configuration.theme);
-    const dispatch = useAppDispatch();
-
-    const toggleTheme = () => {
-        dispatch(changeTheme(theme === "light" ? "dark" : "light"));
-    };
 
     return {
         status: status,
         data: user,
         theme: theme,
-        toggleTheme: toggleTheme,
     };
 };
 

@@ -1,6 +1,6 @@
 import { getAllBdoClass } from "@/services/classification";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MenuTheme } from "antd"
+import { MenuTheme } from "antd";
 
 interface IConfigurationState {
     class: IClass[];

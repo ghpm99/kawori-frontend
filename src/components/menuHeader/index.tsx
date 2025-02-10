@@ -8,11 +8,10 @@ import Image from "next/image";
 import styles from "./MenuHeader.module.scss";
 import useMenuHeader from "./useMenuHeader";
 import { ExclamationCircleOutlined, MoonOutlined, SunFilled, SunOutlined } from "@ant-design/icons";
+import ThemeControl from "../themeControl";
 
 export default function MenuHeader() {
-    const { data, status, theme, toggleTheme } = useMenuHeader();
-
-    const Icon = theme === "light" ? MoonOutlined : SunFilled;
+    const { data, status, theme } = useMenuHeader();
 
     const menuItens = [
         {
@@ -71,24 +70,7 @@ export default function MenuHeader() {
                 </Link>
             </div>
             <div className={styles["user-container"]}>
-                <div className={styles["theme-mode"]}>
-                    <Tooltip
-                        title={
-                            <div className={styles["tooltip"]}>
-                                <ExclamationCircleOutlined className={styles["tooltip-icon"]} />
-                                Clique para mudar o tema da sua interface
-                            </div>
-                        }
-                        placement="topRight"
-                        trigger={["click", "hover"]}
-                    >
-                        <Icon
-                            alt="theme-icon"
-                            onClick={toggleTheme}
-                            className={`${styles["theme-icon"]} ${styles[theme]}`}
-                        />
-                    </Tooltip>
-                </div>
+                <ThemeControl />
                 <Menu disabledOverflow mode="horizontal" items={menuItens} />
             </div>
         </div>
