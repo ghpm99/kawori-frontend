@@ -35,10 +35,12 @@ const Background = ({ theme }: { theme: Theme }) => {
                             <p className="ant-upload-drag-icon">
                                 <InboxOutlined />
                             </p>
-                            <p className="ant-upload-text">
+                            <p className={`ant-upload-text ${styles["text"]} ${styles[theme]}`}>
                                 Clique ou arraste o arquivo para esta área para fazer upload
                             </p>
-                            <p className="ant-upload-hint">Suporte para upload único</p>
+                            <p className={`ant-upload-hint ${styles["hint"]} ${styles[theme]}`}>
+                                Suporte para upload único
+                            </p>
                         </div>
                     </Dragger>
                 </ImgCrop>

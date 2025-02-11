@@ -6,8 +6,6 @@ import styles from "./Menu.module.scss";
 import useMenu from "./useMenu";
 
 import { authStatus } from "@/lib/features/auth";
-import LogoImage from "assets/logo-white.png";
-import Image from "next/image";
 
 type MenuItem = Required<MenuProps>["items"][number];
 export type MenuItemKey =

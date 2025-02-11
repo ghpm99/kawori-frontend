@@ -24,7 +24,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <MenuInternal />
             <Layout>
                 <Header className={styles["header"]}>
-                    <ThemeControl />
                     <LoginHeader />
                 </Header>
                 <Content className={styles["content"]}>{children}</Content>

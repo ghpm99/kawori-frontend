@@ -12,22 +12,29 @@ import News from "@/components/landing/news";
 import UserPanel from "@/components/landing/userPanel";
 import Welcome from "@/components/landing/welcome";
 import { useEffect } from "react";
+import { useAppSelector } from "@/lib/hooks";
 
 export default function Home() {
+    const theme = useAppSelector((state) => state.configuration.theme);
     useEffect(() => {
         document.title = "Kawori";
     }, []);
     return (
         <>
             <div className={styles["section"]}>
-                <Image alt="Kawori Logo" src={LogoKawori} className={styles["logo-image"]} width={500} />
+                <Image
+                    alt="Kawori Logo"
+                    src={LogoKawori}
+                    className={`${styles["logo-image"]} ${styles[theme]}`}
+                    width={500}
+                />
                 <UserPanel />
             </div>
             <Divider />
             <News />
             <Divider />
             <Welcome />
-            <Facetexture />
+            <Facetexture theme={theme} />
             <Divider />
             <FAQ />
             <Divider />

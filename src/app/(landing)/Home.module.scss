@@ -12,4 +12,12 @@
     @media screen and (max-width: 850px) {
         display: none;
     }
+    &.dark{
+        filter: drop-shadow(0 0 0.75rem var(--color-neutral-color-grey1)) ;
+
+    }
+    &.light{
+        filter:  drop-shadow(0 0 0.75rem var(--color-neutral-color-grey5));
+
+    }
 }
