@@ -29,7 +29,7 @@ export default function LoginHeader() {
         <div className={S.layout}>
             <ThemeControl />
             {status === "authenticated" ? (
-                <Popover content={content} title="Conta" className={S["user"]}>
+                <Popover content={content} title="Conta">
                     <Avatar size="small" icon={<UserOutlined />} />
                     {user?.name}
                 </Popover>
