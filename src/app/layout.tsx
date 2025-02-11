@@ -22,7 +22,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 ...antdThemes[theme],
             }}
         >
-            {children}
+            <div style={{ colorScheme: theme === "dark" ? "dark" : "light" }}>{children}</div>
         </ConfigProvider>
     );
 };

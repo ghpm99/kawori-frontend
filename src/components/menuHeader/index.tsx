@@ -64,9 +64,9 @@ export default function MenuHeader() {
 
     return (
         <div className={`${styles["menu-header"]} ${styles[theme]}`}>
-            <div className={styles["menu"]}>
-                <Link href="/" className={styles["menu-item"]}>
-                    <Image alt="Logo" src={LogoImage} width={100} />
+            <div className={styles["logo-container"]}>
+                <Link href="/" className={`${styles["logo"]} ${styles[theme]}`}>
+                    Kawori
                 </Link>
             </div>
             <div className={styles["user-container"]}>

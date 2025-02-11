@@ -1,8 +1,9 @@
 "use client";
 
 import { addStyle } from "@/util";
-import { MenuTheme, ThemeConfig } from "antd";
-import { AliasToken } from "antd/lib/theme/internal";
+import { ThemeConfig } from "antd";
+
+export type Theme = "light" | "dark";
 
 const colors = {
     brandColorPrimarPure: "#644ED0",
@@ -111,7 +112,7 @@ addStyle(`
 
 export default colors;
 
-export const antdThemes: Record<MenuTheme, ThemeConfig> = {
+export const antdThemes: Record<Theme, ThemeConfig> = {
     dark: {
         token: {
             colorPrimary: colors.themeColorPrimaryPure,
@@ -134,6 +135,7 @@ export const antdThemes: Record<MenuTheme, ThemeConfig> = {
                 bodyBg: colors.themeBackground,
                 headerBg: colors.themeColorGrey0,
                 siderBg: colors.themeColorGrey0,
+                footerBg: colors.themeColorGrey4,
             },
         },
     },
@@ -144,6 +146,8 @@ export const antdThemes: Record<MenuTheme, ThemeConfig> = {
         components: {
             Layout: {
                 bodyBg: colors.neutralColorGrey1,
+                headerBg: colors.neutralColorPurewhite,
+                siderBg: colors.neutralColorPurewhite,
             },
         },
     },

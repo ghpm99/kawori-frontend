@@ -1,9 +1,10 @@
 .theme-mode {
-    margin-right: 5px;
+    margin-right: 16px;
     width: 28px;
-    height: 42px;
-    margin-block: auto;
+    height: 100%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .theme-icon {

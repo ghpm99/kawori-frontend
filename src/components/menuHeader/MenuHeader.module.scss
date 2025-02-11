@@ -3,7 +3,7 @@
     display: flex;
     width: 100%;
     border-bottom: 1px solid var(--color-theme-color-primary-pure);
-    box-shadow: 0 0 7px 1px rgba(0,0,0,.1);
+    box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.1);
     z-index: 1;
     &.dark {
         background-color: var(--color-theme-color-grey0);
@@ -96,3 +96,26 @@
     background-color: rgb(68, 65, 65);
 }
 
+.logo-container {
+    padding-inline: 16px;
+    padding-block: 14px;
+}
+
+.logo {
+    text-align: center;
+    margin: 19px;
+    cursor: pointer;
+    font-family: Poppins, "Fira Code", Poppins;
+    font-size: 30px;
+    line-height: 36px;
+    unicode-bidi: isolate;
+    font-weight: bold;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    &.dark {
+        color: var(--color-neutral-color-pure-white);
+    }
+    &.light {
+        color: var(--color-neutral-color-pure-black);
+    }
+}

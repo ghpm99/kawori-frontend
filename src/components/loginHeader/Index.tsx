@@ -7,6 +7,7 @@ import S from "./Login.module.scss";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { signout } from "@/lib/features/auth";
 import { RootState } from "@/lib/store";
+import ThemeControl from "../themeControl";
 
 export default function LoginHeader() {
     const { user, status } = useAppSelector((state: RootState) => state.auth);
@@ -26,6 +27,7 @@ export default function LoginHeader() {
 
     return (
         <div className={S.layout}>
+            <ThemeControl />
             {status === "authenticated" ? (
                 <Popover content={content} title="Conta" className={S["user"]}>
                     <Avatar size="small" icon={<UserOutlined />} />

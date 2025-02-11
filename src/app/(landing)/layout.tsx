@@ -2,8 +2,10 @@
 
 import MenuHeader from "@/components/menuHeader";
 import { useAppSelector } from "@/lib/hooks";
-import { Footer } from "antd/lib/layout/layout";
 import styles from "./landing.module.scss";
+import { Layout } from "antd";
+
+const { Footer } = Layout;
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
     const theme = useAppSelector((state) => state.configuration.theme);
