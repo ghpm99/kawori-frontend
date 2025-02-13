@@ -1,5 +1,6 @@
 import { getAllBdoClass } from "@/services/classification";
 import { Theme } from "@/styles/theme";
+import { getSavedTheme } from "@/util"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IConfigurationState {
@@ -9,7 +10,7 @@ interface IConfigurationState {
 
 const initialState: IConfigurationState = {
     class: [],
-    theme: "light",
+    theme: 'light',
 };
 
 export const configurationSlice = createSlice({
