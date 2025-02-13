@@ -1,3 +1,4 @@
+import { Theme } from "@/styles/theme"
 import dayjs from "dayjs";
 
 export const FACETEXTURE_MESSAGE_REF = "facetexture-message-ref";
@@ -72,3 +73,9 @@ export const addStyle = (styleString: string) => {
     style.textContent = styleString;
     document.head.append(style);
 };
+
+export const getSavedTheme = (): Theme => {
+    if (typeof window === "undefined") return "light";
+    const localTheme = localStorage.getItem("theme");
+    return localTheme === "dark" ? "dark" : "light";
+}
