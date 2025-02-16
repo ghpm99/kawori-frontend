@@ -6,6 +6,7 @@ import tokenServiceInstance from "./auth/authToken";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
+    withCredentials: true,
 });
 
 let tried = 0;
