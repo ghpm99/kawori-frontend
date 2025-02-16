@@ -1,39 +1,41 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
-import path from "path"
+import path from "path";
 
 const publicRoutes = [
-    {path: '/', whenAuthenticated: 'next'},
-    {path: '/admin', whenAuthenticated: 'next'},
-    {path: '/internal', whenAuthenticated: 'next'},
-    {path: '/login', whenAuthenticated: 'redirect'},
+    { path: "/", whenAuthenticated: "next" },
+    { path: "/admin", whenAuthenticated: "next" },
+    { path: "/internal", whenAuthenticated: "next" },
+    { path: "/login", whenAuthenticated: "redirect" },
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 
 export function middleware(request: NextRequest) {
-    console.log(request);
+    console.log(typeof window);
+    if (typeof window !== "undefined") {
+        const data = localStorage.getItem("authToken");
+        console.log("localStorage", data);
+    }
     const path = request.nextUrl.pathname;
-    const publicRoute = publicRoutes.find(route => route.path === path)
-    const authToken = request.cookies.get("authToken");
+    const publicRoute = publicRoutes.find((route) => route.path === path);
+    const authToken = request.cookies.get("acess_token");
 
-    if(!authToken && publicRoute)
-        return NextResponse.next()
+    if (!authToken && publicRoute) return NextResponse.next();
 
-    if(!authToken && !publicRoute){
-        const redirectUrl = request.nextUrl.clone()
-        redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE
+    if (!authToken && !publicRoute) {
+        const redirectUrl = request.nextUrl.clone();
+        redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
         return NextResponse.redirect(redirectUrl);
     }
 
-    if(authToken && publicRoute && publicRoute.whenAuthenticated === 'redirect'){
-        const redirectUrl = request.nextUrl.clone()
-        redirectUrl.pathname = "/"
+    if (authToken && publicRoute && publicRoute.whenAuthenticated === "redirect") {
+        const redirectUrl = request.nextUrl.clone();
+        redirectUrl.pathname = "/";
         return NextResponse.redirect(redirectUrl);
     }
 
-    if(authToken && !publicRoute){
-
-        return NextResponse.next()
+    if (authToken && !publicRoute) {
+        return NextResponse.next();
     }
 
     return NextResponse.next();
