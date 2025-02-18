@@ -11,11 +11,7 @@ const publicRoutes = [
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 
 export function middleware(request: NextRequest) {
-    console.log(typeof window);
-    if (typeof window !== "undefined") {
-        const data = localStorage.getItem("authToken");
-        console.log("localStorage", data);
-    }
+
     const path = request.nextUrl.pathname;
     const publicRoute = publicRoutes.find((route) => route.path === path);
     const authToken = request.cookies.get("acess_token");

@@ -1,9 +1,7 @@
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
 import { signinThunk } from "@/services/auth";
-import TokenServiceInstance from "@/services/auth/authToken";
 
-import { IToken } from "@/services/auth/authToken";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -59,18 +57,10 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setToken: (state: IAuthState, action: PayloadAction<IToken>) => {
-            TokenServiceInstance.setUser({
-                tokens: {
-                    access: action.payload.tokens.access,
-                    refresh: action.payload.tokens.refresh,
-                },
-                remember: action.payload.remember,
-            });
+        signin: (state) => {
             state.status = "authenticated";
         },
         signout: (state) => {
-            TokenServiceInstance.removeUser();
             state.user = initialState.user;
             state.status = "unauthenticated";
         },
@@ -87,13 +77,6 @@ export const authSlice = createSlice({
                 state.status = "unauthenticated";
             })
             .addCase(signinThunk.fulfilled, (state, action) => {
-                TokenServiceInstance.setUser({
-                    tokens: {
-                        access: action.payload.token.tokens.access,
-                        refresh: action.payload.token.tokens.refresh,
-                    },
-                    remember: action.payload.args.remember,
-                });
                 state.status = "authenticated";
                 state.user = action.payload.user;
             })
@@ -103,6 +86,6 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setToken, signout, setLoading, setSelectedMenu } = authSlice.actions;
+export const { signin, signout, setLoading, setSelectedMenu } = authSlice.actions;
 
 export default authSlice.reducer;

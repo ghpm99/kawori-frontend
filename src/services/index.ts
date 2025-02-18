@@ -1,12 +1,13 @@
-import axios, { AxiosError, AxiosInterceptorManager, AxiosResponse } from "axios";
-import TokenService from "./auth/authToken";
-import * as Sentry from "@sentry/nextjs";
-import { refreshTokenService } from "./auth";
-import tokenServiceInstance from "./auth/authToken";
+import * as Sentry from "@sentry/nextjs"
+import axios, { AxiosError, AxiosResponse } from "axios"
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
     withCredentials: true,
+    headers: {
+        "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_API_URL,
+        "Content-Type": "application/json",
+    },
 });
 
 let tried = 0;
@@ -20,28 +21,8 @@ const sleepRequest = (milliseconds: number, originalRequest: any) => {
     });
 };
 
-export const attachTokenToRequest = async (request: any) => {
-    const token = tokenServiceInstance.getLocalAccessToken();
-    if (token) {
-        request.headers!.Authorization = `Bearer ${token}`;
-    }
-    return request;
-};
-
-apiDjango.interceptors.request.use(attachTokenToRequest);
-
 const responseInterceptor = (response: AxiosResponse) => {
     return response;
-};
-
-const refreshTokenAccess = async (error) => {
-    const refreshToken = tokenServiceInstance.getLocalRefreshToken();
-    if (!refreshToken) {
-        tokenServiceInstance.removeUser();
-        return Promise.reject(error);
-    }
-    const tokenAccessRenew = await refreshTokenService({ refresh: refreshToken });
-    tokenServiceInstance.updateLocalAccessToken(tokenAccessRenew.data.access);
 };
 
 export const errorInterceptor = async (error: AxiosError) => {
@@ -49,15 +30,9 @@ export const errorInterceptor = async (error: AxiosError) => {
     const originalRequest = config;
 
     if ((!error.response || statusCodeRetry.includes(response?.status as number)) && tried <= retryMaxCount) {
-        if (error.response?.status === 401) {
-            await refreshTokenAccess(error);
-        }
         tried++;
         return sleepRequest(retryDelay, originalRequest);
     } else {
-        if (error.response && (error.response.status === 403 || error.response?.status === 401)) {
-            tokenServiceInstance.removeUser();
-        }
         Sentry.captureException(error);
         return Promise.reject(error);
     }
