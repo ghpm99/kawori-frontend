@@ -1,5 +1,4 @@
 "use client";
-import AuthProvider from "@/components/provider";
 import ThemeProvider from "@/components/themeProvider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Analytics } from "@vercel/analytics/react";
@@ -14,11 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <StoreProvider>
                     <ThemeProvider>
                         <AntdRegistry>
-                            <AuthProvider>
                                 {children}
                                 <Analytics />
                                 <SpeedInsights />
-                            </AuthProvider>
                         </AntdRegistry>
                     </ThemeProvider>
                 </StoreProvider>
