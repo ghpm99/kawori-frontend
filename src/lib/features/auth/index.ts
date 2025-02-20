@@ -2,7 +2,6 @@ import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
 import { signinThunk } from "@/services/auth";
 
-
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type authStatus = "authenticated" | "unauthenticated";
