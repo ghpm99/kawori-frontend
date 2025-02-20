@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/nextjs"
-import axios, { AxiosError, AxiosResponse } from "axios"
+import * as Sentry from "@sentry/nextjs";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
