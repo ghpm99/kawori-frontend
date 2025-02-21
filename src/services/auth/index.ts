@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from "axios"
 
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { apiDjango } from "..";
+import { createAsyncThunk } from "@reduxjs/toolkit"
+import { apiDjango } from ".."
 
 const apiLogin = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/auth",
@@ -14,33 +14,32 @@ const apiLogin = axios.create({
 
 export const signinThunk = createAsyncThunk(
     "auth/signin",
-    async (args: { username: string; password: string; remember: boolean }) => {
-        const tokenResponse = await apiLogin.post<{ tokens: { access: string; refresh: string } }>("/token/", args, {
-            withCredentials: true,
-        });
-        const userDetailResponse = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/profile/", {
-            headers: {
-                Authorization: `Bearer ${tokenResponse.data.tokens.access}`,
-            },
-            responseType: "json",
-        });
-        return {
-            token: tokenResponse.data,
-            user: userDetailResponse.data,
-            args,
-        };
+    (args: { username: string; password: string; remember: boolean }) => {
+        apiDjango.post<{ msg: string }>("auth/token/", args);
     },
 );
 
-export const userDetailService = () => {
-    const response = apiDjango.get("/profile/");
-    return response;
-};
+export const userDetailThunk = createAsyncThunk("profile/userDetail", async () => {
+    const response = await apiDjango.get<{
+        id: number;
+        name: string;
+        username: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+        is_staff: boolean;
+        is_active: boolean;
+        is_superuser: boolean;
+        last_login: string | null;
+        date_joined: string;
+    }>("profile/");
+    return response.data;
+});
 
-export const verifyTokenService = () => {
+export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
     const response = apiDjango.post("auth/token/verify/");
     return response;
-};
+});
 
 export const refreshTokenService = (refresh: { refresh: string }) => {
     const response = apiDjango.post<{ access: string }>("/token/refresh/", refresh);

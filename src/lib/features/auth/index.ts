@@ -1,6 +1,6 @@
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
-import { signinThunk } from "@/services/auth";
+import { signinThunk, userDetailThunk, verifyTokenThunk } from "@/services/auth";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -47,11 +47,6 @@ const initialState: IAuthState = {
     selectedMenu: ["home"],
 };
 
-export const userDetailsThunk = createAsyncThunk("profile/userDetails", async () => {
-    const response = await apiDjango.get("/profile/");
-    return response.data;
-});
-
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -77,11 +72,22 @@ export const authSlice = createSlice({
             })
             .addCase(signinThunk.fulfilled, (state, action) => {
                 state.status = "authenticated";
-                state.user = action.payload.user;
             })
-            .addCase(userDetailsThunk.fulfilled, (state, action) => {
+            .addCase(signinThunk.rejected, (state) => {
+                state.status = "unauthenticated";
+            })
+            .addCase(userDetailThunk.fulfilled, (state, action) => {
                 state.user = action.payload;
-            });
+            })
+            .addCase(verifyTokenThunk.pending, (state) => {
+                state.status = "unauthenticated";
+            })
+            .addCase(verifyTokenThunk.fulfilled, (state) => {
+                state.status = "authenticated";
+            })
+            .addCase(verifyTokenThunk.rejected, (state) => {
+                state.status = "unauthenticated";
+            })
     },
 });
 
