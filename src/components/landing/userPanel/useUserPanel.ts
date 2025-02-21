@@ -1,6 +1,7 @@
-import { signout, userDetailsThunk } from "@/lib/features/auth";
+import { signout } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
+import { userDetailThunk } from "@/services/auth"
 
 import { useEffect } from "react";
 
@@ -9,7 +10,7 @@ const useUserPanel = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (store.status === "authenticated") dispatch(userDetailsThunk());
+        if (store.status === "authenticated") dispatch(userDetailThunk());
     }, [store.status]);
 
     const formatDate = (date: string) => {

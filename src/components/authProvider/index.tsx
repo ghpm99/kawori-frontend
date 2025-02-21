@@ -1,9 +1,11 @@
-import { verifyTokenService } from "@/services/auth";
+import { useAppDispatch } from '@/lib/hooks'
+import { verifyTokenThunk } from '@/services/auth'
 import { useEffect } from "react";
 
 const AuthProvider = ({ children }) => {
+    const dispatch = useAppDispatch();
     useEffect(() => {
-        verifyTokenService();
+        dispatch(verifyTokenThunk())
     }, []);
     return children;
 };
