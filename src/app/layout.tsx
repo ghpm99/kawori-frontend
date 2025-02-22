@@ -6,13 +6,24 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../../styles/globals.scss";
 import StoreProvider from "./storeProvider";
 import AuthProvider from "@/components/authProvider";
+import React from "react";
+
+const setInitialTheme = `
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.className = savedTheme;
+    })();
+`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="pt-br">
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
+            </head>
             <body>
-                <StoreProvider>
-                    <ThemeProvider>
+                <ThemeProvider>
+                    <StoreProvider>
                         <AntdRegistry>
                             <AuthProvider>
                                 {children}
@@ -20,8 +31,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                                 <SpeedInsights />
                             </AuthProvider>
                         </AntdRegistry>
-                    </ThemeProvider>
-                </StoreProvider>
+                    </StoreProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

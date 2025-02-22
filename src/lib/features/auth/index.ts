@@ -87,7 +87,7 @@ export const authSlice = createSlice({
             })
             .addCase(verifyTokenThunk.rejected, (state) => {
                 state.status = "unauthenticated";
-            })
+            });
     },
 });
 

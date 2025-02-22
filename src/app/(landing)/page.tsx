@@ -13,9 +13,13 @@ import UserPanel from "@/components/landing/userPanel";
 import Welcome from "@/components/landing/welcome";
 import { useEffect } from "react";
 import { useAppSelector } from "@/lib/hooks";
+import { useTheme } from "@/components/themeProvider/themeContext";
 
 export default function Home() {
-    const theme = useAppSelector((state) => state.configuration.theme);
+    const { state } = useTheme();
+    const { theme } = state;
+    console.log("Home", state);
+
     useEffect(() => {
         document.title = "Kawori";
     }, []);
