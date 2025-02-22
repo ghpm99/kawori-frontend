@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from "axios";
 
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import { apiDjango } from ".."
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiDjango } from "..";
 
 const apiLogin = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/auth",
@@ -37,8 +37,8 @@ export const userDetailThunk = createAsyncThunk("profile/userDetail", async () =
 });
 
 export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
-    const response = apiDjango.post("auth/token/verify/");
-    return response;
+    const response = await apiDjango.post("auth/token/verify/");
+    return response.data;
 });
 
 export const refreshTokenService = (refresh: { refresh: string }) => {

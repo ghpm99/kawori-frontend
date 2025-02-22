@@ -4,11 +4,15 @@ import MenuHeader from "@/components/menuHeader";
 import { useAppSelector } from "@/lib/hooks";
 import styles from "./landing.module.scss";
 import { Layout } from "antd";
+import React from "react";
+import { useTheme } from "@/components/themeProvider/themeContext";
 
 const { Footer } = Layout;
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
-    const theme = useAppSelector((state) => state.configuration.theme);
+    const { state } = useTheme();
+    const { theme } = state;
+    console.log("LandingLayout theme", theme);
     return (
         <>
             <div className={`${styles["container"]} ${styles[theme]}`}>

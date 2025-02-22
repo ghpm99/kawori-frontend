@@ -5,12 +5,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IConfigurationState {
     class: IClass[];
-    theme: Theme;
+    theme?: Theme;
 }
 
 const initialState: IConfigurationState = {
     class: [],
-    theme: "light",
 };
 
 export const configurationSlice = createSlice({

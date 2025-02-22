@@ -1,7 +1,7 @@
 import { signout } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { userDetailThunk } from "@/services/auth"
+import { userDetailThunk } from "@/services/auth";
 
 import { useEffect } from "react";
 
