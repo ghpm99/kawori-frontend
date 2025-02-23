@@ -3,9 +3,10 @@ import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 
 import styles from "./Menu.module.scss";
-import useMenu from "./useMenu";
 
-import { authStatus } from "@/lib/features/auth";
+import { authStatus, IUser } from "@/lib/features/auth";
+import { Theme } from "@/styles/theme";
+import { useState } from "react";
 
 type MenuItem = Required<MenuProps>["items"][number];
 export type MenuItemKey =
@@ -101,11 +102,21 @@ const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
     return baseItens;
 };
 
-function MenuInternal() {
-    const { status, toggleCollapsed, user, selectedMenu, theme } = useMenu();
+interface IMenuInternal {
+    status: authStatus;
+    user: IUser;
+    theme: Theme;
+    selectedMenu: MenuItemKey[];
+}
+const MenuInternal = ({ status, user, theme, selectedMenu }: IMenuInternal) => {
+    const [collapsed, setCollapsed] = useState<boolean>(false);
+
+    const toggleCollapsed = () => {
+        setCollapsed((prev) => !prev);
+    };
 
     return (
-        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed} theme={theme}>
+        <Sider breakpoint="lg" collapsedWidth="0" onCollapse={toggleCollapsed} theme={theme} collapsed={collapsed}>
             <div className={styles["logo-container"]}>
                 <Link href="/" className={styles["logo"]}>
                     Kawori
@@ -119,6 +130,6 @@ function MenuInternal() {
             />
         </Sider>
     );
-}
+};
 
 export default MenuInternal;

@@ -1,6 +1,5 @@
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
-import { signinThunk, userDetailThunk, verifyTokenThunk } from "@/services/auth";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -14,6 +13,21 @@ interface IAuthState {
 }
 
 export interface IUser {
+    id: number;
+    name: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_staff: boolean;
+    is_active: boolean;
+    is_superuser: boolean;
+    last_login: string;
+    date_joined: string;
+    image?: string;
+}
+
+interface IUserData {
     id: number;
     name: string;
     username: string;
@@ -47,6 +61,24 @@ const initialState: IAuthState = {
     selectedMenu: ["home"],
 };
 
+export const signinThunk = createAsyncThunk(
+    "auth/signin",
+    async (args: { username: string; password: string; remember: boolean }) => {
+        const response = await apiDjango.post<{ msg: string }>("auth/token/", args);
+        return response.data;
+    },
+);
+
+export const userDetailThunk = createAsyncThunk("profile/userDetail", async () => {
+    const response = await apiDjango.get<IUserData>("profile/");
+    return response.data;
+});
+
+export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
+    const response = await apiDjango.post("auth/token/verify/");
+    return response.data;
+});
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -78,6 +110,9 @@ export const authSlice = createSlice({
             })
             .addCase(userDetailThunk.fulfilled, (state, action) => {
                 state.user = action.payload;
+            })
+            .addCase(userDetailThunk.rejected, (state, action) => {
+                state.status = "unauthenticated";
             })
             .addCase(verifyTokenThunk.pending, (state) => {
                 state.status = "unauthenticated";

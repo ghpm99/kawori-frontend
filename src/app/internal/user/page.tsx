@@ -3,8 +3,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
+import { useTheme } from "@/components/themeProvider/themeContext";
 import { setSelectedMenu, signout } from "@/lib/features/auth";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -13,9 +14,13 @@ import styles from "./User.module.scss";
 const { Title, Paragraph } = Typography;
 
 const User = () => {
-    const { user } = useSelector((state: RootState) => state.auth);
-    const theme = useAppSelector((state) => state.configuration.theme);
     const dispatch = useAppDispatch();
+
+    const {
+        state: { theme },
+    } = useTheme();
+
+    const { user } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         document.title = "Kawori Profile";
