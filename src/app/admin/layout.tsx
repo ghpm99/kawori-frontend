@@ -2,32 +2,40 @@
 
 import LoginHeader from "@/components/loginHeader/Index";
 
-import { Layout } from "antd";
-import styles from "./layout.module.scss";
-import { useAppSelector } from "@/lib/hooks";
-import { useRouter } from "next/navigation";
 import MenuInternal from "@/components/menuInternal/Index";
+import { useTheme } from "@/components/themeProvider/themeContext";
+import { signout } from "@/lib/features/auth";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { Layout } from "antd";
+import { useRouter } from "next/navigation";
+import styles from "./layout.module.scss";
 
 const { Header, Content } = Layout;
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-    const authStore = useAppSelector((state) => state.auth);
     const navigate = useRouter();
+    const dispatch = useAppDispatch();
 
-    if (
-        authStore.loading === false &&
-        authStore.status === "unauthenticated" &&
-        authStore.user.is_superuser === false
-    ) {
+    const {
+        state: { theme },
+    } = useTheme();
+
+    const { loading, status, user, selectedMenu } = useAppSelector((state) => state.auth);
+
+    if (loading === false && status === "unauthenticated" && user.is_superuser === false) {
         navigate.push("/signout");
     }
 
+    const handleSignout = () => {
+        dispatch(signout());
+    };
+
     return (
         <Layout className={styles["container"]}>
-            <MenuInternal />
+            <MenuInternal selectedMenu={selectedMenu} status={status} theme={theme} user={user} />
             <Layout>
                 <Header className={styles["header"]}>
-                    <LoginHeader />
+                    <LoginHeader user={user} status={status} handleSignout={handleSignout} />
                 </Header>
                 <Content className={styles["content"]}>{children}</Content>
             </Layout>

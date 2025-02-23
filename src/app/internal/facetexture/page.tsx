@@ -15,11 +15,14 @@ import { IFacetextureCharacterApi } from "@/services/facetexture";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
 import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
+import { useTheme } from "@/components/themeProvider/themeContext";
 
 function FaceTexture() {
     const dispatch = useAppDispatch();
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
-    const theme = useAppSelector((state) => state.configuration.theme);
+    const {
+        state: { theme },
+    } = useTheme();
 
     useEffect(() => {
         document.title = "Kawori Facetexture";

@@ -1,18 +1,14 @@
 "use client";
 import Link from "next/link";
 
-import LogoImage from "assets/logo.png";
-import { Menu, Tooltip } from "antd";
+import { Menu } from "antd";
 
-import Image from "next/image";
-import styles from "./MenuHeader.module.scss";
-import useMenuHeader from "./useMenuHeader";
-import { ExclamationCircleOutlined, MoonOutlined, SunFilled, SunOutlined } from "@ant-design/icons";
+import { authStatus, IUser } from "@/lib/features/auth";
+import { Theme } from "@/styles/theme";
 import ThemeControl from "../themeControl";
+import styles from "./MenuHeader.module.scss";
 
-export default function MenuHeader() {
-    const { data, status, theme } = useMenuHeader();
-
+export default function MenuHeader({ status, user, theme }: { status: authStatus; user: IUser; theme: Theme }) {
     const menuItens = [
         {
             label: <Link href={"/"}>Inicio</Link>,
@@ -34,7 +30,7 @@ export default function MenuHeader() {
         },
         status === "authenticated"
             ? {
-                  label: data.name,
+                  label: user.name,
                   key: "user",
                   children: [
                       {

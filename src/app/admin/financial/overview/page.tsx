@@ -38,6 +38,7 @@ import {
 import { formatMoney } from "@/util/index";
 import styles from "./Overview.module.scss";
 import { setSelectedMenu } from "@/lib/features/auth";
+import { useTheme } from "@/components/themeProvider/themeContext";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
@@ -87,7 +88,9 @@ const headerTableFinancial = [
 ];
 function Overview() {
     const overviewStore = useSelector((state: RootState) => state.financial.overview);
-    const theme = useAppSelector((state) => state.configuration.theme);
+    const {
+        state: { theme },
+    } = useTheme();
     const dispatch = useAppDispatch();
 
     useEffect(() => {

@@ -1,25 +1,23 @@
 "use client";
-import { changeTheme } from "@/lib/features/configuration";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { antdThemes } from "@/styles/theme";
+import { antdThemes, Theme } from "@/styles/theme";
 import { getSavedTheme } from "@/util";
 import { ConfigProvider, theme } from "antd";
 import locale from "antd/lib/locale/pt_BR";
 import React, { useEffect, useReducer } from "react";
 import { ThemeProvider as CustomThemeProvider } from "./themeContext";
-import State from "pusher-js/types/src/core/http/state";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
-enum Status {
-    STARTUP = "startup",
-    LOADING = "loading",
-    LOADED = "loaded",
-}
+type Status = "loading" | "idle";
 
-const initialState = {
-    status: Status.STARTUP,
+type InitialStateType = {
+    theme: Theme;
+    status: Status;
+};
+
+const initialState: InitialStateType = {
     theme: "light",
+    status: "loading",
 };
 
 const reducer = (state, action) => {
@@ -29,43 +27,37 @@ const reducer = (state, action) => {
                 ...state,
                 theme: action.payload,
             };
-        case "LOADING":
+        case "SET_STATUS":
             return {
                 ...state,
-                status: Status.LOADING,
-            };
-        case "LOADED":
-            return {
-                ...state,
-                status: Status.LOADED,
+                status: action.payload,
             };
         default:
             return state;
     }
 };
 
+const init = (initialState) => {
+    const savedTheme = getSavedTheme();
+    return {
+        ...initialState,
+        theme: savedTheme || initialState.theme,
+    };
+};
+
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-    const [state, localDispatch] = useReducer(reducer, initialState);
+    const [state, localDispatch] = useReducer(reducer, initialState, init);
 
     console.log("ThemeProvider", state);
 
     useEffect(() => {
-        if (state.status !== Status.LOADED) return;
-        console.log("theme", state.theme);
+        if (state.status !== "idle") return;
         localStorage.setItem("theme", state.theme);
         document.documentElement.className = state.theme;
     }, [state.theme, state.status]);
 
     useEffect(() => {
-        localDispatch({ type: "LOADING" });
-
-        const savedTheme = getSavedTheme();
-        console.log("savedTheme", savedTheme);
-        if (savedTheme) {
-            localDispatch({ type: "CHANGE_THEME", payload: savedTheme });
-        }
-
-        localDispatch({ type: "LOADED" });
+        localDispatch({ type: "SET_STATUS", payload: "idle" });
     }, []);
 
     return (
@@ -77,7 +69,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
                     ...antdThemes[state.theme],
                 }}
             >
-                {state.status === Status.LOADED && children}
+                {state.status === "idle" && children}
             </ConfigProvider>
         </CustomThemeProvider>
     );

@@ -12,35 +12,6 @@ const apiLogin = axios.create({
     },
 });
 
-export const signinThunk = createAsyncThunk(
-    "auth/signin",
-    (args: { username: string; password: string; remember: boolean }) => {
-        apiDjango.post<{ msg: string }>("auth/token/", args);
-    },
-);
-
-export const userDetailThunk = createAsyncThunk("profile/userDetail", async () => {
-    const response = await apiDjango.get<{
-        id: number;
-        name: string;
-        username: string;
-        first_name: string;
-        last_name: string;
-        email: string;
-        is_staff: boolean;
-        is_active: boolean;
-        is_superuser: boolean;
-        last_login: string | null;
-        date_joined: string;
-    }>("profile/");
-    return response.data;
-});
-
-export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
-    const response = await apiDjango.post("auth/token/verify/");
-    return response.data;
-});
-
 export const refreshTokenService = (refresh: { refresh: string }) => {
     const response = apiDjango.post<{ access: string }>("/token/refresh/", refresh);
     return response;
