@@ -10,6 +10,7 @@ interface IAuthState {
     status: authStatus;
     loading: boolean;
     selectedMenu: MenuItemKey[];
+    groups: string[]
 }
 
 export interface IUser {
@@ -59,6 +60,7 @@ const initialState: IAuthState = {
     status: "unauthenticated",
     loading: true,
     selectedMenu: ["home"],
+    groups: []
 };
 
 export const signinThunk = createAsyncThunk(
@@ -71,6 +73,11 @@ export const signinThunk = createAsyncThunk(
 
 export const userDetailThunk = createAsyncThunk("profile/userDetail", async () => {
     const response = await apiDjango.get<IUserData>("profile/");
+    return response.data;
+});
+
+export const userGroupsThunk = createAsyncThunk("profile/userGroups", async () => {
+    const response = await apiDjango.get<{data: string[]}>("profile/groups/");
     return response.data;
 });
 
@@ -122,7 +129,10 @@ export const authSlice = createSlice({
             })
             .addCase(verifyTokenThunk.rejected, (state) => {
                 state.status = "unauthenticated";
-            });
+            })
+            .addCase(userGroupsThunk.fulfilled, (state, action) => {
+                state.groups = action.payload.data
+            })
     },
 });
 

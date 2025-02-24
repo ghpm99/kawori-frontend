@@ -147,7 +147,7 @@ const User = () => {
 };
 
 User.auth = {
-    role: "admin",
+    role: "user",
     loading: <LoadingPage />,
     unauthorized: "/signin",
 };

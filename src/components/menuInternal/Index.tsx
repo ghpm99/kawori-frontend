@@ -28,7 +28,7 @@ export type MenuItemKey =
 
 const { Sider } = Layout;
 
-const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
+const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
     const baseItens: MenuItem[] = [
         {
             label: <Link href={"/"}>Inicio</Link>,
@@ -37,13 +37,20 @@ const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
         },
     ];
 
-    if (status === "authenticated") {
+    if(status === "unauthenticated" || !groups || groups.length <= 0){
+        return baseItens;
+    }
+
+    if (groups.includes("user")) {
+        baseItens.push({
+            label: <Link href={"/internal/user"}>Conta</Link>,
+            key: "user",
+            icon: <UserOutlined />,
+        });
+    }
+
+    if (groups.includes("blackdesert")) {
         baseItens.push(
-            {
-                label: <Link href={"/internal/user"}>Conta</Link>,
-                key: "user",
-                icon: <UserOutlined />,
-            },
             {
                 label: <Link href={"/internal/facetexture"}>Facetexture</Link>,
                 key: "facetexture",
@@ -57,46 +64,47 @@ const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
         );
     }
 
-    if (isSuperuser) {
-        baseItens.push(
-            {
-                label: "Financeiro",
-                key: "financial",
-                icon: <SnippetsOutlined />,
-                children: [
-                    {
-                        label: <Link href={"/admin/financial/overview"}>Overview</Link>,
-                        key: "overview",
-                        icon: <SnippetsOutlined />,
-                    },
-                    {
-                        label: <Link href={"/admin/financial/contracts"}>Contratos</Link>,
-                        key: "contracts",
-                        icon: <SnippetsOutlined />,
-                    },
-                    {
-                        label: <Link href={"/admin/financial/invoices"}>Notas</Link>,
-                        key: "invoices",
-                        icon: <SnippetsOutlined />,
-                    },
-                    {
-                        label: <Link href={"/admin/financial/payments"}>Pagamentos</Link>,
-                        key: "payments",
-                        icon: <SnippetsOutlined />,
-                    },
-                    {
-                        label: <Link href={"/admin/financial/tags"}>Tags</Link>,
-                        key: "tags",
-                        icon: <SnippetsOutlined />,
-                    },
-                ],
-            },
-            {
-                label: <Link href={"/admin/server"}>Servidor</Link>,
-                key: "server",
-                icon: <SettingOutlined />,
-            },
-        );
+    if (groups.includes("financial")) {
+        baseItens.push({
+            label: "Financeiro",
+            key: "financial",
+            icon: <SnippetsOutlined />,
+            children: [
+                {
+                    label: <Link href={"/admin/financial/overview"}>Overview</Link>,
+                    key: "overview",
+                    icon: <SnippetsOutlined />,
+                },
+                {
+                    label: <Link href={"/admin/financial/contracts"}>Contratos</Link>,
+                    key: "contracts",
+                    icon: <SnippetsOutlined />,
+                },
+                {
+                    label: <Link href={"/admin/financial/invoices"}>Notas</Link>,
+                    key: "invoices",
+                    icon: <SnippetsOutlined />,
+                },
+                {
+                    label: <Link href={"/admin/financial/payments"}>Pagamentos</Link>,
+                    key: "payments",
+                    icon: <SnippetsOutlined />,
+                },
+                {
+                    label: <Link href={"/admin/financial/tags"}>Tags</Link>,
+                    key: "tags",
+                    icon: <SnippetsOutlined />,
+                },
+            ],
+        });
+    }
+
+    if (groups.includes("admin")) {
+        baseItens.push({
+            label: <Link href={"/admin/server"}>Servidor</Link>,
+            key: "server",
+            icon: <SettingOutlined />,
+        });
     }
 
     return baseItens;
@@ -104,11 +112,11 @@ const menuItens = (status: authStatus, isSuperuser: boolean): MenuItem[] => {
 
 interface IMenuInternal {
     status: authStatus;
-    user: IUser;
     theme: Theme;
     selectedMenu: MenuItemKey[];
+    groups: string[];
 }
-const MenuInternal = ({ status, user, theme, selectedMenu }: IMenuInternal) => {
+const MenuInternal = ({ status, theme, selectedMenu, groups }: IMenuInternal) => {
     const [collapsed, setCollapsed] = useState<boolean>(false);
 
     const toggleCollapsed = () => {
@@ -122,12 +130,7 @@ const MenuInternal = ({ status, user, theme, selectedMenu }: IMenuInternal) => {
                     Kawori
                 </Link>
             </div>
-            <Menu
-                theme={theme}
-                selectedKeys={selectedMenu}
-                mode="vertical"
-                items={menuItens(status, user.is_superuser)}
-            />
+            <Menu theme={theme} selectedKeys={selectedMenu} mode="vertical" items={menuItens(status, groups)} />
         </Sider>
     );
 };
