@@ -1,5 +1,4 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 const publicRoutes = [
     { path: "/", whenAuthenticated: "next" },
@@ -13,7 +12,7 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
     const publicRoute = publicRoutes.find((route) => route.path === path);
-    const authToken = request.cookies.get("acess_token");
+    const authToken = request.cookies.get("access_token");
 
     if (!authToken && publicRoute) return NextResponse.next();
 

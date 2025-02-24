@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         state: { theme },
     } = useTheme();
 
-    const { loading, status, user, selectedMenu } = useAppSelector((state) => state.auth);
+    const { loading, status, user, selectedMenu, groups } = useAppSelector((state) => state.auth);
 
     if (loading === false && status === "unauthenticated" && user.is_superuser === false) {
         navigate.push("/signout");
@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return (
         <Layout className={styles["container"]}>
-            <MenuInternal selectedMenu={selectedMenu} status={status} theme={theme} user={user} />
+            <MenuInternal selectedMenu={selectedMenu} status={status} theme={theme} groups={groups} />
             <Layout>
                 <Header className={styles["header"]}>
                     <LoginHeader user={user} status={status} handleSignout={handleSignout} />

@@ -1,5 +1,3 @@
-import { changeTheme } from "@/lib/features/configuration";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useTheme } from "../themeProvider/themeContext";
 
 const useThemeControl = () => {
