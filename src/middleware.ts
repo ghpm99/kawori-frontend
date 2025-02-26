@@ -12,7 +12,7 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
     const publicRoute = publicRoutes.find((route) => route.path === path);
-    const authToken = request.cookies.get("access_token");
+    const authToken = !!request.cookies.get("access_token") || !!request.cookies.get("refresh_token");
 
     if (!authToken && publicRoute) return NextResponse.next();
 
@@ -24,7 +24,7 @@ export function middleware(request: NextRequest) {
 
     if (authToken && publicRoute && publicRoute.whenAuthenticated === "redirect") {
         const redirectUrl = request.nextUrl.clone();
-        redirectUrl.pathname = "/";
+        redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
         return NextResponse.redirect(redirectUrl);
     }
 

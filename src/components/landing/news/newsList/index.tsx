@@ -2,7 +2,7 @@ import { List } from "antd";
 
 import Link from "next/link";
 import { formatterDate } from "@/util";
-import { INewsData } from '@/lib/features/news';
+import { INewsData } from "@/lib/features/news";
 
 const NewsList = ({ data }: { data: INewsData[] }) => {
     return (

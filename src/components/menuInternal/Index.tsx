@@ -37,7 +37,7 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
         },
     ];
 
-    if(status === "unauthenticated" || !groups || groups.length <= 0){
+    if (status === "unauthenticated" || !groups || groups.length <= 0) {
         return baseItens;
     }
 

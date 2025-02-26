@@ -10,7 +10,7 @@ interface IAuthState {
     status: authStatus;
     loading: boolean;
     selectedMenu: MenuItemKey[];
-    groups: string[]
+    groups: string[];
 }
 
 export interface IUser {
@@ -60,7 +60,7 @@ const initialState: IAuthState = {
     status: "unauthenticated",
     loading: true,
     selectedMenu: ["home"],
-    groups: []
+    groups: [],
 };
 
 export const signinThunk = createAsyncThunk(
@@ -77,12 +77,17 @@ export const userDetailThunk = createAsyncThunk("profile/userDetail", async () =
 });
 
 export const userGroupsThunk = createAsyncThunk("profile/userGroups", async () => {
-    const response = await apiDjango.get<{data: string[]}>("profile/groups/");
+    const response = await apiDjango.get<{ data: string[] }>("profile/groups/");
     return response.data;
 });
 
 export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
     const response = await apiDjango.post("auth/token/verify/");
+    return response.data;
+});
+
+export const signoutThunk = createAsyncThunk("auth/signout", async () => {
+    const response = await apiDjango.get("auth/signout");
     return response.data;
 });
 
@@ -92,10 +97,6 @@ export const authSlice = createSlice({
     reducers: {
         signin: (state) => {
             state.status = "authenticated";
-        },
-        signout: (state) => {
-            state.user = initialState.user;
-            state.status = "unauthenticated";
         },
         setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
@@ -131,11 +132,15 @@ export const authSlice = createSlice({
                 state.status = "unauthenticated";
             })
             .addCase(userGroupsThunk.fulfilled, (state, action) => {
-                state.groups = action.payload.data
+                state.groups = action.payload.data;
             })
+            .addCase(signoutThunk.fulfilled, (state, action) => {
+                state.user = initialState.user;
+                state.status = "unauthenticated";
+            });
     },
 });
 
-export const { signin, signout, setLoading, setSelectedMenu } = authSlice.actions;
+export const { signin, setLoading, setSelectedMenu } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -4,7 +4,7 @@ import LoginHeader from "@/components/loginHeader/Index";
 
 import MenuInternal from "@/components/menuInternal/Index";
 import { useTheme } from "@/components/themeProvider/themeContext";
-import { signout } from "@/lib/features/auth";
+import { signoutThunk } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Layout } from "antd";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
 
     const handleSignout = () => {
-        dispatch(signout());
+        dispatch(signoutThunk());
     };
 
     return (

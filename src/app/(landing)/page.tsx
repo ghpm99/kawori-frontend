@@ -14,7 +14,7 @@ import Welcome from "@/components/landing/welcome";
 import { ILoginPageProps } from "@/components/signin";
 import { ISignupFormProps } from "@/components/signup";
 import { useTheme } from "@/components/themeProvider/themeContext";
-import { signinThunk, signout } from "@/lib/features/auth";
+import { signinThunk, signoutThunk } from "@/lib/features/auth";
 import { fetchNewsFeedThunk } from "@/lib/features/news";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { INewUser, signupService } from "@/services/auth";
@@ -41,7 +41,7 @@ export default function Home() {
     }, []);
 
     const handleSignout = () => {
-        dispatch(signout());
+        dispatch(signoutThunk());
     };
 
     const onFinishLogin = (values: any) => {

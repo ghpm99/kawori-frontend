@@ -15,6 +15,7 @@ import { IFacetextureCharacterApi } from "@/services/facetexture";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
 import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
+import Loading from "./loading";
 
 function FaceTexture() {
     const dispatch = useAppDispatch();
@@ -22,7 +23,6 @@ function FaceTexture() {
     const {
         state: { theme },
     } = useTheme();
-
 
     useEffect(() => {
         document.title = "Kawori Facetexture";
@@ -90,9 +90,9 @@ function FaceTexture() {
         }
     }, [facetextureStore.loading]);
 
-    // if (facetextureStore.loading) {
-    //     return <Loading />;
-    // }
+    if (facetextureStore.loading) {
+        return <Loading />;
+    }
 
     return (
         <>
@@ -118,6 +118,5 @@ function FaceTexture() {
         </>
     );
 }
-
 
 export default FaceTexture;
