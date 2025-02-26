@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-
 import { createClient } from "../../prismicio";
 import { INewsData } from "@/lib/features/news";
 

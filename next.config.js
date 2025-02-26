@@ -35,7 +35,6 @@ const nextConfig = {
 module.exports = nextConfig
 
 // Injected content via Sentry wizard below
-
 module.exports = withSentryConfig(
   module.exports,
   {
@@ -73,4 +72,4 @@ module.exports = withSentryConfig(
     // https://vercel.com/docs/cron-jobs
     automaticVercelMonitors: true,
   }
-);
+)

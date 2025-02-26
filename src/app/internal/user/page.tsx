@@ -4,7 +4,7 @@ import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
 import { useTheme } from "@/components/themeProvider/themeContext";
-import { setSelectedMenu, signout } from "@/lib/features/auth";
+import { setSelectedMenu, signoutThunk } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ const User = () => {
     }, []);
 
     const handleSignout = () => {
-        dispatch(signout());
+        dispatch(signoutThunk());
     };
 
     const getBorderColor = () => {

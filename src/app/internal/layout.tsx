@@ -4,11 +4,11 @@ import LoginHeader from "@/components/loginHeader/Index";
 
 import MenuInternal from "@/components/menuInternal/Index";
 import { useTheme } from "@/components/themeProvider/themeContext";
-import { signout } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import styles from "./layout.module.scss";
+import { signoutThunk } from "@/lib/features/auth";
 
 const { Header, Content } = Layout;
 
@@ -23,11 +23,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const { user, status, selectedMenu, loading, groups } = useAppSelector((state) => state.auth);
 
     if (loading === false && status === "unauthenticated") {
-        navigate.push("/signout");
+        navigate.push("/");
     }
 
     const handleSignout = () => {
-        dispatch(signout());
+        dispatch(signoutThunk());
     };
 
     return (

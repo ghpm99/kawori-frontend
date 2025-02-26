@@ -8,9 +8,9 @@ const AuthProvider = ({ children }) => {
     const { status } = useAppSelector((state) => state.auth);
 
     const onAuthenticated = () => {
-        dispatch(userDetailThunk())
-        dispatch(userGroupsThunk())
-    }
+        dispatch(userDetailThunk());
+        dispatch(userGroupsThunk());
+    };
 
     useEffect(() => {
         dispatch(verifyTokenThunk());
