@@ -127,15 +127,18 @@ export const authSlice = createSlice({
             })
             .addCase(verifyTokenThunk.fulfilled, (state) => {
                 state.status = "authenticated";
+                state.loading = false;
             })
             .addCase(verifyTokenThunk.rejected, (state) => {
                 state.status = "unauthenticated";
+                state.loading = false;
             })
             .addCase(userGroupsThunk.fulfilled, (state, action) => {
                 state.groups = action.payload.data;
             })
             .addCase(signoutThunk.fulfilled, (state, action) => {
                 state.user = initialState.user;
+                state.groups = initialState.groups;
                 state.status = "unauthenticated";
             });
     },

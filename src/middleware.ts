@@ -1,38 +1,54 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 
-const publicRoutes = [
-    { path: "/", whenAuthenticated: "next" },
-    { path: "/admin", whenAuthenticated: "next" },
-    { path: "/internal", whenAuthenticated: "next" },
-    { path: "/login", whenAuthenticated: "redirect" },
+const Routes = [
+    { path: "/", private: false, whenAuthenticated: "next" },
+    { path: "/facetexture", private: false, whenAuthenticated: "redirect", to: "/internal/facetexture" },
+    { path: "/rank", private: false, whenAuthenticated: "next" },
+    { path: "/news", private: false, whenAuthenticated: "next" },
+    { path: "/internal", private: true, whenAuthenticated: "next" },
+    { path: "/admin", private: true, whenAuthenticated: "next" },
+    { path: "/financial", private: true, whenAuthenticated: "next" },
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 
 export function middleware(request: NextRequest) {
-    const path = request.nextUrl.pathname;
-    const publicRoute = publicRoutes.find((route) => route.path === path);
-    const authToken = !!request.cookies.get("access_token") || !!request.cookies.get("refresh_token");
+    const path = getPrefixRequestPathname(request);
+    const route = Routes.find((route) => route.path === path);
+    const authenticated = !!request.cookies.get("access_token") || !!request.cookies.get("refresh_token");
 
-    if (!authToken && publicRoute) return NextResponse.next();
+    console.log(authenticated, path, route);
 
-    if (!authToken && !publicRoute) {
-        const redirectUrl = request.nextUrl.clone();
-        redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
-        return NextResponse.redirect(redirectUrl);
-    }
+    if (!authenticated && route?.private)
+        return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE, "?action=signout");
 
-    if (authToken && publicRoute && publicRoute.whenAuthenticated === "redirect") {
-        const redirectUrl = request.nextUrl.clone();
-        redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
-        return NextResponse.redirect(redirectUrl);
-    }
+    if (authenticated && !route?.private && route?.whenAuthenticated === "redirect")
+        return redirectToPathname(request, route.to);
 
-    if (authToken && !publicRoute) {
-        return NextResponse.next();
-    }
+    if (authenticated && route?.private) return NextResponse.next();
 
     return NextResponse.next();
+}
+
+function redirectToPathname(request: NextRequest, pathname: string, searchParams?: string) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = pathname;
+
+    if (searchParams) {
+        redirectUrl.search = searchParams;
+    }
+
+    return NextResponse.redirect(redirectUrl);
+}
+
+function getPrefixRequestPathname(request: NextRequest): string {
+    const path = request.nextUrl.pathname;
+    const splitPath = path
+        .split(/\/([^\/]+)/)
+        .slice(1, 3)
+        .map((segment) => `/${segment}`)[0];
+
+    return splitPath;
 }
 
 export const config: MiddlewareConfig = {

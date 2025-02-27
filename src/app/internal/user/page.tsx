@@ -20,7 +20,7 @@ const User = () => {
         state: { theme },
     } = useTheme();
 
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { user, groups } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         document.title = "Kawori Profile";
@@ -32,20 +32,20 @@ const User = () => {
     };
 
     const getBorderColor = () => {
-        if (!user) {
-            return "#fff";
-        }
-        if (user.is_superuser) {
+        if (groups.includes("admin")) {
             return "blue";
         }
-        if (user.is_staff) {
+        if (groups.includes("financial")) {
             return "violet";
         }
-        if (user.is_active) {
+        if (groups.includes("blackdesert")) {
             return "green";
-        } else {
+        }
+        if (groups.includes("user")) {
             return "red";
         }
+
+        return "#fff";
     };
 
     const formatDate = (date: string) => {

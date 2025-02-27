@@ -9,12 +9,13 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import styles from "./layout.module.scss";
+import { useEffect } from "react";
 
 const { Header, Content } = Layout;
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-    const navigate = useRouter();
     const dispatch = useAppDispatch();
+    const navigate = useRouter();
 
     const {
         state: { theme },
@@ -22,9 +23,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     const { loading, status, user, selectedMenu, groups } = useAppSelector((state) => state.auth);
 
-    if (loading === false && status === "unauthenticated" && user.is_superuser === false) {
-        navigate.push("/signout");
-    }
+    useEffect(() => {
+        if (loading) return;
+
+        const hasGroups = groups.includes("admin");
+
+        if (status === "unauthenticated" || !user.is_superuser || !hasGroups) {
+            navigate.push("/");
+        }
+    }, [status, loading, user.is_superuser, navigate, groups]);
 
     const handleSignout = () => {
         dispatch(signoutThunk());

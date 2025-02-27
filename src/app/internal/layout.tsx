@@ -9,6 +9,7 @@ import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import styles from "./layout.module.scss";
 import { signoutThunk } from "@/lib/features/auth";
+import { useEffect } from "react";
 
 const { Header, Content } = Layout;
 
@@ -22,9 +23,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     const { user, status, selectedMenu, loading, groups } = useAppSelector((state) => state.auth);
 
-    if (loading === false && status === "unauthenticated") {
-        navigate.push("/");
-    }
+    useEffect(() => {
+        console.log(status);
+        if (loading) return;
+
+        if (status === "unauthenticated" || !user.is_active) {
+            navigate.push("/");
+        }
+    }, [status, loading, user.is_active, navigate]);
 
     const handleSignout = () => {
         dispatch(signoutThunk());
