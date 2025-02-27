@@ -22,10 +22,13 @@ import { formatterDate } from "@/util";
 import * as Sentry from "@sentry/nextjs";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Home() {
+export default function Home({ searchParams }) {
+    console.log(searchParams);
     const [form] = useForm();
     const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const { status, user } = useAppSelector((state) => state.auth);
     const { data: newsData, status: newsStatus } = useAppSelector((state) => state.news);
@@ -38,6 +41,11 @@ export default function Home() {
     useEffect(() => {
         document.title = "Kawori";
         dispatch(fetchNewsFeedThunk());
+
+        if (searchParams?.action === "signout") {
+            handleSignout();
+            router.replace("/");
+        }
     }, []);
 
     const handleSignout = () => {
