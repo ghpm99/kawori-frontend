@@ -4,23 +4,25 @@ import { getSavedTheme } from "@/util";
 import { ConfigProvider, theme } from "antd";
 import locale from "antd/lib/locale/pt_BR";
 import React, { useEffect, useReducer } from "react";
-import { ThemeProvider as CustomThemeProvider } from "./themeContext";
+import { ThemeContextProvider } from "./themeContext";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
 type Status = "loading" | "idle";
 
-type InitialStateType = {
+export type ThemeStateType = {
     theme: Theme;
     status: Status;
 };
 
-const initialState: InitialStateType = {
+export type Action = { type: "CHANGE_THEME"; payload: Theme } | { type: "SET_STATUS"; payload: Status };
+
+const initialState: ThemeStateType = {
     theme: "light",
     status: "loading",
 };
 
-const reducer = (state, action) => {
+const reducer = (state: ThemeStateType, action: Action): ThemeStateType => {
     switch (action.type) {
         case "CHANGE_THEME":
             return {
@@ -37,7 +39,7 @@ const reducer = (state, action) => {
     }
 };
 
-const init = (initialState) => {
+const init = (initialState: ThemeStateType): ThemeStateType => {
     const savedTheme = getSavedTheme();
     return {
         ...initialState,
@@ -61,7 +63,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <CustomThemeProvider value={{ state, dispatch: localDispatch }}>
+        <ThemeContextProvider value={{ state, dispatch: localDispatch }}>
             <ConfigProvider
                 locale={locale}
                 theme={{
@@ -71,7 +73,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
             >
                 {state.status === "idle" && children}
             </ConfigProvider>
-        </CustomThemeProvider>
+        </ThemeContextProvider>
     );
 };
 
