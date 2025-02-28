@@ -1,9 +1,19 @@
-import { createContext, useContext } from "react";
+import { createContext, Dispatch, useContext } from "react";
+import { Action, ThemeStateType } from ".";
 
-const ThemeContext = createContext(null);
+type ThemeContextType = {
+    state: ThemeStateType;
+    dispatch: Dispatch<Action>;
+};
 
-export const useTheme = () => useContext(ThemeContext);
+const ThemeContext = createContext<ThemeContextType | undefined>(null);
 
-export const ThemeProvider = ({ children, value }) => {
-    return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+export const ThemeContextProvider = ThemeContext.Provider;
+
+export const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error("useTheme must be used within a ThemeProvider");
+    }
+    return context;
 };
