@@ -15,7 +15,7 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 export function middleware(request: NextRequest) {
     const path = getPrefixRequestPathname(request);
     const route = Routes.find((route) => route.path === path);
-    const authenticated = !!request.cookies.get("access_token") || !!request.cookies.get("refresh_token");
+    const authenticated = !!request.cookies.get("lifetimetoken");
 
     console.log(authenticated, path, route);
 
