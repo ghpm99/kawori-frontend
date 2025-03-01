@@ -1,3 +1,4 @@
+import { LOCAL_STORE_ITEM_NAME } from "@/components/constants";
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
 
@@ -66,7 +67,7 @@ const initialState: IAuthState = {
 export const signinThunk = createAsyncThunk(
     "auth/signin",
     async (args: { username: string; password: string; remember: boolean }) => {
-        const response = await apiDjango.post<{ msg: string }>("auth/token/", args);
+        const response = await apiDjango.post<{ refresh_token_expiration: string }>("auth/token/", args);
         return response.data;
     },
 );
@@ -112,6 +113,7 @@ export const authSlice = createSlice({
             })
             .addCase(signinThunk.fulfilled, (state, action) => {
                 state.status = "authenticated";
+                localStorage.setItem(LOCAL_STORE_ITEM_NAME, action.payload.refresh_token_expiration);
             })
             .addCase(signinThunk.rejected, (state) => {
                 state.status = "unauthenticated";
@@ -140,6 +142,7 @@ export const authSlice = createSlice({
                 state.user = initialState.user;
                 state.groups = initialState.groups;
                 state.status = "unauthenticated";
+                localStorage.removeItem(LOCAL_STORE_ITEM_NAME);
             });
     },
 });

@@ -12,8 +12,8 @@ const apiLogin = axios.create({
     },
 });
 
-export const refreshTokenService = (refresh: { refresh: string }) => {
-    const response = apiDjango.post<{ access: string }>("/token/refresh/", refresh);
+export const refreshTokenService = async () => {
+    const response = await apiDjango.post<{ msg: string }>("auth/token/refresh/");
     return response;
 };
 

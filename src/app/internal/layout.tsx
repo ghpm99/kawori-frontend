@@ -22,15 +22,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     } = useTheme();
 
     const { user, status, selectedMenu, loading, groups } = useAppSelector((state) => state.auth);
+    const loadingStore = useAppSelector((state) => state.loading);
 
     useEffect(() => {
-        console.log(status);
-        if (loading) return;
+        const loadingToken = loadingStore.effects["auth/verify"] !== "idle";
+        const loadingUserDetails = loadingStore.effects["profile/userDetail"] !== "idle";
+        const loadingUserGroups = loadingStore.effects["profile/userGroups"] !== "idle";
+
+        if (loadingToken || loadingUserDetails || loadingUserGroups) return;
+        console.log("DashboardLayout", status);
 
         if (status === "unauthenticated" || !user.is_active) {
             navigate.push("/");
         }
-    }, [status, loading, user.is_active, navigate]);
+    }, [status, loadingStore.effects, user.is_active, navigate]);
 
     const handleSignout = () => {
         dispatch(signoutThunk());
