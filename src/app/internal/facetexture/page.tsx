@@ -5,21 +5,24 @@ import { useSelector } from "react-redux";
 
 import Background from "@/components/facetexture/background";
 import Characters from "@/components/facetexture/characters";
-import Loading from "@/components/facetexture/loading";
 import Preview from "@/components/facetexture/preview";
+import { useTheme } from "@/components/themeProvider/themeContext";
 import { setSelectedMenu } from "@/lib/features/auth";
 import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "@/lib/features/facetexture";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { IFacetextureCharacterApi } from "@/services/facetexture";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
 import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
+import Loading from "./loading";
 
 function FaceTexture() {
     const dispatch = useAppDispatch();
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
-    const theme = useAppSelector((state) => state.configuration.theme);
+    const {
+        state: { theme },
+    } = useTheme();
 
     useEffect(() => {
         document.title = "Kawori Facetexture";
@@ -115,11 +118,5 @@ function FaceTexture() {
         </>
     );
 }
-
-FaceTexture.auth = {
-    role: "user",
-    loading: <Loading />,
-    unauthorized: "/signin",
-};
 
 export default FaceTexture;

@@ -53,8 +53,6 @@ const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass:
         label: item.abbreviation,
     }));
 
-    console.log(selectItens, bdoClass);
-
     const currentStep = selectedClass === undefined || selectedProfile === undefined ? 0 : 1;
 
     const startQuestion = () => {

@@ -1,9 +1,6 @@
+import { LOCAL_STORE_ITEM_NAME } from "@/components/constants";
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
-import { signinThunk } from "@/services/auth";
-import TokenServiceInstance from "@/services/auth/authToken";
-
-import { IToken } from "@/services/auth/authToken";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -14,9 +11,25 @@ interface IAuthState {
     status: authStatus;
     loading: boolean;
     selectedMenu: MenuItemKey[];
+    groups: string[];
 }
 
 export interface IUser {
+    id: number;
+    name: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_staff: boolean;
+    is_active: boolean;
+    is_superuser: boolean;
+    last_login: string;
+    date_joined: string;
+    image?: string;
+}
+
+interface IUserData {
     id: number;
     name: string;
     username: string;
@@ -48,10 +61,34 @@ const initialState: IAuthState = {
     status: "unauthenticated",
     loading: true,
     selectedMenu: ["home"],
+    groups: [],
 };
 
-export const userDetailsThunk = createAsyncThunk("profile/userDetails", async () => {
-    const response = await apiDjango.get("/profile/");
+export const signinThunk = createAsyncThunk(
+    "auth/signin",
+    async (args: { username: string; password: string; remember: boolean }) => {
+        const response = await apiDjango.post<{ refresh_token_expiration: string }>("auth/token/", args);
+        return response.data;
+    },
+);
+
+export const userDetailThunk = createAsyncThunk("profile/userDetail", async () => {
+    const response = await apiDjango.get<IUserData>("profile/");
+    return response.data;
+});
+
+export const userGroupsThunk = createAsyncThunk("profile/userGroups", async () => {
+    const response = await apiDjango.get<{ data: string[] }>("profile/groups/");
+    return response.data;
+});
+
+export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
+    const response = await apiDjango.post("auth/token/verify/");
+    return response.data;
+});
+
+export const signoutThunk = createAsyncThunk("auth/signout", async () => {
+    const response = await apiDjango.get("auth/signout");
     return response.data;
 });
 
@@ -59,20 +96,8 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setToken: (state: IAuthState, action: PayloadAction<IToken>) => {
-            TokenServiceInstance.setUser({
-                tokens: {
-                    access: action.payload.tokens.access,
-                    refresh: action.payload.tokens.refresh,
-                },
-                remember: action.payload.remember,
-            });
+        signin: (state) => {
             state.status = "authenticated";
-        },
-        signout: (state) => {
-            TokenServiceInstance.removeUser();
-            state.user = initialState.user;
-            state.status = "unauthenticated";
         },
         setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
@@ -87,22 +112,41 @@ export const authSlice = createSlice({
                 state.status = "unauthenticated";
             })
             .addCase(signinThunk.fulfilled, (state, action) => {
-                TokenServiceInstance.setUser({
-                    tokens: {
-                        access: action.payload.token.tokens.access,
-                        refresh: action.payload.token.tokens.refresh,
-                    },
-                    remember: action.payload.args.remember,
-                });
                 state.status = "authenticated";
-                state.user = action.payload.user;
+                localStorage.setItem(LOCAL_STORE_ITEM_NAME, action.payload.refresh_token_expiration);
             })
-            .addCase(userDetailsThunk.fulfilled, (state, action) => {
+            .addCase(signinThunk.rejected, (state) => {
+                state.status = "unauthenticated";
+            })
+            .addCase(userDetailThunk.fulfilled, (state, action) => {
                 state.user = action.payload;
+            })
+            .addCase(userDetailThunk.rejected, (state, action) => {
+                state.status = "unauthenticated";
+            })
+            .addCase(verifyTokenThunk.pending, (state) => {
+                state.status = "unauthenticated";
+            })
+            .addCase(verifyTokenThunk.fulfilled, (state) => {
+                state.status = "authenticated";
+                state.loading = false;
+            })
+            .addCase(verifyTokenThunk.rejected, (state) => {
+                state.status = "unauthenticated";
+                state.loading = false;
+            })
+            .addCase(userGroupsThunk.fulfilled, (state, action) => {
+                state.groups = action.payload.data;
+            })
+            .addCase(signoutThunk.fulfilled, (state, action) => {
+                state.user = initialState.user;
+                state.groups = initialState.groups;
+                state.status = "unauthenticated";
+                localStorage.removeItem(LOCAL_STORE_ITEM_NAME);
             });
     },
 });
 
-export const { setToken, signout, setLoading, setSelectedMenu } = authSlice.actions;
+export const { signin, setLoading, setSelectedMenu } = authSlice.actions;
 
 export default authSlice.reducer;

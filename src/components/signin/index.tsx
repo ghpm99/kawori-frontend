@@ -1,50 +1,13 @@
 import { Button, Checkbox, Form, Input } from "antd";
 
-import { useState } from "react";
-
-import { isFulfilled, isRejected } from "@reduxjs/toolkit";
-
-import { useAppThunkDispatch } from "@/lib/hooks";
-import { signinThunk } from "@/services/auth";
-import * as Sentry from "@sentry/nextjs";
-import { useRouter } from "next/navigation";
 import styles from "./Signin.module.scss";
-import { userDetailsThunk } from "@/lib/features/auth";
 
-export default function LoginPage() {
-    const [error, setError] = useState(false);
-    const navigate = useRouter();
-    const dispatch = useAppThunkDispatch();
-
-    const onFinish = (values: any) => {
-        dispatch(
-            signinThunk({
-                username: values.username,
-                password: values.password,
-                remember: values.remember,
-            }),
-        )
-            .then((action) => {
-                if (isFulfilled(action)) {
-                    dispatch(userDetailsThunk());
-                } else if (isRejected(action)) {
-                    Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
-                    console.error("error", action);
-                    setError(true);
-                }
-            })
-            .catch((err) => {
-                Sentry.captureException(err);
-                console.error("error", err);
-                setError(true);
-            });
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        Sentry.captureException(errorInfo);
-        console.error("Failed:", errorInfo);
-    };
-
+export interface ILoginPageProps {
+    hasError: boolean;
+    onFinish: (values: any) => void;
+    onFinishFailed: (errorInfo: any) => void;
+}
+export default function LoginPage({ hasError, onFinish, onFinishFailed }: ILoginPageProps) {
     return (
         <Form
             name="basic"
@@ -55,7 +18,7 @@ export default function LoginPage() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
-            {error && <div className={styles["error"]}>Usuario ou senha incorretos</div>}
+            {hasError && <div className={styles["error"]}>Usuario ou senha incorretos</div>}
 
             <Form.Item
                 label="Usuario"

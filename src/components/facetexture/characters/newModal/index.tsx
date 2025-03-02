@@ -16,14 +16,16 @@ import Dragger from "antd/lib/upload/Dragger";
 import { useSelector } from "react-redux";
 import styles from "./newModal.module.scss";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
+import { Theme } from "@/styles/theme";
 
 const { Title } = Typography;
 
 interface INewModalProps {
     toggleVisible: () => void;
+    theme: Theme;
 }
 
-const NewModal = ({ toggleVisible }: INewModalProps) => {
+const NewModal = ({ toggleVisible, theme }: INewModalProps) => {
     const dispatch = useAppDispatch();
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
     const disableOkButton = () => {
@@ -141,7 +143,7 @@ const NewModal = ({ toggleVisible }: INewModalProps) => {
                     beforeUpload={(file) => updateImageSelectedCharacter(file)}
                     fileList={[]}
                 >
-                    <div>
+                    <div className={`${styles["upload-text"]} ${styles[theme]}`}>
                         <PlusOutlined />
                         <div style={{ marginTop: 8 }}>Upload</div>
                     </div>

@@ -13,6 +13,7 @@ import tagReducer from "./features/financial/tag";
 import loadingReducer, { LoadingMiddleware } from "./features/loading";
 import configurationReducer from "./features/configuration";
 import statusReducer from "./features/status/Index";
+import newsFeedReducer from "./features/news";
 
 const financialStore = combineReducers({
     overview: overviewReducer,
@@ -35,6 +36,7 @@ export const store = () =>
             financial: financialStore,
             facetexture: facetextureReducer,
             classification: classificationReducer,
+            news: newsFeedReducer,
         },
         devTools: process.env.NODE_ENV === "development",
         middleware: (getDefaultMiddleware) => {

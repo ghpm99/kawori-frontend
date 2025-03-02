@@ -1,7 +1,7 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
-    "javascript.format.semicolons": "remove",
-    "typescript.format.semicolons": "remove",
+    "javascript.format.semicolons": "insert",
+    "typescript.format.semicolons": "insert",
     "typescriptHero.imports.insertSemicolons": false,
     "prettier.semi": false,
     "typescript.tsdk": "node_modules/typescript/lib",
