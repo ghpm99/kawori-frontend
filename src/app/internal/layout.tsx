@@ -30,7 +30,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         const loadingUserGroups = loadingStore.effects["profile/userGroups"] !== "idle";
 
         if (loadingToken || loadingUserDetails || loadingUserGroups) return;
-        console.log("DashboardLayout", status);
 
         if (status === "unauthenticated" || !user.is_active) {
             navigate.push("/");
