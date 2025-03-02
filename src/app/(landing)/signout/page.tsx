@@ -1,6 +1,6 @@
 "use client";
 
-import { signout } from "@/lib/features/auth";
+import { signoutThunk } from "@/lib/features/auth";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ export default function Signout() {
         if (authStore.status === "unauthenticated") {
             navigate.push("/");
         } else {
-            dispatch(signout());
+            dispatch(signoutThunk());
         }
     }, [authStore.status]);
 

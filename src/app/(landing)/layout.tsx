@@ -1,18 +1,24 @@
 "use client";
 
 import MenuHeader from "@/components/menuHeader";
+import { useTheme } from "@/components/themeProvider/themeContext";
 import { useAppSelector } from "@/lib/hooks";
-import styles from "./landing.module.scss";
 import { Layout } from "antd";
+import React from "react";
+import styles from "./landing.module.scss";
 
 const { Footer } = Layout;
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
-    const theme = useAppSelector((state) => state.configuration.theme);
+    const {
+        state: { theme },
+    } = useTheme();
+    const { status, user } = useAppSelector((state) => state.auth);
+
     return (
         <>
             <div className={`${styles["container"]} ${styles[theme]}`}>
-                <MenuHeader />
+                <MenuHeader theme={theme} status={status} user={user} />
                 <div className={`${styles["body"]} ${styles[theme]}`}>
                     <div className={styles["internal-page"]}>{children}</div>
                 </div>

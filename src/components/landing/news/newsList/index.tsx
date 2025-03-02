@@ -1,9 +1,10 @@
 import { List } from "antd";
-import { NewsProps } from "..";
+
 import Link from "next/link";
 import { formatterDate } from "@/util";
+import { INewsData } from "@/lib/features/news";
 
-const NewsList = ({ data }: { data: NewsProps[] }) => {
+const NewsList = ({ data }: { data: INewsData[] }) => {
     return (
         <List
             header={<strong>Novidades</strong>}

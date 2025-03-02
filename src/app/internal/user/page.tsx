@@ -3,8 +3,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import { setSelectedMenu, signout } from "@/lib/features/auth";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useTheme } from "@/components/themeProvider/themeContext";
+import { setSelectedMenu, signoutThunk } from "@/lib/features/auth";
+import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -13,9 +14,13 @@ import styles from "./User.module.scss";
 const { Title, Paragraph } = Typography;
 
 const User = () => {
-    const { user } = useSelector((state: RootState) => state.auth);
-    const theme = useAppSelector((state) => state.configuration.theme);
     const dispatch = useAppDispatch();
+
+    const {
+        state: { theme },
+    } = useTheme();
+
+    const { user, groups } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         document.title = "Kawori Profile";
@@ -23,24 +28,24 @@ const User = () => {
     }, []);
 
     const handleSignout = () => {
-        dispatch(signout());
+        dispatch(signoutThunk());
     };
 
     const getBorderColor = () => {
-        if (!user) {
-            return "#fff";
-        }
-        if (user.is_superuser) {
+        if (groups.includes("admin")) {
             return "blue";
         }
-        if (user.is_staff) {
+        if (groups.includes("financial")) {
             return "violet";
         }
-        if (user.is_active) {
+        if (groups.includes("blackdesert")) {
             return "green";
-        } else {
+        }
+        if (groups.includes("user")) {
             return "red";
         }
+
+        return "#fff";
     };
 
     const formatDate = (date: string) => {
@@ -142,7 +147,7 @@ const User = () => {
 };
 
 User.auth = {
-    role: "admin",
+    role: "user",
     loading: <LoadingPage />,
     unauthorized: "/signin",
 };

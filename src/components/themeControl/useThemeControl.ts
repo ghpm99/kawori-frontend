@@ -1,12 +1,11 @@
-import { changeTheme } from "@/lib/features/configuration";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useTheme } from "../themeProvider/themeContext";
 
 const useThemeControl = () => {
-    const theme = useAppSelector((state) => state.configuration.theme);
-    const dispatch = useAppDispatch();
+    const { state, dispatch } = useTheme();
+    const { theme } = state;
 
     const toggleTheme = () => {
-        dispatch(changeTheme(theme === "light" ? "dark" : "light"));
+        dispatch({ type: "CHANGE_THEME", payload: theme === "light" ? "dark" : "light" });
     };
 
     return {

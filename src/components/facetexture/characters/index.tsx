@@ -46,7 +46,7 @@ const Characters = ({ theme }: { theme: Theme }) => {
                 <DragAndDropCharacters />
             </div>
             <Info />
-            <NewModal toggleVisible={toggleModalVisible} />
+            <NewModal toggleVisible={toggleModalVisible} theme={theme} />
         </div>
     );
 };

@@ -10,6 +10,7 @@ import { RootState } from "@/lib/store";
 import { db } from "@/util/db";
 import styles from "./Background.module.scss";
 import { Theme } from "@/styles/theme";
+import Image from "next/image";
 
 const Background = ({ theme }: { theme: Theme }) => {
     const facetextureStore = useSelector((state: RootState) => state.facetexture);
@@ -28,7 +29,15 @@ const Background = ({ theme }: { theme: Theme }) => {
         <div className={`${styles["background-container"]} ${styles[theme]}`}>
             <h1>Background</h1>
             <div>
-                <img className={styles["background"]} src={facetextureStore.backgroundUrl} alt={"background"} />
+                {facetextureStore.backgroundUrl !== "" && (
+                    <Image
+                        className={styles["background"]}
+                        width={920}
+                        height={837}
+                        src={facetextureStore.backgroundUrl}
+                        alt={"background"}
+                    />
+                )}
                 <ImgCrop showReset rotationSlider aspect={920 / 837}>
                     <Dragger fileList={[]} beforeUpload={uploadNewBackground} maxCount={1}>
                         <div>

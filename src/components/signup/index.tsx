@@ -1,57 +1,15 @@
 "use client";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, FormInstance, Input } from "antd";
 
-import { useAppThunkDispatch } from "@/lib/hooks";
-import { INewUser, signinThunk, signupService } from "@/services/auth";
-import { isFulfilled, isRejected } from "@reduxjs/toolkit";
-import * as Sentry from "@sentry/nextjs";
-import { useRouter } from "next/navigation";
+import { INewUser } from "@/services/auth";
 
-const SingupForm = () => {
-    const [form] = Form.useForm();
-    const navigate = useRouter();
-    const dispatch = useAppThunkDispatch();
+export interface ISignupFormProps {
+    form: FormInstance<INewUser>;
+    onFinish: (values: INewUser) => void;
+    onFinishFailed: (errorInfo: any) => void;
+}
 
-    const signin = (username: string, password: string) => {
-        dispatch(
-            signinThunk({
-                username: username,
-                password: password,
-                remember: true,
-            }),
-        )
-            .then((action) => {
-                if (isFulfilled(action)) {
-                    navigate.push("/internal/user");
-                } else if (isRejected(action)) {
-                    Sentry.captureMessage(`Falhou em Logar ${action.error.message}`);
-                    message.error("Falhou em logar");
-                }
-            })
-            .catch((err) => {
-                Sentry.captureException(err);
-                console.error("error", err);
-            });
-    };
-
-    const onFinish = (values: INewUser) => {
-        signupService(values)
-            .then((response) => {
-                message.success(response.data.msg);
-                form.resetFields();
-                signin(values.username, values.password);
-            })
-            .catch((error) => {
-                Sentry.captureException(error);
-                message.error(error?.response?.data?.msg ?? "Falhou em criar usuário");
-            });
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        Sentry.captureException(errorInfo);
-        console.error("Failed:", errorInfo);
-    };
-
+const SingupForm = ({ form, onFinish, onFinishFailed }: ISignupFormProps) => {
     return (
         <Form
             form={form}
