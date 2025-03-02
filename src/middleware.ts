@@ -17,8 +17,6 @@ export function middleware(request: NextRequest) {
     const route = Routes.find((route) => route.path === path);
     const authenticated = !!request.cookies.get("lifetimetoken");
 
-    console.log(authenticated, path, route);
-
     if (!authenticated && route?.private)
         return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE, "?action=signout");
 

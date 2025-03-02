@@ -50,8 +50,6 @@ const init = (initialState: ThemeStateType): ThemeStateType => {
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, localDispatch] = useReducer(reducer, initialState, init);
 
-    console.log("ThemeProvider", state);
-
     useEffect(() => {
         if (state.status !== "idle") return;
         localStorage.setItem("theme", state.theme);

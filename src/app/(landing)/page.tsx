@@ -25,7 +25,6 @@ import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Home({ searchParams }) {
-    console.log(searchParams);
     const [form] = useForm();
     const dispatch = useAppDispatch();
     const router = useRouter();

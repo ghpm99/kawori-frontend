@@ -8,10 +8,7 @@ import { Button, message } from "antd";
 const OpenModalNewContract = () => {
     const dispatch = useAppDispatch();
 
-    console.log(dispatch);
-
     const openModal = (modal: keyof IModalContracts) => {
-        console.log("clicou", changeVisibleContractsModal);
         dispatch(changeVisibleContractsModal({ modal: modal, visible: true }));
     };
 
