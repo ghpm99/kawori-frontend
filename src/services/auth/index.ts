@@ -1,6 +1,5 @@
 import axios from "axios";
 
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiDjango } from "..";
 
 const apiLogin = axios.create({
@@ -11,6 +10,8 @@ const apiLogin = axios.create({
         "Content-Type": "application/json",
     },
 });
+
+apiLogin.get("/csrf/");
 
 export const refreshTokenService = async () => {
     const response = await apiDjango.post<{ msg: string }>("auth/token/refresh/");
