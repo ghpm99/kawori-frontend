@@ -1,6 +1,7 @@
 import { LOCAL_STORE_ITEM_NAME } from "@/components/constants";
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
+import { apiAuth } from "@/services/auth";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -67,7 +68,7 @@ const initialState: IAuthState = {
 export const signinThunk = createAsyncThunk(
     "auth/signin",
     async (args: { username: string; password: string; remember: boolean }) => {
-        const response = await apiDjango.post<{ refresh_token_expiration: string }>("auth/token/", args);
+        const response = await apiAuth.post<{ refresh_token_expiration: string }>("token/", args);
         return response.data;
     },
 );
@@ -83,12 +84,17 @@ export const userGroupsThunk = createAsyncThunk("profile/userGroups", async () =
 });
 
 export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
-    const response = await apiDjango.post("auth/token/verify/");
+    const response = await apiAuth.post("token/verify/");
+    return response.data;
+});
+
+export const refreshTokenThunk = createAsyncThunk("auth/refresh", async () => {
+    const response = await apiAuth.post("token/refresh/");
     return response.data;
 });
 
 export const signoutThunk = createAsyncThunk("auth/signout", async () => {
-    const response = await apiDjango.get("auth/signout");
+    const response = await apiAuth.get("signout");
     return response.data;
 });
 
@@ -108,32 +114,20 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(signinThunk.pending, (state) => {
-                state.status = "unauthenticated";
-            })
             .addCase(signinThunk.fulfilled, (state, action) => {
                 state.status = "authenticated";
                 localStorage.setItem(LOCAL_STORE_ITEM_NAME, action.payload.refresh_token_expiration);
             })
-            .addCase(signinThunk.rejected, (state) => {
-                state.status = "unauthenticated";
-            })
             .addCase(userDetailThunk.fulfilled, (state, action) => {
                 state.user = action.payload;
-            })
-            .addCase(userDetailThunk.rejected, (state, action) => {
-                state.status = "unauthenticated";
-            })
-            .addCase(verifyTokenThunk.pending, (state) => {
-                state.status = "unauthenticated";
             })
             .addCase(verifyTokenThunk.fulfilled, (state) => {
                 state.status = "authenticated";
                 state.loading = false;
             })
-            .addCase(verifyTokenThunk.rejected, (state) => {
-                state.status = "unauthenticated";
-                state.loading = false;
+            .addCase(refreshTokenThunk.fulfilled, state => {
+                state.status = "authenticated"
+                state.loading = false
             })
             .addCase(userGroupsThunk.fulfilled, (state, action) => {
                 state.groups = action.payload.data;

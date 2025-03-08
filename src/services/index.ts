@@ -1,6 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { refreshTokenService } from "./auth";
+import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
+import { refreshTokenAsync, refreshTokenService } from "./auth";
+import { permanentRedirect } from "next/navigation";
+
+import { refreshTokenThunk } from "@/lib/features/auth";
+import { store } from "@/lib/store";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
@@ -30,9 +34,10 @@ export const errorInterceptor = async (error: AxiosError) => {
     const { config, response } = error;
     const originalRequest = config;
 
-    if ((!error.response || statusCodeRetry.includes(response?.status as number)) && tried <= retryMaxCount) {
-        if (response.status === 401) {
-            await refreshTokenService();
+    if ((!response || statusCodeRetry.includes(response?.status as number)) && tried <= retryMaxCount) {
+        if (response.status === HttpStatusCode.Unauthorized && !(await refreshTokenAsync())) {
+            Sentry.captureException(error);
+            return Promise.reject(error);
         }
         tried++;
         return sleepRequest(retryDelay, originalRequest);

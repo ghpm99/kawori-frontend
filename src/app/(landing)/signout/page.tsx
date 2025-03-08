@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Signout() {
+    console.log("Page Signout")
     const dispatch = useAppDispatch();
     const navigate = useRouter();
     const authStore = useAppSelector((state) => state.auth);

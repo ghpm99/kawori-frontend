@@ -4,12 +4,13 @@ import { Button, Form, FormInstance, Input } from "antd";
 import { INewUser } from "@/services/auth";
 
 export interface ISignupFormProps {
+    loading: boolean;
     form: FormInstance<INewUser>;
     onFinish: (values: INewUser) => void;
     onFinishFailed: (errorInfo: any) => void;
 }
 
-const SingupForm = ({ form, onFinish, onFinishFailed }: ISignupFormProps) => {
+const SingupForm = ({ loading,form, onFinish, onFinishFailed }: ISignupFormProps) => {
     return (
         <Form
             form={form}
@@ -107,6 +108,7 @@ const SingupForm = ({ form, onFinish, onFinishFailed }: ISignupFormProps) => {
                 }}
                 type="primary"
                 htmlType="submit"
+                loading={loading}
             >
                 Cadastrar
             </Button>

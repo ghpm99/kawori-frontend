@@ -3,11 +3,12 @@ import { Button, Checkbox, Form, Input } from "antd";
 import styles from "./Signin.module.scss";
 
 export interface ILoginPageProps {
+    loading: boolean
     hasError: boolean;
     onFinish: (values: any) => void;
     onFinishFailed: (errorInfo: any) => void;
 }
-export default function LoginPage({ hasError, onFinish, onFinishFailed }: ILoginPageProps) {
+export default function LoginPage({ loading, hasError, onFinish, onFinishFailed }: ILoginPageProps) {
     return (
         <Form
             name="basic"
@@ -67,6 +68,7 @@ export default function LoginPage({ hasError, onFinish, onFinishFailed }: ILogin
                 }}
                 type="primary"
                 htmlType="submit"
+                loading={loading}
             >
                 Logar
             </Button>
