@@ -84,13 +84,23 @@ export default function Home({ searchParams }) {
         console.error("Failed:", errorInfo);
     };
 
+    const loadingSigninOrSignup = ((): boolean => {
+        const signinLoading = loadingStore.effects["auth/signin"] === "pending"
+        const signupLoading = loadingStore.effects["auth/signup"] === "pending"
+        const verifyTokenLoading = loadingStore.effects["auth/verify"] === "pending"
+        const refreshTokenLoading = loadingStore.effects["auth/refresh"] === "pending"
+        return signinLoading || signupLoading || verifyTokenLoading || refreshTokenLoading
+    })()
+
     const loginProps: ILoginPageProps = {
+        loading: loadingStore.effects["auth/signin"] === "pending",
         hasError: signinStatus === "failed",
         onFinish: onFinishLogin,
         onFinishFailed: onFinishFailedLogin,
     };
 
     const signupProps: ISignupFormProps = {
+        loading: false,
         form: form,
         onFinish: onFinishSignup,
         onFinishFailed: onFinishFailedSignup,
@@ -106,6 +116,7 @@ export default function Home({ searchParams }) {
                     width={500}
                 />
                 <UserPanel
+                    loading={loadingStore.effects["profile/userDetail"] !== "idle"}
                     status={status}
                     user={user}
                     formatDate={formatterDate}

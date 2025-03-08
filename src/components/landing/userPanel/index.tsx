@@ -40,6 +40,7 @@ const tabItens = ({
 ];
 
 const UserPanel = ({
+    loading,
     user,
     status,
     formatDate,
@@ -47,6 +48,7 @@ const UserPanel = ({
     loginPage,
     signupPage,
 }: {
+    loading: boolean
     user: IUser;
     status: authStatus;
     formatDate: (date: string) => string;
@@ -54,7 +56,7 @@ const UserPanel = ({
     loginPage: ILoginPageProps;
     signupPage: ISignupFormProps;
 }) => {
-    if (!status || status === "unauthenticated" || !user) {
+    if (!status || status === "unauthenticated" || !user || loading) {
         return (
             <div className={styles["tabs"]}>
                 <Tabs centered items={tabItens({ loginPage: loginPage, signupPage: signupPage })} />
