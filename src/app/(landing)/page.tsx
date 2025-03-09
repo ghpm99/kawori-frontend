@@ -24,7 +24,7 @@ import { useForm } from "antd/lib/form/Form";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function Home({ searchParams }) {
+export default function Home() {
     const [form] = useForm();
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -40,10 +40,6 @@ export default function Home({ searchParams }) {
     useEffect(() => {
         document.title = "Kawori";
         dispatch(fetchNewsFeedThunk());
-
-        if (searchParams?.action === "signout") {
-            handleSignout();
-        }
     }, []);
 
     const handleSignout = () => {

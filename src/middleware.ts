@@ -10,7 +10,7 @@ const Routes = [
     { path: "/financial", private: true, whenAuthenticated: "next" },
 ] as const;
 
-const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
+const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/signout";
 
 export function middleware(request: NextRequest) {
     const path = getPrefixRequestPathname(request);
@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
     const authenticated = !!request.cookies.get("lifetimetoken");
 
     if (!authenticated && route?.private)
-        return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE, "?action=signout");
+        return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE);
 
     if (authenticated && !route?.private && route?.whenAuthenticated === "redirect")
         return redirectToPathname(request, route.to);
