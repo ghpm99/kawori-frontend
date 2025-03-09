@@ -26,7 +26,6 @@ const initialState: IContractStore = {
 export const fetchAllContract = createAsyncThunk("financial/fetchAllContract", async (filters: IContractFilters) => {
     const response = await fetchAllContractService(filters);
     return {
-        filters,
         response,
     };
 });
@@ -41,6 +40,31 @@ export const contractSlice = createSlice({
         ) => {
             state.modal[action.payload.modal].visible = action.payload.visible;
         },
+        setFilterContract: (state: IContractStore, action: PayloadAction<PayloadSetFilterContractsAction>) => {
+            state.filters = {
+                ...state.filters,
+                [action.payload.name]: action.payload.value ?? "",
+            };
+        },
+        setFiltersContract: (state: IContractStore, action: PayloadAction<IContractFilters>) => {
+            state.filters = {
+                ...state.filters,
+                ...action.payload,
+            };
+        },
+        cleanFilterContract: (state: IContractStore) => {
+            state.filters = initialState.filters;
+        },
+        changePagination: (state: IContractStore, action: PayloadAction<PayloadChangePaginationAction>) => {
+            state.filters = {
+                ...state.filters,
+                page: action.payload.page,
+                page_size: action.payload.pageSize,
+            };
+        },
+        includeContract: (state: IContractStore, action: PayloadAction<IContractPagination>) => {
+            state.data.push(action.payload)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -55,12 +79,18 @@ export const contractSlice = createSlice({
                     hasPrevious: action.payload.response.data.has_previous,
                     totalPages: action.payload.response.data.total_pages,
                 };
-                state.filters = action.payload.filters;
                 state.loading = false;
             });
     },
 });
 
-export const { changeVisibleContractsModal } = contractSlice.actions;
+export const {
+    changeVisibleContractsModal,
+    changePagination,
+    cleanFilterContract,
+    setFilterContract,
+    setFiltersContract,
+    includeContract,
+} = contractSlice.actions;
 
 export default contractSlice.reducer;

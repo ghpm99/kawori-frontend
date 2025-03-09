@@ -73,7 +73,7 @@ export async function fetchAllInvoiceService(filters: IInvoiceFilters) {
 }
 
 export async function saveNewContractService(data: INewContractRequest) {
-    const response = await apiDjango.post("/financial/contract/new", data);
+    const response = await apiDjango.post<{data: IContractPagination}>("/financial/contract/new", data);
     return response.data;
 }
 

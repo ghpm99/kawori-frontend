@@ -4,12 +4,14 @@ import LoadingPage from "@/components/loadingPage/Index";
 import ModalPayoff, { ITableDataSource } from "@/components/payments/modalPayoff";
 import {
     changeDataSourcePayoffPayments,
+    changePagination,
     changeSingleDataSourcePayoffPayments,
     changeStatusPaymentPagination,
     changeVisibleModalPayoffPayments,
     cleanFilterPayments,
     fetchAllPayment,
     setFilterPayments,
+    setFiltersPayments,
 } from "@/lib/features/financial/payment";
 import { ClearOutlined, ToTopOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, DatePicker, Input, Layout, Popconfirm, Select, Table, Typography, message } from "antd";
@@ -23,7 +25,9 @@ import { useSelector } from "react-redux";
 
 import { setSelectedMenu } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
-import { formatMoney, formatterDate } from "@/util/index";
+import { formatMoney, formatterDate, updateSearchParams } from "@/util/index";
+import { usePathname, useRouter } from "next/navigation";
+
 import styles from "./Payments.module.scss";
 
 const { Title } = Typography;
@@ -32,45 +36,35 @@ const { RangePicker } = DatePicker;
 const customFormat = ["DD/MM/YYYY", "DD/MM/YYYY"];
 const messageKey = "payment_pagination_message";
 
-function FinancialPage() {
+function FinancialPage({ searchParams }) {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const financialStore = useSelector((state: RootState) => state.financial.payment);
     const dispatch = useAppDispatch();
+    const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         document.title = "Kawori Pagamentos";
         dispatch(setSelectedMenu(["financial", "payments"]));
-
         dispatch(
-            fetchAllPayment({
-                page: 1,
-                active: true,
-                status: 0,
-                page_size: 20,
+            setFiltersPayments({
+                ...searchParams,
             }),
         );
     }, []);
 
+    useEffect(() => {
+        updateSearchParams(router, pathname, financialStore.filters);
+        dispatch(fetchAllPayment(financialStore.filters));
+    }, [financialStore.filters, dispatch, router, pathname]);
+
     const cleanFilter = () => {
         dispatch(cleanFilterPayments());
-        dispatch(
-            fetchAllPayment({
-                page: 1,
-                active: true,
-                status: 0,
-                page_size: 20,
-            }),
-        );
     };
 
     const applyFilter = (event: any) => {
         event.preventDefault();
-        dispatch(
-            fetchAllPayment({
-                ...financialStore.filters,
-                active: true,
-            }),
-        );
+        dispatch(setFilterPayments({ name: "active", value: true }));
     };
 
     const handleChangeFilter = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,10 +87,9 @@ function FinancialPage() {
 
     const onChangePagination = (page: number, pageSize: number) => {
         dispatch(
-            fetchAllPayment({
-                ...financialStore.filters,
+            changePagination({
                 page: page,
-                page_size: pageSize,
+                pageSize: pageSize,
             }),
         );
     };
@@ -387,7 +380,7 @@ function FinancialPage() {
                 <Table
                     pagination={{
                         showSizeChanger: true,
-                        defaultPageSize: financialStore.filters.page_size,
+                        pageSize: financialStore.filters.page_size,
                         current: financialStore.pagination.currentPage,
                         total: financialStore.pagination.totalPages * financialStore.filters.page_size,
                         onChange: onChangePagination,

@@ -14,6 +14,7 @@ const initialState: IInvoiceStore = {
     filters: {
         page: 1,
         page_size: 20,
+        status: 0,
     },
     pagination: {
         currentPage: 1,
@@ -26,7 +27,6 @@ const initialState: IInvoiceStore = {
 export const fetchAllInvoice = createAsyncThunk("financial/fetchAllInvoice", async (filters: IInvoiceFilters) => {
     const response = await fetchAllInvoiceService(filters);
     return {
-        filters,
         response,
     };
 });
@@ -40,6 +40,28 @@ export const financialSlice = createSlice({
             action: PayloadAction<PayloadChangeVisibleModalInvoiceAction>,
         ) => {
             state.modal[action.payload.modal].visible = action.payload.visible;
+        },
+        setFilterInvoice: (state: IInvoiceStore, action: PayloadAction<PayloadSetFilterInvoiceAction>) => {
+            state.filters = {
+                ...state.filters,
+                [action.payload.name]: action.payload.value ?? "",
+            };
+        },
+        setFiltersInvoice: (state: IInvoiceStore, action: PayloadAction<IInvoiceFilters>) => {
+            state.filters = {
+                ...state.filters,
+                ...action.payload,
+            };
+        },
+        cleanFilterInvoice: (state: IInvoiceStore) => {
+            state.filters = initialState.filters;
+        },
+        changePagination: (state: IInvoiceStore, action: PayloadAction<PayloadChangePaginationAction>) => {
+            state.filters = {
+                ...state.filters,
+                page: action.payload.page,
+                page_size: action.payload.pageSize,
+            };
         },
     },
     extraReducers: (builder) => {
@@ -55,12 +77,12 @@ export const financialSlice = createSlice({
                     hasPrevious: action.payload.response.data.has_previous,
                     totalPages: action.payload.response.data.total_pages,
                 };
-                state.filters = action.payload.filters;
                 state.loading = false;
             });
     },
 });
 
-export const { changeVisibleInvoiceModal } = financialSlice.actions;
+export const { changeVisibleInvoiceModal, changePagination, cleanFilterInvoice, setFiltersInvoice, setFilterInvoice } =
+    financialSlice.actions;
 
 export default financialSlice.reducer;

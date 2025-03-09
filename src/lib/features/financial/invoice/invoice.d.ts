@@ -36,3 +36,8 @@ type PayloadChangeVisibleModalInvoiceAction = {
     modal: keyof IModalInvoice;
     visible: boolean;
 };
+
+type PayloadSetFilterInvoiceAction = {
+    name: string
+    value: any
+}
