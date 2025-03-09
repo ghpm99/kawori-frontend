@@ -29,14 +29,11 @@ const AuthProvider = ({ children }) => {
     };
 
     const loadingAuth = ((): boolean => {
-        const verifyTokenLoading = !(loadingStore.effects["auth/verify"] === 'idle')
-        const signinLoading = !(loadingStore.effects["auth/signin"] === 'idle')
+        const verifyTokenLoading = loadingStore.effects["auth/verify"] === 'pending'
+        const signinLoading = loadingStore.effects["auth/signin"] === 'pending'
 
         return verifyTokenLoading || signinLoading
     })()
-
-    const hasAuthenticatedFailed = loadingStore.effects["auth/verify"] === "failed"
-    console.log(hasAuthenticatedFailed, loadingStore.effects)
 
     useEffect(() => {
         if (verifyLocalStore()) {
@@ -47,16 +44,11 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         console.log("AuthProvider loading", loadingAuth)
         if (loadingAuth) return;
+
         if (status === "authenticated") onAuthenticated();
-        else router.push("/signout");
+
     }, [status, loadingAuth, onAuthenticated, router]);
 
-   useEffect(() => {
-        console.log("falhou em autenticar", hasAuthenticatedFailed)
-        if(hasAuthenticatedFailed){
-            router.push("/signout")
-        }
-   }, [hasAuthenticatedFailed])
 
     return children;
 };

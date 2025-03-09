@@ -21,22 +21,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         state: { theme },
     } = useTheme();
 
-    const { loading, status, user, selectedMenu, groups } = useAppSelector((state) => state.auth);
+    const { status, user, selectedMenu, groups } = useAppSelector((state) => state.auth);
     const loadingStore = useAppSelector((state) => state.loading);
 
-    useEffect(() => {
-        const loadingToken = loadingStore.effects["auth/verify"] !== "idle";
-        const loadingUserDetails = loadingStore.effects["profile/userDetail"] !== "idle";
+     const loading = ((): boolean => {
+        const loadingToken = loadingStore.effects["auth/verify"] === "pending";
+        const loadingUserDetails = loadingStore.effects["profile/userDetail"] === "pending";
         const loadingUserGroups = loadingStore.effects["profile/userGroups"] !== "idle";
 
-        if (loadingToken || loadingUserDetails || loadingUserGroups) return;
+        return loadingToken || loadingUserDetails || loadingUserGroups
+     })()
+
+    useEffect(() => {
+
+        if (loading) return;
 
         const hasGroups = groups.includes("admin");
 
         if (status === "unauthenticated" || !user.is_superuser || !hasGroups) {
             navigate.push("/");
         }
-    }, [status, loadingStore.effects, user.is_superuser, navigate, groups]);
+    }, [status, loading, user.is_superuser, navigate, groups]);
 
     const handleSignout = () => {
         dispatch(signoutThunk());

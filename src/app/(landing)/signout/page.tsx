@@ -10,13 +10,21 @@ export default function Signout() {
     const dispatch = useAppDispatch();
     const navigate = useRouter();
     const authStore = useAppSelector((state) => state.auth);
+    const loadingStore = useAppSelector(state => state.loading)
+
+    const loading = loadingStore.effects["auth/signout"] !== "idle"
+
     useEffect(() => {
-        if (authStore.status === "unauthenticated") {
-            navigate.push("/");
-        } else {
-            dispatch(signoutThunk());
-        }
-    }, [authStore.status]);
+        dispatch(signoutThunk());
+    },[dispatch])
+
+    useEffect(() => {
+        console.log("auth/signout", loading)
+        if(loading) return
+
+        navigate.push("/");
+
+    }, [loading, navigate]);
 
     return <div>Deslogando</div>;
 }
