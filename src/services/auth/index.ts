@@ -2,7 +2,8 @@ import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
 
 import * as Sentry from "@sentry/nextjs";
 
-let hasRefreshToken = false
+let isRefreshingToken = false;
+let refreshPromise: Promise<any> | null = null;
 
 export const apiAuth = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/auth/",
@@ -27,8 +28,14 @@ const errorInterceptor = async (error: AxiosError) => {
         return Promise.reject(error);
     }
 
-    if (response.status === HttpStatusCode.Unauthorized && await refreshTokenAsync()) {
-        return apiAuth(originalRequest)
+    if (response.status === HttpStatusCode.Unauthorized) {
+        try {
+            await refreshTokenAsync();
+            return apiAuth(originalRequest);
+        } catch (refreshError) {
+            Sentry.captureException(refreshError);
+            return Promise.reject(refreshError);
+        }
     }
 
     Sentry.captureException(error);
@@ -39,18 +46,36 @@ apiAuth.interceptors.response.use(responseInterceptor, errorInterceptor);
 
 apiAuth.get("/csrf/");
 
-
-
 export const refreshTokenAsync = async () => {
-    if(hasRefreshToken) return
-    hasRefreshToken = true
-    const refreshResponse = await refreshTokenService();
-    console.log(refreshResponse);
-    hasRefreshToken = false
-    if (refreshResponse.status !== 200) {
-        return false
+    if (isRefreshingToken) {
+        console.log("Já está atualizando o token, aguardando...");
+        return refreshPromise;
     }
-    return true
+
+    isRefreshingToken = true;
+    refreshPromise = new Promise(async (resolve, reject) => {
+        try {
+            console.log("Iniciando atualização do token...");
+            const refreshResponse = await refreshTokenService();
+            console.log("Resposta da atualização do token:", refreshResponse);
+
+            if (refreshResponse.status !== 200) {
+                console.error("Falha ao atualizar o token:", refreshResponse);
+                reject(new Error("Falha ao atualizar o token"));
+            } else {
+                resolve(refreshResponse.data); // Resolve com os dados da resposta
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar o token:", error);
+            reject(error); // Rejeita a promessa em caso de erro
+        } finally {
+            console.log("Finalizando atualização do token, liberando semáforo...");
+            isRefreshingToken = false;
+            refreshPromise = null;
+        }
+    });
+
+    return refreshPromise; // Retorna a promessa
 };
 
 export const refreshTokenService = async () => {

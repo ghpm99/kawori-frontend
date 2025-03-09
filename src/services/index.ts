@@ -35,13 +35,21 @@ export const errorInterceptor = async (error: AxiosError) => {
     const originalRequest = config;
 
     if ((!response || statusCodeRetry.includes(response?.status as number)) && tried <= retryMaxCount) {
-        if (response.status === HttpStatusCode.Unauthorized && !(await refreshTokenAsync())) {
-            Sentry.captureException(error);
-            return Promise.reject(error);
+        if (response.status === HttpStatusCode.Unauthorized) {
+            try {
+                await refreshTokenAsync();
+            } catch (refreshError) {
+                Sentry.captureException(refreshError);
+                return Promise.reject(refreshError);
+            }
         }
         tried++;
         return sleepRequest(retryDelay, originalRequest);
     } else {
+        if(response?.status === HttpStatusCode.Forbidden){
+            window.location.href = "/signout"
+            return;
+        }
         Sentry.captureException(error);
         return Promise.reject(error);
     }
