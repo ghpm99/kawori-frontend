@@ -23,7 +23,6 @@ const errorInterceptor = async (error: AxiosError) => {
     const originalRequest = config;
 
     if (!response?.status) {
-        console.log("capturando erro", !response?.status);
         Sentry.captureException(error);
         return Promise.reject(error);
     }
@@ -48,34 +47,31 @@ apiAuth.get("/csrf/");
 
 export const refreshTokenAsync = async () => {
     if (isRefreshingToken) {
-        console.log("Já está atualizando o token, aguardando...");
         return refreshPromise;
     }
 
     isRefreshingToken = true;
     refreshPromise = new Promise(async (resolve, reject) => {
         try {
-            console.log("Iniciando atualização do token...");
             const refreshResponse = await refreshTokenService();
-            console.log("Resposta da atualização do token:", refreshResponse);
 
             if (refreshResponse.status !== 200) {
-                console.error("Falha ao atualizar o token:", refreshResponse);
                 reject(new Error("Falha ao atualizar o token"));
             } else {
-                resolve(refreshResponse.data); // Resolve com os dados da resposta
+                resolve(refreshResponse.data);
             }
         } catch (error) {
-            console.error("Erro ao atualizar o token:", error);
-            reject(error); // Rejeita a promessa em caso de erro
+            if (error?.status === HttpStatusCode.Forbidden) {
+                window.dispatchEvent(new CustomEvent("tokenRefreshFailed"));
+            }
+            reject(error);
         } finally {
-            console.log("Finalizando atualização do token, liberando semáforo...");
             isRefreshingToken = false;
             refreshPromise = null;
         }
     });
 
-    return refreshPromise; // Retorna a promessa
+    return refreshPromise;
 };
 
 export const refreshTokenService = async () => {

@@ -10,7 +10,7 @@ export interface ISignupFormProps {
     onFinishFailed: (errorInfo: any) => void;
 }
 
-const SingupForm = ({ loading,form, onFinish, onFinishFailed }: ISignupFormProps) => {
+const SingupForm = ({ loading, form, onFinish, onFinishFailed }: ISignupFormProps) => {
     return (
         <Form
             form={form}

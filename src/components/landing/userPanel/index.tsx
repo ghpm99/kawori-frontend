@@ -48,7 +48,7 @@ const UserPanel = ({
     loginPage,
     signupPage,
 }: {
-    loading: boolean
+    loading: boolean;
     user: IUser;
     status: authStatus;
     formatDate: (date: string) => string;

@@ -32,7 +32,7 @@ const items: CollapseProps["items"] = [
         children: (
             <p>
                 Para entrar em contato com o suporte, entre no nosso grupo do discord atraves do link:
-                <a href="https://discord.gg/3tVg24hE">Kawori Site</a>
+                <a href="https://discord.gg/fykNkXyn2r">Kawori Site</a>
             </p>
         ),
     },

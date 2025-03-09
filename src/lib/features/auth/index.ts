@@ -125,9 +125,9 @@ export const authSlice = createSlice({
                 state.status = "authenticated";
                 state.loading = false;
             })
-            .addCase(refreshTokenThunk.fulfilled, state => {
-                state.status = "authenticated"
-                state.loading = false
+            .addCase(refreshTokenThunk.fulfilled, (state) => {
+                state.status = "authenticated";
+                state.loading = false;
             })
             .addCase(userGroupsThunk.fulfilled, (state, action) => {
                 state.groups = action.payload.data;

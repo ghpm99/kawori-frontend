@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import styles from "./Signin.module.scss";
 
 export interface ILoginPageProps {
-    loading: boolean
+    loading: boolean;
     hasError: boolean;
     onFinish: (values: any) => void;
     onFinishFailed: (errorInfo: any) => void;

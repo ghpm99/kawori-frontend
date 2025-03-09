@@ -1,10 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
-import { refreshTokenAsync, refreshTokenService } from "./auth";
-import { permanentRedirect } from "next/navigation";
-
-import { refreshTokenThunk } from "@/lib/features/auth";
-import { store } from "@/lib/store";
+import { refreshTokenAsync } from "./auth";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
@@ -39,17 +35,12 @@ export const errorInterceptor = async (error: AxiosError) => {
             try {
                 await refreshTokenAsync();
             } catch (refreshError) {
-                Sentry.captureException(refreshError);
                 return Promise.reject(refreshError);
             }
         }
         tried++;
         return sleepRequest(retryDelay, originalRequest);
     } else {
-        if(response?.status === HttpStatusCode.Forbidden){
-            window.location.href = "/signout"
-            return;
-        }
         Sentry.captureException(error);
         return Promise.reject(error);
     }
