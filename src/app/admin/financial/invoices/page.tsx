@@ -7,38 +7,43 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "@/components/loadingPage/Index";
-import { fetchAllInvoice } from "@/lib/features/financial/invoice";
+import { setSelectedMenu } from "@/lib/features/auth";
+import { changePagination, fetchAllInvoice, setFiltersInvoice } from "@/lib/features/financial/invoice";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { formatMoney, formatterDate } from "@/util/index";
+import { formatMoney, formatterDate, updateSearchParams } from "@/util/index";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Invoices.module.scss";
-import { setSelectedMenu } from "@/lib/features/auth";
 
 const { Title } = Typography;
 
-function FinancialPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.invoice);
+function FinancialPage({ searchParams }) {
     const dispatch = useAppDispatch();
+    const router = useRouter();
+    const pathname = usePathname();
+    const financialStore = useSelector((state: RootState) => state.financial.invoice);
 
     useEffect(() => {
         document.title = "Kawori Notas";
         dispatch(setSelectedMenu(["financial", "invoices"]));
 
         dispatch(
-            fetchAllInvoice({
-                page: 1,
-                page_size: 20,
-                status: 0,
+            setFiltersInvoice({
+                ...searchParams,
             }),
         );
     }, []);
 
+    useEffect(() => {
+        updateSearchParams(router, pathname, financialStore.filters);
+        dispatch(fetchAllInvoice(financialStore.filters));
+    }, [financialStore.filters, dispatch, router, pathname]);
+
     const onChangePagination = (page: number, pageSize: number) => {
         dispatch(
-            fetchAllInvoice({
-                ...financialStore.filters,
+            changePagination({
                 page: page,
-                page_size: pageSize,
+                pageSize: pageSize,
             }),
         );
     };
@@ -125,7 +130,7 @@ function FinancialPage() {
                 <Table
                     pagination={{
                         showSizeChanger: true,
-                        defaultPageSize: financialStore.filters.page_size,
+                        pageSize: financialStore.filters.page_size,
                         current: financialStore.pagination.currentPage,
                         total: financialStore.pagination.totalPages * financialStore.filters.page_size,
                         onChange: onChangePagination,

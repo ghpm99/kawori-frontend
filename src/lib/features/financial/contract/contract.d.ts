@@ -31,3 +31,8 @@ interface IContractPagination {
     value_open: number;
     value_closed: number;
 }
+
+type PayloadSetFilterContractsAction = {
+    name: string
+    value: any
+}

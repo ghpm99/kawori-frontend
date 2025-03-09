@@ -1,5 +1,6 @@
 import { Theme } from "@/styles/theme";
 import dayjs from "dayjs";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const FACETEXTURE_MESSAGE_REF = "facetexture-message-ref";
 
@@ -78,4 +79,18 @@ export const getSavedTheme = (): Theme => {
     if (typeof window === "undefined") return "light";
     const localTheme = localStorage.getItem("theme");
     return localTheme === "dark" ? "dark" : "light";
+};
+
+export const updateSearchParams = (router: AppRouterInstance, pathname: string, filters: Object) => {
+    const current = new URLSearchParams();
+
+    for (const filter in filters) {
+        if (!filters[filter] || filters[filter] === "") continue;
+        current.set(filter, filters[filter]);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+
+    router.push(`${pathname}${query}`);
 };

@@ -38,3 +38,13 @@ type PayloadChangeStatusPaymentPaginationAction = {
     id: number;
     status: number;
 };
+
+type PayloadChangePaginationAction = {
+    page: number
+    pageSize: number
+}
+
+type PayloadSetFilterPaymentsAction = {
+    name: string
+    value: any
+}

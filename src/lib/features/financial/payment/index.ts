@@ -12,7 +12,9 @@ const initialState: IPaymentStore = {
     },
     loading: true,
     filters: {
-        page: 0,
+        page: 1,
+        active: true,
+        status: 0,
         page_size: 20,
     },
     modal: {
@@ -26,7 +28,6 @@ const initialState: IPaymentStore = {
 export const fetchAllPayment = createAsyncThunk("financial/fetchAllPayment", async (filters: IPaymentFilters) => {
     const response = await fetchAllPaymentService(filters);
     return {
-        filters,
         response,
     };
 });
@@ -55,10 +56,16 @@ export const financialSlice = createSlice({
             const index = state.data.findIndex((item) => item.id === action.payload.id);
             state.data[index].status = action.payload.status;
         },
-        setFilterPayments: (state: IPaymentStore, action) => {
+        setFilterPayments: (state: IPaymentStore, action: PayloadAction<PayloadSetFilterPaymentsAction>) => {
             state.filters = {
                 ...state.filters,
                 [action.payload.name]: action.payload.value ?? "",
+            };
+        },
+        setFiltersPayments: (state: IPaymentStore, action: PayloadAction<IPaymentFilters>) => {
+            state.filters = {
+                ...state.filters,
+                ...action.payload,
             };
         },
         cleanFilterPayments: (state: IPaymentStore) => {
@@ -80,6 +87,13 @@ export const financialSlice = createSlice({
             const index = state.modal.payoff.data.findIndex((item) => item.id === action.payload.id);
             state.modal.payoff.data[index] = action.payload;
         },
+        changePagination: (state: IPaymentStore, action: PayloadAction<PayloadChangePaginationAction>) => {
+            state.filters = {
+                ...state.filters,
+                page: action.payload.page,
+                page_size: action.payload.pageSize
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -87,7 +101,6 @@ export const financialSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchAllPayment.fulfilled, (state, action) => {
-                state.filters = action.payload.filters;
                 state.data = action.payload.response.data.data.map((data: any) => ({
                     ...data,
                     key: data.id,
@@ -111,6 +124,8 @@ export const {
     changeVisibleModalPayoffPayments,
     changeDataSourcePayoffPayments,
     changeSingleDataSourcePayoffPayments,
+    changePagination,
+    setFiltersPayments,
 } = financialSlice.actions;
 
 export default financialSlice.reducer;

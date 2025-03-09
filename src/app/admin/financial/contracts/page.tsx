@@ -9,32 +9,36 @@ import ModalNew, { INewContractForm } from "@/components/contracts/modalNew";
 import OpenModalNewContract from "@/components/financial/contracts/openModalNewContract";
 import LoadingPage from "@/components/loadingPage/Index";
 import { setSelectedMenu } from "@/lib/features/auth";
-import { changeVisibleContractsModal, fetchAllContract } from "@/lib/features/financial/contract";
+import { changePagination, changeVisibleContractsModal, fetchAllContract, includeContract, setFiltersContract } from "@/lib/features/financial/contract";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { saveNewContractService, updateAllContractsValue } from "@/services/financial";
-import { formatMoney } from "@/util/index";
+import { formatMoney, updateSearchParams } from "@/util/index";
 import styles from "./Contracts.module.scss";
+import { usePathname, useRouter } from "next/navigation";
 
-const { Header, Content } = Layout;
 
 const { Title } = Typography;
 
-function FinancialPage() {
-    const financialStore = useSelector((state: RootState) => state.financial.contract);
+function FinancialPage({ searchParams }) {
     const dispatch = useAppDispatch();
+    const router = useRouter();
+    const pathname = usePathname();
+    const financialStore = useSelector((state: RootState) => state.financial.contract);
 
     useEffect(() => {
         document.title = "Kawori Contratos";
         dispatch(setSelectedMenu(["financial", "contracts"]));
-
-        dispatch(
-            fetchAllContract({
-                page: 1,
-                page_size: 20,
-            }),
-        );
+        dispatch(setFiltersContract(searchParams))
     }, []);
+
+    useEffect(() => {
+
+        updateSearchParams(router, pathname, financialStore.filters);
+        dispatch(fetchAllContract(financialStore.filters));
+
+    }, [financialStore.filters, router, dispatch, pathname])
+
 
     const closeModal = (modal: keyof IModalContracts) => {
         dispatch(changeVisibleContractsModal({ modal: modal, visible: false }));
@@ -46,25 +50,17 @@ function FinancialPage() {
         };
 
         saveNewContractService(newContract).then((e) => {
-            message.success(e.msg);
+            message.success("Contrato adicionado com sucesso");
             closeModal("newPayment");
-            dispatch(
-                fetchAllContract({
-                    page: 1,
-                    page_size: 20,
-                }),
-            );
+            dispatch(includeContract(e.data))
         });
     };
 
     const onChangePagination = (page: number, pageSize: number) => {
-        dispatch(
-            fetchAllContract({
-                ...financialStore.filters,
-                page: page,
-                page_size: pageSize,
-            }),
-        );
+        dispatch(changePagination({
+            page: page,
+            pageSize: pageSize
+        }))
     };
 
     const headerTableFinancial = [

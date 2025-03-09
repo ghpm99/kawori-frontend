@@ -88,14 +88,14 @@ export default function Home() {
     })();
 
     const loginProps: ILoginPageProps = {
-        loading: loadingStore.effects["auth/signin"] === "pending",
+        loading: loadingSigninOrSignup,
         hasError: signinStatus === "failed",
         onFinish: onFinishLogin,
         onFinishFailed: onFinishFailedLogin,
     };
 
     const signupProps: ISignupFormProps = {
-        loading: false,
+        loading: loadingSigninOrSignup,
         form: form,
         onFinish: onFinishSignup,
         onFinishFailed: onFinishFailedSignup,
