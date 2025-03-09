@@ -4,9 +4,10 @@ import { Avatar, Breadcrumb, Button, Typography } from "antd";
 
 import LoadingPage from "@/components/loadingPage/Index";
 import { useTheme } from "@/components/themeProvider/themeContext";
-import { setSelectedMenu, signoutThunk } from "@/lib/features/auth";
+import { setSelectedMenu } from "@/lib/features/auth";
 import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styles from "./User.module.scss";
@@ -14,6 +15,7 @@ import styles from "./User.module.scss";
 const { Title, Paragraph } = Typography;
 
 const User = () => {
+    const navigate = useRouter();
     const dispatch = useAppDispatch();
 
     const {
@@ -28,7 +30,7 @@ const User = () => {
     }, []);
 
     const handleSignout = () => {
-        dispatch(signoutThunk());
+        navigate.push("/signout");
     };
 
     const getBorderColor = () => {

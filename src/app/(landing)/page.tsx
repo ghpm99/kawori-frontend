@@ -14,15 +14,15 @@ import Welcome from "@/components/landing/welcome";
 import { ILoginPageProps } from "@/components/signin";
 import { ISignupFormProps } from "@/components/signup";
 import { useTheme } from "@/components/themeProvider/themeContext";
-import { signinThunk, signoutThunk } from "@/lib/features/auth";
+import { signinThunk } from "@/lib/features/auth";
 import { fetchNewsFeedThunk } from "@/lib/features/news";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { INewUser, signupService } from "@/services/auth";
 import { formatterDate } from "@/util";
 import * as Sentry from "@sentry/nextjs";
 import { useForm } from "antd/lib/form/Form";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Home({ searchParams }) {
     const [form] = useForm();
@@ -43,12 +43,11 @@ export default function Home({ searchParams }) {
 
         if (searchParams?.action === "signout") {
             handleSignout();
-            router.replace("/");
         }
     }, []);
 
     const handleSignout = () => {
-        dispatch(signoutThunk());
+        router.push("/signout");
     };
 
     const onFinishLogin = (values: any) => {
@@ -85,12 +84,12 @@ export default function Home({ searchParams }) {
     };
 
     const loadingSigninOrSignup = ((): boolean => {
-        const signinLoading = loadingStore.effects["auth/signin"] === "pending"
-        const signupLoading = loadingStore.effects["auth/signup"] === "pending"
-        const verifyTokenLoading = loadingStore.effects["auth/verify"] === "pending"
-        const refreshTokenLoading = loadingStore.effects["auth/refresh"] === "pending"
-        return signinLoading || signupLoading || verifyTokenLoading || refreshTokenLoading
-    })()
+        const signinLoading = loadingStore.effects["auth/signin"] === "pending";
+        const signupLoading = loadingStore.effects["auth/signup"] === "pending";
+        const verifyTokenLoading = loadingStore.effects["auth/verify"] === "pending";
+        const refreshTokenLoading = loadingStore.effects["auth/refresh"] === "pending";
+        return signinLoading || signupLoading || verifyTokenLoading || refreshTokenLoading;
+    })();
 
     const loginProps: ILoginPageProps = {
         loading: loadingStore.effects["auth/signin"] === "pending",
