@@ -1,24 +1,96 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 
+const MainRoutes = [
+    {
+        subdomain: "",
+        path: "/",
+        private: false,
+        whenAuthenticated: "next",
+    },
+    {
+        subdomain: "",
+        path: "/news",
+        private: false,
+        whenAuthenticated: "next",
+    },
+    {
+        subdomain: "",
+        path: "/user",
+        private: true,
+        whenAuthenticated: "next",
+    },
+];
+
+const BlackDesertRoutes = [
+    {
+        subdomain: "blackdesert",
+        path: "/facetexture",
+        private: false,
+        whenAuthenticated: "redirect",
+        to: "/internal/facetexture",
+    },
+    {
+        subdomain: "blackdesert",
+        path: "/rank",
+        private: false,
+        whenAuthenticated: "next",
+    },
+    {
+        subdomain: "blackdesert",
+        path: "/overlay",
+        private: false,
+        whenAuthenticated: "next",
+    },
+] as const;
+
+const FinancialRoutes = [
+    {
+        subdomain: "financial",
+        path: "/financial",
+        private: true,
+        whenAuthenticated: "next",
+    },
+] as const;
+
 const Routes = [
-    { path: "/", private: false, whenAuthenticated: "next" },
-    { path: "/facetexture", private: false, whenAuthenticated: "redirect", to: "/internal/facetexture" },
-    { path: "/rank", private: false, whenAuthenticated: "next" },
-    { path: "/news", private: false, whenAuthenticated: "next" },
-    { path: "/internal", private: true, whenAuthenticated: "next" },
-    { path: "/admin", private: true, whenAuthenticated: "next" },
-    { path: "/financial", private: true, whenAuthenticated: "next" },
+    ...MainRoutes,
+    ...BlackDesertRoutes,
+    ...FinancialRoutes,
+    { subdomain: "", path: "/", private: false, whenAuthenticated: "next" },
+    { subdomain: "", path: "/news", private: false, whenAuthenticated: "next" },
+    { subdomain: "", path: "/internal", private: true, whenAuthenticated: "next" },
+    { subdomain: "", path: "/admin", private: true, whenAuthenticated: "next" },
+    { subdomain: "financial", path: "/financial", private: true, whenAuthenticated: "next" },
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/signout";
 
-export function middleware(request: NextRequest) {
-    const path = getPrefixRequestPathname(request);
-    const route = Routes.find((route) => route.path === path);
-    const authenticated = !!request.cookies.get("lifetimetoken");
+function getSubdomain(request: NextRequest) {
+    console.log("request", request);
+    const host = request.headers.get("host");
+    const subdomain = host.split(".")[0];
+    return subdomain;
+}
 
-    if (!authenticated && route?.private)
-        return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE);
+function hasAuthenticated(request: NextRequest) {
+    if (request.nextUrl.hostname === "localhost") return true;
+
+    return !!request.cookies.get("lifetimetoken");
+}
+
+export function middleware(request: NextRequest) {
+    console.log("====================================");
+    const subdomain = getSubdomain(request);
+    console.log("subdomain", subdomain);
+    const path = getPrefixRequestPathname(request);
+    console.log("path", path);
+    const route = Routes.find((route) => route.path === path && route.subdomain === subdomain);
+    console.log("route", route);
+    console.log("cookies", request.cookies);
+    const authenticated = hasAuthenticated(request);
+    console.log("authenticated", authenticated);
+
+    if (!authenticated && route?.private) return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE);
 
     if (authenticated && !route?.private && route?.whenAuthenticated === "redirect")
         return redirectToPathname(request, route.to);
