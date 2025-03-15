@@ -19,7 +19,7 @@ const MainRoutes = [
         private: true,
         whenAuthenticated: "next",
     },
-];
+] as const;
 
 const BlackDesertRoutes = [
     {
@@ -86,7 +86,6 @@ export function middleware(request: NextRequest) {
     console.log("path", path);
     const route = Routes.find((route) => route.path === path && route.subdomain === subdomain);
     console.log("route", route);
-    console.log("cookies", request.cookies);
     const authenticated = hasAuthenticated(request);
     console.log("authenticated", authenticated);
 

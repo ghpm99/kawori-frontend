@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import styles from "./layout.module.scss";
 import { signoutThunk } from "@/lib/features/auth";
 import { useEffect } from "react";
+import { userGroups } from "@/components/constants";
 
 const { Header, Content } = Layout;
 
@@ -21,7 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         state: { theme },
     } = useTheme();
 
-    const { user, status, selectedMenu, loading, groups } = useAppSelector((state) => state.auth);
+    const { user, status, selectedMenu, groups } = useAppSelector((state) => state.auth);
     const loadingStore = useAppSelector((state) => state.loading);
 
     useEffect(() => {
@@ -31,10 +32,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         if (loadingToken || loadingUserDetails || loadingUserGroups) return;
 
-        if (status === "unauthenticated" || !user.is_active) {
+        const hasGroups = groups.includes(userGroups.blackdesert);
+
+        if (status === "unauthenticated" || !user.is_active || !hasGroups) {
             navigate.push("/");
         }
-    }, [status, loadingStore.effects, user.is_active, navigate]);
+    }, [status, loadingStore.effects, user.is_active, navigate, groups]);
 
     const handleSignout = () => {
         dispatch(signoutThunk());

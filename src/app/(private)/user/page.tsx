@@ -5,45 +5,64 @@ import { Avatar, Breadcrumb, Button, Typography } from "antd";
 import LoadingPage from "@/components/loadingPage/Index";
 import { useTheme } from "@/components/themeProvider/themeContext";
 import { setSelectedMenu } from "@/lib/features/auth";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styles from "./User.module.scss";
+import { userGroups } from "@/components/constants";
 
 const { Title, Paragraph } = Typography;
 
 const User = () => {
     const navigate = useRouter();
     const dispatch = useAppDispatch();
+    const { status, user, groups } = useSelector((state: RootState) => state.auth);
+    const loadingStore = useAppSelector((state) => state.loading);
 
     const {
         state: { theme },
     } = useTheme();
-
-    const { user, groups } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         document.title = "Kawori Profile";
         dispatch(setSelectedMenu(["user"]));
     }, []);
 
+    const loading = ((): boolean => {
+        const loadingToken = loadingStore.effects["auth/verify"] === "pending";
+        const loadingUserDetails = loadingStore.effects["profile/userDetail"] === "pending";
+        const loadingUserGroups = loadingStore.effects["profile/userGroups"] !== "idle";
+
+        return loadingToken || loadingUserDetails || loadingUserGroups;
+    })();
+
+    useEffect(() => {
+        if (loading) return;
+
+        const hasGroups = groups.includes(userGroups.user);
+
+        if (status === "unauthenticated" || !user.is_active || !hasGroups) {
+            navigate.push("/");
+        }
+    }, [status, loading, user.is_active, navigate, groups]);
+
     const handleSignout = () => {
         navigate.push("/signout");
     };
 
     const getBorderColor = () => {
-        if (groups.includes("admin")) {
+        if (groups.includes(userGroups.admin)) {
             return "blue";
         }
-        if (groups.includes("financial")) {
+        if (groups.includes(userGroups.financial)) {
             return "violet";
         }
-        if (groups.includes("blackdesert")) {
+        if (groups.includes(userGroups.blackdesert)) {
             return "green";
         }
-        if (groups.includes("user")) {
+        if (groups.includes(userGroups.user)) {
             return "red";
         }
 

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import DashboardLayout from "@/app/admin/layout.tsx";
+import DashboardLayout from "@/app/(private)/finance/app/layout";
 import { renderWithProviders } from "@/util/test-utils";
 
 jest.mock("next/navigation");

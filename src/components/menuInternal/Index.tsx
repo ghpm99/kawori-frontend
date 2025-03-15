@@ -7,6 +7,7 @@ import styles from "./Menu.module.scss";
 import { authStatus, IUser } from "@/lib/features/auth";
 import { Theme } from "@/styles/theme";
 import { useState } from "react";
+import { userGroups } from "../constants";
 
 type MenuItem = Required<MenuProps>["items"][number];
 export type MenuItemKey =
@@ -41,7 +42,7 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
         return baseItens;
     }
 
-    if (groups.includes("user")) {
+    if (groups.includes(userGroups.user)) {
         baseItens.push({
             label: <Link href={"/internal/user"}>Conta</Link>,
             key: "user",
@@ -49,7 +50,7 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
         });
     }
 
-    if (groups.includes("blackdesert")) {
+    if (groups.includes(userGroups.blackdesert)) {
         baseItens.push(
             {
                 label: <Link href={"/internal/facetexture"}>Facetexture</Link>,
@@ -64,7 +65,7 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
         );
     }
 
-    if (groups.includes("financial")) {
+    if (groups.includes(userGroups.financial)) {
         baseItens.push({
             label: "Financeiro",
             key: "financial",
@@ -99,7 +100,7 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
         });
     }
 
-    if (groups.includes("admin")) {
+    if (groups.includes(userGroups.admin)) {
         baseItens.push({
             label: <Link href={"/admin/server"}>Servidor</Link>,
             key: "server",

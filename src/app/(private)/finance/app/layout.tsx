@@ -10,6 +10,7 @@ import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import styles from "./layout.module.scss";
 import { useEffect } from "react";
+import { userGroups } from "@/components/constants";
 
 const { Header, Content } = Layout;
 
@@ -35,12 +36,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     useEffect(() => {
         if (loading) return;
 
-        const hasGroups = groups.includes("admin");
+        const hasGroups = groups.includes(userGroups.financial);
 
-        if (status === "unauthenticated" || !user.is_superuser || !hasGroups) {
+        if (status === "unauthenticated" || !user.is_active || !hasGroups) {
             navigate.push("/");
         }
-    }, [status, loading, user.is_superuser, navigate, groups]);
+    }, [status, loading, user.is_active, navigate, groups]);
 
     const handleSignout = () => {
         dispatch(signoutThunk());

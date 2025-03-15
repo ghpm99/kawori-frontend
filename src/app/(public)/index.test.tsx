@@ -1,7 +1,7 @@
 import useMenuHeader from "@/components/menuHeader/useMenuHeader";
 
-import LandingLayout from "@/app/(landing)/layout.tsx";
-import Home from "@/app/(landing)/page.tsx";
+import LandingLayout from "@/app/(public)/layout";
+import Home from "@/app/(public)/page";
 import { renderWithProviders } from "@/util/test-utils";
 import { cleanup, render, screen } from "@testing-library/react";
 
