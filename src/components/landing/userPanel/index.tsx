@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, List, Tabs, TabsProps } from "antd";
+import { Button, List, ListProps, Tabs, TabsProps } from "antd";
 
 import LoginPage, { ILoginPageProps } from "@/components/signin";
 import SingupForm, { ISignupFormProps } from "@/components/signup";
@@ -47,6 +47,7 @@ const UserPanel = ({
     handleSignout,
     loginPage,
     signupPage,
+    links,
 }: {
     loading: boolean;
     user: IUser;
@@ -55,6 +56,7 @@ const UserPanel = ({
     handleSignout: () => void;
     loginPage: ILoginPageProps;
     signupPage: ISignupFormProps;
+    links: { text: string; link: string }[];
 }) => {
     if (!status || status === "unauthenticated" || !user || loading) {
         return (
@@ -88,11 +90,7 @@ const UserPanel = ({
                 <List
                     header={<strong>Acesso Rápido</strong>}
                     bordered
-                    dataSource={[
-                        { text: "Perfil", link: "/internal/user" },
-                        { text: "Facetexture", link: "/internal/facetexture" },
-                        { text: "Rank de Classes", link: "/internal/rank" },
-                    ]}
+                    dataSource={links}
                     renderItem={(item) => (
                         <List.Item>
                             <Link href={item.link}>{item.text}</Link>

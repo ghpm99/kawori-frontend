@@ -15,15 +15,19 @@ export default function MenuHeader({ status, user, theme }: { status: authStatus
             key: "home",
         },
         {
+            label: "Financeiro",
+            key: "finance",
+        },
+        {
             label: "Black Desert",
             key: "blackdesert",
             children: [
                 {
-                    label: <Link href={"/facetexture"}>Facetexture</Link>,
+                    label: <Link href={"/blackdesert/facetexture"}>Facetexture</Link>,
                     key: "facetexture",
                 },
                 {
-                    label: <Link href={"/rank"}>Rank de Classes</Link>,
+                    label: <Link href={"/blackdesert/rank"}>Rank de Classes</Link>,
                     key: "rank",
                 },
             ],
@@ -34,15 +38,15 @@ export default function MenuHeader({ status, user, theme }: { status: authStatus
                   key: "user",
                   children: [
                       {
-                          label: <Link href={"/internal/user"}>Conta</Link>,
+                          label: <Link href={"/user"}>Conta</Link>,
                           key: "user-account",
                       },
                       {
-                          label: <Link href={"/internal/facetexture"}>Facetexture</Link>,
+                          label: <Link href={"/blackdesert/app/facetexture"}>Facetexture</Link>,
                           key: "user-facetexture",
                       },
                       {
-                          label: <Link href={"/internal/rank"}>Rank de Classes</Link>,
+                          label: <Link href={"/blackdesert/app/rank"}>Rank de Classes</Link>,
                           key: "user-classification",
                       },
                       {

@@ -44,7 +44,7 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
 
     if (groups.includes(userGroups.user)) {
         baseItens.push({
-            label: <Link href={"/internal/user"}>Conta</Link>,
+            label: <Link href={"/user"}>Conta</Link>,
             key: "user",
             icon: <UserOutlined />,
         });
@@ -53,12 +53,12 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
     if (groups.includes(userGroups.blackdesert)) {
         baseItens.push(
             {
-                label: <Link href={"/internal/facetexture"}>Facetexture</Link>,
+                label: <Link href={"/blackdesert/app/facetexture"}>Facetexture</Link>,
                 key: "facetexture",
                 icon: <AppstoreOutlined />,
             },
             {
-                label: <Link href={"/internal/rank"}>Rank de classes</Link>,
+                label: <Link href={"/blackdesert/app/rank"}>Rank de classes</Link>,
                 key: "rank",
                 icon: <AppstoreOutlined />,
             },
@@ -72,27 +72,27 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
             icon: <SnippetsOutlined />,
             children: [
                 {
-                    label: <Link href={"/admin/financial/overview"}>Overview</Link>,
+                    label: <Link href={"/finance/app/overview"}>Overview</Link>,
                     key: "overview",
                     icon: <SnippetsOutlined />,
                 },
                 {
-                    label: <Link href={"/admin/financial/contracts"}>Contratos</Link>,
+                    label: <Link href={"/finance/app/contracts"}>Contratos</Link>,
                     key: "contracts",
                     icon: <SnippetsOutlined />,
                 },
                 {
-                    label: <Link href={"/admin/financial/invoices"}>Notas</Link>,
+                    label: <Link href={"/finance/app/invoices"}>Notas</Link>,
                     key: "invoices",
                     icon: <SnippetsOutlined />,
                 },
                 {
-                    label: <Link href={"/admin/financial/payments"}>Pagamentos</Link>,
+                    label: <Link href={"/finance/app/payments"}>Pagamentos</Link>,
                     key: "payments",
                     icon: <SnippetsOutlined />,
                 },
                 {
-                    label: <Link href={"/admin/financial/tags"}>Tags</Link>,
+                    label: <Link href={"/finance/app/tags"}>Tags</Link>,
                     key: "tags",
                     icon: <SnippetsOutlined />,
                 },
@@ -101,11 +101,18 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
     }
 
     if (groups.includes(userGroups.admin)) {
-        baseItens.push({
-            label: <Link href={"/admin/server"}>Servidor</Link>,
-            key: "server",
-            icon: <SettingOutlined />,
-        });
+        baseItens.push(
+            {
+                label: <Link href={"/admin/analytics"}>Analytics</Link>,
+                key: "analytics",
+                icon: <SettingOutlined />,
+            },
+            {
+                label: <Link href={"/admin/server"}>Servidor</Link>,
+                key: "server",
+                icon: <SettingOutlined />,
+            },
+        );
     }
 
     return baseItens;
