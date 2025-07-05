@@ -25,7 +25,7 @@ const Characters = ({ theme }: { theme: Theme }) => {
         );
     };
 
-    const disableNewButton = facetextureStore.facetexture.length >= 35;
+    const disableNewButton = facetextureStore.facetexture.length >= 41;
 
     return (
         <div className={`${Styles["characters"]} ${Styles[theme]}`}>
