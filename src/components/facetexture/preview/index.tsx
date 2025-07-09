@@ -1,5 +1,5 @@
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, message } from "antd";
+import { Button, message, Select } from "antd";
 import { saveAs } from "file-saver";
 import { useState } from "react";
 
@@ -18,6 +18,7 @@ const Preview = ({ theme }: { theme: Theme }) => {
     const [previewBackground, setPreviewBackground] = useState();
     const [loading, setLoading] = useState(false);
     const [downloading, setDownloading] = useState(false);
+    const [iconStyle, setIconStyle] = useState<"P" | "G">("P");
 
     const updatePreviewBackground = async () => {
         if (loading) {
@@ -31,6 +32,7 @@ const Preview = ({ theme }: { theme: Theme }) => {
         const background = (await db.background.toArray())[0];
         previewFacetextureService({
             background: background.image,
+            icon_style: iconStyle,
         })
             .then((response) => {
                 message.success({
@@ -64,6 +66,7 @@ const Preview = ({ theme }: { theme: Theme }) => {
         const background = (await db.background.toArray())[0];
         downloadFacetextureService({
             background: background.image,
+            icon_style: iconStyle,
         })
             .then((response) => {
                 saveAs(response, "export.zip");
@@ -87,6 +90,14 @@ const Preview = ({ theme }: { theme: Theme }) => {
         <div className={`${Styles["preview-container"]} ${Styles[theme]}`}>
             <h1>Preview</h1>
             <div>
+                <Select
+                    style={{ width: 200, marginRight: "3px" }}
+                    value={iconStyle}
+                    onChange={(value) => setIconStyle(value as "P" | "G")}
+                >
+                    <Select.Option value="P">Prata</Select.Option>
+                    <Select.Option value="G">Dourado</Select.Option>
+                </Select>
                 <Button
                     disabled={disableButtons}
                     onClick={updatePreviewBackground}
