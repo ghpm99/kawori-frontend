@@ -33,12 +33,12 @@ const Background = ({ theme }: { theme: Theme }) => {
                     <Image
                         className={styles["background"]}
                         width={920}
-                        height={997}
+                        height={1157}
                         src={facetextureStore.backgroundUrl}
                         alt={"background"}
                     />
                 )}
-                <ImgCrop showReset rotationSlider aspect={920 / 997}>
+                <ImgCrop showReset rotationSlider aspect={920 / 1157}>
                     <Dragger fileList={[]} beforeUpload={uploadNewBackground} maxCount={1}>
                         <div>
                             <p className="ant-upload-drag-icon">
