@@ -3,6 +3,86 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ModalNewInvoice, { IModalNewInvoiceProps } from "./index";
 
+jest.mock("antd", () => {
+    const React = require("react");
+
+    const MockFormItem = ({ label, name, children, valuePropName, style, rules }: any) => {
+        const id = name || (typeof label === "string" ? label.toLowerCase().replace(/\s+/g, "-") : "field");
+        const child = children ? React.Children.only(children) : null;
+        const childWithProps = child ? React.cloneElement(child, { id, "aria-label": label }) : null;
+        return (
+            <div>
+                {label && <label htmlFor={id}>{label}</label>}
+                {childWithProps}
+            </div>
+        );
+    };
+
+    const MockForm = ({ children, onFinish, form }: any) => {
+        if (form && form._setOnFinish) form._setOnFinish(onFinish);
+        return <div>{children}</div>;
+    };
+    MockForm.Item = MockFormItem;
+    MockForm.useForm = () => {
+        const onFinishRef = React.useRef(null);
+        const formRef = React.useRef({
+            submit: () => {
+                if (onFinishRef.current) onFinishRef.current({});
+            },
+            _setOnFinish: (fn: any) => {
+                onFinishRef.current = fn;
+            },
+        });
+        return [formRef.current];
+    };
+
+    const MockOption = ({ children }: any) => <div role="option">{children}</div>;
+    const MockSelect = ({ children, id, "aria-label": ariaLabel, mode, placeholder }: any) => {
+        const [open, setOpen] = React.useState(false);
+        return (
+            <div>
+                <div
+                    id={id}
+                    aria-label={ariaLabel}
+                    role="combobox"
+                    tabIndex={0}
+                    onMouseDown={() => setOpen(true)}
+                />
+                {open && <div role="listbox">{children}</div>}
+            </div>
+        );
+    };
+    MockSelect.Option = MockOption;
+
+    const MockModal = ({ title, children, open: isOpen, onCancel, onOk }: any) =>
+        isOpen ? (
+            <div>
+                <div>{title}</div>
+                {children}
+                <button onClick={onCancel}>Cancel</button>
+                <button onClick={onOk}>OK</button>
+            </div>
+        ) : null;
+
+    return {
+        Modal: MockModal,
+        Form: MockForm,
+        Input: ({ id, "aria-label": ariaLabel, placeholder }: any) => (
+            <input id={id} aria-label={ariaLabel} placeholder={placeholder} />
+        ),
+        InputNumber: ({ id, "aria-label": ariaLabel }: any) => (
+            <input type="number" id={id} aria-label={ariaLabel} />
+        ),
+        DatePicker: ({ id, "aria-label": ariaLabel }: any) => (
+            <input type="date" id={id} aria-label={ariaLabel} />
+        ),
+        Select: MockSelect,
+        Switch: ({ id, "aria-label": ariaLabel }: any) => (
+            <input type="checkbox" id={id} aria-label={ariaLabel} />
+        ),
+    };
+});
+
 const mockTags: ITags[] = [
     { id: 1, name: "Tag1", color: "" },
     { id: 2, name: "Tag2", color: "" },

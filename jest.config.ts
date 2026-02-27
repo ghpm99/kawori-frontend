@@ -13,6 +13,8 @@ const config: Config = {
     // Add more setup options before each test is run
     preset: "ts-jest",
     maxWorkers: 2,
+    forceExit: true,
+    workerIdleMemoryLimit: "512MB",
     setupFiles: ["<rootDir>/jest.setupFiles.js"],
     setupFilesAfterEnv: ["<rootDir>/jest.setupFilesAfterEnv.js"],
     moduleNameMapper: {

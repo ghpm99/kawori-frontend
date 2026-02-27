@@ -1,27 +1,37 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { Provider } from "react-redux";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import ServerPage from "./page";
-import { setSelectedMenu } from "@/lib/features/auth";
 import { updateAllContractsValue } from "@/services/financial";
-import { message } from "antd";
 import { renderWithProviders } from "@/util/test-utils";
 
 jest.mock("@/lib/hooks", () => ({
     useAppDispatch: () => jest.fn(),
 }));
 
+// Prevent module-level apiAuth.get("/csrf/") in services/auth/index.ts from
+// creating an unhandled rejection that gets attributed to async tests
+jest.mock("@/services/auth", () => ({
+    refreshTokenAsync: jest.fn(),
+    refreshTokenService: jest.fn(),
+    signupService: jest.fn(),
+}));
+
 jest.mock("@/services/financial", () => ({
     updateAllContractsValue: jest.fn(),
 }));
 
-jest.mock("antd", () => ({
-    ...jest.requireActual("antd"),
-    message: {
-        loading: jest.fn(),
-        success: jest.fn(),
-    },
-}));
+jest.mock("antd", () => {
+    const MockBreadcrumb = ({ children }: any) => <div>{children}</div>;
+    MockBreadcrumb.Item = ({ children }: any) => <span>{children}</span>;
+    return {
+        Breadcrumb: MockBreadcrumb,
+        Button: ({ children, onClick }: any) => <button onClick={onClick}>{children}</button>,
+        Layout: ({ children }: any) => <div>{children}</div>,
+        message: { loading: jest.fn(), success: jest.fn() },
+    };
+});
+
+jest.mock("@/components/loadingPage/Index", () => () => null);
 
 describe("ServerPage", () => {
     beforeEach(() => {
@@ -44,6 +54,7 @@ describe("ServerPage", () => {
     });
 
     test("should call updateContractsValue and display loading and success messages", async () => {
+        const { message } = require("antd");
         const response = { data: { msg: "Contratos calculados com sucesso" } };
         (updateAllContractsValue as jest.Mock).mockResolvedValue(response);
 

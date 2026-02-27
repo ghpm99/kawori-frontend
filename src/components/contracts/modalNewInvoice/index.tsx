@@ -44,7 +44,7 @@ export default function ModalNewInvoice(props: IModalNewInvoiceProps) {
     return (
         <Modal
             title="Nova entrada"
-            visible={props.visible}
+            open={props.visible}
             onCancel={props.onCancel}
             okButtonProps={{ htmlType: "submit" }}
             onOk={onOk}

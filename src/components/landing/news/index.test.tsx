@@ -1,14 +1,12 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import News from "./index";
-import { fetchProjectDetailData } from "@/app/api/lib/news";
-import { formatterDate } from "@/util";
 
-// Mock the fetchProjectDetailData function
-jest.mock("@/app/api/lib/news", () => ({
-    fetchProjectDetailData: jest.fn(),
-}));
+// Mock NewsList to keep this test focused on the News wrapper logic
+jest.mock("./newsList", () => ({ data }: any) => (
+    <div>{data.map((item: any) => <div key={item.url}>{item.title}</div>)}</div>
+));
 
 const mockData = [
     {
@@ -24,39 +22,28 @@ const mockData = [
 ];
 
 describe("News Component", () => {
-    beforeEach(() => {
-        (fetchProjectDetailData as jest.Mock).mockResolvedValue(mockData);
-    });
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    test("renders without crashing", () => {
-        render(<News />);
+    test("renders loading state when status is loading", () => {
+        render(<News data={[]} status="loading" />);
         expect(screen.getByText(/loading/i)).toBeInTheDocument();
     });
 
-    test("displays 'No news available' when there is no news data", async () => {
-        (fetchProjectDetailData as jest.Mock).mockResolvedValueOnce([]);
-        render(<News />);
-
-        await waitFor(() => {
-            expect(fetchProjectDetailData).toHaveBeenCalledTimes(1);
-        });
-
+    test("displays 'No news available' when there is no news data", () => {
+        render(<News data={[]} status="success" />);
         expect(screen.getByText(/no news available/i)).toBeInTheDocument();
     });
 
-    test("fetches and displays news data", async () => {
-        render(<News />);
+    test("renders news items when data is provided", () => {
+        render(<News data={mockData} status="success" />);
+        expect(screen.getByText("News 1")).toBeInTheDocument();
+        expect(screen.getByText("News 2")).toBeInTheDocument();
+    });
 
-        await waitFor(() => {
-            expect(fetchProjectDetailData).toHaveBeenCalledTimes(1);
-        });
-
-        mockData.forEach((news) => {
-            const date = formatterDate(news.first_publication_date);
-            expect(screen.getByText(`[${date}] - ${news.title}`)).toBeInTheDocument();
-        });
+    test("does not render news items in loading state", () => {
+        render(<News data={mockData} status="loading" />);
+        expect(screen.queryByText("News 1")).not.toBeInTheDocument();
     });
 });

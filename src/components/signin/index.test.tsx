@@ -1,38 +1,49 @@
 import LoginPage from "@/components/signin";
-import { renderWithProviders } from "@/util/test-utils";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
-import axios from "axios";
-
-jest.mock("next/navigation", () => ({
-    useRouter: jest.fn(() => ({
-        push: jest.fn(),
-    })),
-}));
+import "@testing-library/jest-dom";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 describe("LoginPage", () => {
     test("should render the login form", () => {
-        renderWithProviders(<LoginPage />);
+        render(<LoginPage loading={false} hasError={false} onFinish={jest.fn()} onFinishFailed={jest.fn()} />);
 
         expect(screen.getByLabelText("Usuario")).toBeInTheDocument();
         expect(screen.getByLabelText("Senha")).toBeInTheDocument();
         expect(screen.getByText("Logar")).toBeInTheDocument();
     });
 
-    test("should show an error message when login fails", async () => {
-        (axios.post as jest.Mock).mockRejectedValue({
-            response: { status: 400, data: { msg: "mensagem de erro" } },
-        });
-        renderWithProviders(<LoginPage />);
-        const usernameInput = screen.getByLabelText("Usuario");
-        const passwordInput = screen.getByLabelText("Senha");
-        const loginButton = screen.getByText("Logar");
+    test("should show an error message when hasError is true", () => {
+        render(<LoginPage loading={false} hasError={true} onFinish={jest.fn()} onFinishFailed={jest.fn()} />);
 
-        fireEvent.change(usernameInput, { target: { value: "test" } });
-        fireEvent.change(passwordInput, { target: { value: "test" } });
-        fireEvent.click(loginButton);
+        expect(screen.getByText(/usuario ou senha incorretos/i)).toBeInTheDocument();
+    });
+
+    test("should not show error message when hasError is false", () => {
+        render(<LoginPage loading={false} hasError={false} onFinish={jest.fn()} onFinishFailed={jest.fn()} />);
+
+        expect(screen.queryByText(/usuario ou senha incorretos/i)).not.toBeInTheDocument();
+    });
+
+    test("should call onFinish when form is submitted with valid values", async () => {
+        const onFinish = jest.fn();
+        render(<LoginPage loading={false} hasError={false} onFinish={onFinish} onFinishFailed={jest.fn()} />);
+
+        fireEvent.change(screen.getByLabelText("Usuario"), { target: { value: "testuser" } });
+        fireEvent.change(screen.getByLabelText("Senha"), { target: { value: "testpassword" } });
+        fireEvent.click(screen.getByText("Logar"));
 
         await waitFor(() => {
-            expect(screen.getByText(/usuario ou senha incorretos/i)).toBeInTheDocument();
+            expect(onFinish).toHaveBeenCalled();
+        });
+    });
+
+    test("should call onFinishFailed when form is submitted without required fields", async () => {
+        const onFinishFailed = jest.fn();
+        render(<LoginPage loading={false} hasError={false} onFinish={jest.fn()} onFinishFailed={onFinishFailed} />);
+
+        fireEvent.click(screen.getByText("Logar"));
+
+        await waitFor(() => {
+            expect(onFinishFailed).toHaveBeenCalled();
         });
     });
 });

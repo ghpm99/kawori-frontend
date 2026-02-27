@@ -49,7 +49,7 @@ export default function ModalFilter(props: IModalFilterProps) {
     return (
         <Modal
             title="Filtro"
-            visible={props.visible}
+            open={props.visible}
             onCancel={props.onCancel}
             okButtonProps={{ htmlType: "submit" }}
             onOk={okFilters}
