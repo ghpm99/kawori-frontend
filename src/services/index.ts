@@ -11,7 +11,6 @@ export const apiDjango = axios.create({
     },
 });
 
-let tried = 0;
 const retryMaxCount = 3;
 const retryDelay = 1500;
 const statusCodeRetry = [401, 408, 504, 500];
@@ -28,17 +27,19 @@ const responseInterceptor = (response: AxiosResponse) => {
 
 export const errorInterceptor = async (error: AxiosError) => {
     const { config, response } = error;
-    const originalRequest = config;
+    const originalRequest = config as any;
 
-    if ((!response || statusCodeRetry.includes(response?.status as number)) && tried <= retryMaxCount) {
-        if (response.status === HttpStatusCode.Unauthorized) {
+    const retryCount: number = originalRequest?._retryCount ?? 0;
+
+    if ((!response || statusCodeRetry.includes(response?.status as number)) && retryCount < retryMaxCount) {
+        if (response?.status === HttpStatusCode.Unauthorized) {
             try {
                 await refreshTokenAsync();
             } catch (refreshError) {
                 return Promise.reject(refreshError);
             }
         }
-        tried++;
+        originalRequest._retryCount = retryCount + 1;
         return sleepRequest(retryDelay, originalRequest);
     } else {
         Sentry.captureException(error);

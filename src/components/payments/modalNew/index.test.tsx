@@ -13,15 +13,17 @@ describe("ModalNew Component", () => {
         onFinish: mockOnFinish,
     };
 
-    beforeEach(() => {
-        render(<ModalNew {...defaultProps} />);
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
     test("renders the modal with correct title", () => {
+        render(<ModalNew {...defaultProps} />);
         expect(screen.getByText("Nova entrada")).toBeInTheDocument();
     });
 
     test("renders all form fields", () => {
+        render(<ModalNew {...defaultProps} />);
         expect(screen.getByLabelText("Tipo")).toBeInTheDocument();
         expect(screen.getByLabelText("Nome")).toBeInTheDocument();
         expect(screen.getByLabelText("Data")).toBeInTheDocument();
@@ -32,11 +34,13 @@ describe("ModalNew Component", () => {
     });
 
     test("calls onCancel when cancel button is clicked", () => {
+        render(<ModalNew {...defaultProps} />);
         fireEvent.click(screen.getByText("Cancel"));
         expect(mockOnCancel).toHaveBeenCalled();
     });
 
     test.skip("calls onFinish when form is submitted", () => {
+        render(<ModalNew {...defaultProps} />);
         fireEvent.change(screen.getByPlaceholderText("Digite o nome"), { target: { value: "Test Name" } });
         fireEvent.change(screen.getByPlaceholderText("Selecione o tipo de entrada"), { target: { value: 0 } });
         fireEvent.change(screen.getByPlaceholderText("Digite o valor"), { target: { value: 100 } });
@@ -45,6 +49,7 @@ describe("ModalNew Component", () => {
     });
 
     test("validates required fields", async () => {
+        render(<ModalNew {...defaultProps} />);
         fireEvent.click(screen.getByText("OK"));
         expect(await screen.findByText("Selecione o tipo de entrada")).toBeInTheDocument();
         expect(await screen.findByText("Entre com o nome da entrada")).toBeInTheDocument();
