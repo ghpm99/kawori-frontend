@@ -45,7 +45,7 @@ describe("Financial Services", () => {
         const filters = { status: "paid" };
         const result = await fetchAllPaymentService(filters);
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/", { params: filters });
+        expect(apiDjango.get).toHaveBeenCalledWith("/financial/payment/", { params: filters });
         expect(result).toBe(mockData.data);
     });
 
@@ -56,7 +56,7 @@ describe("Financial Services", () => {
         const data = { amount: 100 };
         const result = await saveNewPaymentService(data);
 
-        expect(apiDjango.post).toHaveBeenCalledWith("/financial/", data);
+        expect(apiDjango.post).toHaveBeenCalledWith("/financial/payment/new", data);
         expect(result).toBe(mockData.data);
     });
 
@@ -67,7 +67,7 @@ describe("Financial Services", () => {
         const id = 1;
         const result = await fetchDetailPaymentService(id);
 
-        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/${id}/`);
+        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/payment/${id}/`);
         expect(result).toBe(mockData.data);
     });
 
@@ -79,7 +79,7 @@ describe("Financial Services", () => {
         const payment = { amount: 100 };
         const result = await savePaymentDetailService(id, payment);
 
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/${id}/save`, payment);
+        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/payment/${id}/save`, payment);
         expect(result).toBe(mockData.data);
     });
 
@@ -90,7 +90,7 @@ describe("Financial Services", () => {
         const id = 1;
         const result = await payoffPaymentService(id);
 
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/${id}/payoff`);
+        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/payment/${id}/payoff`);
         expect(result).toBe(mockData.data);
     });
 
@@ -294,7 +294,7 @@ describe("Financial Services", () => {
 
         const result = await updateAllContractsValue();
 
-        expect(apiDjango.post).toHaveBeenCalledWith("/financial/update_all_contracts_value");
+        expect(apiDjango.post).toHaveBeenCalledWith("/financial/contract/update_all_contracts_value");
         expect(result).toBe(mockData);
     });
 });

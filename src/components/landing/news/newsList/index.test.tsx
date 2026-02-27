@@ -1,7 +1,7 @@
 import { formatterDate } from "@/util";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { NewsProps } from "..";
+import { INewsData } from "@/lib/features/news";
 import NewsList from "./index";
 
 jest.mock("next/link", () => {
@@ -12,7 +12,7 @@ jest.mock("@/util", () => ({
     formatterDate: jest.fn((date) => date),
 }));
 
-const mockData: NewsProps[] = [
+const mockData: INewsData[] = [
     {
         title: "Test News 1",
         url: "/news/test-news-1",

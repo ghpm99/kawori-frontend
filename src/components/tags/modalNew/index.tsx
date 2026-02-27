@@ -34,7 +34,7 @@ export default function ModalNewTag(props: IModalNewTagProps) {
     return (
         <Modal
             title="Nova tag"
-            visible={props.visible}
+            open={props.visible}
             onCancel={props.onCancel}
             okButtonProps={{ htmlType: "submit" }}
             onOk={onOk}
