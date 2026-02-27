@@ -12,6 +12,7 @@ const createJestConfig = nextJest({
 const config: Config = {
     // Add more setup options before each test is run
     preset: "ts-jest",
+    maxWorkers: 2,
     setupFiles: ["<rootDir>/jest.setupFiles.js"],
     setupFilesAfterEnv: ["<rootDir>/jest.setupFilesAfterEnv.js"],
     moduleNameMapper: {

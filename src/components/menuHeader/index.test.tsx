@@ -4,8 +4,6 @@ import { render, screen } from "@testing-library/react";
 
 jest.mock("@/components/menuHeader/useMenuHeader");
 
-jest.mock("@/components/menuHeader/useMenuHeader");
-
 describe("MenuHeader", () => {
     test("should render the menu header with user options when authenticated", () => {
         (useMenuHeader as jest.Mock).mockReturnValue({

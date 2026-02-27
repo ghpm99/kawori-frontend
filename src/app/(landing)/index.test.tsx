@@ -13,14 +13,6 @@ jest.mock("next/navigation", () => ({
         push: jest.fn(),
     }),
 }));
-jest.mock("react", () => ({
-    ...jest.requireActual("react"),
-    cache: jest.fn(),
-}));
-
-beforeAll(() => {
-    cleanup();
-});
 
 afterEach(() => {
     jest.clearAllMocks();

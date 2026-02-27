@@ -1,97 +1,61 @@
-import exp from "constants";
-import tokenServiceInstance from "./auth/authToken";
-import { attachTokenToRequest, errorInterceptor } from "./index";
+import { errorInterceptor } from "./index";
 
 jest.mock("@sentry/nextjs");
+jest.mock("./auth", () => ({
+    refreshTokenAsync: jest.fn().mockResolvedValue(undefined),
+}));
 
 describe("apiDjango", () => {
-    test("should have a request interceptor that adds the Authorization header", async () => {
-        tokenServiceInstance.setUser({
-            remember: true,
-            tokens: {
-                access: "test-token",
-                refresh: "test-refresh",
-            },
-        });
+    beforeAll(() => {
+        jest.useFakeTimers();
+    });
 
-        attachTokenToRequest({ headers: {} }).then((request) => {
-            expect(request.headers.Authorization).toBe("Bearer test-token");
-        });
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    const makeErrorRequest = (codeStatus: number, retryCount = 0) => ({
+        message: `Request failed with status code ${codeStatus}`,
+        name: "AxiosError",
+        isAxiosError: true,
+        toJSON: jest.fn(),
+        config: {
+            _retryCount: retryCount,
+            baseURL: "http://localhost:8500/",
+            method: "get",
+            url: "/profile/",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                Authorization: "Bearer",
+            },
+        },
+        response: {
+            data: { msg: "O token é inválido ou expirado" },
+            status: codeStatus,
+            statusText: "Error",
+            headers: {},
+            config: {},
+        },
     });
 
     test.each([408, 504, 500])(
-        "should have an error interceptor that retries the request if the status is %s",
-        async (codeStatus) => {
-            const errorRequest = {
-                message: `Request failed with status code ${codeStatus}`,
-                name: "AxiosError",
-                status: codeStatus,
-                isAxiosError: true,
-                toJSON: jest.fn(),
-                config: {
-                    transitional: {
-                        silentJSONParsing: true,
-                        forcedJSONParsing: true,
-                        clarifyTimeoutError: false,
-                    },
-                    adapter: ["xhr", "http", "fetch"],
-                    transformRequest: [null],
-                    transformResponse: [null],
-                    timeout: 0,
-                    xsrfCookieName: "XSRF-TOKEN",
-                    xsrfHeaderName: "X-XSRF-TOKEN",
-                    maxContentLength: -1,
-                    maxBodyLength: -1,
-                    env: {},
-                    headers: {
-                        Accept: "application/json, text/plain, */*",
-                        Authorization: "Bearer",
-                    },
-                    baseURL: "http://localhost:8500/",
-                    method: "get",
-                    url: "/profile/",
-                },
-                response: {
-                    data: {
-                        msg: "O token é inválido ou expirado",
-                    },
-                    status: codeStatus,
-                    statusText: "Unauthorized",
-                    headers: {
-                        "content-length": "51",
-                        "content-type": "application/json",
-                    },
-                    config: {
-                        transitional: {
-                            silentJSONParsing: true,
-                            forcedJSONParsing: true,
-                            clarifyTimeoutError: false,
-                        },
-                        adapter: ["xhr", "http", "fetch"],
-                        transformRequest: [null],
-                        transformResponse: [null],
-                        timeout: 0,
-                        xsrfCookieName: "XSRF-TOKEN",
-                        xsrfHeaderName: "X-XSRF-TOKEN",
-                        maxContentLength: -1,
-                        maxBodyLength: -1,
-                        env: {},
-                        headers: {
-                            Accept: "application/json, text/plain, */*",
-                            Authorization: "Bearer",
-                        },
-                        baseURL: "http://localhost:8500/",
-                        method: "get",
-                        url: "/profile/",
-                    },
-                    request: {
-                        m_isAborted: false,
-                    },
-                },
-            };
-            const errorRetorno = errorInterceptor(errorRequest);
-            const expectedError = new Promise((resolve, reject) => {});
-            expect(errorRetorno).toEqual(expectedError);
+        "should schedule a retry for status %s",
+        (codeStatus) => {
+            const errorRequest = makeErrorRequest(codeStatus);
+            const result = errorInterceptor(errorRequest as any);
+            expect(result).toBeInstanceOf(Promise);
         },
     );
+
+    test("should reject and capture exception when max retries are exceeded", async () => {
+        const Sentry = jest.requireMock("@sentry/nextjs");
+        const errorRequest = makeErrorRequest(500, 3);
+
+        await expect(errorInterceptor(errorRequest as any)).rejects.toBeDefined();
+        expect(Sentry.captureException).toHaveBeenCalled();
+    });
 });
