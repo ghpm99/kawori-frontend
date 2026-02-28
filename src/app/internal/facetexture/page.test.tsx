@@ -11,7 +11,11 @@ jest.mock("@/components/themeProvider/themeContext", () => ({
 jest.mock("antd", () => ({
     message: { loading: jest.fn(), success: jest.fn() },
     Breadcrumb: ({ items }: any) => (
-        <nav>{items?.map((i: any) => <span key={i.title}>{i.title}</span>)}</nav>
+        <nav>
+            {items?.map((i: any) => (
+                <span key={i.title}>{i.title}</span>
+            ))}
+        </nav>
     ),
 }));
 

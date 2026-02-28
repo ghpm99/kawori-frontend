@@ -1,4 +1,5 @@
 import { Button, Checkbox, Form, Input } from "antd";
+import Link from "next/link";
 
 import styles from "./Signin.module.scss";
 
@@ -51,14 +52,14 @@ export default function LoginPage({ loading, hasError, onFinish, onFinishFailed 
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                     <Checkbox>Lembrar-se de mim</Checkbox>
                 </Form.Item>
-                <a
-                    href=""
+                <Link
+                    href="/reset-password"
                     style={{
                         float: "right",
                     }}
                 >
                     Esqueci minha senha
-                </a>
+                </Link>
             </Form.Item>
 
             <Button

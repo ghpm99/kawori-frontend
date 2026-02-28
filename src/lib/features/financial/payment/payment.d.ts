@@ -40,11 +40,11 @@ type PayloadChangeStatusPaymentPaginationAction = {
 };
 
 type PayloadChangePaginationAction = {
-    page: number
-    pageSize: number
-}
+    page: number;
+    pageSize: number;
+};
 
 type PayloadSetFilterPaymentsAction = {
-    name: string
-    value: any
-}
+    name: string;
+    value: any;
+};

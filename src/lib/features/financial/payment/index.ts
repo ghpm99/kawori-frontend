@@ -91,9 +91,9 @@ export const financialSlice = createSlice({
             state.filters = {
                 ...state.filters,
                 page: action.payload.page,
-                page_size: action.payload.pageSize
-            }
-        }
+                page_size: action.payload.pageSize,
+            };
+        },
     },
     extraReducers: (builder) => {
         builder
