@@ -25,14 +25,20 @@ jest.mock("@/services/financial", () => ({
 jest.mock("antd", () => {
     const MockBreadcrumb = ({ items, children }: any) => (
         <nav>
-            {items?.map((i: any) => <span key={i.title}>{i.title}</span>)}
+            {items?.map((i: any) => (
+                <span key={i.title}>{i.title}</span>
+            ))}
             {children}
         </nav>
     );
     MockBreadcrumb.Item = ({ children }: any) => <span>{children}</span>;
     const MockTable = ({ columns, dataSource, summary }: any) => (
         <div>
-            <div>{columns?.map((col: any) => <span key={col.key}>{col.title}</span>)}</div>
+            <div>
+                {columns?.map((col: any) => (
+                    <span key={col.key}>{col.title}</span>
+                ))}
+            </div>
             {summary && summary(dataSource ?? [])}
         </div>
     );

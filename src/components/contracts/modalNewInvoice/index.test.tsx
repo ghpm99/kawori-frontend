@@ -41,13 +41,7 @@ jest.mock("antd", () => {
         const [open, setOpen] = React.useState(false);
         return (
             <div>
-                <div
-                    id={id}
-                    aria-label={ariaLabel}
-                    role="combobox"
-                    tabIndex={0}
-                    onMouseDown={() => setOpen(true)}
-                />
+                <div id={id} aria-label={ariaLabel} role="combobox" tabIndex={0} onMouseDown={() => setOpen(true)} />
                 {open && <div role="listbox">{children}</div>}
             </div>
         );
@@ -70,16 +64,10 @@ jest.mock("antd", () => {
         Input: ({ id, "aria-label": ariaLabel, placeholder }: any) => (
             <input id={id} aria-label={ariaLabel} placeholder={placeholder} />
         ),
-        InputNumber: ({ id, "aria-label": ariaLabel }: any) => (
-            <input type="number" id={id} aria-label={ariaLabel} />
-        ),
-        DatePicker: ({ id, "aria-label": ariaLabel }: any) => (
-            <input type="date" id={id} aria-label={ariaLabel} />
-        ),
+        InputNumber: ({ id, "aria-label": ariaLabel }: any) => <input type="number" id={id} aria-label={ariaLabel} />,
+        DatePicker: ({ id, "aria-label": ariaLabel }: any) => <input type="date" id={id} aria-label={ariaLabel} />,
         Select: MockSelect,
-        Switch: ({ id, "aria-label": ariaLabel }: any) => (
-            <input type="checkbox" id={id} aria-label={ariaLabel} />
-        ),
+        Switch: ({ id, "aria-label": ariaLabel }: any) => <input type="checkbox" id={id} aria-label={ariaLabel} />,
     };
 });
 

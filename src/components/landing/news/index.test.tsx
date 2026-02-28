@@ -5,7 +5,11 @@ import News from "./index";
 
 // Mock NewsList to keep this test focused on the News wrapper logic
 jest.mock("./newsList", () => ({ data }: any) => (
-    <div>{data.map((item: any) => <div key={item.url}>{item.title}</div>)}</div>
+    <div>
+        {data.map((item: any) => (
+            <div key={item.url}>{item.title}</div>
+        ))}
+    </div>
 ));
 
 const mockData = [

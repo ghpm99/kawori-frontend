@@ -70,13 +70,37 @@ describe("facetextureSlice", () => {
             const stateWithItems: IFacetextureState = {
                 ...baseState,
                 facetexture: [
-                    { id: 1, name: "A", class: { id: 1, name: "W", abbreviation: "W", class_image: "" }, show: true, image: "", order: 0 },
-                    { id: 2, name: "B", class: { id: 1, name: "W", abbreviation: "W", class_image: "" }, show: true, image: "", order: 1 },
-                    { id: 3, name: "C", class: { id: 1, name: "W", abbreviation: "W", class_image: "" }, show: true, image: "", order: 2 },
+                    {
+                        id: 1,
+                        name: "A",
+                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
+                        show: true,
+                        image: "",
+                        order: 0,
+                    },
+                    {
+                        id: 2,
+                        name: "B",
+                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
+                        show: true,
+                        image: "",
+                        order: 1,
+                    },
+                    {
+                        id: 3,
+                        name: "C",
+                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
+                        show: true,
+                        image: "",
+                        order: 2,
+                    },
                 ],
             };
             // Move item at index 0 to index 2
-            const state = facetextureReducer(stateWithItems, reorderCharacterReducer({ indexSource: 0, indexDestination: 2 }));
+            const state = facetextureReducer(
+                stateWithItems,
+                reorderCharacterReducer({ indexSource: 0, indexDestination: 2 }),
+            );
             expect(state.facetexture[0].name).toBe("B");
             expect(state.facetexture[1].name).toBe("C");
             expect(state.facetexture[2].name).toBe("A");
@@ -88,8 +112,22 @@ describe("facetextureSlice", () => {
             const stateWithItems: IFacetextureState = {
                 ...baseState,
                 facetexture: [
-                    { id: 1, name: "A", class: { id: 1, name: "W", abbreviation: "W", class_image: "" }, show: true, image: "", order: 0 },
-                    { id: 2, name: "B", class: { id: 1, name: "W", abbreviation: "W", class_image: "" }, show: true, image: "", order: 1 },
+                    {
+                        id: 1,
+                        name: "A",
+                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
+                        show: true,
+                        image: "",
+                        order: 0,
+                    },
+                    {
+                        id: 2,
+                        name: "B",
+                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
+                        show: true,
+                        image: "",
+                        order: 1,
+                    },
                 ],
             };
             const state = facetextureReducer(stateWithItems, deleteCharacterReducer(0));
@@ -106,8 +144,14 @@ describe("facetextureSlice", () => {
         });
 
         test("should hide modal when visible is false", () => {
-            const openState = { ...baseState, modal: { newFacetexture: { ...baseState.modal.newFacetexture, visible: true } } };
-            const state = facetextureReducer(openState, changeModalVisible({ modal: "newFacetexture", visible: false }));
+            const openState = {
+                ...baseState,
+                modal: { newFacetexture: { ...baseState.modal.newFacetexture, visible: true } },
+            };
+            const state = facetextureReducer(
+                openState,
+                changeModalVisible({ modal: "newFacetexture", visible: false }),
+            );
             expect(state.modal.newFacetexture.visible).toBe(false);
         });
     });
@@ -119,7 +163,10 @@ describe("facetextureSlice", () => {
         });
 
         test("should set saving to false", () => {
-            const savingState = { ...baseState, modal: { newFacetexture: { ...baseState.modal.newFacetexture, saving: true } } };
+            const savingState = {
+                ...baseState,
+                modal: { newFacetexture: { ...baseState.modal.newFacetexture, saving: true } },
+            };
             const state = facetextureReducer(savingState, changeFacetextureSavingModalReducer(false));
             expect(state.modal.newFacetexture.saving).toBe(false);
         });
@@ -148,11 +195,21 @@ describe("facetextureSlice", () => {
         test("should set class, facetexture list, and loading to false on fulfilled", () => {
             const payload = {
                 characters: [
-                    { id: 1, name: "TestChar", class: { id: 1, name: "W", abbreviation: "W", class_image: "" }, show: true, image: "", order: 0 },
+                    {
+                        id: 1,
+                        name: "TestChar",
+                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
+                        show: true,
+                        image: "",
+                        order: 0,
+                    },
                 ],
                 classes: { class: [{ id: 1, name: "Warrior", abbreviation: "W", class_image: "", class_symbol: "" }] },
             };
-            const state = facetextureReducer({ ...baseState, loading: true }, { type: fetchFacetexture.fulfilled.type, payload });
+            const state = facetextureReducer(
+                { ...baseState, loading: true },
+                { type: fetchFacetexture.fulfilled.type, payload },
+            );
             expect(state.loading).toBe(false);
             expect(state.facetexture).toHaveLength(1);
             expect(state.class).toHaveLength(1);

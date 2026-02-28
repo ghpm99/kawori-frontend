@@ -42,14 +42,11 @@ describe("apiDjango", () => {
         },
     });
 
-    test.each([408, 504, 500])(
-        "should schedule a retry for status %s",
-        (codeStatus) => {
-            const errorRequest = makeErrorRequest(codeStatus);
-            const result = errorInterceptor(errorRequest as any);
-            expect(result).toBeInstanceOf(Promise);
-        },
-    );
+    test.each([408, 504, 500])("should schedule a retry for status %s", (codeStatus) => {
+        const errorRequest = makeErrorRequest(codeStatus);
+        const result = errorInterceptor(errorRequest as any);
+        expect(result).toBeInstanceOf(Promise);
+    });
 
     test("should reject and capture exception when max retries are exceeded", async () => {
         const Sentry = jest.requireMock("@sentry/nextjs");
