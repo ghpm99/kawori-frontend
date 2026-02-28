@@ -35,8 +35,6 @@ describe("Background Component", () => {
         renderWithProviders(<Background theme="light" />);
 
         expect(screen.getByText("Background")).toBeInTheDocument();
-        expect(
-            screen.getByText(/clique ou arraste o arquivo para esta área para fazer upload/i),
-        ).toBeInTheDocument();
+        expect(screen.getByText(/clique ou arraste o arquivo para esta área para fazer upload/i)).toBeInTheDocument();
     });
 });

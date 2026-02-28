@@ -5,6 +5,7 @@ const Routes = [
     { path: "/facetexture", private: false, whenAuthenticated: "redirect", to: "/internal/facetexture" },
     { path: "/rank", private: false, whenAuthenticated: "next" },
     { path: "/news", private: false, whenAuthenticated: "next" },
+    { path: "/reset-password", private: false, whenAuthenticated: "next" },
     { path: "/internal", private: true, whenAuthenticated: "next" },
     { path: "/admin", private: true, whenAuthenticated: "next" },
     { path: "/financial", private: true, whenAuthenticated: "next" },
@@ -17,8 +18,7 @@ export function middleware(request: NextRequest) {
     const route = Routes.find((route) => route.path === path);
     const authenticated = !!request.cookies.get("lifetimetoken");
 
-    if (!authenticated && route?.private)
-        return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE);
+    if (!authenticated && route?.private) return redirectToPathname(request, REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE);
 
     if (authenticated && !route?.private && route?.whenAuthenticated === "redirect")
         return redirectToPathname(request, route.to);
