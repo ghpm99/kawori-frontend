@@ -10,7 +10,7 @@ import Info from "./info";
 import NewModal from "./newModal";
 import { useAppDispatch } from "@/lib/hooks";
 import { Theme } from "@/styles/theme";
-import { MAXIMUM_FACETEXTURE_CHARACTERS } from '@/components/constants';
+import { MAXIMUM_FACETEXTURE_CHARACTERS } from "@/components/constants";
 
 const { Title } = Typography;
 const Characters = ({ theme }: { theme: Theme }) => {
