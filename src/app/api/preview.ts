@@ -1,12 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { setPreviewData, redirectToPreviewURL } from "@prismicio/next";
+import { NextRequest } from "next/server";
+import { redirectToPreviewURL } from "@prismicio/next";
 
 import { createClient } from "../../prismicio";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const client = createClient({ req });
+export async function GET(request: NextRequest) {
+    const client = createClient();
 
-    await setPreviewData({ req, res });
-
-    return await redirectToPreviewURL({ req, res, client });
+    return await redirectToPreviewURL({ client, request });
 }

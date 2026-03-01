@@ -40,7 +40,7 @@ export default function Home() {
     useEffect(() => {
         document.title = "Kawori";
         dispatch(fetchNewsFeedThunk());
-    }, []);
+    }, [dispatch]);
 
     const handleSignout = () => {
         router.push("/signout");

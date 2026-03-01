@@ -27,7 +27,7 @@ function Vote() {
         dispatch(setSelectedMenu(["rank"]));
         dispatch(getAllQuestions());
         dispatch(getAllBdoClass());
-    }, []);
+    }, [dispatch]);
 
     const nextQuestion = () => {
         setActivePanel((prev) => ++prev);

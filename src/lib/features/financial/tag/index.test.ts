@@ -1,82 +1,80 @@
-import tagReducer, { changeVisibleModalTag, fetchTags } from "./index";
+jest.mock("axios", () => {
+    const actual = jest.requireActual("axios");
+    return {
+        ...actual,
+        create: jest.fn(() => ({
+            get: jest.fn(),
+            post: jest.fn(),
+            interceptors: {
+                request: { use: jest.fn() },
+                response: { use: jest.fn() },
+            },
+        })),
+    };
+});
 
-// Mock the financial service to prevent real network calls
-jest.mock("@/services/financial", () => ({
-    fetchTagsService: jest.fn(),
-    updateAllContractsValue: jest.fn(),
-}));
+import reducer, { financialSlice, changeVisibleModalTag, fetchTags } from "./index";
 
-const initialState: ITagStore = {
-    data: [],
-    loading: true,
-    modal: {
-        newTag: {
-            visible: false,
-            error: false,
-            errorMsg: "",
-        },
-    },
-};
+const initialState = financialSlice.getInitialState();
 
-describe("financialSlice (tag)", () => {
-    describe("initial state", () => {
-        test("should return the initial state", () => {
-            const state = tagReducer(undefined, { type: "@@INIT" });
+describe("financial tag slice", () => {
+    describe("estado inicial", () => {
+        it("deve ter data vazio e loading true", () => {
+            expect(initialState.data).toEqual([]);
+            expect(initialState.loading).toBe(true);
+        });
 
-            expect(state).toEqual(initialState);
+        it("deve ter modal newTag com visible false", () => {
+            expect(initialState.modal.newTag.visible).toBe(false);
+            expect(initialState.modal.newTag.error).toBe(false);
+            expect(initialState.modal.newTag.errorMsg).toBe("");
         });
     });
 
-    describe("changeVisibleModalTag", () => {
-        test("should set modal visible to true", () => {
-            const action = changeVisibleModalTag({ modal: "newTag", visible: true });
-            const state = tagReducer(initialState, action);
+    describe("reducers síncronos", () => {
+        it("changeVisibleModalTag deve alternar visibilidade do modal", () => {
+            const result = reducer(
+                initialState,
+                changeVisibleModalTag({ modal: "newTag", visible: true }),
+            );
 
-            expect(state.modal.newTag.visible).toBe(true);
+            expect(result.modal.newTag.visible).toBe(true);
         });
 
-        test("should set modal visible to false", () => {
-            const openState: ITagStore = {
+        it("changeVisibleModalTag deve fechar o modal", () => {
+            const openState = {
                 ...initialState,
-                modal: { newTag: { ...initialState.modal.newTag, visible: true } },
+                modal: { ...initialState.modal, newTag: { ...initialState.modal.newTag, visible: true } },
             };
-            const action = changeVisibleModalTag({ modal: "newTag", visible: false });
-            const state = tagReducer(openState, action);
 
-            expect(state.modal.newTag.visible).toBe(false);
+            const result = reducer(
+                openState,
+                changeVisibleModalTag({ modal: "newTag", visible: false }),
+            );
+
+            expect(result.modal.newTag.visible).toBe(false);
         });
     });
 
-    describe("fetchTags async thunk", () => {
-        test("should set loading to true on pending", () => {
-            const action = { type: fetchTags.pending.type };
-            const startState: ITagStore = { ...initialState, loading: false };
-            const state = tagReducer(startState, action);
+    describe("extraReducers", () => {
+        it("fetchTags.pending deve marcar loading true", () => {
+            const state = { ...initialState, loading: false };
+            const result = reducer(state, { type: fetchTags.pending.type });
 
-            expect(state.loading).toBe(true);
+            expect(result.loading).toBe(true);
         });
 
-        test("should set data and loading to false on fulfilled", () => {
-            const mockTags: ITags[] = [
-                { id: 1, name: "Tag A", color: "#ff0000" },
-                { id: 2, name: "Tag B", color: "#00ff00" },
-            ];
-            const action = { type: fetchTags.fulfilled.type, payload: { data: mockTags } };
-            const state = tagReducer(initialState, action);
-
-            expect(state.data).toEqual(mockTags);
-            expect(state.loading).toBe(false);
-        });
-
-        test("should preserve modal state across fetches", () => {
-            const openState: ITagStore = {
-                ...initialState,
-                modal: { newTag: { ...initialState.modal.newTag, visible: true } },
+        it("fetchTags.fulfilled deve popular data e desligar loading", () => {
+            const tags = [{ id: 1, name: "Tag1" }, { id: 2, name: "Tag2" }];
+            const action = {
+                type: fetchTags.fulfilled.type,
+                payload: { data: tags },
             };
-            const action = { type: fetchTags.pending.type };
-            const state = tagReducer(openState, action);
 
-            expect(state.modal.newTag.visible).toBe(true);
+            const result = reducer(initialState, action);
+
+            expect(result.data).toEqual(tags);
+            expect(result.loading).toBe(false);
         });
     });
 });

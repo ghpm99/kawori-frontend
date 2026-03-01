@@ -22,7 +22,7 @@ function Rank() {
         document.title = "Kawori Rank";
         dispatch(setSelectedMenu(["rank"]));
         dispatch(getAllAnswers());
-    }, []);
+    }, [dispatch]);
 
     const combatStyleText = (combatStyle: number) => {
         switch (combatStyle) {

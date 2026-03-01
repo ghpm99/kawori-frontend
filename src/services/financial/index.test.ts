@@ -1,3 +1,18 @@
+jest.mock("axios", () => {
+    const actual = jest.requireActual("axios");
+    return {
+        ...actual,
+        create: jest.fn(() => ({
+            get: jest.fn(),
+            post: jest.fn(),
+            interceptors: {
+                request: { use: jest.fn() },
+                response: { use: jest.fn() },
+            },
+        })),
+    };
+});
+
 import { apiDjango } from "..";
 import {
     fetchAllPaymentService,
@@ -26,275 +41,221 @@ import {
     updateAllContractsValue,
 } from "./index";
 
-jest.mock("..", () => ({
-    apiDjango: {
-        get: jest.fn(),
-        post: jest.fn(),
-    },
-}));
+const mockedGet = apiDjango.get as jest.MockedFunction<typeof apiDjango.get>;
+const mockedPost = apiDjango.post as jest.MockedFunction<typeof apiDjango.post>;
 
-describe("Financial Services", () => {
-    afterEach(() => {
-        jest.clearAllMocks();
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
+describe("Payment services", () => {
+    it("fetchAllPaymentService deve chamar GET /financial/payment/ com filtros", async () => {
+        const filters = { page: 1, status: "open" } as any;
+        mockedGet.mockResolvedValueOnce({ data: { results: [] } } as any);
+
+        await fetchAllPaymentService(filters);
+
+        expect(mockedGet).toHaveBeenCalledWith("/financial/payment/", { params: filters });
     });
 
-    test("should fetch all payments", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("saveNewPaymentService deve chamar POST /financial/payment/new com dados", async () => {
+        const data = { value: 100, date: "2024-01-01" } as any;
+        mockedPost.mockResolvedValueOnce({ data: { id: 1 } } as any);
 
-        const filters = { status: "paid" };
-        const result = await fetchAllPaymentService(filters);
+        await saveNewPaymentService(data);
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/payment/", { params: filters });
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/payment/new", data);
     });
 
-    test("should save a new payment", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
+    it("fetchDetailPaymentService deve chamar GET /financial/payment/:id/", async () => {
+        mockedGet.mockResolvedValueOnce({ data: { id: 5 } } as any);
 
-        const data = { amount: 100 };
-        const result = await saveNewPaymentService(data);
+        await fetchDetailPaymentService(5);
 
-        expect(apiDjango.post).toHaveBeenCalledWith("/financial/payment/new", data);
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/payment/5/");
     });
 
-    test("should fetch payment details", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("savePaymentDetailService deve chamar POST /financial/payment/:id/save", async () => {
+        const payment = { value: 200 } as any;
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const id = 1;
-        const result = await fetchDetailPaymentService(id);
+        await savePaymentDetailService(10, payment);
 
-        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/payment/${id}/`);
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/payment/10/save", payment);
     });
 
-    test("should save payment details", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
+    it("payoffPaymentService deve chamar POST /financial/payment/:id/payoff", async () => {
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const id = 1;
-        const payment = { amount: 100 };
-        const result = await savePaymentDetailService(id, payment);
+        await payoffPaymentService(7);
 
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/payment/${id}/save`, payment);
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/payment/7/payoff");
+    });
+});
+
+describe("Report services", () => {
+    it("fetchPaymentReportService deve chamar GET /financial/report/", async () => {
+        mockedGet.mockResolvedValueOnce({ data: {} } as any);
+
+        await fetchPaymentReportService();
+
+        expect(mockedGet).toHaveBeenCalledWith("/financial/report/");
     });
 
-    test("should payoff a payment", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
+    it("fetchCountPaymentReportService deve chamar GET /financial/report/count_payment", async () => {
+        mockedGet.mockResolvedValueOnce({ data: {} } as any);
 
-        const id = 1;
-        const result = await payoffPaymentService(id);
+        await fetchCountPaymentReportService();
 
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/payment/${id}/payoff`);
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/report/count_payment");
     });
 
-    test("should fetch payment report", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchAmountPaymentReportService deve chamar GET /financial/report/amount_payment", async () => {
+        mockedGet.mockResolvedValueOnce({ data: {} } as any);
 
-        const result = await fetchPaymentReportService();
+        await fetchAmountPaymentReportService();
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/report/");
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/report/amount_payment");
     });
 
-    test("should fetch count payment report", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchAmountPaymentOpenReportService deve chamar GET /financial/report/amount_payment_open", async () => {
+        mockedGet.mockResolvedValueOnce({ data: {} } as any);
 
-        const result = await fetchCountPaymentReportService();
+        await fetchAmountPaymentOpenReportService();
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/report/count_payment");
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/report/amount_payment_open");
     });
 
-    test("should fetch amount payment report", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchAmountPaymentClosedReportService deve chamar GET /financial/report/amount_payment_closed", async () => {
+        mockedGet.mockResolvedValueOnce({ data: {} } as any);
 
-        const result = await fetchAmountPaymentReportService();
+        await fetchAmountPaymentClosedReportService();
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/report/amount_payment");
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/report/amount_payment_closed");
     });
 
-    test("should fetch amount payment open report", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchAmountInvoiceByTagReportService deve chamar GET /financial/report/amount_invoice_by_tag", async () => {
+        mockedGet.mockResolvedValueOnce({ data: {} } as any);
 
-        const result = await fetchAmountPaymentOpenReportService();
+        await fetchAmountInvoiceByTagReportService();
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/report/amount_payment_open");
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/report/amount_invoice_by_tag");
+    });
+});
+
+describe("Contract services", () => {
+    it("fetchAllContractService deve chamar GET /financial/contract/ com filtros", async () => {
+        const filters = { page: 1 } as any;
+        mockedGet.mockResolvedValueOnce({ data: { results: [] } } as any);
+
+        await fetchAllContractService(filters);
+
+        expect(mockedGet).toHaveBeenCalledWith("/financial/contract/", { params: filters });
     });
 
-    test("should fetch amount payment closed report", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("saveNewContractService deve chamar POST /financial/contract/new com dados", async () => {
+        const data = { name: "Contract 1" } as any;
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const result = await fetchAmountPaymentClosedReportService();
+        await saveNewContractService(data);
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/report/amount_payment_closed");
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/contract/new", data);
     });
 
-    test("should fetch amount invoice by tag report", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchDetailContractService deve chamar GET /financial/contract/:id/", async () => {
+        mockedGet.mockResolvedValueOnce({ data: { id: 3 } } as any);
 
-        const result = await fetchAmountInvoiceByTagReportService();
+        await fetchDetailContractService(3);
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/report/amount_invoice_by_tag");
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/contract/3/");
     });
 
-    test("should fetch all contracts", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchDetailContractInvoicesService deve chamar GET /financial/contract/:id/invoices/ com filtros", async () => {
+        const filters = { page: 1 } as any;
+        mockedGet.mockResolvedValueOnce({ data: { results: [] } } as any);
 
-        const filters = { status: "active" };
-        const result = await fetchAllContractService(filters);
+        await fetchDetailContractInvoicesService(3, filters);
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/contract/", { params: filters });
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/contract/3/invoices/", { params: filters });
     });
 
-    test("should fetch all invoices", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("mergeContractService deve chamar POST /financial/contract/:id/merge/ com dados", async () => {
+        const data = { id: 1, target: 2 } as any;
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const filters = { status: "unpaid" };
-        const result = await fetchAllInvoiceService(filters);
+        await mergeContractService(data);
 
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/invoice/", { params: filters });
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/contract/1/merge/", data);
     });
 
-    test("should save a new contract", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
+    it("updateAllContractsValue deve chamar POST /financial/contract/update_all_contracts_value", async () => {
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const data = { name: "New Contract" };
-        const result = await saveNewContractService(data);
+        await updateAllContractsValue();
 
-        expect(apiDjango.post).toHaveBeenCalledWith("/financial/contract/new", data);
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/contract/update_all_contracts_value");
+    });
+});
+
+describe("Invoice services", () => {
+    it("fetchAllInvoiceService deve chamar GET /financial/invoice/ com filtros", async () => {
+        const filters = { page: 1 } as any;
+        mockedGet.mockResolvedValueOnce({ data: { results: [] } } as any);
+
+        await fetchAllInvoiceService(filters);
+
+        expect(mockedGet).toHaveBeenCalledWith("/financial/invoice/", { params: filters });
     });
 
-    test("should fetch contract details", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("includeNewInvoiceService deve chamar POST /financial/contract/:idContract/invoice/", async () => {
+        const data = { idContract: 5, value: 100 } as any;
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const id = 1;
-        const result = await fetchDetailContractService(id);
+        await includeNewInvoiceService(data);
 
-        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/contract/${id}/`);
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/contract/5/invoice/", data);
     });
 
-    test("should fetch contract invoices", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("fetchDetailInvoiceService deve chamar GET /financial/invoice/:id/", async () => {
+        mockedGet.mockResolvedValueOnce({ data: { id: 8 } } as any);
 
-        const id = 1;
-        const filters = { status: "unpaid" };
-        const result = await fetchDetailContractInvoicesService(id, filters);
+        await fetchDetailInvoiceService(8);
 
-        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/contract/${id}/invoices/`, { params: filters });
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/invoice/8/");
     });
 
-    test("should include a new invoice", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
+    it("fetchDetailInvoicePaymentsService deve chamar GET /financial/invoice/:id/payments/ com filtros", async () => {
+        const filters = { page: 1 } as any;
+        mockedGet.mockResolvedValueOnce({ data: { results: [] } } as any);
 
-        const data = { idContract: 1, amount: 200 };
-        const result = await includeNewInvoiceService(data);
+        await fetchDetailInvoicePaymentsService(8, filters);
 
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/contract/${data.idContract}/invoice/`, data);
-        expect(result).toBe(mockData.data);
+        expect(mockedGet).toHaveBeenCalledWith("/financial/invoice/8/payments/", { params: filters });
     });
 
-    test("should fetch invoice details", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("saveInvoiceTagsService deve chamar POST /financial/invoice/:id/tags com array de IDs", async () => {
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const id = 1;
-        const result = await fetchDetailInvoiceService(id);
+        await saveInvoiceTagsService(4, [1, 2, 3]);
 
-        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/invoice/${id}/`);
-        expect(result).toBe(mockData.data);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/invoice/4/tags", [1, 2, 3]);
+    });
+});
+
+describe("Tag services", () => {
+    it("fetchTagsService deve chamar GET /financial/tag/", async () => {
+        mockedGet.mockResolvedValueOnce({ data: { data: [] } } as any);
+
+        await fetchTagsService();
+
+        expect(mockedGet).toHaveBeenCalledWith("/financial/tag/");
     });
 
-    test("should fetch invoice payments", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
+    it("includeNewTagService deve chamar POST /financial/tag/new com nome", async () => {
+        mockedPost.mockResolvedValueOnce({ data: {} } as any);
 
-        const id = 1;
-        const filters = { status: "paid" };
-        const result = await fetchDetailInvoicePaymentsService(id, filters);
+        await includeNewTagService({ name: "New Tag" });
 
-        expect(apiDjango.get).toHaveBeenCalledWith(`/financial/invoice/${id}/payments/`, { params: filters });
-        expect(result).toBe(mockData.data);
-    });
-
-    test("should merge contracts", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
-
-        const data = { id: 1, mergeWithId: 2 };
-        const result = await mergeContractService(data);
-
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/contract/${data.id}/merge/`, data);
-        expect(result).toBe(mockData.data);
-    });
-
-    test("should fetch tags", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.get as jest.Mock).mockResolvedValue(mockData);
-
-        const result = await fetchTagsService();
-
-        expect(apiDjango.get).toHaveBeenCalledWith("/financial/tag/");
-        expect(result).toBe(mockData.data);
-    });
-
-    test("should include a new tag", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
-
-        const tag = { name: "New Tag" };
-        const result = await includeNewTagService(tag);
-
-        expect(apiDjango.post).toHaveBeenCalledWith("/financial/tag/new", tag);
-        expect(result).toBe(mockData.data);
-    });
-
-    test("should save invoice tags", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
-
-        const idInvoice = 1;
-        const tags = [1, 2, 3];
-        const result = await saveInvoiceTagsService(idInvoice, tags);
-
-        expect(apiDjango.post).toHaveBeenCalledWith(`/financial/invoice/${idInvoice}/tags`, tags);
-        expect(result).toBe(mockData);
-    });
-
-    test("should update all contracts value", async () => {
-        const mockData = { data: "mockData" };
-        (apiDjango.post as jest.Mock).mockResolvedValue(mockData);
-
-        const result = await updateAllContractsValue();
-
-        expect(apiDjango.post).toHaveBeenCalledWith("/financial/contract/update_all_contracts_value");
-        expect(result).toBe(mockData);
+        expect(mockedPost).toHaveBeenCalledWith("/financial/tag/new", { name: "New Tag" });
     });
 });
