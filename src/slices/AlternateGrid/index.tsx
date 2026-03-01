@@ -4,7 +4,7 @@ import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 
 export type AlternateGridProps = SliceComponentProps<Content.AlternateGridSlice>;
 
-const AlternateGrid = ({ slice }: AlternateGridProps): JSX.Element => {
+const AlternateGrid = ({ slice }: AlternateGridProps) => {
     return (
         <section
             data-slice-type={slice.slice_type}

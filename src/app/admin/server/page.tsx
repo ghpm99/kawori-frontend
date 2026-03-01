@@ -14,7 +14,7 @@ function ServerPage() {
     useEffect(() => {
         document.title = "Kawori Server";
         dispatch(setSelectedMenu(["server"]));
-    }, []);
+    }, [dispatch]);
 
     const updateContractsValue = () => {
         message.loading({

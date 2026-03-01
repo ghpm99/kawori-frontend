@@ -1,58 +1,109 @@
-import { errorInterceptor } from "./index";
+const mockRefreshTokenAsync = jest.fn();
 
-jest.mock("@sentry/nextjs");
 jest.mock("./auth", () => ({
-    refreshTokenAsync: jest.fn().mockResolvedValue(undefined),
+    refreshTokenAsync: (...args: any[]) => mockRefreshTokenAsync(...args),
 }));
 
-describe("apiDjango", () => {
-    beforeAll(() => {
-        jest.useFakeTimers();
-    });
+jest.mock("axios", () => {
+    const actual = jest.requireActual("axios");
+    return {
+        ...actual,
+        create: jest.fn(() => ({
+            get: jest.fn(),
+            post: jest.fn(),
+            interceptors: {
+                request: { use: jest.fn() },
+                response: { use: jest.fn() },
+            },
+        })),
+    };
+});
 
-    afterAll(() => {
-        jest.useRealTimers();
-    });
+import { AxiosError, AxiosResponse } from "axios";
+import { errorInterceptor } from "./index";
 
-    afterEach(() => {
+describe("errorInterceptor", () => {
+    beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    const makeErrorRequest = (codeStatus: number, retryCount = 0) => ({
-        message: `Request failed with status code ${codeStatus}`,
-        name: "AxiosError",
-        isAxiosError: true,
-        toJSON: jest.fn(),
-        config: {
-            _retryCount: retryCount,
-            baseURL: "http://localhost:8500/",
-            method: "get",
-            url: "/profile/",
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                Authorization: "Bearer",
-            },
-        },
-        response: {
-            data: { msg: "O token é inválido ou expirado" },
-            status: codeStatus,
+    function createAxiosError(status: number | undefined, retryCount = 0): AxiosError {
+        const config: any = { _retryCount: retryCount, url: "/test" };
+        const response = status ? {
+            status,
+            data: {},
             statusText: "Error",
             headers: {},
-            config: {},
-        },
+            config,
+        } as AxiosResponse : undefined;
+
+        return {
+            config,
+            response,
+            isAxiosError: true,
+            name: "AxiosError",
+            message: "Error",
+            toJSON: () => ({}),
+        } as AxiosError;
+    }
+
+    it("deve chamar refreshTokenAsync quando status é 401", async () => {
+        mockRefreshTokenAsync.mockResolvedValueOnce(undefined);
+
+        const error = createAxiosError(401);
+        errorInterceptor(error);
+
+        expect(mockRefreshTokenAsync).toHaveBeenCalledTimes(1);
     });
 
-    test.each([408, 504, 500])("should schedule a retry for status %s", (codeStatus) => {
-        const errorRequest = makeErrorRequest(codeStatus);
-        const result = errorInterceptor(errorRequest as any);
-        expect(result).toBeInstanceOf(Promise);
+    it("deve rejeitar quando refreshToken falha em 401", async () => {
+        const refreshError = new Error("Refresh failed");
+        mockRefreshTokenAsync.mockRejectedValueOnce(refreshError);
+
+        const error = createAxiosError(401);
+        await expect(errorInterceptor(error)).rejects.toThrow("Refresh failed");
     });
 
-    test("should reject and capture exception when max retries are exceeded", async () => {
-        const Sentry = jest.requireMock("@sentry/nextjs");
-        const errorRequest = makeErrorRequest(500, 3);
+    it("deve incrementar retryCount a cada tentativa", () => {
+        const error = createAxiosError(500);
+        errorInterceptor(error);
 
-        await expect(errorInterceptor(errorRequest as any)).rejects.toBeDefined();
-        expect(Sentry.captureException).toHaveBeenCalled();
+        expect((error.config as any)._retryCount).toBe(1);
+    });
+
+    it("deve rejeitar e reportar ao Sentry após 3 tentativas", async () => {
+        const Sentry = require("@sentry/nextjs");
+        const error = createAxiosError(500, 3);
+
+        await expect(errorInterceptor(error)).rejects.toBe(error);
+        expect(Sentry.captureException).toHaveBeenCalledWith(error);
+    });
+
+    it("deve fazer retry para status 408 (timeout)", () => {
+        const error = createAxiosError(408);
+        errorInterceptor(error);
+
+        expect((error.config as any)._retryCount).toBe(1);
+    });
+
+    it("deve fazer retry para status 504 (gateway timeout)", () => {
+        const error = createAxiosError(504);
+        errorInterceptor(error);
+
+        expect((error.config as any)._retryCount).toBe(1);
+    });
+
+    it("deve fazer retry quando response é undefined (erro de rede)", () => {
+        const error = createAxiosError(undefined);
+        errorInterceptor(error);
+
+        expect((error.config as any)._retryCount).toBe(1);
+    });
+
+    it("não deve chamar refreshTokenAsync para status diferente de 401", () => {
+        const error = createAxiosError(500);
+        errorInterceptor(error);
+
+        expect(mockRefreshTokenAsync).not.toHaveBeenCalled();
     });
 });

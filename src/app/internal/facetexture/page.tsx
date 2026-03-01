@@ -1,6 +1,6 @@
 "use client";
 import { Breadcrumb, message } from "antd";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import Background from "@/components/facetexture/background";
@@ -24,6 +24,36 @@ function FaceTexture() {
         state: { theme },
     } = useTheme();
 
+    const updateBackground = useCallback(async () => {
+        const background = (await db.background.toArray())[0];
+
+        let backgroundImage;
+
+        if (background) {
+            backgroundImage = URL.createObjectURL(background.image);
+        } else {
+            backgroundImage = "/media/background.jpg";
+            const blob = await fetch(backgroundImage).then((r) => r.blob());
+            await db.background.add({
+                image: blob,
+            });
+        }
+        dispatch(updateBackgroundReducer(backgroundImage));
+    }, [dispatch]);
+
+    const updateCharacterImage = useCallback(async (index: number, name: string) => {
+        const image = await db.image.where("name").equals(name).first();
+        if (image) {
+            const imageUrl = URL.createObjectURL(image.imagem);
+            dispatch(
+                updateFacetextureUrlReducer({
+                    id: index,
+                    image: imageUrl,
+                }),
+            );
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         document.title = "Kawori Facetexture";
         dispatch(setSelectedMenu(["facetexture"]));
@@ -44,37 +74,7 @@ function FaceTexture() {
                 updateCharacterImage(value.id, value.name);
             });
         });
-    }, []);
-
-    const updateBackground = async () => {
-        const background = (await db.background.toArray())[0];
-
-        let backgroundImage;
-
-        if (background) {
-            backgroundImage = URL.createObjectURL(background.image);
-        } else {
-            backgroundImage = "/media/background.jpg";
-            const blob = await fetch(backgroundImage).then((r) => r.blob());
-            await db.background.add({
-                image: blob,
-            });
-        }
-        dispatch(updateBackgroundReducer(backgroundImage));
-    };
-
-    const updateCharacterImage = async (index: number, name: string) => {
-        const image = await db.image.where("name").equals(name).first();
-        if (image) {
-            const imageUrl = URL.createObjectURL(image.imagem);
-            dispatch(
-                updateFacetextureUrlReducer({
-                    id: index,
-                    image: imageUrl,
-                }),
-            );
-        }
-    };
+    }, [dispatch, updateBackground, updateCharacterImage]);
 
     useEffect(() => {
         if (facetextureStore.loading) {

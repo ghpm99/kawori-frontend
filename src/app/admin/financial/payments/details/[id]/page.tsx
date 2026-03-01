@@ -4,7 +4,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import dayjs from "dayjs";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "@/components/loadingPage/Index";
@@ -28,10 +28,10 @@ import styles from "./Details.module.scss";
 const { Paragraph } = Typography;
 const { Option } = Select;
 
-export default function PaymentDetails({ params }: { params: { id: number } }) {
+export default function PaymentDetails({ params }: { params: Promise<{ id: number }> }) {
     const msgRef = "payment-details-msg";
 
-    const { id } = params;
+    const { id } = use(params);
 
     const financialStore = useSelector((state: RootState) => state.financial.paymentDetail);
     const dispatch = useAppDispatch();
@@ -39,14 +39,14 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
     useEffect(() => {
         document.title = `Kawori Pagamento ${id}`;
         dispatch(setSelectedMenu(["financial", "payments"]));
-    }, []);
+    }, [dispatch, id]);
 
     useEffect(() => {
         if (id) {
             const idPayment = id;
             dispatch(fetchPaymentDetails(idPayment));
         }
-    }, [id]);
+    }, [id, dispatch]);
 
     const date = new Date(financialStore.data?.date).toLocaleDateString();
 

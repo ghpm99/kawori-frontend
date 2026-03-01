@@ -12,13 +12,14 @@ import { Breadcrumb } from "antd";
 import ListNews from "./listNews";
 import stylesNews from "./news.module.scss";
 
-type Params = { uid: string };
+type Params = Promise<{ uid: string }>;
 
 // export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+    const { uid } = await params;
     const client = createClient();
-    const page = await client.getByUID("platform_news", params.uid);
+    const page = await client.getByUID("platform_news", uid);
 
     return {
         title: `${page.data.meta_title}`,
@@ -27,8 +28,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 export default async function Page({ params }: { params: Params }) {
+    const { uid } = await params;
     const client = createClient();
-    const page = await client.getByUID("platform_news", params.uid);
+    const page = await client.getByUID("platform_news", uid);
     const pages = await client.getAllByType("platform_news");
     const pageList = pages.map((item) => ({
         first_publication_date: item.first_publication_date,

@@ -51,7 +51,7 @@ function FinancialPage({ searchParams }) {
                 ...searchParams,
             }),
         );
-    }, []);
+    }, [dispatch, searchParams]);
 
     useEffect(() => {
         updateSearchParams(router, pathname, financialStore.filters);

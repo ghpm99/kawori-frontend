@@ -35,7 +35,7 @@ function FinancialPage({ searchParams }) {
         document.title = "Kawori Contratos";
         dispatch(setSelectedMenu(["financial", "contracts"]));
         dispatch(setFiltersContract(searchParams));
-    }, []);
+    }, [dispatch, searchParams]);
 
     useEffect(() => {
         updateSearchParams(router, pathname, financialStore.filters);

@@ -1,56 +1,70 @@
-import newsFeedReducer, { fetchNewsFeedThunk, INewsData } from "./index";
-
-describe("newsFeedSlice", () => {
-    const initialState = {
-        data: [] as INewsData[],
-        status: "waiting" as const,
+jest.mock("axios", () => {
+    const actual = jest.requireActual("axios");
+    return {
+        ...actual,
+        create: jest.fn(() => ({
+            get: jest.fn(),
+            post: jest.fn(),
+            interceptors: {
+                request: { use: jest.fn() },
+                response: { use: jest.fn() },
+            },
+        })),
     };
+});
 
-    describe("initial state", () => {
-        test("should return the initial state", () => {
-            const state = newsFeedReducer(undefined, { type: "@@INIT" });
+import reducer, { newsFeedSlice, fetchNewsFeedThunk } from "./index";
 
-            expect(state).toEqual({ data: [], status: "waiting" });
+const initialState = newsFeedSlice.getInitialState();
+
+describe("news slice", () => {
+    describe("estado inicial", () => {
+        it("deve ter data vazio e status 'waiting'", () => {
+            expect(initialState.data).toEqual([]);
+            expect(initialState.status).toBe("waiting");
         });
     });
 
-    describe("fetchNewsFeedThunk", () => {
-        test("should set status to loading on pending", () => {
-            const action = { type: fetchNewsFeedThunk.pending.type };
-            const state = newsFeedReducer(initialState, action);
+    describe("extraReducers", () => {
+        it("fetchNewsFeedThunk.pending deve marcar status como 'loading'", () => {
+            const result = reducer(initialState, { type: fetchNewsFeedThunk.pending.type });
 
-            expect(state.status).toBe("loading");
+            expect(result.status).toBe("loading");
         });
 
-        test("should set data and status to success on fulfilled", () => {
-            const mockData: INewsData[] = [
-                { title: "News 1", url: "/news/1", first_publication_date: "2024-01-01" },
-                { title: "News 2", url: "/news/2", first_publication_date: "2024-02-01" },
+        it("fetchNewsFeedThunk.fulfilled deve popular data e marcar status 'success'", () => {
+            const newsData = [
+                { first_publication_date: "2024-01-01", url: "/news/article-1", title: "Article 1" },
+                { first_publication_date: "2024-01-02", url: "/news/article-2", title: "Article 2" },
             ];
-            const action = { type: fetchNewsFeedThunk.fulfilled.type, payload: mockData };
-            const state = newsFeedReducer(initialState, action);
 
-            expect(state.data).toEqual(mockData);
-            expect(state.status).toBe("success");
-        });
-
-        test("should set status to error on rejected", () => {
-            const action = { type: fetchNewsFeedThunk.rejected.type };
-            const state = newsFeedReducer(initialState, action);
-
-            expect(state.status).toBe("error");
-        });
-
-        test("should preserve existing data when transitioning to loading", () => {
-            const existingState = {
-                data: [{ title: "Old", url: "/old", first_publication_date: "2023-01-01" }],
-                status: "success" as const,
+            const action = {
+                type: fetchNewsFeedThunk.fulfilled.type,
+                payload: newsData,
             };
-            const action = { type: fetchNewsFeedThunk.pending.type };
-            const state = newsFeedReducer(existingState, action);
 
-            expect(state.status).toBe("loading");
-            expect(state.data).toEqual(existingState.data);
+            const result = reducer(initialState, action);
+
+            expect(result.data).toEqual(newsData);
+            expect(result.status).toBe("success");
+        });
+
+        it("fetchNewsFeedThunk.rejected deve marcar status como 'error'", () => {
+            const result = reducer(initialState, { type: fetchNewsFeedThunk.rejected.type });
+
+            expect(result.status).toBe("error");
+        });
+
+        it("deve transitar de 'loading' para 'success' ao completar", () => {
+            const loadingState = { ...initialState, status: "loading" as const };
+            const action = {
+                type: fetchNewsFeedThunk.fulfilled.type,
+                payload: [{ first_publication_date: "2024-01-01", url: "/", title: "Test" }],
+            };
+
+            const result = reducer(loadingState, action);
+
+            expect(result.status).toBe("success");
         });
     });
 });

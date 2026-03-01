@@ -3,8 +3,6 @@ import {
     Breadcrumb,
     Card,
     Dropdown,
-    Layout,
-    Menu,
     MenuProps,
     message,
     Modal,
@@ -17,7 +15,7 @@ import dayjs from "dayjs";
 
 import Link from "next/link";
 
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, use, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import ModalNewInvoice, { IFormNewInvoice } from "@/components/contracts/modalNewInvoice";
@@ -40,10 +38,10 @@ import styles from "./Details.module.scss";
 const { Paragraph } = Typography;
 const { Option } = Select;
 
-export default function ContractDetails({ params }: { params: { id: number } }) {
+export default function ContractDetails({ params }: { params: Promise<{ id: number }> }) {
     const msgRef = "contract-details-msg";
 
-    const { id } = params;
+    const { id } = use(params);
 
     const financialStore = useSelector((state: RootState) => state.financial.contractDetail);
     const tagStore = useSelector((state: RootState) => state.financial.tag);
@@ -72,7 +70,7 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
                 }),
             );
         }
-    }, [id]);
+    }, [id, dispatch]);
 
     useEffect(() => {
         document.title = `Kawori Contrato ${id}`;
@@ -85,7 +83,7 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
             }),
         );
         dispatch(fetchTags());
-    }, []);
+    }, [dispatch, id]);
 
     const save: MouseEventHandler<HTMLButtonElement> = (event) => {
         console.log(event);
@@ -185,21 +183,16 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
         );
     };
 
-    const menu = (
-        <Menu
-            onClick={onMenuClick}
-            items={[
-                {
-                    key: "1",
-                    label: "Incluir nova nota",
-                },
-                {
-                    key: "2",
-                    label: "Mesclar contrato",
-                },
-            ]}
-        />
-    );
+    const menuItems = [
+        {
+            key: "1",
+            label: "Incluir nova nota",
+        },
+        {
+            key: "2",
+            label: "Mesclar contrato",
+        },
+    ];
 
     return (
         <>
@@ -222,7 +215,7 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
                         </Paragraph>
                     </div>
                     <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                        <Dropdown.Button overlay={menu} type="primary" onClick={save} className={styles.button_save}>
+                        <Dropdown.Button menu={{ items: menuItems, onClick: onMenuClick }} type="primary" onClick={save} className={styles.button_save}>
                             Salvar
                         </Dropdown.Button>
                     </div>

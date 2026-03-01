@@ -1,115 +1,208 @@
 import { _registerEffect } from "./middleware";
 
+const emptyState: LoadingState = {
+    global: false,
+    slices: {},
+    effects: {},
+    requests: {},
+};
+
 describe("_registerEffect", () => {
-    const initialState: LoadingState = {
-        global: false,
-        slices: {},
-        effects: {},
-        requests: {},
-    };
+    describe("lifecycle pending", () => {
+        it("deve marcar global como true", () => {
+            const result = _registerEffect({
+                initialState: emptyState,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "pending",
+                requestId: "req-1",
+            });
 
-    test("should initialize state correctly when slice, effect, and requests are not present", () => {
-        const args = {
-            initialState,
-            slice: "testSlice",
-            effect: "testSlice/testEffect",
-            lifecycle: "pending",
-            requestId: "request1",
-        };
+            expect(result.global).toBe(true);
+        });
 
-        const result = _registerEffect(args);
+        it("deve marcar slice como 'pending'", () => {
+            const result = _registerEffect({
+                initialState: emptyState,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "pending",
+                requestId: "req-1",
+            });
 
-        expect(result.slices["testSlice"]).toBe("pending");
-        expect(result.effects["testSlice/testEffect"]).toBe("pending");
-        expect(result.requests["testSlice/testEffect"]).toEqual(["request1"]);
-        expect(result.global).toBe(true);
+            expect(result.slices["auth"]).toBe("pending");
+        });
+
+        it("deve marcar effect como 'pending'", () => {
+            const result = _registerEffect({
+                initialState: emptyState,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "pending",
+                requestId: "req-1",
+            });
+
+            expect(result.effects["auth/signin"]).toBe("pending");
+        });
+
+        it("deve adicionar requestId ao array de requests do effect", () => {
+            const result = _registerEffect({
+                initialState: emptyState,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "pending",
+                requestId: "req-1",
+            });
+
+            expect(result.requests["auth/signin"]).toContain("req-1");
+        });
     });
 
-    test("should update state correctly when lifecycle is pending", () => {
-        const args = {
-            initialState: {
-                ...initialState,
-                slices: { testSlice: "starting" },
-                effects: { "testSlice/testEffect": "starting" },
-                requests: { "testSlice/testEffect": [] },
-            },
-            slice: "testSlice",
-            effect: "testSlice/testEffect",
-            lifecycle: "pending",
-            requestId: "request1",
-        };
+    describe("lifecycle fulfilled", () => {
+        it("deve remover requestId e marcar effect como 'idle'", () => {
+            const stateWithPending: LoadingState = {
+                global: true,
+                slices: { auth: "pending" },
+                effects: { "auth/signin": "pending" },
+                requests: { "auth/signin": ["req-1"] },
+            };
 
-        const result = _registerEffect(args);
+            const result = _registerEffect({
+                initialState: stateWithPending,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "fulfilled",
+                requestId: "req-1",
+            });
 
-        expect(result.slices["testSlice"]).toBe("pending");
-        expect(result.effects["testSlice/testEffect"]).toBe("pending");
-        expect(result.requests["testSlice/testEffect"]).toEqual(["request1"]);
-        expect(result.global).toBe(true);
+            expect(result.requests["auth/signin"]).toEqual([]);
+            expect(result.effects["auth/signin"]).toBe("idle");
+        });
+
+        it("deve marcar global como false quando não há mais requests ativos", () => {
+            const stateWithPending: LoadingState = {
+                global: true,
+                slices: { auth: "pending" },
+                effects: { "auth/signin": "pending" },
+                requests: { "auth/signin": ["req-1"] },
+            };
+
+            const result = _registerEffect({
+                initialState: stateWithPending,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "fulfilled",
+                requestId: "req-1",
+            });
+
+            expect(result.global).toBe(false);
+        });
+
+        it("deve manter global true se ainda há requests de outro slice", () => {
+            const stateWithMultiple: LoadingState = {
+                global: true,
+                slices: { auth: "pending", financial: "pending" },
+                effects: { "auth/signin": "pending", "financial/fetchTags": "pending" },
+                requests: { "auth/signin": ["req-1"], "financial/fetchTags": ["req-2"] },
+            };
+
+            const result = _registerEffect({
+                initialState: stateWithMultiple,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "fulfilled",
+                requestId: "req-1",
+            });
+
+            expect(result.global).toBe(true);
+            expect(result.slices["auth"]).toBe("idle");
+            expect(result.slices["financial"]).toBe("pending");
+        });
+
+        it("deve manter effect como pending se ainda há requests pendentes para ele", () => {
+            const stateWithMultipleRequests: LoadingState = {
+                global: true,
+                slices: { auth: "pending" },
+                effects: { "auth/signin": "pending" },
+                requests: { "auth/signin": ["req-1", "req-2"] },
+            };
+
+            const result = _registerEffect({
+                initialState: stateWithMultipleRequests,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "fulfilled",
+                requestId: "req-1",
+            });
+
+            expect(result.effects["auth/signin"]).toBe("pending");
+            expect(result.requests["auth/signin"]).toEqual(["req-2"]);
+        });
     });
 
-    test("should update state correctly when lifecycle is fulfilled", () => {
-        const args = {
-            initialState: {
-                ...initialState,
-                slices: { testSlice: "pending" },
-                effects: { "testSlice/testEffect": "pending" },
-                requests: { "testSlice/testEffect": ["request1"] },
-            },
-            slice: "testSlice",
-            effect: "testSlice/testEffect",
-            lifecycle: "fulfilled",
-            requestId: "request1",
-        };
+    describe("lifecycle rejected", () => {
+        it("deve marcar effect como 'failed'", () => {
+            const stateWithPending: LoadingState = {
+                global: true,
+                slices: { auth: "pending" },
+                effects: { "auth/signin": "pending" },
+                requests: { "auth/signin": ["req-1"] },
+            };
 
-        const result = _registerEffect(args);
+            const result = _registerEffect({
+                initialState: stateWithPending,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "rejected",
+                requestId: "req-1",
+            });
 
-        expect(result.slices["testSlice"]).toBe("idle");
-        expect(result.effects["testSlice/testEffect"]).toBe("idle");
-        expect(result.requests["testSlice/testEffect"]).toEqual([]);
-        expect(result.global).toBe(false);
+            expect(result.effects["auth/signin"]).toBe("failed");
+        });
+
+        it("deve marcar slice como 'failed' quando não há mais requests ativos", () => {
+            const stateWithPending: LoadingState = {
+                global: true,
+                slices: { auth: "pending" },
+                effects: { "auth/signin": "pending" },
+                requests: { "auth/signin": ["req-1"] },
+            };
+
+            const result = _registerEffect({
+                initialState: stateWithPending,
+                slice: "auth",
+                effect: "auth/signin",
+                lifecycle: "rejected",
+                requestId: "req-1",
+            });
+
+            expect(result.slices["auth"]).toBe("failed");
+        });
     });
 
-    test("should update state correctly when lifecycle is rejected", () => {
-        const args = {
-            initialState: {
-                ...initialState,
-                slices: { testSlice: "pending" },
-                effects: { "testSlice/testEffect": "pending" },
-                requests: { "testSlice/testEffect": ["request1"] },
-            },
-            slice: "testSlice",
-            effect: "testSlice/testEffect",
-            lifecycle: "rejected",
-            requestId: "request1",
-        };
+    describe("inicialização de slices/effects", () => {
+        it("deve criar slice como 'starting' se não existir", () => {
+            const result = _registerEffect({
+                initialState: emptyState,
+                slice: "newSlice",
+                effect: "newSlice/action",
+                lifecycle: "pending",
+                requestId: "req-1",
+            });
 
-        const result = _registerEffect(args);
+            expect(result.slices["newSlice"]).toBe("pending");
+        });
 
-        expect(result.slices["testSlice"]).toBe("failed");
-        expect(result.effects["testSlice/testEffect"]).toBe("failed");
-        expect(result.requests["testSlice/testEffect"]).toEqual([]);
-        expect(result.global).toBe(false);
-    });
+        it("deve criar array de requests vazio se não existir", () => {
+            const result = _registerEffect({
+                initialState: emptyState,
+                slice: "auth",
+                effect: "auth/newAction",
+                lifecycle: "pending",
+                requestId: "req-1",
+            });
 
-    test("should handle multiple requests correctly", () => {
-        const args = {
-            initialState: {
-                ...initialState,
-                slices: { testSlice: "pending" },
-                effects: { "testSlice/testEffect": "pending" },
-                requests: { "testSlice/testEffect": ["request1", "request2"] },
-            },
-            slice: "testSlice",
-            effect: "testSlice/testEffect",
-            lifecycle: "fulfilled",
-            requestId: "request1",
-        };
-
-        const result = _registerEffect(args);
-
-        expect(result.slices["testSlice"]).toBe("pending");
-        expect(result.effects["testSlice/testEffect"]).toBe("pending");
-        expect(result.requests["testSlice/testEffect"]).toEqual(["request2"]);
-        expect(result.global).toBe(true);
+            expect(result.requests["auth/newAction"]).toEqual(["req-1"]);
+        });
     });
 });

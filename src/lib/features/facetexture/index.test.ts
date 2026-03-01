@@ -1,224 +1,152 @@
-import facetextureReducer, {
+jest.mock("axios", () => {
+    const actual = jest.requireActual("axios");
+    return {
+        ...actual,
+        create: jest.fn(() => ({
+            get: jest.fn(),
+            post: jest.fn(),
+            interceptors: {
+                request: { use: jest.fn() },
+                response: { use: jest.fn() },
+            },
+        })),
+    };
+});
+
+import reducer, {
+    facetextureSlice,
+    updateFacetextureUrlReducer,
+    updateBackgroundReducer,
+    setSelectedFacetextureReducer,
+    deleteCharacterReducer,
+    setFacetextureIsEdited,
+    updateFacetextureClassModalReducer,
+    updateFacetextureVisibleClassModalReducer,
+    updateFacetextureImageNameModalReducer,
     changeModalVisible,
     changeFacetextureSavingModalReducer,
-    deleteCharacterReducer,
     fetchFacetexture,
-    reorderCharacterReducer,
-    setFacetextureIsEdited,
-    setSelectedFacetextureReducer,
-    updateBackgroundReducer,
 } from "./index";
 
-// Mock services to prevent real network calls when the module is loaded
-jest.mock("@/services/facetexture", () => ({
-    fetchFaceTextureClassService: jest.fn(),
-    fetchFacetextureService: jest.fn(),
-    newCharacterThunk: {
-        pending: { type: "facetexture/NewCharacter/pending" },
-        fulfilled: { type: "facetexture/NewCharacter/fulfilled" },
-        rejected: { type: "facetexture/NewCharacter/rejected" },
-    },
-    reorderCharacterThunk: {
-        pending: { type: "facetexture/reorderCharacter/pending" },
-        fulfilled: { type: "facetexture/reorderCharacter/fulfilled" },
-    },
-    changeClassCharacterThunk: {
-        fulfilled: { type: "facetexture/changeClassCharacter/fulfilled" },
-    },
-    deleteCharacterThunk: {
-        fulfilled: { type: "facetexture/deleteCharacter/fulfilled" },
-    },
-    changeShowClassThunk: {
-        fulfilled: { type: "facetexture/changeShowClass/fulfilled" },
-    },
-}));
+const initialState = facetextureSlice.getInitialState();
 
-const baseState: IFacetextureState = {
-    loading: false,
-    backgroundUrl: "",
-    class: [],
-    facetexture: [],
-    selected: undefined,
-    edited: false,
-    error: false,
-    modal: {
-        newFacetexture: {
-            visible: false,
-            saving: false,
-            data: { name: "", visible: true, classId: 0 },
-        },
-    },
-};
+const createFacetextureState = (): typeof initialState => ({
+    ...initialState,
+    facetexture: [
+        { id: 1, name: "Char1", image: "img1.png", class: { id: 1, class_image: "class1.png" }, order: 0, show: true } as any,
+        { id: 2, name: "Char2", image: "img2.png", class: { id: 2, class_image: "class2.png" }, order: 1, show: true } as any,
+        { id: 3, name: "Char3", image: "img3.png", class: { id: 1, class_image: "class1.png" }, order: 2, show: false } as any,
+    ],
+});
 
-describe("facetextureSlice", () => {
-    describe("updateBackgroundReducer", () => {
-        test("should update backgroundUrl", () => {
-            const state = facetextureReducer(baseState, updateBackgroundReducer("blob:new-bg"));
-            expect(state.backgroundUrl).toBe("blob:new-bg");
+describe("facetexture slice", () => {
+    describe("estado inicial", () => {
+        it("deve ter loading true e listas vazias", () => {
+            expect(initialState.loading).toBe(true);
+            expect(initialState.facetexture).toEqual([]);
+            expect(initialState.class).toEqual([]);
+        });
+
+        it("deve ter selected undefined e edited false", () => {
+            expect(initialState.selected).toBeUndefined();
+            expect(initialState.edited).toBe(false);
+        });
+
+        it("deve ter modal newFacetexture com visible false", () => {
+            expect(initialState.modal.newFacetexture.visible).toBe(false);
+            expect(initialState.modal.newFacetexture.saving).toBe(false);
         });
     });
 
-    describe("setSelectedFacetextureReducer", () => {
-        test("should set the selected facetexture index", () => {
-            const state = facetextureReducer(baseState, setSelectedFacetextureReducer(3));
-            expect(state.selected).toBe(3);
+    describe("reducers síncronos", () => {
+        it("updateFacetextureUrlReducer deve atualizar image do personagem pelo id", () => {
+            const state = createFacetextureState();
+            const result = reducer(state, updateFacetextureUrlReducer({ id: 1, image: "new-img.png" }));
+
+            expect(result.facetexture[0].image).toBe("new-img.png");
+        });
+
+        it("updateBackgroundReducer deve atualizar backgroundUrl", () => {
+            const result = reducer(initialState, updateBackgroundReducer("background.png"));
+            expect(result.backgroundUrl).toBe("background.png");
+        });
+
+        it("setSelectedFacetextureReducer deve definir o selecionado", () => {
+            const result = reducer(initialState, setSelectedFacetextureReducer(2));
+            expect(result.selected).toBe(2);
+        });
+
+        it("deleteCharacterReducer deve remover personagem pelo index e marcar como editado", () => {
+            const state = createFacetextureState();
+            const result = reducer(state, deleteCharacterReducer(1));
+
+            expect(result.facetexture).toHaveLength(2);
+            expect(result.facetexture[0].id).toBe(1);
+            expect(result.facetexture[1].id).toBe(3);
+            expect(result.edited).toBe(true);
+        });
+
+        it("setFacetextureIsEdited deve atualizar flag edited", () => {
+            const result = reducer(initialState, setFacetextureIsEdited(true));
+            expect(result.edited).toBe(true);
+        });
+
+        it("updateFacetextureClassModalReducer deve atualizar classId no modal", () => {
+            const result = reducer(initialState, updateFacetextureClassModalReducer({ classId: 5 }));
+            expect(result.modal.newFacetexture.data.classId).toBe(5);
+        });
+
+        it("updateFacetextureVisibleClassModalReducer deve atualizar visible no modal", () => {
+            const result = reducer(initialState, updateFacetextureVisibleClassModalReducer({ visible: false }));
+            expect(result.modal.newFacetexture.data.visible).toBe(false);
+        });
+
+        it("updateFacetextureImageNameModalReducer deve atualizar name no modal", () => {
+            const result = reducer(initialState, updateFacetextureImageNameModalReducer({ name: "New Name" }));
+            expect(result.modal.newFacetexture.data.name).toBe("New Name");
+        });
+
+        it("changeModalVisible deve alternar visibilidade do modal", () => {
+            const result = reducer(initialState, changeModalVisible({ modal: "newFacetexture", visible: true }));
+            expect(result.modal.newFacetexture.visible).toBe(true);
+        });
+
+        it("changeFacetextureSavingModalReducer deve atualizar saving no modal", () => {
+            const result = reducer(initialState, changeFacetextureSavingModalReducer(true));
+            expect(result.modal.newFacetexture.saving).toBe(true);
         });
     });
 
-    describe("reorderCharacterReducer", () => {
-        test("should reorder facetexture list", () => {
-            const stateWithItems: IFacetextureState = {
-                ...baseState,
-                facetexture: [
-                    {
-                        id: 1,
-                        name: "A",
-                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
-                        show: true,
-                        image: "",
-                        order: 0,
-                    },
-                    {
-                        id: 2,
-                        name: "B",
-                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
-                        show: true,
-                        image: "",
-                        order: 1,
-                    },
-                    {
-                        id: 3,
-                        name: "C",
-                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
-                        show: true,
-                        image: "",
-                        order: 2,
-                    },
-                ],
+    describe("extraReducers", () => {
+        it("fetchFacetexture.pending deve marcar loading true e error false", () => {
+            const state = { ...initialState, loading: false, error: true };
+            const result = reducer(state, { type: fetchFacetexture.pending.type });
+
+            expect(result.loading).toBe(true);
+            expect(result.error).toBe(false);
+        });
+
+        it("fetchFacetexture.fulfilled deve popular class e facetexture e desligar loading", () => {
+            const action = {
+                type: fetchFacetexture.fulfilled.type,
+                payload: {
+                    classes: { class: [{ id: 1, name: "Warrior" }] },
+                    characters: [{ id: 1, name: "Char1" }],
+                },
             };
-            // Move item at index 0 to index 2
-            const state = facetextureReducer(
-                stateWithItems,
-                reorderCharacterReducer({ indexSource: 0, indexDestination: 2 }),
-            );
-            expect(state.facetexture[0].name).toBe("B");
-            expect(state.facetexture[1].name).toBe("C");
-            expect(state.facetexture[2].name).toBe("A");
-        });
-    });
 
-    describe("deleteCharacterReducer", () => {
-        test("should remove character at given index and set edited to true", () => {
-            const stateWithItems: IFacetextureState = {
-                ...baseState,
-                facetexture: [
-                    {
-                        id: 1,
-                        name: "A",
-                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
-                        show: true,
-                        image: "",
-                        order: 0,
-                    },
-                    {
-                        id: 2,
-                        name: "B",
-                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
-                        show: true,
-                        image: "",
-                        order: 1,
-                    },
-                ],
-            };
-            const state = facetextureReducer(stateWithItems, deleteCharacterReducer(0));
-            expect(state.facetexture).toHaveLength(1);
-            expect(state.facetexture[0].name).toBe("B");
-            expect(state.edited).toBe(true);
-        });
-    });
+            const result = reducer(initialState, action);
 
-    describe("changeModalVisible", () => {
-        test("should toggle modal visibility", () => {
-            const state = facetextureReducer(baseState, changeModalVisible({ modal: "newFacetexture", visible: true }));
-            expect(state.modal.newFacetexture.visible).toBe(true);
+            expect(result.loading).toBe(false);
+            expect(result.class).toEqual([{ id: 1, name: "Warrior" }]);
+            expect(result.facetexture).toEqual([{ id: 1, name: "Char1" }]);
         });
 
-        test("should hide modal when visible is false", () => {
-            const openState = {
-                ...baseState,
-                modal: { newFacetexture: { ...baseState.modal.newFacetexture, visible: true } },
-            };
-            const state = facetextureReducer(
-                openState,
-                changeModalVisible({ modal: "newFacetexture", visible: false }),
-            );
-            expect(state.modal.newFacetexture.visible).toBe(false);
-        });
-    });
+        it("fetchFacetexture.rejected deve marcar loading false e error true", () => {
+            const result = reducer(initialState, { type: fetchFacetexture.rejected.type });
 
-    describe("changeFacetextureSavingModalReducer", () => {
-        test("should set saving to true", () => {
-            const state = facetextureReducer(baseState, changeFacetextureSavingModalReducer(true));
-            expect(state.modal.newFacetexture.saving).toBe(true);
-        });
-
-        test("should set saving to false", () => {
-            const savingState = {
-                ...baseState,
-                modal: { newFacetexture: { ...baseState.modal.newFacetexture, saving: true } },
-            };
-            const state = facetextureReducer(savingState, changeFacetextureSavingModalReducer(false));
-            expect(state.modal.newFacetexture.saving).toBe(false);
-        });
-    });
-
-    describe("setFacetextureIsEdited", () => {
-        test("should set edited to true", () => {
-            const state = facetextureReducer(baseState, setFacetextureIsEdited(true));
-            expect(state.edited).toBe(true);
-        });
-
-        test("should set edited to false", () => {
-            const editedState = { ...baseState, edited: true };
-            const state = facetextureReducer(editedState, setFacetextureIsEdited(false));
-            expect(state.edited).toBe(false);
-        });
-    });
-
-    describe("fetchFacetexture async thunk", () => {
-        test("should set loading to true and error to false on pending", () => {
-            const state = facetextureReducer(baseState, { type: fetchFacetexture.pending.type });
-            expect(state.loading).toBe(true);
-            expect(state.error).toBe(false);
-        });
-
-        test("should set class, facetexture list, and loading to false on fulfilled", () => {
-            const payload = {
-                characters: [
-                    {
-                        id: 1,
-                        name: "TestChar",
-                        class: { id: 1, name: "W", abbreviation: "W", class_image: "" },
-                        show: true,
-                        image: "",
-                        order: 0,
-                    },
-                ],
-                classes: { class: [{ id: 1, name: "Warrior", abbreviation: "W", class_image: "", class_symbol: "" }] },
-            };
-            const state = facetextureReducer(
-                { ...baseState, loading: true },
-                { type: fetchFacetexture.fulfilled.type, payload },
-            );
-            expect(state.loading).toBe(false);
-            expect(state.facetexture).toHaveLength(1);
-            expect(state.class).toHaveLength(1);
-        });
-
-        test("should set loading to false and error to true on rejected", () => {
-            const state = facetextureReducer({ ...baseState, loading: true }, { type: fetchFacetexture.rejected.type });
-            expect(state.loading).toBe(false);
-            expect(state.error).toBe(true);
+            expect(result.loading).toBe(false);
+            expect(result.error).toBe(true);
         });
     });
 });

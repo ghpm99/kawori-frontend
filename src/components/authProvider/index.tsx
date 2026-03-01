@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
         if (verifyLocalStore()) {
             dispatch(verifyTokenThunk());
         }
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         const handleTokenRefreshFailed = () => {

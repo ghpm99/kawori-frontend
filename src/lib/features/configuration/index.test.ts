@@ -1,27 +1,46 @@
-import { configureStore } from "@reduxjs/toolkit";
-import configurationReducer, { configurationSlice } from "./index";
+jest.mock("axios", () => {
+    const actual = jest.requireActual("axios");
+    return {
+        ...actual,
+        create: jest.fn(() => ({
+            get: jest.fn(),
+            post: jest.fn(),
+            interceptors: {
+                request: { use: jest.fn() },
+                response: { use: jest.fn() },
+            },
+        })),
+    };
+});
+
+import reducer, { configurationSlice } from "./index";
 import { getAllBdoClass } from "@/services/classification";
 
-describe("configurationSlice", () => {
-    test("should handle initial state", () => {
-        const initialState = configurationSlice.getInitialState();
-        expect(initialState).toEqual({ class: [] });
+const initialState = configurationSlice.getInitialState();
+
+describe("configuration slice", () => {
+    describe("estado inicial", () => {
+        it("deve ter class vazio", () => {
+            expect(initialState.class).toEqual([]);
+        });
     });
 
-    test("should handle getAllBdoClass.fulfilled", () => {
-        const store = configureStore({
-            reducer: {
-                configuration: configurationReducer,
-            },
+    describe("extraReducers", () => {
+        it("getAllBdoClass.fulfilled deve popular lista de classes", () => {
+            const classes = [
+                { id: 1, name: "Warrior", class_image: "warrior.png" },
+                { id: 2, name: "Sorceress", class_image: "sorceress.png" },
+            ];
+
+            const action = {
+                type: getAllBdoClass.fulfilled.type,
+                payload: { class: classes },
+            };
+
+            const result = reducer(initialState, action);
+
+            expect(result.class).toEqual(classes);
+            expect(result.class).toHaveLength(2);
         });
-
-        const mockClasses = [
-            { id: 1, name: "Warrior" },
-            { id: 2, name: "Sorceress" },
-        ];
-        store.dispatch(getAllBdoClass.fulfilled({ class: mockClasses }, "requestId"));
-
-        const state = store.getState().configuration;
-        expect(state.class).toEqual(mockClasses);
     });
 });
