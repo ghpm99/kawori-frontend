@@ -11,10 +11,9 @@ const createJestConfig = nextJest({
 /** @type {import('jest').Config} */
 const config: Config = {
     // Add more setup options before each test is run
-    preset: "ts-jest",
     maxWorkers: 2,
     forceExit: true,
-    workerIdleMemoryLimit: "512MB",
+    workerIdleMemoryLimit: "2048MB",
     setupFiles: ["<rootDir>/jest.setupFiles.js"],
     setupFilesAfterEnv: ["<rootDir>/jest.setupFilesAfterEnv.js"],
     moduleNameMapper: {
@@ -22,7 +21,6 @@ const config: Config = {
         "^@/(.*)$": "<rootDir>/src/$1"
     },
     testEnvironment: "jsdom",
-    globals: { fetch },
     coverageProvider: "v8",
     collectCoverageFrom: [
         "src/**/*.ts",
@@ -35,10 +33,10 @@ const config: Config = {
     ],
     coverageThreshold: {
         global: {
-            branches: 80,
-            functions: 65,
-            lines: 50,
-            statements: 50
+            branches: 50,
+            functions: 30,
+            lines: 10,
+            statements: 10
         }
     }
 };

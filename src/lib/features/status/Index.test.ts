@@ -1,18 +1,29 @@
-import statusReducer, { setCpuAndMemoryValue } from "./Index";
+import reducer, { statusSlice, setCpuAndMemoryValue } from "./Index";
 
-describe("statusSlice reducer", () => {
-    const initialState = {
-        cpu: 0,
-        memory: 0,
-    };
+const initialState = statusSlice.getInitialState();
 
-    test("should handle initial state", () => {
-        expect(statusReducer(undefined, { type: "unknown" })).toEqual(initialState);
+describe("status slice", () => {
+    describe("estado inicial", () => {
+        it("deve ter cpu e memory em 0", () => {
+            expect(initialState.cpu).toBe(0);
+            expect(initialState.memory).toBe(0);
+        });
     });
 
-    test("should handle setCpuAndMemoryValue", () => {
-        const actual = statusReducer(initialState, setCpuAndMemoryValue({ cpu: 50, memory: 1024 }));
-        expect(actual.cpu).toEqual(50);
-        expect(actual.memory).toEqual(1024);
+    describe("reducers", () => {
+        it("setCpuAndMemoryValue deve atualizar cpu e memory", () => {
+            const result = reducer(initialState, setCpuAndMemoryValue({ cpu: 45.5, memory: 72.3 }));
+
+            expect(result.cpu).toBe(45.5);
+            expect(result.memory).toBe(72.3);
+        });
+
+        it("setCpuAndMemoryValue deve atualizar para zero", () => {
+            const state = { cpu: 50, memory: 80 };
+            const result = reducer(state, setCpuAndMemoryValue({ cpu: 0, memory: 0 }));
+
+            expect(result.cpu).toBe(0);
+            expect(result.memory).toBe(0);
+        });
     });
 });

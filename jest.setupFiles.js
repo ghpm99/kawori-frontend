@@ -10,28 +10,30 @@ if (typeof global.MessageChannel === 'undefined') {
     global.MessageChannel = MessageChannel;
 }
 
-// jsdom does not support getComputedStyle with pseudo-elements (used by antd animations)
-const _getComputedStyle = window.getComputedStyle.bind(window);
-window.getComputedStyle = (elt, pseudoElt) => {
-    if (pseudoElt) {
-        return { getPropertyValue: () => '' };
-    }
-    return _getComputedStyle(elt);
-};
+if (typeof window !== 'undefined') {
+    // jsdom does not support getComputedStyle with pseudo-elements (used by antd animations)
+    const _getComputedStyle = window.getComputedStyle.bind(window);
+    window.getComputedStyle = (elt, pseudoElt) => {
+        if (pseudoElt) {
+            return { getPropertyValue: () => '' };
+        }
+        return _getComputedStyle(elt);
+    };
 
-Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-    })),
-});
+    Object.defineProperty(window, "matchMedia", {
+        writable: true,
+        value: jest.fn().mockImplementation((query) => ({
+            matches: false,
+            media: query,
+            onchange: null,
+            addListener: jest.fn(), // Deprecated
+            removeListener: jest.fn(), // Deprecated
+            addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
+            dispatchEvent: jest.fn(),
+        })),
+    });
+}
 
 jest.mock("@sentry/nextjs", () => ({
     captureMessage: jest.fn(),

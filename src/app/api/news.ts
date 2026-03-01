@@ -4,7 +4,7 @@ import { createClient } from "../../prismicio";
 import { INewsData } from "@/lib/features/news";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const client = createClient({ req });
+    const client = createClient();
 
     const page = await client.getAllByType("platform_news");
 
@@ -17,8 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return pageList;
 }
 
-export async function GET(req: NextApiRequest) {
-    const client = createClient({ req });
+export async function GET() {
+    const client = createClient();
 
     const page = await client.getAllByType("platform_news");
 

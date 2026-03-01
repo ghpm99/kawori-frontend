@@ -1,5 +1,5 @@
 "use client";
-import { Breadcrumb, Card, Dropdown, Layout, Menu, MenuProps, message, Select, Table, Typography } from "antd";
+import { Breadcrumb, Card, Dropdown, MenuProps, message, Select, Table, Typography } from "antd";
 import { DefaultOptionType } from "antd/lib/select";
 
 import Link from "next/link";
@@ -99,17 +99,12 @@ export default function InvoiceDetails({ params }: { params: { id: number } }) {
         );
     };
 
-    const menu = (
-        <Menu
-            onClick={onMenuClick}
-            items={[
-                {
-                    key: "1",
-                    label: "Incluir nova nota",
-                },
-            ]}
-        />
-    );
+    const menuItems = [
+        {
+            key: "1",
+            label: "Incluir nova nota",
+        },
+    ];
 
     return (
         <>
@@ -189,7 +184,7 @@ export default function InvoiceDetails({ params }: { params: { id: number } }) {
                         <div className={styles.label}>Pagamentos:</div>
                     </div>
                     <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                        <Dropdown.Button overlay={menu} type="primary" onClick={save} className={styles.button_save}>
+                        <Dropdown.Button menu={{ items: menuItems, onClick: onMenuClick }} type="primary" onClick={save} className={styles.button_save}>
                             Salvar
                         </Dropdown.Button>
                     </div>

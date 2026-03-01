@@ -83,21 +83,15 @@ export default function ModalFilter(props: IModalFilterProps) {
                     <RangePicker
                         format={customFormat}
                         style={{ width: "100%" }}
-                        ranges={{
-                            Hoje: [dayjs(), dayjs()],
-                            Ontem: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")],
-                            "Últimos 7 dias": [dayjs().subtract(7, "days"), dayjs()],
-                            "Últimos 30 dias": [dayjs().subtract(30, "days"), dayjs()],
-                            "Mês atual": [dayjs().startOf("month"), dayjs().endOf("month")],
-                            "Proximo mês": [
-                                dayjs().add(1, "months").startOf("month"),
-                                dayjs().add(1, "months").endOf("month"),
-                            ],
-                            "Mês passado": [
-                                dayjs().subtract(1, "month").startOf("month"),
-                                dayjs().subtract(1, "month").endOf("month"),
-                            ],
-                        }}
+                        presets={[
+                            { label: "Hoje", value: [dayjs(), dayjs()] },
+                            { label: "Ontem", value: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")] },
+                            { label: "Últimos 7 dias", value: [dayjs().subtract(7, "days"), dayjs()] },
+                            { label: "Últimos 30 dias", value: [dayjs().subtract(30, "days"), dayjs()] },
+                            { label: "Mês atual", value: [dayjs().startOf("month"), dayjs().endOf("month")] },
+                            { label: "Proximo mês", value: [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")] },
+                            { label: "Mês passado", value: [dayjs().subtract(1, "month").startOf("month"), dayjs().subtract(1, "month").endOf("month")] },
+                        ]}
                     />
                 </Form.Item>
                 <Form.Item label="Parcelas" name="installments">
@@ -107,21 +101,15 @@ export default function ModalFilter(props: IModalFilterProps) {
                     <RangePicker
                         format={customFormat}
                         style={{ width: "100%" }}
-                        ranges={{
-                            Hoje: [dayjs(), dayjs()],
-                            Ontem: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")],
-                            "Últimos 7 dias": [dayjs().subtract(7, "days"), dayjs()],
-                            "Últimos 30 dias": [dayjs().subtract(30, "days"), dayjs()],
-                            "Mês atual": [dayjs().startOf("month"), dayjs().endOf("month")],
-                            "Proximo mês": [
-                                dayjs().add(1, "months").startOf("month"),
-                                dayjs().add(1, "months").endOf("month"),
-                            ],
-                            "Mês passado": [
-                                dayjs().subtract(1, "month").startOf("month"),
-                                dayjs().subtract(1, "month").endOf("month"),
-                            ],
-                        }}
+                        presets={[
+                            { label: "Hoje", value: [dayjs(), dayjs()] },
+                            { label: "Ontem", value: [dayjs().subtract(1, "days"), dayjs().subtract(1, "days")] },
+                            { label: "Últimos 7 dias", value: [dayjs().subtract(7, "days"), dayjs()] },
+                            { label: "Últimos 30 dias", value: [dayjs().subtract(30, "days"), dayjs()] },
+                            { label: "Mês atual", value: [dayjs().startOf("month"), dayjs().endOf("month")] },
+                            { label: "Proximo mês", value: [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")] },
+                            { label: "Mês passado", value: [dayjs().subtract(1, "month").startOf("month"), dayjs().subtract(1, "month").endOf("month")] },
+                        ]}
                     />
                 </Form.Item>
                 <Form.Item label="Valor" name="value">
