@@ -16,7 +16,7 @@ import {
     Tooltip as ChartTooltip,
 } from "chart.js";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useInView } from "react-intersection-observer";
 import styles from "./rank.module.scss";
@@ -47,27 +47,19 @@ const Rank = () => {
     const dispatch = useAppDispatch();
     const configurationStore = useAppSelector((state) => state.configuration);
     const classificationStore = useAppSelector((state) => state.classification);
-    const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
-
-    const [answerSummary, setAnswerSummary] = useState<AnswerSummaryData | undefined>(undefined);
-
     const classIdParams = searchParams.get("classId");
+
+    const selectedClassId = useMemo(() => {
+        const classId = parseInt(classIdParams ?? "");
+        return Number.isNaN(classId) ? null : classId;
+    }, [classIdParams]);
 
     useEffect(() => {
         document.title = "Ranking de Classes - Resultados de Votação";
         dispatch(getAllBdoClass());
-        // dispatch(getTotalVotes());
         dispatch(getAnswerByClass());
         dispatch(getAnswerSummary());
-    }, []);
-
-    useEffect(() => {
-        const classId = parseInt(classIdParams);
-        if (Number.isNaN(classId)) {
-            return;
-        }
-        setSelectedClassId(classId);
-    }, [classIdParams]);
+    }, [dispatch]);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -122,13 +114,12 @@ const Rank = () => {
 
     const normalizedName = normalizeString(selectedClass?.name || "");
 
-    useEffect(() => {
+    const answerSummary = useMemo(() => {
         if (selectedClass) {
-            setAnswerSummary(classificationStore.answerSummary.find((item) => item.bdo_class === selectedClass.id));
-        } else {
-            setAnswerSummary(undefined);
+            return classificationStore.answerSummary.find((item) => item.bdo_class === selectedClass.id);
         }
-    }, [selectedClass?.id, classificationStore?.answerSummary?.length]);
+        return undefined;
+    }, [selectedClass, classificationStore.answerSummary]);
 
     const awakeningAnswerSummary = (() => {
         if (!answerSummary || !answerSummary.resume["1"]) {

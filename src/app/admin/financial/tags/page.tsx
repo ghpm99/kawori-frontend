@@ -24,7 +24,7 @@ function TagPage() {
         document.title = "Kawori Tags";
         dispatch(setSelectedMenu(["financial", "tags"]));
         dispatch(fetchTags());
-    }, []);
+    }, [dispatch]);
 
     const openModal = (modal: keyof IModalTags) => {
         dispatch(changeVisibleModalTag({ modal, visible: true }));

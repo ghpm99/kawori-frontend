@@ -14,7 +14,8 @@
       "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npx jest:*)",
       "Bash(NODE_OPTIONS=\"--max-old-space-size=8192\" npx jest:*)",
       "Bash(export:*)",
-      "Bash(yarn coverage:*)"
+      "Bash(yarn coverage:*)",
+      "Bash(yarn build:*)"
     ]
   }
 }

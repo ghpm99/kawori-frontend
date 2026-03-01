@@ -105,45 +105,7 @@ function Overview() {
         dispatch(fetchAmountPaymentClosedReportThunk());
         dispatch(fetchAmountInvoiceByTagReportThunk());
         dispatch(fetchAmountForecastValueThunk());
-    }, []);
-
-    function OverviewReport() {
-        return (
-            <Flex align="center" vertical gap={"8px"}>
-                <Cards
-                    countPayment={overviewStore.data.countPayment}
-                    amountPayment={overviewStore.data.amountPayment}
-                    amountPaymentOpen={overviewStore.data.amountPaymentOpen}
-                    amountPaymentClosed={overviewStore.data.amountPaymentClosed}
-                    loading={overviewStore.loading}
-                />
-                <Table
-                    className={styles["table"]}
-                    columns={headerTableFinancial}
-                    dataSource={overviewStore.data.month}
-                    loading={overviewStore.loading}
-                    summary={(paymentData) => <TableSummary paymentData={paymentData} />}
-                    pagination={false}
-                    style={{
-                        borderRadius: "20px",
-                    }}
-                    bordered
-                />
-                <PaymentWithFixed theme={theme} data={overviewStore.data.payments} />
-                <InvoiceByTag theme={theme} data={overviewStore.data.invoiceByTag} />
-                <AccumulatedValue
-                    theme={theme}
-                    payments={overviewStore.data.payments}
-                    amountForecastValue={overviewStore.data.amountForecastValue}
-                />
-                <PaymentFixed
-                    theme={theme}
-                    fixedCredit={overviewStore.data.fixed_credit}
-                    fixedDebit={overviewStore.data.fixed_debit}
-                />
-            </Flex>
-        );
-    }
+    }, [dispatch]);
 
     return (
         <>
@@ -153,7 +115,39 @@ function Overview() {
                 <Breadcrumb.Item>Overview</Breadcrumb.Item>
             </Breadcrumb>
             <Layout>
-                <OverviewReport />
+                <Flex align="center" vertical gap={"8px"}>
+                    <Cards
+                        countPayment={overviewStore.data.countPayment}
+                        amountPayment={overviewStore.data.amountPayment}
+                        amountPaymentOpen={overviewStore.data.amountPaymentOpen}
+                        amountPaymentClosed={overviewStore.data.amountPaymentClosed}
+                        loading={overviewStore.loading}
+                    />
+                    <Table
+                        className={styles["table"]}
+                        columns={headerTableFinancial}
+                        dataSource={overviewStore.data.month}
+                        loading={overviewStore.loading}
+                        summary={(paymentData) => <TableSummary paymentData={paymentData} />}
+                        pagination={false}
+                        style={{
+                            borderRadius: "20px",
+                        }}
+                        bordered
+                    />
+                    <PaymentWithFixed theme={theme} data={overviewStore.data.payments} />
+                    <InvoiceByTag theme={theme} data={overviewStore.data.invoiceByTag} />
+                    <AccumulatedValue
+                        theme={theme}
+                        payments={overviewStore.data.payments}
+                        amountForecastValue={overviewStore.data.amountForecastValue}
+                    />
+                    <PaymentFixed
+                        theme={theme}
+                        fixedCredit={overviewStore.data.fixed_credit}
+                        fixedDebit={overviewStore.data.fixed_debit}
+                    />
+                </Flex>
             </Layout>
         </>
     );

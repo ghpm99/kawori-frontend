@@ -27,7 +27,7 @@ const User = () => {
     useEffect(() => {
         document.title = "Kawori Profile";
         dispatch(setSelectedMenu(["user"]));
-    }, []);
+    }, [dispatch]);
 
     const handleSignout = () => {
         navigate.push("/signout");
