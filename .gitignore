@@ -44,3 +44,8 @@ yarn-error.log*
 .vscode/targets.log
 .vscode/configurationCache.log
 .vscode/dryrun.log
+.claude
+.idea
+.swc
+.yarn
+.vscode
