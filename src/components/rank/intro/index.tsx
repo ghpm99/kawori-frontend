@@ -2,46 +2,44 @@ import { ClassProfile, setSelectedBdoClass } from "@/lib/features/classification
 import { useAppDispatch } from "@/lib/hooks";
 import { Button, Card, Divider, Select, Steps } from "antd";
 import styles from "./intro.module.scss";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 const Intro = ({ nextQuestion, bdoClass }: { nextQuestion: () => void; bdoClass: IClass[] }) => {
     const dispatch = useAppDispatch();
 
     const [selectedClass, setSelectedClass] = useState<number | undefined>(undefined);
     const [selectedProfile, setSelectedProfile] = useState<ClassProfile | undefined>(undefined);
-    const [enableCombatStyleSelect, setEnableCombatStyleSelect] = useState(true);
 
-    useEffect(() => {
+    const { enableCombatStyleSelect, derivedProfile } = useMemo(() => {
         switch (selectedClass) {
-            case 1: {
-                setEnableCombatStyleSelect(false);
-                setSelectedProfile(1);
-                break;
-            }
-            case 17: {
-                setEnableCombatStyleSelect(false);
-                setSelectedProfile(1);
-                break;
-            }
-            case 27: {
-                setEnableCombatStyleSelect(false);
-                setSelectedProfile(1);
-                break;
-            }
-            case 28: {
-                setEnableCombatStyleSelect(false);
-                setSelectedProfile(2);
-                break;
-            }
-            default: {
-                setEnableCombatStyleSelect(true);
-                break;
-            }
+            case 1:
+            case 17:
+            case 27:
+                return { enableCombatStyleSelect: false, derivedProfile: 1 as ClassProfile };
+            case 28:
+                return { enableCombatStyleSelect: false, derivedProfile: 2 as ClassProfile };
+            default:
+                return { enableCombatStyleSelect: true, derivedProfile: undefined };
         }
     }, [selectedClass]);
 
     const handlerChangeBdoClass = (value: number) => {
         setSelectedClass(value);
+        const result = (() => {
+            switch (value) {
+                case 1:
+                case 17:
+                case 27:
+                    return 1 as ClassProfile;
+                case 28:
+                    return 2 as ClassProfile;
+                default:
+                    return undefined;
+            }
+        })();
+        if (result !== undefined) {
+            setSelectedProfile(result);
+        }
     };
 
     const handlerChangeProfile = (value: ClassProfile) => {

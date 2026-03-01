@@ -119,6 +119,7 @@ const Preview = ({ theme }: { theme: Theme }) => {
                 </Button>
             </div>
             <div>
+                {/* eslint-disable-next-line @next/next/no-img-element -- blob URL from createObjectURL */}
                 {previewBackground && <img src={URL.createObjectURL(previewBackground)} alt={"preview-background"} />}
             </div>
         </div>
