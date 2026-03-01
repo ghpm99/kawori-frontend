@@ -4,7 +4,7 @@ import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 
 export type CallToActionProps = SliceComponentProps<Content.CallToActionSlice>;
 
-const CallToAction = ({ slice }: CallToActionProps): JSX.Element => {
+const CallToAction = ({ slice }: CallToActionProps) => {
     const alignment = slice.variation === "alignLeft" ? "left" : "center";
 
     return (

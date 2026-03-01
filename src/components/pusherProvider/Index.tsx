@@ -1,8 +1,13 @@
 import Pusher from "pusher-js";
 import { setPusherClient } from "react-pusher";
 
+interface IPusherChildProps {
+    pusher_key: string;
+    pusher_cluster: string;
+}
+
 interface IPusherProviderProps {
-    children: JSX.Element;
+    children: React.ReactElement<IPusherChildProps>;
 }
 
 export default function PusherProvider({ children }: IPusherProviderProps) {

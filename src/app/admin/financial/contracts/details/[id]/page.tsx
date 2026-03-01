@@ -3,8 +3,6 @@ import {
     Breadcrumb,
     Card,
     Dropdown,
-    Layout,
-    Menu,
     MenuProps,
     message,
     Modal,
@@ -185,21 +183,16 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
         );
     };
 
-    const menu = (
-        <Menu
-            onClick={onMenuClick}
-            items={[
-                {
-                    key: "1",
-                    label: "Incluir nova nota",
-                },
-                {
-                    key: "2",
-                    label: "Mesclar contrato",
-                },
-            ]}
-        />
-    );
+    const menuItems = [
+        {
+            key: "1",
+            label: "Incluir nova nota",
+        },
+        {
+            key: "2",
+            label: "Mesclar contrato",
+        },
+    ];
 
     return (
         <>
@@ -222,7 +215,7 @@ export default function ContractDetails({ params }: { params: { id: number } }) 
                         </Paragraph>
                     </div>
                     <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                        <Dropdown.Button overlay={menu} type="primary" onClick={save} className={styles.button_save}>
+                        <Dropdown.Button menu={{ items: menuItems, onClick: onMenuClick }} type="primary" onClick={save} className={styles.button_save}>
                             Salvar
                         </Dropdown.Button>
                     </div>
