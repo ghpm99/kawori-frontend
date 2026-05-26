@@ -29,31 +29,39 @@ export async function fetchFaceTextureClassService() {
     return response.data;
 }
 
-export async function previewFacetextureService(args: any) {
-    const response = await apiDjango.post(
-        "/facetexture/preview",
-        { ...args },
-        {
-            responseType: "blob",
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
+interface IFacetextureBackgroundArgs {
+    background: Blob;
+    icon_style: string;
+}
+
+// The backend reads `background` from request.FILES and the rest from
+// request.POST, so the payload must be real multipart/form-data — a plain object
+// would be serialized as JSON and the file would never reach the server. A Blob
+// needs an explicit filename for Django to treat it as an uploaded file.
+function buildBackgroundFormData(args: IFacetextureBackgroundArgs): FormData {
+    const formData = new FormData();
+    formData.append("background", args.background, "background.png");
+    formData.append("icon_style", args.icon_style);
+    return formData;
+}
+
+export async function previewFacetextureService(args: IFacetextureBackgroundArgs) {
+    const response = await apiDjango.post("/facetexture/preview", buildBackgroundFormData(args), {
+        responseType: "blob",
+        headers: {
+            "Content-Type": "multipart/form-data",
         },
-    );
+    });
     return response.data;
 }
 
-export async function downloadFacetextureService(args: any) {
-    const response = await apiDjango.post(
-        "/facetexture/download",
-        { ...args },
-        {
-            responseType: "blob",
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
+export async function downloadFacetextureService(args: IFacetextureBackgroundArgs) {
+    const response = await apiDjango.post("/facetexture/download", buildBackgroundFormData(args), {
+        responseType: "blob",
+        headers: {
+            "Content-Type": "multipart/form-data",
         },
-    );
+    });
     return response.data;
 }
 
