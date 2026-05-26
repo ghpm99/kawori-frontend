@@ -1,7 +1,8 @@
 import { LOCAL_STORE_ITEM_NAME } from "@/components/constants";
 import { MenuItemKey } from "@/components/menuInternal/Index";
 import { apiDjango } from "@/services";
-import { apiAuth } from "@/services/auth";
+import { apiAuth, refreshTokenAsync } from "@/services/auth";
+import { clearTokens, isAuthenticated, setTokens } from "@/services/token";
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -68,7 +69,13 @@ const initialState: IAuthState = {
 export const signinThunk = createAsyncThunk(
     "auth/signin",
     async (args: { username: string; password: string; remember: boolean }) => {
-        const response = await apiAuth.post<{ refresh_token_expiration: string }>("token/", args);
+        const response = await apiAuth.post<{ access: string; refresh: string; refresh_token_expiration: string }>(
+            "token/",
+            args,
+        );
+        // Bearer flow: persist the tokens so every subsequent request can attach
+        // the Authorization header.
+        setTokens(response.data.access, response.data.refresh);
         return response.data;
     },
 );
@@ -83,19 +90,25 @@ export const userGroupsThunk = createAsyncThunk("profile/userGroups", async () =
     return response.data;
 });
 
+// There is no server-side "verify" endpoint in the Bearer flow: a token is
+// valid when it exists and has not expired. If the access token is stale but a
+// refresh token is present, refreshTokenAsync renews it (and notifies the app
+// to sign out when the refresh token is gone/expired).
 export const verifyTokenThunk = createAsyncThunk("auth/verify", async () => {
-    const response = await apiAuth.post("token/verify/");
-    return response.data;
+    if (isAuthenticated()) return { valid: true };
+    await refreshTokenAsync();
+    return { valid: true };
 });
 
 export const refreshTokenThunk = createAsyncThunk("auth/refresh", async () => {
-    const response = await apiAuth.post("token/refresh/");
-    return response.data;
+    const access = await refreshTokenAsync();
+    return { access };
 });
 
+// Logout is purely local in the Bearer flow: drop the stored tokens.
 export const signoutThunk = createAsyncThunk("auth/signout", async () => {
-    const response = await apiAuth.get("signout");
-    return response.data;
+    clearTokens();
+    return {};
 });
 
 export const authSlice = createSlice({

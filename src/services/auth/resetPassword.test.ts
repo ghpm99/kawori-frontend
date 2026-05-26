@@ -1,3 +1,5 @@
+export {};
+
 const mockPost = jest.fn();
 const mockGet = jest.fn();
 

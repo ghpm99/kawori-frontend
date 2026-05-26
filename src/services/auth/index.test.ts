@@ -1,4 +1,4 @@
-import { HttpStatusCode } from "axios";
+export {};
 
 const mockPost = jest.fn();
 const mockGet = jest.fn();
@@ -16,28 +16,34 @@ jest.mock("axios", () => ({
 }));
 
 // Import after mock setup
-const { refreshTokenAsync, signupService, refreshTokenService, apiAuth } = require("./index");
+const { refreshTokenAsync, signupService } = require("./index");
+const { getAccessToken } = require("@/services/token");
 
 describe("refreshTokenAsync", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        localStorage.clear();
     });
 
-    it("deve chamar endpoint token/refresh/", async () => {
-        mockPost.mockResolvedValueOnce({ status: 200, data: { msg: "ok" } });
+    it("deve enviar o refresh token no corpo para token/refresh/", async () => {
+        localStorage.setItem("refresh_token", "refresh-123");
+        mockPost.mockResolvedValueOnce({ data: { access: "new-access" } });
 
         await refreshTokenAsync();
 
-        expect(mockPost).toHaveBeenCalledWith("token/refresh/");
+        expect(mockPost).toHaveBeenCalledWith("token/refresh/", { refresh: "refresh-123" });
     });
 
-    it("deve rejeitar quando o status não é 200", async () => {
-        mockPost.mockResolvedValueOnce({ status: 400, data: { msg: "error" } });
+    it("deve persistir o novo access token retornado", async () => {
+        mockPost.mockResolvedValueOnce({ data: { access: "new-access" } });
 
-        await expect(refreshTokenAsync()).rejects.toThrow("Falha ao atualizar o token");
+        const access = await refreshTokenAsync();
+
+        expect(access).toBe("new-access");
+        expect(getAccessToken()).toBe("new-access");
     });
 
-    it("deve disparar evento tokenRefreshFailed quando recebe erro com status 403", async () => {
+    it("deve disparar evento tokenRefreshFailed quando o refresh falha", async () => {
         const dispatchSpy = jest.spyOn(window, "dispatchEvent");
         mockPost.mockRejectedValueOnce({ status: 403 });
 
@@ -51,33 +57,18 @@ describe("refreshTokenAsync", () => {
     });
 
     it("deve prevenir chamadas concorrentes retornando a mesma promise", async () => {
-        let resolveFirst: Function;
+        let resolveFirst: (value: unknown) => void;
         const firstPromise = new Promise((r) => (resolveFirst = r));
         mockPost.mockReturnValueOnce(firstPromise);
 
         const call1 = refreshTokenAsync();
         const call2 = refreshTokenAsync();
 
-        resolveFirst!({ status: 200, data: { msg: "ok" } });
+        resolveFirst!({ data: { access: "new-access" } });
 
         await Promise.all([call1, call2]);
 
         expect(mockPost).toHaveBeenCalledTimes(1);
-    });
-});
-
-describe("refreshTokenService", () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-
-    it("deve chamar apiAuth.post com endpoint token/refresh/", async () => {
-        mockPost.mockResolvedValueOnce({ data: { msg: "refreshed" } });
-
-        const result = await refreshTokenService();
-
-        expect(mockPost).toHaveBeenCalledWith("token/refresh/");
-        expect(result.data.msg).toBe("refreshed");
     });
 });
 
