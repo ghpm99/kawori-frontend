@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import Image from "next/image";
+import RedirectIfAuthenticated from "@/components/redirectIfAuthenticated";
 import styles from "./Facetexture.module.scss";
 
 import facetextureImage1 from "assets/facetexture-1.png";
@@ -11,6 +12,7 @@ import facetextureImage4 from "assets/facetexture-4.png";
 export default function Facetexture() {
     return (
         <>
+            <RedirectIfAuthenticated to="/internal/facetexture" />
             <div className={styles["card-container"]}>
                 <div className={styles["card"]}>
                     <h1>

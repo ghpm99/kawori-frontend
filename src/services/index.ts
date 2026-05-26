@@ -1,50 +1,50 @@
 import * as Sentry from "@sentry/nextjs";
-import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
+import axios, { AxiosError, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig } from "axios";
 import { refreshTokenAsync } from "./auth";
+import { getAccessToken } from "./token";
 
 export const apiDjango = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
-    withCredentials: true,
     headers: {
-        "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_API_URL,
         "Content-Type": "application/json",
     },
 });
 
-const retryMaxCount = 3;
-const retryDelay = 1500;
-const statusCodeRetry = [401, 408, 504, 500];
-
-const sleepRequest = (milliseconds: number, originalRequest: any) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(apiDjango(originalRequest)), milliseconds);
-    });
-};
+// Attach the bearer token to every request that has one.
+apiDjango.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = getAccessToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
 
 const responseInterceptor = (response: AxiosResponse) => {
     return response;
 };
 
 export const errorInterceptor = async (error: AxiosError) => {
-    const { config, response } = error;
-    const originalRequest = config as any;
+    const config = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined;
+    const { response } = error;
 
-    const retryCount: number = originalRequest?._retryCount ?? 0;
-
-    if ((!response || statusCodeRetry.includes(response?.status as number)) && retryCount < retryMaxCount) {
-        if (response?.status === HttpStatusCode.Unauthorized) {
-            try {
-                await refreshTokenAsync();
-            } catch (refreshError) {
-                return Promise.reject(refreshError);
-            }
-        }
-        originalRequest._retryCount = retryCount + 1;
-        return sleepRequest(retryDelay, originalRequest);
-    } else {
-        Sentry.captureException(error);
+    if (!config) {
         return Promise.reject(error);
     }
+
+    // On the first 401, try to refresh the access token once and replay the
+    // request with the fresh bearer. refreshTokenAsync notifies the app when the
+    // refresh token itself is gone/expired, so there is no retry loop here.
+    if (response?.status === HttpStatusCode.Unauthorized && !config._retry) {
+        config._retry = true;
+        try {
+            const access = await refreshTokenAsync();
+            config.headers.Authorization = `Bearer ${access}`;
+            return apiDjango.request(config);
+        } catch (refreshError) {
+            return Promise.reject(refreshError);
+        }
+    }
+
+    Sentry.captureException(error);
+    return Promise.reject(error);
 };
 
 apiDjango.interceptors.response.use(responseInterceptor, errorInterceptor);

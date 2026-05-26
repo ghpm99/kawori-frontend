@@ -1,82 +1,50 @@
-import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
-
+"use client";
 import * as Sentry from "@sentry/nextjs";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
-let isRefreshingToken = false;
-let refreshPromise: Promise<any> | null = null;
+import { getAccessToken, getRefreshToken, setTokens } from "@/services/token";
 
 export const apiAuth = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/auth/",
-    withCredentials: true,
     headers: {
-        "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_API_URL,
         "Content-Type": "application/json",
     },
 });
 
-const responseInterceptor = (response: AxiosResponse) => {
-    return response;
-};
+// Attach the bearer token to every request that has one.
+apiAuth.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = getAccessToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
 
-const errorInterceptor = async (error: AxiosError) => {
-    const { config, response } = error;
-    const originalRequest = config;
+// Single-flight refresh: concurrent 401s share a single token/refresh/ call so
+// we never fire a stampede of refreshes. The refresh token travels in the body
+// (Bearer flow); on success we persist the new access token, on failure we
+// notify the app (AuthProvider listens for `tokenRefreshFailed`) and reject.
+let refreshing: Promise<string> | null = null;
 
-    if (!response?.status) {
-        Sentry.captureException(error);
-        return Promise.reject(error);
+export const refreshTokenAsync = async (): Promise<string> => {
+    if (!refreshing) {
+        const refresh = getRefreshToken();
+        refreshing = apiAuth
+            .post<{ access: string }>("token/refresh/", { refresh })
+            .then((res) => {
+                setTokens(res.data.access);
+                return res.data.access;
+            })
+            .catch((error) => {
+                Sentry.captureException(error);
+                if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("tokenRefreshFailed"));
+                }
+                throw error;
+            })
+            .finally(() => {
+                refreshing = null;
+            });
     }
-
-    if (response.status === HttpStatusCode.Unauthorized) {
-        try {
-            await refreshTokenAsync();
-            return apiAuth(originalRequest);
-        } catch (refreshError) {
-            Sentry.captureException(refreshError);
-            return Promise.reject(refreshError);
-        }
-    }
-
-    Sentry.captureException(error);
-    return Promise.reject(error);
-};
-
-apiAuth.interceptors.response.use(responseInterceptor, errorInterceptor);
-
-apiAuth.get("/csrf/");
-
-export const refreshTokenAsync = async () => {
-    if (isRefreshingToken) {
-        return refreshPromise;
-    }
-
-    isRefreshingToken = true;
-    refreshPromise = new Promise(async (resolve, reject) => {
-        try {
-            const refreshResponse = await refreshTokenService();
-
-            if (refreshResponse.status !== 200) {
-                reject(new Error("Falha ao atualizar o token"));
-            } else {
-                resolve(refreshResponse.data);
-            }
-        } catch (error) {
-            if (error?.status === HttpStatusCode.Forbidden) {
-                window.dispatchEvent(new CustomEvent("tokenRefreshFailed"));
-            }
-            reject(error);
-        } finally {
-            isRefreshingToken = false;
-            refreshPromise = null;
-        }
-    });
-
-    return refreshPromise;
-};
-
-export const refreshTokenService = async () => {
-    const response = await apiAuth.post<{ msg: string }>("token/refresh/");
-    return response;
+    return refreshing;
 };
 
 export interface INewUser {
