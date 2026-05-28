@@ -184,7 +184,12 @@ export default function InvoiceDetails({ params }: { params: Promise<{ id: numbe
                         <div className={styles.label}>Pagamentos:</div>
                     </div>
                     <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                        <Dropdown.Button menu={{ items: menuItems, onClick: onMenuClick }} type="primary" onClick={save} className={styles.button_save}>
+                        <Dropdown.Button
+                            menu={{ items: menuItems, onClick: onMenuClick }}
+                            type="primary"
+                            onClick={save}
+                            className={styles.button_save}
+                        >
                             Salvar
                         </Dropdown.Button>
                     </div>

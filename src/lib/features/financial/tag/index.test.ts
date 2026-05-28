@@ -33,10 +33,7 @@ describe("financial tag slice", () => {
 
     describe("reducers síncronos", () => {
         it("changeVisibleModalTag deve alternar visibilidade do modal", () => {
-            const result = reducer(
-                initialState,
-                changeVisibleModalTag({ modal: "newTag", visible: true }),
-            );
+            const result = reducer(initialState, changeVisibleModalTag({ modal: "newTag", visible: true }));
 
             expect(result.modal.newTag.visible).toBe(true);
         });
@@ -47,10 +44,7 @@ describe("financial tag slice", () => {
                 modal: { ...initialState.modal, newTag: { ...initialState.modal.newTag, visible: true } },
             };
 
-            const result = reducer(
-                openState,
-                changeVisibleModalTag({ modal: "newTag", visible: false }),
-            );
+            const result = reducer(openState, changeVisibleModalTag({ modal: "newTag", visible: false }));
 
             expect(result.modal.newTag.visible).toBe(false);
         });
@@ -65,7 +59,10 @@ describe("financial tag slice", () => {
         });
 
         it("fetchTags.fulfilled deve popular data e desligar loading", () => {
-            const tags = [{ id: 1, name: "Tag1" }, { id: 2, name: "Tag2" }];
+            const tags = [
+                { id: 1, name: "Tag1" },
+                { id: 2, name: "Tag2" },
+            ];
             const action = {
                 type: fetchTags.fulfilled.type,
                 payload: { data: tags },

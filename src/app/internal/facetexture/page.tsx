@@ -41,18 +41,21 @@ function FaceTexture() {
         dispatch(updateBackgroundReducer(backgroundImage));
     }, [dispatch]);
 
-    const updateCharacterImage = useCallback(async (index: number, name: string) => {
-        const image = await db.image.where("name").equals(name).first();
-        if (image) {
-            const imageUrl = URL.createObjectURL(image.imagem);
-            dispatch(
-                updateFacetextureUrlReducer({
-                    id: index,
-                    image: imageUrl,
-                }),
-            );
-        }
-    }, [dispatch]);
+    const updateCharacterImage = useCallback(
+        async (index: number, name: string) => {
+            const image = await db.image.where("name").equals(name).first();
+            if (image) {
+                const imageUrl = URL.createObjectURL(image.imagem);
+                dispatch(
+                    updateFacetextureUrlReducer({
+                        id: index,
+                        image: imageUrl,
+                    }),
+                );
+            }
+        },
+        [dispatch],
+    );
 
     useEffect(() => {
         document.title = "Kawori Facetexture";
