@@ -1,4 +1,12 @@
-import { formatMoney, formatterDate, formatterDetailedDate, formatterMonthYearDate, normalizeString, getSavedTheme, updateSearchParams } from "./index";
+import {
+    formatMoney,
+    formatterDate,
+    formatterDetailedDate,
+    formatterMonthYearDate,
+    normalizeString,
+    getSavedTheme,
+    updateSearchParams,
+} from "./index";
 
 describe("formatMoney", () => {
     it("deve formatar valor positivo no padrão BRL com duas casas decimais", () => {

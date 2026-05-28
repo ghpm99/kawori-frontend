@@ -33,9 +33,30 @@ const initialState = facetextureSlice.getInitialState();
 const createFacetextureState = (): typeof initialState => ({
     ...initialState,
     facetexture: [
-        { id: 1, name: "Char1", image: "img1.png", class: { id: 1, class_image: "class1.png" }, order: 0, show: true } as any,
-        { id: 2, name: "Char2", image: "img2.png", class: { id: 2, class_image: "class2.png" }, order: 1, show: true } as any,
-        { id: 3, name: "Char3", image: "img3.png", class: { id: 1, class_image: "class1.png" }, order: 2, show: false } as any,
+        {
+            id: 1,
+            name: "Char1",
+            image: "img1.png",
+            class: { id: 1, class_image: "class1.png" },
+            order: 0,
+            show: true,
+        } as any,
+        {
+            id: 2,
+            name: "Char2",
+            image: "img2.png",
+            class: { id: 2, class_image: "class2.png" },
+            order: 1,
+            show: true,
+        } as any,
+        {
+            id: 3,
+            name: "Char3",
+            image: "img3.png",
+            class: { id: 1, class_image: "class1.png" },
+            order: 2,
+            show: false,
+        } as any,
     ],
 });
 

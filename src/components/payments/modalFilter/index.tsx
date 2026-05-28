@@ -89,8 +89,20 @@ export default function ModalFilter(props: IModalFilterProps) {
                             { label: "Últimos 7 dias", value: [dayjs().subtract(7, "days"), dayjs()] },
                             { label: "Últimos 30 dias", value: [dayjs().subtract(30, "days"), dayjs()] },
                             { label: "Mês atual", value: [dayjs().startOf("month"), dayjs().endOf("month")] },
-                            { label: "Proximo mês", value: [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")] },
-                            { label: "Mês passado", value: [dayjs().subtract(1, "month").startOf("month"), dayjs().subtract(1, "month").endOf("month")] },
+                            {
+                                label: "Proximo mês",
+                                value: [
+                                    dayjs().add(1, "months").startOf("month"),
+                                    dayjs().add(1, "months").endOf("month"),
+                                ],
+                            },
+                            {
+                                label: "Mês passado",
+                                value: [
+                                    dayjs().subtract(1, "month").startOf("month"),
+                                    dayjs().subtract(1, "month").endOf("month"),
+                                ],
+                            },
                         ]}
                     />
                 </Form.Item>
@@ -107,8 +119,20 @@ export default function ModalFilter(props: IModalFilterProps) {
                             { label: "Últimos 7 dias", value: [dayjs().subtract(7, "days"), dayjs()] },
                             { label: "Últimos 30 dias", value: [dayjs().subtract(30, "days"), dayjs()] },
                             { label: "Mês atual", value: [dayjs().startOf("month"), dayjs().endOf("month")] },
-                            { label: "Proximo mês", value: [dayjs().add(1, "months").startOf("month"), dayjs().add(1, "months").endOf("month")] },
-                            { label: "Mês passado", value: [dayjs().subtract(1, "month").startOf("month"), dayjs().subtract(1, "month").endOf("month")] },
+                            {
+                                label: "Proximo mês",
+                                value: [
+                                    dayjs().add(1, "months").startOf("month"),
+                                    dayjs().add(1, "months").endOf("month"),
+                                ],
+                            },
+                            {
+                                label: "Mês passado",
+                                value: [
+                                    dayjs().subtract(1, "month").startOf("month"),
+                                    dayjs().subtract(1, "month").endOf("month"),
+                                ],
+                            },
                         ]}
                     />
                 </Form.Item>

@@ -1,16 +1,5 @@
 "use client";
-import {
-    Breadcrumb,
-    Card,
-    Dropdown,
-    MenuProps,
-    message,
-    Modal,
-    Select,
-    Table,
-    Tag,
-    Typography,
-} from "antd";
+import { Breadcrumb, Card, Dropdown, MenuProps, message, Modal, Select, Table, Tag, Typography } from "antd";
 import dayjs from "dayjs";
 
 import Link from "next/link";
@@ -215,7 +204,12 @@ export default function ContractDetails({ params }: { params: Promise<{ id: numb
                         </Paragraph>
                     </div>
                     <div className={`${styles["label-detail"]} ${styles["action-Button"]}`}>
-                        <Dropdown.Button menu={{ items: menuItems, onClick: onMenuClick }} type="primary" onClick={save} className={styles.button_save}>
+                        <Dropdown.Button
+                            menu={{ items: menuItems, onClick: onMenuClick }}
+                            type="primary"
+                            onClick={save}
+                            className={styles.button_save}
+                        >
                             Salvar
                         </Dropdown.Button>
                     </div>

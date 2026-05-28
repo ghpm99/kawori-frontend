@@ -21,10 +21,7 @@ export function createTestStore(preloadedState?: PreloadedStateShapeFromReducers
 
 export function renderWithProviders(
     ui: React.ReactElement,
-    {
-        store = createTestStore(),
-        ...renderOptions
-    }: ExtendedRenderOptions = {},
+    { store = createTestStore(), ...renderOptions }: ExtendedRenderOptions = {},
 ) {
     function Wrapper({ children }: PropsWithChildren<{}>) {
         return <Provider store={store}>{children}</Provider>;
