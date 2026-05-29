@@ -6,7 +6,7 @@ import styles from "./ModalFilter.module.scss";
 
 interface IModalFilterProps {
     visible: boolean;
-    onCancel: (e: React.MouseEvent<HTMLElement>) => void;
+    onCancel: (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void;
     setFilters: ((values: IFormModalFilter) => void) | undefined;
 }
 
