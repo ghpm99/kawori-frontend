@@ -4,7 +4,7 @@ import styles from "./ModalNew.module.scss";
 
 interface IModalNewProps {
     visible: boolean;
-    onCancel: (e: React.MouseEvent<HTMLElement>) => void;
+    onCancel: (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void;
     onFinish: ((values: IFormModalNew) => void) | undefined;
 }
 
