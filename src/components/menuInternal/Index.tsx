@@ -1,4 +1,4 @@
-import { AppstoreOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, BarChartOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 
@@ -24,7 +24,8 @@ export type MenuItemKey =
     | "invoices"
     | "payments"
     | "tags"
-    | "server";
+    | "server"
+    | "analytics";
 
 const { Sider } = Layout;
 
@@ -100,11 +101,18 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
     }
 
     if (groups.includes("admin")) {
-        baseItens.push({
-            label: <Link href={"/admin/server"}>Servidor</Link>,
-            key: "server",
-            icon: <SettingOutlined />,
-        });
+        baseItens.push(
+            {
+                label: <Link href={"/admin/analytics"}>Analytics</Link>,
+                key: "analytics",
+                icon: <BarChartOutlined />,
+            },
+            {
+                label: <Link href={"/admin/server"}>Servidor</Link>,
+                key: "server",
+                icon: <SettingOutlined />,
+            },
+        );
     }
 
     return baseItens;
