@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BarChartOutlined, HomeOutlined, SettingOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 
@@ -9,23 +9,7 @@ import { Theme } from "@/styles/theme";
 import { useState } from "react";
 
 type MenuItem = Required<MenuProps>["items"][number];
-export type MenuItemKey =
-    | "home"
-    | "user"
-    | "facetexture"
-    | "rank"
-    | "controller"
-    | "command"
-    | "remote"
-    | "status"
-    | "financial"
-    | "overview"
-    | "contracts"
-    | "invoices"
-    | "payments"
-    | "tags"
-    | "server"
-    | "analytics";
+export type MenuItemKey = "home" | "user" | "facetexture" | "rank" | "controller" | "command" | "remote" | "status";
 
 const { Sider } = Layout;
 
@@ -61,56 +45,6 @@ const menuItens = (status: authStatus, groups: string[]): MenuItem[] => {
                 label: <Link href={"/internal/rank"}>Rank de classes</Link>,
                 key: "rank",
                 icon: <AppstoreOutlined />,
-            },
-        );
-    }
-
-    if (groups.includes("financial")) {
-        baseItens.push({
-            label: "Financeiro",
-            key: "financial",
-            icon: <SnippetsOutlined />,
-            children: [
-                {
-                    label: <Link href={"/admin/financial/overview"}>Overview</Link>,
-                    key: "overview",
-                    icon: <SnippetsOutlined />,
-                },
-                {
-                    label: <Link href={"/admin/financial/contracts"}>Contratos</Link>,
-                    key: "contracts",
-                    icon: <SnippetsOutlined />,
-                },
-                {
-                    label: <Link href={"/admin/financial/invoices"}>Notas</Link>,
-                    key: "invoices",
-                    icon: <SnippetsOutlined />,
-                },
-                {
-                    label: <Link href={"/admin/financial/payments"}>Pagamentos</Link>,
-                    key: "payments",
-                    icon: <SnippetsOutlined />,
-                },
-                {
-                    label: <Link href={"/admin/financial/tags"}>Tags</Link>,
-                    key: "tags",
-                    icon: <SnippetsOutlined />,
-                },
-            ],
-        });
-    }
-
-    if (groups.includes("admin")) {
-        baseItens.push(
-            {
-                label: <Link href={"/admin/analytics"}>Analytics</Link>,
-                key: "analytics",
-                icon: <BarChartOutlined />,
-            },
-            {
-                label: <Link href={"/admin/server"}>Servidor</Link>,
-                key: "server",
-                icon: <SettingOutlined />,
             },
         );
     }
