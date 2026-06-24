@@ -9,7 +9,7 @@ import { Theme } from "@/styles/theme";
 import { useState } from "react";
 
 type MenuItem = Required<MenuProps>["items"][number];
-export type MenuItemKey = "home" | "user" | "facetexture" | "rank" | "controller" | "command" | "remote" | "status";
+export type MenuItemKey = "home" | "user" | "facetexture" | "rank" | "status";
 
 const { Sider } = Layout;
 
