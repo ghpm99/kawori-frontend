@@ -101,9 +101,9 @@ describe("_registerEffect", () => {
         it("deve manter global true se ainda há requests de outro slice", () => {
             const stateWithMultiple: LoadingState = {
                 global: true,
-                slices: { auth: "pending", financial: "pending" },
-                effects: { "auth/signin": "pending", "financial/fetchTags": "pending" },
-                requests: { "auth/signin": ["req-1"], "financial/fetchTags": ["req-2"] },
+                slices: { auth: "pending", facetexture: "pending" },
+                effects: { "auth/signin": "pending", "facetexture/fetchAll": "pending" },
+                requests: { "auth/signin": ["req-1"], "facetexture/fetchAll": ["req-2"] },
             };
 
             const result = _registerEffect({
@@ -116,7 +116,7 @@ describe("_registerEffect", () => {
 
             expect(result.global).toBe(true);
             expect(result.slices["auth"]).toBe("idle");
-            expect(result.slices["financial"]).toBe("pending");
+            expect(result.slices["facetexture"]).toBe("pending");
         });
 
         it("deve manter effect como pending se ainda há requests pendentes para ele", () => {
