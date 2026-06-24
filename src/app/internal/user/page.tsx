@@ -37,9 +37,6 @@ const User = () => {
         if (groups.includes("admin")) {
             return "blue";
         }
-        if (groups.includes("financial")) {
-            return "violet";
-        }
         if (groups.includes("blackdesert")) {
             return "green";
         }

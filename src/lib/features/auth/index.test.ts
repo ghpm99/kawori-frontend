@@ -67,8 +67,8 @@ describe("auth slice", () => {
         });
 
         it("setSelectedMenu deve atualizar o menu selecionado", () => {
-            const state = reducer(initialState, setSelectedMenu(["financial"]));
-            expect(state.selectedMenu).toEqual(["financial"]);
+            const state = reducer(initialState, setSelectedMenu(["user"]));
+            expect(state.selectedMenu).toEqual(["user"]);
         });
     });
 
