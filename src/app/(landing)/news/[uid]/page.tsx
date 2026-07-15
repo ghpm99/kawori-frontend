@@ -1,4 +1,3 @@
-"use server";
 import { isFilled } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 import { Metadata } from "next";
@@ -14,7 +13,7 @@ import stylesNews from "./news.module.scss";
 
 type Params = Promise<{ uid: string }>;
 
-// export const dynamicParams = false;
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
     const { uid } = await params;
