@@ -1,101 +1,42 @@
 "use client";
-import { Breadcrumb, message } from "antd";
-import { useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Alert, Breadcrumb, Button, Result, Space, message } from "antd";
+import * as Sentry from "@sentry/nextjs";
+import { useEffect, useState } from "react";
 
-import Background from "@/components/facetexture/background";
-import Characters from "@/components/facetexture/characters";
-import Preview from "@/components/facetexture/preview";
-import { useTheme } from "@/components/themeProvider/themeContext";
 import { setSelectedMenu } from "@/lib/features/auth";
-import { fetchFacetexture, updateBackgroundReducer, updateFacetextureUrlReducer } from "@/lib/features/facetexture";
 import { useAppDispatch } from "@/lib/hooks";
-import { RootState } from "@/lib/store";
-import { IFacetextureCharacterApi } from "@/services/facetexture";
+import { exportFacetextureData } from "@/services/facetexture/export";
 import { FACETEXTURE_MESSAGE_REF } from "@/util";
-import { db } from "@/util/db";
 import Styles from "./Facetexture.module.scss";
-import Loading from "./loading";
+
+const BDO_APP_URL = process.env.NEXT_PUBLIC_BDO_APP_URL;
 
 function FaceTexture() {
     const dispatch = useAppDispatch();
-    const facetextureStore = useSelector((state: RootState) => state.facetexture);
-    const {
-        state: { theme },
-    } = useTheme();
-
-    const updateBackground = useCallback(async () => {
-        const background = (await db.background.toArray())[0];
-
-        let backgroundImage;
-
-        if (background) {
-            backgroundImage = URL.createObjectURL(background.image);
-        } else {
-            backgroundImage = "/media/background.jpg";
-            const blob = await fetch(backgroundImage).then((r) => r.blob());
-            await db.background.add({
-                image: blob,
-            });
-        }
-        dispatch(updateBackgroundReducer(backgroundImage));
-    }, [dispatch]);
-
-    const updateCharacterImage = useCallback(
-        async (index: number, name: string) => {
-            const image = await db.image.where("name").equals(name).first();
-            if (image) {
-                const imageUrl = URL.createObjectURL(image.imagem);
-                dispatch(
-                    updateFacetextureUrlReducer({
-                        id: index,
-                        image: imageUrl,
-                    }),
-                );
-            }
-        },
-        [dispatch],
-    );
+    const [exporting, setExporting] = useState(false);
 
     useEffect(() => {
         document.title = "Kawori Facetexture";
         dispatch(setSelectedMenu(["facetexture"]));
-        updateBackground();
-        dispatch(fetchFacetexture()).then((action) => {
-            const payload = action.payload as {
-                characters: IFacetextureCharacterApi[];
-                classes: {
-                    class: {
-                        id: number;
-                        name: string;
-                        abbreviation: string;
-                        class_image: string;
-                    }[];
-                };
-            };
-            payload.characters.forEach((value, index) => {
-                updateCharacterImage(value.id, value.name);
-            });
-        });
-    }, [dispatch, updateBackground, updateCharacterImage]);
+    }, [dispatch]);
 
-    useEffect(() => {
-        if (facetextureStore.loading) {
-            message.loading({
-                content: "Carregando",
-                key: FACETEXTURE_MESSAGE_REF,
-            });
-        } else {
-            message.success({
-                content: "Carregado!",
-                key: FACETEXTURE_MESSAGE_REF,
-            });
+    const handleExport = async () => {
+        if (exporting) {
+            return;
         }
-    }, [facetextureStore.loading]);
-
-    if (facetextureStore.loading) {
-        return <Loading />;
-    }
+        setExporting(true);
+        message.loading({ content: "Exportando seus dados", key: FACETEXTURE_MESSAGE_REF });
+        try {
+            await exportFacetextureData();
+            message.success({ content: "Dados exportados!", key: FACETEXTURE_MESSAGE_REF });
+        } catch (reason) {
+            message.error({ content: "Falhou em exportar!", key: FACETEXTURE_MESSAGE_REF });
+            console.error(reason);
+            Sentry.captureException(reason);
+        } finally {
+            setExporting(false);
+        }
+    };
 
     return (
         <>
@@ -103,21 +44,34 @@ function FaceTexture() {
                 className={Styles["breadcrumb"]}
                 items={[{ href: "/", title: "Home" }, { title: "Kawori" }, { title: "Facetexture" }]}
             />
-            <div className={Styles["help-text"]}>
-                Perdido? Precisa de ajuda? Assista agora o{" "}
-                <a className={Styles["hiper-link"]} target="_blank" href="https://youtu.be/_el6fCfvzXQ">
-                    <strong>guia em video</strong>
-                </a>{" "}
-                ou entre em{" "}
-                <a className={Styles["hiper-link"]} target="_blank" href="https://discord.gg/fykNkXyn2r">
-                    <strong>nosso discord.</strong>
-                </a>
-            </div>
-            <div className={Styles["container-toolkit"]}>
-                <Characters theme={theme} />
-                <Background theme={theme} />
-                <Preview theme={theme} />
-            </div>
+            <Result
+                status="info"
+                title="A ferramenta de Facetexture mudou de casa"
+                subTitle="O editor de facetexture agora vive em um aplicativo dedicado. Esta tela serve apenas para você exportar seus dados e migrar."
+                extra={
+                    <Space direction="vertical" size="large" style={{ width: "100%" }}>
+                        <Alert
+                            type="warning"
+                            showIcon
+                            message="Exporte antes de continuar"
+                            description="Suas imagens de rosto e o background ficam salvos apenas neste navegador. Exporte o arquivo e importe-o no aplicativo novo para não perder nada."
+                        />
+                        <Space wrap>
+                            <Button type="primary" loading={exporting} onClick={handleExport}>
+                                Exportar meus dados
+                            </Button>
+                            <Button
+                                href={BDO_APP_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                disabled={!BDO_APP_URL}
+                            >
+                                Abrir o aplicativo novo
+                            </Button>
+                        </Space>
+                    </Space>
+                }
+            />
         </>
     );
 }
