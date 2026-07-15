@@ -2,6 +2,8 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   reactStrictMode: false,
   transpilePackages: [
     'antd',
@@ -15,6 +17,7 @@ const nextConfig = {
     'rc-table',
   ],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: 'storage.cloud.google.com',
